@@ -1,0 +1,45 @@
+{
+  "probe_schema": "flycall.malecns.bulk-range-probe.v1",
+  "observed_on": "2026-10-13",
+  "exact_client_timestamp_recorded": false,
+  "capture_method": "Completed HTTPS HEAD and HTTP Range GET requests with curl against the official public GCS object; parsed the Feather metadata from the captured initial range with probe_bulk_range.py.",
+  "source_url": "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+  "expected_generation": "1780494887545976",
+  "object": {
+    "content_length_bytes": 1051241946,
+    "content_type": "application/octet-stream",
+    "last_modified": "Wed, 03 Jun 2026 13:54:47 GMT",
+    "etag": "\"f30e9dcca25cfd021bf1e7b3d975599e\"",
+    "generation": "1780494887545976",
+    "accept_ranges": "bytes",
+    "server_checksums": {
+      "md5_base64": "8w6dzKJc/QIb8eez2XVZng==",
+      "crc32c_base64": "dKRPVQ=="
+    },
+    "full_object_sha256": null
+  },
+  "feather_probe": {
+    "format_magic": "ARROW1",
+    "rows_from_embedded_pandas_range_index": 151856684,
+    "columns_from_embedded_pandas_metadata": [
+      {"name": "body_pre", "numpy_type": "int64", "pandas_type": "int64"},
+      {"name": "body_post", "numpy_type": "int64", "pandas_type": "int64"},
+      {"name": "weight", "numpy_type": "int64", "pandas_type": "int64"}
+    ],
+    "probe_scope": "First and last 65,536 bytes only; no table batch decoded.",
+    "ranges": [
+      {
+        "content_range": "bytes 0-65535/1051241946",
+        "bytes": 65536,
+        "sha256": "9d011c0b23cd637824184893e42f5d7812391bfa886f790fb6f2294b1df018a4",
+        "magic_at_expected_edge": "ARROW1 at file start"
+      },
+      {
+        "content_range": "bytes 1051176410-1051241945/1051241946",
+        "bytes": 65536,
+        "sha256": "54d98f0c78c9ca6104acce43a6854a3c0954221cc47ee24c9c40f1d1da22fd48",
+        "magic_at_expected_edge": "ARROW1 at file end"
+      }
+    ]
+  }
+}

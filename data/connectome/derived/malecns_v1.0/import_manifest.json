@@ -1,0 +1,55 @@
+{
+  "source_filename": "connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+  "source_generation": 1780494887545976,
+  "source_size_bytes": 1051241946,
+  "source_sha256": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+  "source_rows": 151856684,
+  "output_edge_count": 151856684,
+  "output_node_count": 88384522,
+  "output_duplicate_rows_aggregated": 0,
+  "input_weight_sum": 311833243,
+  "output_weight_sum": 311833243,
+  "source_self_loop_rows": 123,
+  "output_self_loop_pairs": 123,
+  "source_self_loop_weight_sum": 542,
+  "output_edges_sha256": "d32d5be692b127e8b9132e418bbfc4a13fbc36e2f5fabc90293a1f04d5f133aa",
+  "output_nodes_sha256": "71601532b54b5fd8fba108681148a5f791f9c6c69885ed0b124e3750f84fb654",
+  "pyarrow_version": "26.0.0",
+  "duckdb_version": "1.5.6",
+  "import_rules": {
+    "source_fields": {
+      "body_pre": "source_id",
+      "body_post": "target_id",
+      "weight": "weight"
+    },
+    "output_edge_schema": [
+      "source_id:int64",
+      "target_id:int64",
+      "weight:int64"
+    ],
+    "output_node_schema": [
+      "node_id:int64"
+    ],
+    "node_ids": "unique union of all source_id and target_id values",
+    "duplicate_pairs": "sum weight globally, including across record batches",
+    "self_loops": "retain",
+    "nulls": "fail explicitly",
+    "nonpositive_weights": "fail explicitly",
+    "filters": "none; do not infer or add a minconf-0.5 predicate",
+    "endpoint_semantics": "node; no neuron, region, or cell_type annotation inferred"
+  },
+  "resource_strategy": {
+    "global_aggregation": "DuckDB GROUP BY with disk spill; node IDs are deduplicated from externally sorted endpoint rows",
+    "duckdb_memory_limit": "2GB",
+    "duckdb_threads": 2,
+    "read_batch_rows": 65536,
+    "estimated_peak_extra_disk_bytes": 18081690432,
+    "free_disk_bytes_before_import": 24862359552,
+    "staging_bytes_before_database_cleanup": 2732163539,
+    "source_rows_for_disk_estimate": 151856684
+  },
+  "source_sha256_before_import": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+  "source_sha256_after_import": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+  "source_size_bytes_before_import": 1051241946,
+  "source_size_bytes_after_import": 1051241946
+}

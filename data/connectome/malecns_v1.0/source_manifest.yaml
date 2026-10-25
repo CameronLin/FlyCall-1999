@@ -1,0 +1,120 @@
+manifest_version: "1.0"
+status: source_selected_full_file_sha256_verified
+scope: "M0.1 source selection only; no graph import, subgraph generation, or case-data changes."
+dataset:
+  name: MaleCNS
+  release: "v1.0"
+  release_date: "2026-06-08"
+  official_project_url: https://male-cns.janelia.org/
+  official_release_notes_url: https://male-cns.janelia.org/release/
+source_selection:
+  mode: bulk_connectivity_file
+  rationale:
+    - "The project needs the whole directed graph downstream; the official neuPrint guidance recommends bulk exports for whole-connectome analysis."
+    - "The neuPrint API is suited to targeted queries and requires an account token; no token is stored in this project."
+    - "The official MaleCNS connectivity bulk object is public and supports HTTP byte ranges; the full pinned object was later downloaded solely to compute its complete SHA-256, without parsing edge rows."
+  alternative_api:
+    server: https://neuprint.janelia.org
+    dataset: "male-cns:v1.0"
+    auth: "Personal neuPrint token required."
+    docs_url: https://connectome-neuprint.github.io/neuprint-python/docs/quickstart.html
+    used_for_this_probe: false
+  official_download_page: https://male-cns.janelia.org/download/
+  gcs_uri: "gs://flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather"
+  https_url: "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather"
+  selected_file: connectome-weights-male-cns-v1.0-minconf-0.5.feather
+  format: Apache Arrow Feather
+  official_description: "Full segment-to-segment connection graph; segments with no synapses are excluded."
+  local_full_file_downloaded: true
+  object_metadata_observed:
+    observed_on: "2026-10-13"
+    content_length_bytes: 1051241946
+    last_modified_utc: "2026-06-03T13:54:47Z"
+    generation: "1780494887545976"
+    etag: "f30e9dcca25cfd021bf1e7b3d975599e"
+    accept_ranges: bytes
+    server_checksums:
+      md5_base64: "8w6dzKJc/QIb8eez2XVZng=="
+      crc32c_base64: "dKRPVQ=="
+    full_object_sha256: "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1"
+    full_object_sha256_algorithm: SHA-256
+    full_object_sha256_computed_on: "2026-10-13"
+    local_file_path: data/connectome/malecns_v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+    local_file_bytes: 1051241946
+    local_file_generation: "1780494887545976"
+    generation_verification: "HTTP GET used both the generation query parameter and x-goog-if-generation-match header; response returned x-goog-generation 1780494887545976."
+    download_command: >-
+      curl --fail --location --show-error --retry 3 --retry-delay 2
+      --header 'x-goog-if-generation-match: 1780494887545976'
+      --dump-header /private/tmp/flycall_malecns_v1_headers.txt
+      --output /Users/linyifen/Desktop/coding/FlyCall-1999/data/connectome/malecns_v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather.partial
+      'https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/connectome-weights-male-cns-v1.0-minconf-0.5.feather?generation=1780494887545976'
+    finalize_command: >-
+      mv data/connectome/malecns_v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather.partial
+      data/connectome/malecns_v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+    sha256_command: "shasum -a 256 data/connectome/malecns_v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather"
+    size_command: "stat -f 'bytes=%z path=%N' data/connectome/malecns_v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather"
+    full_object_sha256_note: "Computed from the complete local file; server MD5/CRC32C and the two probe-range SHA-256 values are retained as separate checks."
+  observed_file_schema:
+    source: "Pandas/Arrow metadata embedded in the first 64 KiB of the actual Feather object."
+    metadata_row_count: 151856684
+    fields:
+      - name: body_pre
+        type: int64
+        meaning: "Presynaptic neuron/body ID; directed edge source."
+      - name: body_post
+        type: int64
+        meaning: "Postsynaptic neuron/body ID; directed edge target."
+      - name: weight
+        type: int64
+        meaning: "Published segment-to-segment connection weight; neuPrint documents weight as the number of connections/postsynaptic densities, not a calibrated synaptic efficacy."
+  edge_contract:
+    source_field: body_pre
+    target_field: body_post
+    direction: "body_pre (presynaptic/source) -> body_post (postsynaptic/target)"
+    adjacency_matrix_convention: "A[target, source] if a matrix is materialized; the source table remains source-to-target."
+    weight_field: weight
+    weight_semantics: "Integer connection count/strength."
+  confidence:
+    selected_release_filter: "The selected official artifact name is minconf-0.5."
+    additional_project_filter: none
+    confidence_columns_in_selected_file: []
+    related_partner_table_fields: [conf_pre, conf_post]
+    exact_upstream_predicate: "Not specified on the official download page; do not infer >= versus > or a pre/post combination rule."
+    note: "Use the published minconf-0.5 artifact as-is. Do not treat weight as confidence and do not apply a second threshold to aggregate edges."
+  access:
+    method: "Full HTTPS GET pinned with generation=1780494887545976 and x-goog-if-generation-match, plus the separate range-probe HEAD/GET workflow."
+    authentication_required: false
+    probe_script: data/connectome/malecns_v1.0/probe_bulk_range.py
+    probe_result: data/connectome/malecns_v1.0/probe_result_v1.0.json
+    reproduction_command: "python3 -B data/connectome/malecns_v1.0/probe_bulk_range.py --output data/connectome/malecns_v1.0/probe_result_v1.0.json"
+    probe_scope: "The probe result covers only the first and last 65,536 bytes; the separately downloaded full object was read only by checksum and was not parsed or transformed."
+  authorization:
+    license: "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+    license_url: https://creativecommons.org/licenses/by/4.0/
+    official_license_statement_url: https://male-cns.janelia.org/download/
+    attribution: >-
+      MaleCNS v1.0 connectome data, produced by the FlyEM Project Team (HHMI
+      Janelia Research Campus), the University of Cambridge Department of
+      Zoology, the MRC Laboratory of Molecular Biology, and Google Research.
+      Berg S. et al., “Sexual dimorphism in the complete Drosophila male central
+      nervous system connectome,” Cell 189(18), 5504–5526.e15 (2026),
+      https://doi.org/10.1016/j.cell.2026.08.015. Source:
+      https://male-cns.janelia.org/download/. Licensed CC BY 4.0:
+      https://creativecommons.org/licenses/by/4.0/.
+    required_attribution_practice:
+      - "Give appropriate credit and link to CC BY 4.0."
+      - "Indicate any changes made to the source data in any derived artifact."
+    source_changes_in_this_probe: "None; only byte ranges and metadata were read."
+  official_references:
+    - https://male-cns.janelia.org/
+    - https://male-cns.janelia.org/download/
+    - https://male-cns.janelia.org/release/
+    - https://connectome-neuprint.github.io/neuprint-python/docs/faq.html
+    - https://connectome-neuprint.github.io/neuprint-python/docs/queries.html
+    - https://github.com/connectome-neuprint/neuPrint/blob/master/pgmspecs.md
+    - https://www.janelia.org/node/70503
+    - https://creativecommons.org/licenses/by/4.0/
+open_items:
+  - "The official download page does not document the exact confidence comparator used to construct minconf-0.5."
+  - "M1.1 must decode and validate a sample edge row and confirm the intended edge-weight interpretation; no edge rows were parsed during M0.1."
