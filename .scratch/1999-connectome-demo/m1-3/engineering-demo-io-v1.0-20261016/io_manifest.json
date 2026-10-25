@@ -1,0 +1,279 @@
+{
+  "manifest_schema_version": "1.0",
+  "artifact_type": "m1.3_synthetic_io_reachability_check",
+  "artifact_status": "passed",
+  "created_at_utc": "2026-10-15T16:15:50Z",
+  "limitations": [
+    "I/O nodes are synthetic engineering endpoints, not biologically typed nodes.",
+    "This artifact does not establish biological representativeness or function.",
+    "Edge weight is connection metadata and is not used as a path cost."
+  ],
+  "source_graph": {
+    "path": "data/connectome/derived/malecns_v1.0/subgraphs/engineering-demo-v1.0",
+    "artifact_name": "MaleCNS v1.0 M1.2 hash-priority 500-node engineering demo",
+    "manifest_sha256": "5300c6cefdc6b84a854545e64f4131baa3fc42f0bde97a83f68fcc1c3769cf40",
+    "nodes": {
+      "path": "nodes.parquet",
+      "rows": 500,
+      "schema": "node_id:int64",
+      "sha256": "a8ad1e6a42c0a386d4bdef517ac628c29a5b7b8f023c51b43cce8e0354087428"
+    },
+    "edges": {
+      "path": "edges.parquet",
+      "rows": 2216,
+      "schema": "source_id:int64,target_id:int64,weight:int64",
+      "sha256": "afa69be2078eaf136d00511539145dc82ea54af5aa2f52ffdcb87501488e2175"
+    },
+    "upstream_m1_1_source_sha256": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+    "upstream_m1_1_edges_sha256": "d32d5be692b127e8b9132e418bbfc4a13fbc36e2f5fabc90293a1f04d5f133aa",
+    "upstream_m1_1_nodes_sha256": "71601532b54b5fd8fba108681148a5f791f9c6c69885ed0b124e3750f84fb654"
+  },
+  "io_selection": {
+    "kind": "synthetic I/O node sets for engineering demo",
+    "algorithm": "BLAKE2b-128 keyed hash-priority",
+    "salt": "FlyCallM13-IO-v1",
+    "salt_hex": "466c7943616c6c4d31332d494f2d7631",
+    "node_id_encoding": "signed int64, 8 bytes, little-endian",
+    "role_domain_separation": "ASCII role name + NUL + encoded node ID",
+    "rank_order": "digest bytes ascending; node_id ascending on digest collision",
+    "input_node_ids": [
+      20094,
+      21265,
+      46043,
+      50817,
+      66956,
+      67105,
+      82753,
+      95822,
+      105698,
+      133583101,
+      136005522,
+      147287007,
+      192656362,
+      223037278,
+      232269701,
+      356394988,
+      427537031,
+      445055901,
+      499893784,
+      540521216,
+      693826395,
+      707438505,
+      718194764,
+      746296719,
+      752267113,
+      776550341,
+      830204463,
+      841961711,
+      855368627,
+      914051157,
+      914353144,
+      965219470
+    ],
+    "output_node_ids": [
+      12440,
+      18564,
+      19123,
+      21806,
+      23044,
+      23353,
+      28537,
+      33704,
+      41989,
+      72432,
+      89422,
+      97249,
+      101099,
+      198311948,
+      388055699,
+      397832802,
+      410400468,
+      492128127,
+      523478128,
+      563624867,
+      567186674,
+      615553874,
+      674221890,
+      727874291,
+      732156618,
+      756414572,
+      782476408,
+      813624297,
+      815889974,
+      922096505,
+      931114962,
+      1026342716
+    ],
+    "sets_disjoint": true,
+    "selection_sha256": "2f3ff12d2437309d7f06edd3b9396e9ffa8cbf6dcda8a964ce212a82ddb85d40"
+  },
+  "reachability": {
+    "direction": "source_id -> target_id",
+    "max_steps": 4,
+    "edge_weight_used_as_cost": false,
+    "path_cost": "unweighted hop count; edge weight is not used",
+    "per_output": [
+      {
+        "node_id": 12440,
+        "shortest_hops": 1
+      },
+      {
+        "node_id": 18564,
+        "shortest_hops": 1
+      },
+      {
+        "node_id": 19123,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 21806,
+        "shortest_hops": 1
+      },
+      {
+        "node_id": 23044,
+        "shortest_hops": 1
+      },
+      {
+        "node_id": 23353,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 28537,
+        "shortest_hops": 1
+      },
+      {
+        "node_id": 33704,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 41989,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 72432,
+        "shortest_hops": 1
+      },
+      {
+        "node_id": 89422,
+        "shortest_hops": 1
+      },
+      {
+        "node_id": 97249,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 101099,
+        "shortest_hops": 1
+      },
+      {
+        "node_id": 198311948,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 388055699,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 397832802,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 410400468,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 492128127,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 523478128,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 563624867,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 567186674,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 615553874,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 674221890,
+        "shortest_hops": 1
+      },
+      {
+        "node_id": 727874291,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 732156618,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 756414572,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 782476408,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 813624297,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 815889974,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 922096505,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 931114962,
+        "shortest_hops": 2
+      },
+      {
+        "node_id": 1026342716,
+        "shortest_hops": 2
+      }
+    ],
+    "unreachable_output_ids": [],
+    "all_outputs_reachable": true,
+    "reachability_summary_sha256": "2c3225499c23d93f0bf2eb081d3196b93670fd29bc9185c9d7b19a16d1c7dfc4",
+    "edge_weight_meaning": "Published segment-to-segment connection weight; source documentation describes it as the number of connections/postsynaptic densities, not calibrated synaptic efficacy. M1.1 retains int64 and globally sums duplicate directed pairs."
+  },
+  "adjustments": [],
+  "unreachable_policy": "Stop explicitly; do not silently reselect nodes or change T.",
+  "source_checksums_before": {
+    "manifest.json": "5300c6cefdc6b84a854545e64f4131baa3fc42f0bde97a83f68fcc1c3769cf40",
+    "nodes.parquet": "a8ad1e6a42c0a386d4bdef517ac628c29a5b7b8f023c51b43cce8e0354087428",
+    "edges.parquet": "afa69be2078eaf136d00511539145dc82ea54af5aa2f52ffdcb87501488e2175"
+  },
+  "source_checksums_after": {
+    "manifest.json": "5300c6cefdc6b84a854545e64f4131baa3fc42f0bde97a83f68fcc1c3769cf40",
+    "nodes.parquet": "a8ad1e6a42c0a386d4bdef517ac628c29a5b7b8f023c51b43cce8e0354087428",
+    "edges.parquet": "afa69be2078eaf136d00511539145dc82ea54af5aa2f52ffdcb87501488e2175"
+  },
+  "outputs": {
+    "report": "io_report.md",
+    "report_sha256": "441eebe8df03a359d2269203dc0dbbc4d242e4349c4ff6bbbc14ee4161138922",
+    "selection_payload_sha256": "2f3ff12d2437309d7f06edd3b9396e9ffa8cbf6dcda8a964ce212a82ddb85d40",
+    "reachability_payload_sha256": "2c3225499c23d93f0bf2eb081d3196b93670fd29bc9185c9d7b19a16d1c7dfc4"
+  },
+  "execution": {
+    "elapsed_seconds": 0.383612,
+    "peak_rss_bytes": 62226432,
+    "python_version": "3.12.14",
+    "pyarrow_version": "26.0.0",
+    "node_count_loaded": 500,
+    "edge_count_loaded": 2216,
+    "dense_adjacency_created": false,
+    "full_connectome_read": false,
+    "model_loaded": false
+  }
+}

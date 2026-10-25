@@ -1,0 +1,20 @@
+{
+  "seed_node_id": 274013289,
+  "seed_priority_hex": "000000101b2e6230592f8718fc4de3c2",
+  "candidate_count": 88384522,
+  "selection_policy": "minimum fixed-salt hash priority over all streamed node rows",
+  "hash_priority": {
+    "algorithm": "BLAKE2b-128",
+    "digest_bits": "128",
+    "salt_ascii": "FlyCallM12-v1",
+    "salt_hex": "466c7943616c6c4d31322d7631",
+    "node_id_encoding": "signed int64, 8 bytes, little-endian",
+    "rank_order": "digest bytes ascending; node_id ascending only on digest collision"
+  },
+  "elapsed_seconds": 99.551,
+  "peak_rss_bytes": 76873728,
+  "rss_limit_bytes": 2147483648,
+  "disk_free_bytes_at_start": 20392996864,
+  "disk_free_bytes_min_observed": 19423879168,
+  "disk_free_bytes_at_result": 19424292864
+}

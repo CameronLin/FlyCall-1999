@@ -1,0 +1,120 @@
+{
+  "manifest_schema_version": "1.0",
+  "artifact_type": "engineering_demo_subgraph",
+  "artifact_name": "MaleCNS v1.0 M1.2 hash-priority 500-node engineering demo",
+  "artifact_status": "verified_engineering_demo",
+  "created_at_utc": "2026-10-15T15:33:05.577704+00:00",
+  "limitations": [
+    "Engineering demo artifact only; not a biologically representative sample.",
+    "The 500-node cap is an adopted demo size, not an optimal or biologically justified scale.",
+    "M1.1 node IDs are endpoint IDs; no neuron, cell-type, or brain-region semantics are inferred.",
+    "M1.2 feasibility completion does not approve a research seed policy or support population-level biological claims."
+  ],
+  "source": {
+    "dataset": "MaleCNS v1.0",
+    "official_bulk_filename": "connectome-weights-male-cns-v1.0-minconf-0.5.feather",
+    "generation": 1780494887545976,
+    "size_bytes": 1051241946,
+    "sha256": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+    "source_rows": 151856684,
+    "m1_1_import_manifest": "data/connectome/derived/malecns_v1.0/import_manifest.json",
+    "m1_1_edges_path": "data/connectome/derived/malecns_v1.0/edges.parquet",
+    "m1_1_edges_sha256": "d32d5be692b127e8b9132e418bbfc4a13fbc36e2f5fabc90293a1f04d5f133aa",
+    "m1_1_edge_rows": 151856684,
+    "m1_1_nodes_path": "data/connectome/derived/malecns_v1.0/nodes.parquet",
+    "m1_1_nodes_sha256": "71601532b54b5fd8fba108681148a5f791f9c6c69885ed0b124e3750f84fb654",
+    "m1_1_node_rows": 88384522,
+    "source_checksums_before_run2": {
+      "nodes.parquet": "71601532b54b5fd8fba108681148a5f791f9c6c69885ed0b124e3750f84fb654",
+      "edges.parquet": "d32d5be692b127e8b9132e418bbfc4a13fbc36e2f5fabc90293a1f04d5f133aa"
+    },
+    "source_checksums_after_run2": {
+      "nodes.parquet": "71601532b54b5fd8fba108681148a5f791f9c6c69885ed0b124e3750f84fb654",
+      "edges.parquet": "d32d5be692b127e8b9132e418bbfc4a13fbc36e2f5fabc90293a1f04d5f133aa"
+    },
+    "m1_1_outputs_read_only": true,
+    "selected_release_filter": "Official minconf-0.5 artifact used as published; the exact upstream comparator is not specified, and no additional project filter was applied."
+  },
+  "selection": {
+    "algorithm": "BLAKE2b-128",
+    "salt_ascii": "FlyCallM12-v1",
+    "salt_hex": "466c7943616c6c4d31322d7631",
+    "node_id_encoding": "signed int64, 8 bytes, little-endian",
+    "rank_order": "digest bytes ascending; node_id ascending only on digest collision",
+    "seed_node_id": 274013289,
+    "seed_priority_hex": "000000101b2e6230592f8718fc4de3c2",
+    "seed_candidate_count": 88384522,
+    "node_limit": 500,
+    "selected_node_count": 500,
+    "selected_node_ids_file": "nodes.parquet",
+    "bfs_adjacency_for_selection": "weak/undirected view of source_id and target_id",
+    "bfs_depth_reached": 2,
+    "completion_reason": "node_limit_reached",
+    "layer_candidate_order": "within each layer, retain lowest fixed-salt hash-priority unseen IDs if node cap would be exceeded; node_id ascending breaks digest collisions only"
+  },
+  "edge_semantics": {
+    "output_direction": "original source_id -> target_id; direction is preserved",
+    "weight_type": "int64",
+    "weight_meaning": "Published segment-to-segment connection weight; source documentation describes it as the number of connections/postsynaptic densities, not calibrated synaptic efficacy. M1.1 retains int64 and globally sums duplicate directed pairs.",
+    "induced_edge_rule": "retain every M1.1 directed edge row whose source_id and target_id are both selected",
+    "self_loop_policy": "retain according to M1.1; no M1.2 filter added",
+    "edge_count": 2216
+  },
+  "execution": {
+    "run1_scratch": ".scratch/1999-connectome-demo/probes/m1-2/streaming-bfs-hash-priority-seed-274013289-20261015-run1",
+    "run2_scratch": ".scratch/1999-connectome-demo/probes/m1-2/streaming-bfs-hash-priority-seed-274013289-20261015-run2",
+    "run2_summary": ".scratch/1999-connectome-demo/probes/m1-2/streaming-bfs-hash-priority-seed-274013289-20261015-run2/run_summary.json",
+    "run2_probe_result": ".scratch/1999-connectome-demo/probes/m1-2/streaming-bfs-hash-priority-seed-274013289-20261015-run2/probe/probe_result.json",
+    "run2_code_sha256": {
+      "src/flycall_data/streaming_bfs.py": "d31a3c446f74243dc98de1b1aa78dc71cf570ba6056389b4f5928c1ffe5aa458",
+      "tests/test_streaming_bfs.py": "f3a7f481c3e7bbe2ecffa424b0ab40bdef485354af0bfa8e4a8058667d94d59a"
+    },
+    "python_version": "3.12.14 (main, Sep  1 2026, 14:09:38) [Clang 22.1.3 ]",
+    "pyarrow_version": "26.0.0",
+    "fixture_tests": {
+      "command": "PYTHONPATH=src uv run --offline --python 3.12 --with pyarrow==26.0.0 -- python -m unittest discover -s tests -p 'test_streaming_bfs.py' -v",
+      "tests": 11,
+      "status": "passed"
+    },
+    "seed_selection_elapsed_seconds": 99.551,
+    "bfs_elapsed_seconds": 43.735,
+    "total_elapsed_seconds_including_checksum_and_comparison": 145.24,
+    "edge_scans_completed": 4,
+    "edge_rows_scanned_total": 607426736,
+    "peak_rss_bytes": 203833344,
+    "physical_ram_bytes": 8589934592,
+    "minimum_free_disk_bytes_during_bfs": 18343780352,
+    "duckdb_used": false,
+    "duckdb_spill_bytes": 0,
+    "temporary_index_bytes": 0,
+    "scratch_output_bytes": 106793
+  },
+  "reproducibility_and_validation": {
+    "run1_run2_seed_equal": true,
+    "run1_run2_selected_node_set_equal": true,
+    "run1_run2_sorted_induced_edge_tuple_multiset_equal": true,
+    "canonical_node_set_sha256": "c21e96f221e7bb301f16cff129cd612fb54dd4232f3aa62f77f1fd444a0e19ae",
+    "canonical_sorted_induced_edge_tuples_sha256": "df8cccc1e34a101c6c54e61f9bbaf5b8bf8c3983209531a6bd0469b9f26c0471",
+    "run1_order_sensitive_induced_edges_sha256": "5b33825d0d9ba8f13fc72b2cb4b25556eba43e55255d0743cffc4b705ed53882",
+    "run2_order_sensitive_induced_edges_sha256": "5b33825d0d9ba8f13fc72b2cb4b25556eba43e55255d0743cffc4b705ed53882",
+    "order_sensitive_digest_explanation": "induced_edges_sha256 hashes rows in source Parquet order; it is not permutation-invariant. Canonical sorted tuple SHA-256 above is order-independent.",
+    "run2_independent_validation": "pass",
+    "run2_candidate_nodes_sha256": "a8ad1e6a42c0a386d4bdef517ac628c29a5b7b8f023c51b43cce8e0354087428",
+    "run2_candidate_edges_sha256": "afa69be2078eaf136d00511539145dc82ea54af5aa2f52ffdcb87501488e2175",
+    "run2_canonical_edges_sha256": "df8cccc1e34a101c6c54e61f9bbaf5b8bf8c3983209531a6bd0469b9f26c0471"
+  },
+  "outputs": {
+    "nodes": {
+      "path": "nodes.parquet",
+      "schema": "node_id:int64",
+      "rows": 500,
+      "sha256": "a8ad1e6a42c0a386d4bdef517ac628c29a5b7b8f023c51b43cce8e0354087428"
+    },
+    "edges": {
+      "path": "edges.parquet",
+      "schema": "source_id:int64,target_id:int64,weight:int64",
+      "rows": 2216,
+      "sha256": "afa69be2078eaf136d00511539145dc82ea54af5aa2f52ffdcb87501488e2175"
+    }
+  }
+}
