@@ -1,0 +1,316 @@
+version: "1.2.1"
+status: "verified_against_latest_monthly_category_data"
+dataset_scope: "合成的臺北市1999客服通話STT逐字稿；只產生文字，不生成音訊。"
+revision_notes:
+  - "v1.2.1 由既有 pilot_v1.2.jsonl 與 taxonomy_v1.2.yaml 接續修訂，保留 v1.1 與 v1.2 原檔。"
+  - "修正 V12-028、V12-048、V12-049、V12-050 的語句或時序問題，以及 V12-013、V12-018、V12-030 的客服收尾用語。"
+  - "全批位置改用行政區與公共空間相對位置描述，移除門牌、具名路口組合及可直接定位的地址細節；未新增真實路口或地標。"
+  - "調整追問次序、補充方式與客服收尾，保留原標籤、情境家族配置及每筆單一主要問題。"
+  - "Pilot v1.2.1 沿用 v1.1 官方類別名稱與主類別核對來源。"
+  - "開場客服使用不提示主題的中性問候；來電者描述後，客服只針對已提供資訊釐清。"
+  - "逐字稿每筆至少 280 個中文字，目標 300–400 字；約 10–14 行 R/L 發言。"
+  - "自動關鍵字掃描不能完全判斷語意洩漏或家族內情境差異，須人工複核。"
+
+source_check:
+  dataset_name: "臺北市陳情系統類別資料"
+  platform: "臺北市資料大平臺"
+  dataset_url: "https://data.taipei/dataset/detail?id=cb423c17-88eb-4231-a725-f1b93247d1bf"
+  resource_name: "11509案件類別趨勢明細表"
+  resource_id: "b57a0fa8-9507-438b-b2e1-676829a72aff"
+  resource_download_url: "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=b57a0fa8-9507-438b-b2e1-676829a72aff"
+  data_month_roc: "11509"
+  data_month_gregorian: "2026-09"
+  resource_updated_at: "2026-10-08 15:47:05"
+  checked_at: "2026-10-11"
+  encoding: "UTF-8 with BOM"
+  columns_used:
+    parent: "案件主類別"
+    subcategory: "案件次類別"
+  note: "下列筆數是 11509 月檔中符合該主類別與次類別組合的資料列數，僅用於記錄核對結果，不作為合成資料分布依據。"
+
+speaker_map:
+  status: "tentative"
+  note: "合成逐字稿的暫定聲道設定；實際 STT 聲道慣例尚待日後依資料格式調整。全體固定使用此對應。"
+  channels:
+    R: "客服"
+    L: "來電民眾"
+
+schema:
+  required_fields:
+    - id
+    - transcript
+    - label_id
+    - label_name
+    - scenario_id
+    - scenario_family_id
+    - split
+    - is_synthetic
+    - speaker_map
+    - generator_model
+    - prompt_version
+    - review_status
+  transcript_format: "多行文字；每行以 R: 或 L: 開頭。"
+  pilot_turn_count: "每筆 10–14 行 R/L 發言。"
+  pilot_minimum_cjk_characters: 280
+  pilot_target_cjk_characters: "300–400"
+  pilot_split: "pilot"
+  pilot_records_per_category: 10
+  pilot_total_records: 50
+  pilot_family_count_by_category:
+    sidewalk_maintenance: 5
+    road_surface_defect: 5
+    park_general_maintenance: 6
+    waste_truck_service: 5
+    street_cleaning: 5
+  pilot_family_allocation:
+    sidewalk_maintenance:
+      FAM-SW-TILE-MOVEMENT: 2
+      FAM-SW-TACTILE-PAVING: 2
+      FAM-SW-RAMP-SURFACE: 2
+      FAM-SW-LEVEL-SETTLEMENT: 2
+      FAM-SW-CURB-EDGE: 2
+    road_surface_defect:
+      FAM-ROAD-INTERSECTION-DENT: 2
+      FAM-ROAD-WHEEL-TRACK: 2
+      FAM-ROAD-CROSSING-APPROACH: 2
+      FAM-ROAD-REPAIR-JOINT: 2
+      FAM-ROAD-LONGITUDINAL-TRANSITION: 2
+    park_general_maintenance:
+      FAM-PARK-SEATING: 2
+      FAM-PARK-PLAY-EQUIPMENT: 2
+      FAM-PARK-SPORTS-EQUIPMENT: 1
+      FAM-PARK-GREENERY: 1
+      FAM-PARK-PLANTING-BED: 1
+      FAM-PARK-VEHICLE-ENTRY: 3
+    waste_truck_service:
+      FAM-WASTE-MISSED-STOP: 2
+      FAM-WASTE-ALLEY-ACCESS: 2
+      FAM-WASTE-ARRIVAL-TIME: 2
+      FAM-WASTE-STOP-LOCATION: 2
+      FAM-WASTE-WEEKEND-SCHEDULE: 2
+    street_cleaning:
+      FAM-CLEAN-BIN-OVERFLOW: 2
+      FAM-CLEAN-BIN-DAMAGE: 2
+      FAM-CLEAN-CIGARETTE: 2
+      FAM-CLEAN-DOG-WASTE: 2
+      FAM-CLEAN-SURFACE-DEBRIS: 2
+  pilot_families_not_included: []
+  prompt_version: "taipei1999-synth-pilot-v1.2.1"
+
+split_policy:
+  pilot: "全部試產資料填 pilot。"
+  formal_dataset: "正式資料按 scenario_family_id 分組切分，避免相近情境跨越 train、validation、test；公園類必須涵蓋 FAM-PARK-VEHICLE-ENTRY 車輛違規進入情境。"
+
+labels:
+  - label_id: "sidewalk_maintenance"
+    label_name: "人行道維護"
+    official_parent: "道路、山坡地、路樹及路燈"
+    official_subcategory: "人行道維護"
+    latest_month_match_rows: 568
+    include:
+      - "人行道鋪面、地磚、導盲磚或緣石本體破損、鬆動、沉陷、高低差等維護問題。"
+      - "通行表面本身狀況不佳，且主要訴求是修復或維護人行道。"
+    exclude:
+      - "車行道凹陷或不平，改列道路凹陷、不平、有高低差。"
+      - "移動式物品、違停或施工圍設造成的占用或阻路；依其案件性質另行分類。"
+      - "排水溝、孔蓋本體故障；不要僅因位置在人行道就納入。"
+    confusing_rules:
+      - "若問題位於人行道且描述的是人行道鋪面，採本類；若明確是車行道面，採道路凹陷、不平、有高低差。"
+      - "導盲磚本體破損屬本類；被外物遮擋則不描述成鋪面維護案件。"
+    scenario_families:
+      - scenario_family_id: "FAM-SW-TILE-MOVEMENT"
+        name: "鬆動或破裂的鋪面磚"
+        case_variants:
+          - "單片地磚踩踏時晃動"
+          - "石磚裂開或邊角翹起"
+      - scenario_family_id: "FAM-SW-TACTILE-PAVING"
+        name: "導盲磚本體中斷或破損"
+        case_variants:
+          - "導引路線缺少一段"
+          - "提醒磚裂損或翹起"
+      - scenario_family_id: "FAM-SW-RAMP-SURFACE"
+        name: "人行坡道表面磨損"
+        case_variants:
+          - "坡面裂縫造成輪子卡滯"
+          - "止滑紋磨耗造成表面變滑"
+      - scenario_family_id: "FAM-SW-LEVEL-SETTLEMENT"
+        name: "人行通行面沉陷或銜接落差"
+        case_variants:
+          - "一段鋪面沉陷形成淺槽"
+          - "相鄰地磚鬆動形成踩踏高低差"
+      - scenario_family_id: "FAM-SW-CURB-EDGE"
+        name: "人行道緣石本體鬆動或破損"
+        case_variants:
+          - "邊緣石裂損並突出"
+          - "轉角緣石鬆動或移位"
+  - label_id: "road_surface_defect"
+    label_name: "道路凹陷、不平、有高低差"
+    official_parent: "道路、山坡地、路樹及路燈"
+    official_subcategory: "道路凹陷、不平、有高低差"
+    latest_month_match_rows: 435
+    include:
+      - "車行道路面凹陷、隆起、破損、不平或前後路面形成高低差。"
+      - "主要訴求為道路表面修復或確認路面維護。"
+    exclude:
+      - "人行道鋪面問題，改列人行道維護。"
+      - "溝蓋遺失、鬆動或被打開；不要以路面不平混併溝蓋本體問題。"
+      - "交通號誌、標線或交通事故等非路面維護主訴。"
+    confusing_rules:
+      - "依實際受損的表面判斷：人行通行鋪面為人行道維護，車行道路面為本類。"
+      - "若主要問題是孔蓋或排水設施本身，排除於本類，即使周邊路面有落差。"
+    scenario_families:
+      - scenario_family_id: "FAM-ROAD-INTERSECTION-DENT"
+        name: "路口附近局部凹陷"
+        case_variants:
+          - "巷口後方外側車道的小凹處"
+          - "行穿線或轉彎前的局部下陷"
+      - scenario_family_id: "FAM-ROAD-WHEEL-TRACK"
+        name: "車輪行經位置形成長條凹陷"
+        case_variants:
+          - "慢車道輪跡狹長下陷"
+          - "主要車道輪跡形成淺槽"
+      - scenario_family_id: "FAM-ROAD-CROSSING-APPROACH"
+        name: "停靠或穿越位置前的路面凹損"
+        case_variants:
+          - "公車靠站前路面裂陷"
+          - "行人穿越線前方的淺坑"
+      - scenario_family_id: "FAM-ROAD-REPAIR-JOINT"
+        name: "路面接縫或補面不平"
+        case_variants:
+          - "橫向接縫高低差"
+          - "補面邊緣與原路面未接平"
+      - scenario_family_id: "FAM-ROAD-LONGITUDINAL-TRANSITION"
+        name: "車行方向上的長條或斜向高低差"
+        case_variants:
+          - "橋下出口後斜向落差"
+          - "沿車道延伸的接縫落差"
+  - label_id: "park_general_maintenance"
+    label_name: "一般公園綠地管理及設施維護（含車輛違規進入）"
+    official_parent: "公園、排水溝、下水道及自來水"
+    official_subcategory: "一般公園綠地管理及設施維護（含車輛違規進入）"
+    latest_month_match_rows: 500
+    include:
+      - "一般公園或綠地範圍內的遊具、座椅、休憩或運動設施維護。"
+      - "公園綠地日常管理、步道或植栽區維護，以及此官方子類名稱涵蓋的公園車輛違規進入情境。"
+    exclude:
+      - "河濱公園管理、排水溝、雨水或污水下水道、自來水等案件。"
+      - "發生於公園的噪音案件；不以公園地點取代其噪音案件屬性。"
+      - "非公園範圍的行道樹或路燈維護。"
+    confusing_rules:
+      - "先確認問題是否發生在一般公園或綠地範圍；河濱公園及排水設施不納入本類。"
+      - "可使用本類官方名稱，但單筆對話只描述一個主要問題；不可同時拼接設施故障與車輛違規。"
+    scenario_families:
+      - scenario_family_id: "FAM-PARK-SEATING"
+        name: "公園座椅或桌面損壞"
+        case_variants:
+          - "木椅木片裂損"
+          - "石桌桌面鬆動或缺角"
+      - scenario_family_id: "FAM-PARK-PLAY-EQUIPMENT"
+        name: "兒童遊戲設備局部破損"
+        case_variants:
+          - "溜滑梯護板裂損"
+          - "鞦韆吊鏈包覆剝落或磨損"
+      - scenario_family_id: "FAM-PARK-SPORTS-EQUIPMENT"
+        name: "運動或球場設施鬆動、破損"
+        case_variants:
+          - "體健器材固定座鬆動"
+          - "球場圍網邊緣翹起"
+      - scenario_family_id: "FAM-PARK-GREENERY"
+        name: "公園植栽或綠籬生長管理"
+        case_variants:
+          - "草坡雜草過高"
+          - "步道旁綠籬過度外伸"
+      - scenario_family_id: "FAM-PARK-PLANTING-BED"
+        name: "草地或花圃邊緣土壤狀況"
+        case_variants:
+          - "草地裸土反覆擴大"
+          - "花圃土壤沖到園內步道"
+      - scenario_family_id: "FAM-PARK-VEHICLE-ENTRY"
+        name: "車輛進入一般公園範圍"
+        case_variants:
+          - "汽車從步行入口的矮柱間駛入園內停留"
+          - "機車沿園內步道騎入遊戲區外圍"
+          - "小貨車越過步道邊緣駛上草地停留"
+        formal_coverage_required: true
+  - label_id: "waste_truck_service"
+    label_name: "垃圾車清運及服務事項"
+    official_parent: "垃圾、噪音、污染及資源回收"
+    official_subcategory: "垃圾車清運及服務事項"
+    latest_month_match_rows: 281
+    include:
+      - "垃圾車收運時段、路線、停靠或清運服務未符合民眾觀察到的情形。"
+      - "民眾詢問垃圾車服務安排，或反映特定路段收運服務問題。"
+    exclude:
+      - "路面既有垃圾、果皮箱滿溢、菸蒂或狗便清潔，改列路面清潔。"
+      - "資源回收分類或專用袋政策諮詢，除非主要問題明確是垃圾車服務。"
+      - "大型廢棄物或其他廢棄物處理，除非對話主訴明確是垃圾車收運服務。"
+    confusing_rules:
+      - "垃圾車是否到達、何時停靠或是否清運屬本類；垃圾留在路面或果皮箱周邊的清理屬路面清潔。"
+      - "若對話只問一般分類規定，不硬套成垃圾車服務案件。"
+    scenario_families:
+      - scenario_family_id: "FAM-WASTE-MISSED-STOP"
+        name: "原定等候點未見車輛停靠"
+        case_variants:
+          - "住戶在固定位置等候未遇車"
+          - "原有停靠點當晚未停"
+      - scenario_family_id: "FAM-WASTE-ALLEY-ACCESS"
+        name: "巷內收運路段未進入"
+        case_variants:
+          - "車輛在短巷入口折返"
+          - "住戶不清楚巷內服務是否延續"
+      - scenario_family_id: "FAM-WASTE-ARRIVAL-TIME"
+        name: "到達時段提早或波動"
+        case_variants:
+          - "連續幾日早於平常時間"
+          - "同一停靠點不同日到達時間差異大"
+      - scenario_family_id: "FAM-WASTE-STOP-LOCATION"
+        name: "不清楚目前停靠位置"
+        case_variants:
+          - "市場周邊等候點不固定"
+          - "新住戶不確定巷內停靠位置"
+      - scenario_family_id: "FAM-WASTE-WEEKEND-SCHEDULE"
+        name: "週末收運時段或停靠安排詢問"
+        case_variants:
+          - "詢問週日服務時間"
+          - "詢問週六晚間停靠安排"
+  - label_id: "street_cleaning"
+    label_name: "路面清潔（含行人果皮箱、菸蒂、狗便）"
+    official_parent: "垃圾、噪音、污染及資源回收"
+    official_subcategory: "路面清潔（含行人果皮箱、菸蒂、狗便）"
+    latest_month_match_rows: 583
+    include:
+      - "公共路面清掃、行人果皮箱滿溢或周邊散落、菸蒂、狗便等路面清潔問題。"
+      - "主要訴求是公共空間髒污清理或清潔維護。"
+    exclude:
+      - "垃圾車收運時段、路線或漏收，改列垃圾車清運及服務事項。"
+      - "私人室內或私人土地清潔；不要描述成公共路面案件。"
+      - "廢棄物違規棄置等以稽查或廢棄物處理為主的案件。"
+    confusing_rules:
+      - "路面或公共果皮箱周邊清潔屬本類；收運車未到或路線服務問題屬垃圾車清運及服務事項。"
+      - "使用明確公共空間作為場景；若地點或權責範圍不清，列入人工複核。"
+    scenario_families:
+      - scenario_family_id: "FAM-CLEAN-BIN-OVERFLOW"
+        name: "公共果皮箱滿溢"
+        case_variants:
+          - "箱內垃圾滿出並散落"
+          - "箱蓋因容量已無法闔上"
+      - scenario_family_id: "FAM-CLEAN-BIN-DAMAGE"
+        name: "果皮箱部件異常造成周邊髒污"
+        case_variants:
+          - "內桶歪斜導致垃圾漏出"
+          - "箱蓋偏斜使紙屑飄落"
+      - scenario_family_id: "FAM-CLEAN-CIGARETTE"
+        name: "公共路面反覆累積菸蒂"
+        case_variants:
+          - "固定角落每日有菸蒂"
+          - "店外公共人行面反覆有菸蒂"
+      - scenario_family_id: "FAM-CLEAN-DOG-WASTE"
+        name: "公共人行面狗便未清理"
+        case_variants:
+          - "路口等待區附近單點髒污"
+          - "站牌後方連日出現狗便"
+      - scenario_family_id: "FAM-CLEAN-SURFACE-DEBRIS"
+        name: "公共路面一般髒污或散落物清理"
+        case_variants:
+          - "飲料或食物殘留造成黏滑"
+          - "人行面落葉與泥土反覆堆積"

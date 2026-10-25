@@ -1,0 +1,21 @@
+batch,records,label_counts,split_counts,filtered_sha256
+001,50,"{""sidewalk_maintenance"": 50}","{""train"": 42, ""test"": 8}",416ff898b604d57cc7d22e998903ba42376b712329412d919b679f6ee3c623af
+002,50,"{""sidewalk_maintenance"": 50}","{""train"": 30, ""validation"": 20}",9dbd46cac29e6c567e9cf69daa4c34044d0610d52ef0f3f4d021b1ba558bb17e
+003,50,"{""sidewalk_maintenance"": 50}","{""train"": 28, ""test"": 22}",96ddc7fbc0d53bc8808d3eb7b4ff276233882c1dfba18ea865c8ceb4d2455fa7
+004,50,"{""sidewalk_maintenance"": 50}","{""train"": 40, ""validation"": 10}",0eac7385cdc64408095877dd66c72928d7350457be003aa5d49c4077a9bb79ff
+005,50,"{""road_surface_defect"": 50}","{""train"": 40, ""validation"": 10}",e47f701f8171559dfdf7bc793c37e37c6e2da667b17a27bddfc2eca72c12a9ed
+006,50,"{""road_surface_defect"": 50}","{""test"": 8, ""train"": 42}",2a6a4b3f2a56e183a6db3469a45aed2914a6e24f30518b7aab03e149160d37af
+007,50,"{""road_surface_defect"": 50}","{""train"": 40, ""validation"": 10}",47f61291d7f199404d060cda20d1f3d575f9790b852cc9660366accbe7a8e23a
+008,50,"{""road_surface_defect"": 50}","{""train"": 18, ""test"": 22, ""validation"": 10}",2f010b5af2933c20ee80581913dfc45819d2ce0cc2444c83caf50716a4ef30f4
+009,50,"{""park_general_maintenance"": 50}","{""train"": 50}",15d7232932db857b14e8377e51a8ec108046906ba47d00c11e266bc99da09070
+010,50,"{""park_general_maintenance"": 50}","{""train"": 50}",188fad7dc5f5b58ae1c5838425e18ffc9fda870469f9906e2cae76210128301c
+011,50,"{""park_general_maintenance"": 50}","{""train"": 12, ""validation"": 30, ""test"": 8}",e908c4778ea22cd755381871f137c79a5dc0fbf60b55ad25a98418491891aeb0
+012,50,"{""park_general_maintenance"": 50}","{""train"": 28, ""test"": 22}",6c3051cfb42fccc6bc95eb2247fb63210aaaa78c82fb583b8475a5fed52d38b7
+013,50,"{""waste_truck_service"": 50}","{""train"": 35, ""validation"": 15}",d52705dc708d71edde29e04bd370601344e5eeffa394d4177eccbe5556431cb0
+014,50,"{""waste_truck_service"": 50}","{""train"": 40, ""test"": 10}",8ef4caa8372921efddcfe3dca3ec03eaef9c51c00e99fb469d2e17167bf25648
+015,50,"{""waste_truck_service"": 50}","{""train"": 50}",4ff89c8bcc37a506cba669170db312db4632381b9cb8254fc3ef21e3337e58c1
+016,50,"{""waste_truck_service"": 50}","{""train"": 15, ""test"": 20, ""validation"": 15}",72e46ff4a0e9b863cf683f957f75f74bd625abfc2b163bd57916dc69df577736
+017,50,"{""street_cleaning"": 50}","{""train"": 50}",5e3146d9fdb156aad3418abfd97cf54db08ad60d86370cd4d38ce0f607aad90b
+018,50,"{""street_cleaning"": 50}","{""train"": 50}",31a459ee11289658f015582bc2003c9de8e52d78c97d5d43c1e4fee3c072f469
+019,50,"{""street_cleaning"": 50}","{""train"": 40, ""validation"": 10}",56a291afa86ae08b76c50b6ea90a3ff4043662b493ca66e1b8743f0551b780ea
+020,50,"{""street_cleaning"": 50}","{""test"": 30, ""validation"": 20}",7fde35f5eb1e2358afa32083e7105cde4dd07c17aa1cdffb6e392cd352599b6f

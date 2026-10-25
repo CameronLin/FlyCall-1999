@@ -1,0 +1,70 @@
+version: "1.0"
+status: "draft_unfrozen"
+source_files:
+  - "taxonomy_expansion_draft_v1.1.md"
+  - "taxonomy_v1.2.1.yaml"
+  - "family_review_decisions_v1.0.md"
+summary:
+  source_family_count: 75
+  recommended_keep_count: 50
+  revise_pending_count: 15
+  merge_source_count: 10
+  provisional_independent_id_count_after_merges: 65
+  frozen: false
+merge_map:
+  - source_family_id: "FAM-ROAD-CROSSING-APPROACH"
+    category: "道路凹陷、不平、有高低差"
+    target_family_ids:
+      - "FAM-ROAD-INTERSECTION-DENT"
+    condition: "依提供建議併入路口局部凹陷，作為停靠／穿越位置變化。"
+  - source_family_id: "FAM-SW-DRIVEWAY-CROSSING"
+    category: "人行道維護"
+    target_family_ids:
+      - "FAM-SW-LEVEL-SETTLEMENT"
+    condition: "出入口人行道銜接落差依建議併入人行道沉陷。"
+  - source_family_id: "FAM-WASTE-SCHEDULED-DAY-OMISSION"
+    category: "垃圾車清運及服務事項"
+    target_family_ids:
+      - "FAM-WASTE-MISSED-STOP"
+      - "FAM-WASTE-ROUTE-SEGMENT-OMISSION"
+    condition: "依實際範圍併入漏停或整段未服務。"
+  - source_family_id: "FAM-WASTE-TEMP-STOP-RELOCATION"
+    category: "垃圾車清運及服務事項"
+    target_family_ids:
+      - "FAM-WASTE-STOP-LOCATION"
+    condition: "臨時停靠點移動併入停靠位置。"
+  - source_family_id: "FAM-WASTE-HOLIDAY-SCHEDULE"
+    category: "垃圾車清運及服務事項"
+    target_family_ids:
+      - "FAM-WASTE-WEEKEND-SCHEDULE"
+    condition: "假日服務安排併入週末服務。"
+  - source_family_id: "FAM-WASTE-RECYCLABLE-STREAM-SERVICE"
+    category: "垃圾車清運及服務事項"
+    target_family_ids:
+      - "FAM-WASTE-ARRIVAL-TIME"
+      - "FAM-WASTE-MISSED-STOP"
+      - "FAM-WASTE-STOP-LOCATION"
+    condition: "依實際問題併入到達時間、漏停或停靠位置；不生成回收分類政策諮詢。"
+  - source_family_id: "FAM-CLEAN-EVENT-PACKAGING"
+    category: "路面清潔（含行人果皮箱、菸蒂、狗便）"
+    target_family_ids:
+      - "FAM-CLEAN-SURFACE-DEBRIS"
+    condition: "活動包裝併入一般路面散落物。"
+  - source_family_id: "FAM-CLEAN-WIND-DISPERSED-LITTER"
+    category: "路面清潔（含行人果皮箱、菸蒂、狗便）"
+    target_family_ids:
+      - "FAM-CLEAN-SURFACE-DEBRIS"
+      - "FAM-CLEAN-BIN-OVERFLOW"
+      - "FAM-CLEAN-BIN-DAMAGE"
+    condition: "一般併入一般路面散落物；明確源自果皮箱則併入果皮箱家族。"
+  - source_family_id: "FAM-CLEAN-GUM-ADHERED-RESIDUE"
+    category: "路面清潔（含行人果皮箱、菸蒂、狗便）"
+    target_family_ids:
+      - "FAM-CLEAN-SURFACE-DEBRIS"
+    condition: "黏附殘留併入一般路面髒污。"
+  - source_family_id: "FAM-CLEAN-DOG-WASTE-PERSISTENT-RESIDUE"
+    category: "路面清潔（含行人果皮箱、菸蒂、狗便）"
+    target_family_ids:
+      - "FAM-CLEAN-DOG-WASTE"
+      - "FAM-CLEAN-POST-SWEEP-RESIDUE"
+    condition: "依內容併入狗便清理或清掃後殘留。"

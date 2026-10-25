@@ -1,0 +1,45 @@
+# 由助理獨立複核決定 v1.0 轉錄；草案，未核准。
+map_version: "draft-1.1"
+status: draft_unapproved
+source_taxonomy: "taxonomy_expansion_draft_v1.1.md"
+source_decisions_workbook: "FlyCall_1999_助理獨立複核決定_v1.0.xlsx"
+source_decisions_markdown: "independent_review_decisions_v1.0.md"
+active_family_count: 66
+merged_family_count: 9
+merges:
+  - source_family_id: "FAM-SW-DRIVEWAY-CROSSING"
+    target_rule: "FAM-SW-LEVEL-SETTLEMENT"
+    target_family_ids: ["FAM-SW-LEVEL-SETTLEMENT"]
+    routing_rule: "僅限人行道與車道出入口銜接處出現可描述的高低差；將目標家族納入界線補上出入口銜接落差。"
+  - source_family_id: "FAM-ROAD-CROSSING-APPROACH"
+    target_rule: "FAM-ROAD-INTERSECTION-DENT"
+    target_family_ids: ["FAM-ROAD-INTERSECTION-DENT"]
+    routing_rule: "停靠／穿越位置前的局部車道路面凹陷作為路口局部凹陷的相對位置變化。"
+  - source_family_id: "FAM-WASTE-SCHEDULED-DAY-OMISSION"
+    target_rule: "FAM-WASTE-MISSED-STOP 或 FAM-WASTE-ROUTE-SEGMENT-OMISSION"
+    target_family_ids: ["FAM-WASTE-MISSED-STOP", "FAM-WASTE-ROUTE-SEGMENT-OMISSION"]
+    routing_rule: "單一停靠點／住戶未服務歸 MISSED-STOP；整段街廓未服務歸 ROUTE-SEGMENT-OMISSION。"
+  - source_family_id: "FAM-WASTE-TEMP-STOP-RELOCATION"
+    target_rule: "FAM-WASTE-STOP-LOCATION"
+    target_family_ids: ["FAM-WASTE-STOP-LOCATION"]
+    routing_rule: "臨時停靠點移動屬停靠位置資訊變動。"
+  - source_family_id: "FAM-WASTE-RECYCLABLE-STREAM-SERVICE"
+    target_rule: "FAM-WASTE-ARRIVAL-TIME／FAM-WASTE-MISSED-STOP／FAM-WASTE-STOP-LOCATION"
+    target_family_ids: ["FAM-WASTE-ARRIVAL-TIME", "FAM-WASTE-MISSED-STOP", "FAM-WASTE-STOP-LOCATION"]
+    routing_rule: "依唯一主要訴求分派：時段不明、未到點或停靠位置不明；排除回收物分類與政策諮詢。"
+  - source_family_id: "FAM-CLEAN-EVENT-PACKAGING"
+    target_rule: "FAM-CLEAN-SURFACE-DEBRIS"
+    target_family_ids: ["FAM-CLEAN-SURFACE-DEBRIS"]
+    routing_rule: "活動後包裝與紙屑作為一般公共路面散落物的來源變化，不獨立成家族。"
+  - source_family_id: "FAM-CLEAN-WIND-DISPERSED-LITTER"
+    target_rule: "FAM-CLEAN-SURFACE-DEBRIS；可確認來源時改派至 FAM-CLEAN-BIN-OVERFLOW 或 FAM-CLEAN-BIN-DAMAGE"
+    target_family_ids: ["FAM-CLEAN-SURFACE-DEBRIS", "FAM-CLEAN-BIN-OVERFLOW", "FAM-CLEAN-BIN-DAMAGE"]
+    routing_rule: "不得只因來電者推測有風就分派；能描述的散落物先歸一般路面髒污，來源確證為果皮箱時才改派。"
+  - source_family_id: "FAM-CLEAN-GUM-ADHERED-RESIDUE"
+    target_rule: "FAM-CLEAN-SURFACE-DEBRIS"
+    target_family_ids: ["FAM-CLEAN-SURFACE-DEBRIS"]
+    routing_rule: "黏著殘留是一般路面髒污的污物型態，不另立服務家族。"
+  - source_family_id: "FAM-CLEAN-DOG-WASTE-PERSISTENT-RESIDUE"
+    target_rule: "FAM-CLEAN-DOG-WASTE 或 FAM-CLEAN-POST-SWEEP-RESIDUE"
+    target_family_ids: ["FAM-CLEAN-DOG-WASTE", "FAM-CLEAN-POST-SWEEP-RESIDUE"]
+    routing_rule: "新出現／不同點位的狗便清理歸 DOG-WASTE；確認同一舊痕清掃後仍留存才歸 POST-SWEEP-RESIDUE。"

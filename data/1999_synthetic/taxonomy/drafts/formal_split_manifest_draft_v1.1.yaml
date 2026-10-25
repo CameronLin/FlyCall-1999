@@ -1,0 +1,341 @@
+# Split manifest 草案 v1.1 — 未凍結
+# 只規劃額外正式 1,000 筆，Pilot 維持獨立。
+manifest_version: "draft-1.1"
+status: draft_unfrozen
+freeze_before_generation: true
+formal_dataset_target: 1000
+records_per_category: 200
+pilot:
+  baseline_file: "pilot_v1.2.1.jsonl"
+  current_draft_file: "pilot_v1.2.2.jsonl"
+  version_relation: "兩檔是同一組 50 筆 Pilot 的基準與修訂草案，不是 100 筆。"
+  records: 50
+  split: pilot
+  included_in_formal_target: false
+  review_status: pending_manual_review
+  generation_gate: "50 筆 Pilot 完成人工複核並留存明確通過紀錄前，不得開始正式生成。"
+recommended_split: "70/15/15"
+split_policy:
+  unit: scenario_family_id
+  isolation: "同一 scenario_family_id 只屬一個 split；不拆分家族湊數。"
+  family_counts_per_category_by_order: ["8/3/3", "8/3/3", "9/3/3", "5/3/3", "5/3/3"]
+  rationale: "每類精確分配 140/30/30，family 整組留在單一 split。"
+  draft_note: "暫列 65 個獨立家族含 15 個待修訂項目；taxonomy 核准後須重新計算。"
+total_split_records: {train: 700, validation: 150, test: 150}
+total_split_families: {train: 35, validation: 15, test: 15}
+categories:
+  - label_id: sidewalk_maintenance
+    label_name: "人行道維護"
+    target_records: 200
+    split_totals: {train: 140, validation: 30, test: 30}
+    family_counts: {train: 8, validation: 3, test: 3}
+    families:
+      - scenario_family_id: FAM-SW-TILE-MOVEMENT
+        split: train
+        planned_records: 18
+        taxonomy_status: existing
+      - scenario_family_id: FAM-SW-MISSING-PAVERS
+        split: train
+        planned_records: 18
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-SW-TACTILE-PAVING
+        split: train
+        planned_records: 18
+        taxonomy_status: existing
+      - scenario_family_id: FAM-SW-TACTILE-ALIGNMENT
+        split: train
+        planned_records: 18
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-SW-RAMP-SURFACE
+        split: train
+        planned_records: 17
+        taxonomy_status: existing
+      - scenario_family_id: FAM-SW-CURB-RAMP-LANDING
+        split: train
+        planned_records: 17
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-SW-SLAB-JOINT-GAP
+        split: train
+        planned_records: 17
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-SW-CURB-EDGE
+        split: train
+        planned_records: 17
+        taxonomy_status: existing
+      - scenario_family_id: FAM-SW-CONCRETE-SPALLING
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-SW-FLAT-SURFACE-SLIPPERY
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-SW-EDGE-CRUMBLING
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-SW-UTILITY-RESTORATION
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-SW-LEVEL-SETTLEMENT
+        split: test
+        planned_records: 10
+        taxonomy_status: existing
+      - scenario_family_id: FAM-SW-PEDESTRIAN-DECK
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_revise
+  - label_id: road_surface_defect
+    label_name: "道路凹陷、不平、有高低差"
+    target_records: 200
+    split_totals: {train: 140, validation: 30, test: 30}
+    family_counts: {train: 8, validation: 3, test: 3}
+    families:
+      - scenario_family_id: FAM-ROAD-INTERSECTION-DENT
+        split: train
+        planned_records: 18
+        taxonomy_status: existing
+      - scenario_family_id: FAM-ROAD-DEEP-POTHOLE
+        split: train
+        planned_records: 18
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-ROAD-WHEEL-TRACK
+        split: train
+        planned_records: 18
+        taxonomy_status: existing
+      - scenario_family_id: FAM-ROAD-WIDESPREAD-UNDULATION
+        split: train
+        planned_records: 18
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-ROAD-PATCH-BREAKUP
+        split: train
+        planned_records: 17
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-ROAD-FATIGUE-CRACKING
+        split: train
+        planned_records: 17
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-ROAD-SURFACE-CRACKING
+        split: train
+        planned_records: 17
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-ROAD-BINDER-BLEEDING
+        split: train
+        planned_records: 17
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-ROAD-REPAIR-JOINT
+        split: validation
+        planned_records: 10
+        taxonomy_status: existing
+      - scenario_family_id: FAM-ROAD-SURFACE-RAVELING
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-ROAD-UTILITY-CUT-SETTLEMENT
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-ROAD-LONGITUDINAL-TRANSITION
+        split: test
+        planned_records: 10
+        taxonomy_status: existing
+      - scenario_family_id: FAM-ROAD-PAVEMENT-HEAVE
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-ROAD-SHOULDER-EDGE-DROP
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_pass
+  - label_id: park_general_maintenance
+    label_name: "一般公園綠地管理及設施維護"
+    target_records: 200
+    split_totals: {train: 140, validation: 30, test: 30}
+    family_counts: {train: 9, validation: 3, test: 3}
+    families:
+      - scenario_family_id: FAM-PARK-SEATING
+        split: train
+        planned_records: 16
+        taxonomy_status: existing
+      - scenario_family_id: FAM-PARK-PLAY-EQUIPMENT
+        split: train
+        planned_records: 16
+        taxonomy_status: existing
+      - scenario_family_id: FAM-PARK-SPORTS-EQUIPMENT
+        split: train
+        planned_records: 16
+        taxonomy_status: existing
+      - scenario_family_id: FAM-PARK-COURT-SURFACE
+        split: train
+        planned_records: 16
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-PARK-GREENERY
+        split: train
+        planned_records: 16
+        taxonomy_status: existing
+      - scenario_family_id: FAM-PARK-PLANTING-BED
+        split: train
+        planned_records: 15
+        taxonomy_status: existing
+      - scenario_family_id: FAM-PARK-TRAIL-SURFACE-EROSION
+        split: train
+        planned_records: 15
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-PARK-VEHICLE-ENTRY
+        split: train
+        planned_records: 15
+        taxonomy_status: existing
+      - scenario_family_id: FAM-PARK-FENCE-GATE
+        split: train
+        planned_records: 15
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-PARK-STAIR-HANDRAIL
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-PARK-RESTROOM-DOOR-PARTITION
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-PARK-DRINKING-FOUNTAIN
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-PARK-SHELTER-ROOF
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-PARK-INFORMATION-SIGN
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-PARK-LIGHTING-EQUIPMENT
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_revise
+  - label_id: waste_truck_service
+    label_name: "垃圾車清運及服務事項"
+    target_records: 200
+    split_totals: {train: 140, validation: 30, test: 30}
+    family_counts: {train: 5, validation: 3, test: 3}
+    families:
+      - scenario_family_id: FAM-WASTE-MISSED-STOP
+        split: train
+        planned_records: 28
+        taxonomy_status: existing
+      - scenario_family_id: FAM-WASTE-ROUTE-SEGMENT-OMISSION
+        split: train
+        planned_records: 28
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-WASTE-ARRIVAL-TIME
+        split: train
+        planned_records: 28
+        taxonomy_status: existing
+      - scenario_family_id: FAM-WASTE-ROUTE-ORDER-CHANGE
+        split: train
+        planned_records: 28
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-WASTE-STOP-LOCATION
+        split: train
+        planned_records: 28
+        taxonomy_status: existing
+      - scenario_family_id: FAM-WASTE-PARTIAL-COLLECTION
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-WASTE-SHORT-DWELL
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-WASTE-COLLECTION-CUE-FAILURE
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-WASTE-ALLEY-ACCESS
+        split: test
+        planned_records: 10
+        taxonomy_status: existing
+      - scenario_family_id: FAM-WASTE-ACCESS-INTERRUPTION
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-WASTE-WEEKEND-SCHEDULE
+        split: test
+        planned_records: 10
+        taxonomy_status: existing
+  - label_id: street_cleaning
+    label_name: "路面清潔（含行人果皮箱、菸蒂、狗便）"
+    target_records: 200
+    split_totals: {train: 140, validation: 30, test: 30}
+    family_counts: {train: 5, validation: 3, test: 3}
+    families:
+      - scenario_family_id: FAM-CLEAN-BIN-OVERFLOW
+        split: train
+        planned_records: 28
+        taxonomy_status: existing
+      - scenario_family_id: FAM-CLEAN-BIN-DAMAGE
+        split: train
+        planned_records: 28
+        taxonomy_status: existing
+      - scenario_family_id: FAM-CLEAN-CIGARETTE
+        split: train
+        planned_records: 28
+        taxonomy_status: existing
+      - scenario_family_id: FAM-CLEAN-SURFACE-DEBRIS
+        split: train
+        planned_records: 28
+        taxonomy_status: existing
+      - scenario_family_id: FAM-CLEAN-MUD-SILT-FILM
+        split: train
+        planned_records: 28
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-CLEAN-DOG-WASTE
+        split: validation
+        planned_records: 10
+        taxonomy_status: existing
+      - scenario_family_id: FAM-CLEAN-REACCUMULATING-DEBRIS
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_revise
+      - scenario_family_id: FAM-CLEAN-POST-SWEEP-RESIDUE
+        split: validation
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-CLEAN-SHARP-GLASS
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-CLEAN-STORM-BRANCH-DEBRIS
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_pass
+      - scenario_family_id: FAM-CLEAN-LOOSE-GRIT
+        split: test
+        planned_records: 10
+        taxonomy_status: proposed_revise
+excluded_merge_sources:
+  - FAM-CLEAN-DOG-WASTE-PERSISTENT-RESIDUE
+  - FAM-CLEAN-EVENT-PACKAGING
+  - FAM-CLEAN-GUM-ADHERED-RESIDUE
+  - FAM-CLEAN-WIND-DISPERSED-LITTER
+  - FAM-ROAD-CROSSING-APPROACH
+  - FAM-SW-DRIVEWAY-CROSSING
+  - FAM-WASTE-HOLIDAY-SCHEDULE
+  - FAM-WASTE-RECYCLABLE-STREAM-SERVICE
+  - FAM-WASTE-SCHEDULED-DAY-OMISSION
+  - FAM-WASTE-TEMP-STOP-RELOCATION
+family_load_ranges_per_category:
+  14_families: {train: "17-18", validation: "10", test: "10"}
+  15_families: {train: "15-16", validation: "10", test: "10"}
+  11_families: {train: "28", validation: "10", test: "10"}
+pre_freeze_checks:
+  - "人工複核 Pilot 50 筆並留下明確決定；pending 不視為通過。"
+  - "核准 15 個待修訂家族和 10 個合併規則，之後重算家族集合與配額。"
+  - "逐列核對 family ID 單一 split，及每類 140/30/30、全體 700/150/150。"
+  - "評估 11 家族類別 train 每家族 28 筆與 holdout 每家族 10 筆的差距。"
+  - "考量每類 validation/test 各僅 3 個家族的代表性限制。"
+  - "凍結 taxonomy、manifest、ID、prompt、模型、批次規格與驗證門檻後才生成。"
+non_goals:
+  - "本 manifest 不凍結，不開始正式生成。"
+  - "Pilot 不納入正式 1,000 筆，不自動合併。"

@@ -1,0 +1,33 @@
+{
+  "version": "formal-v1.0.0",
+  "status": "complete",
+  "completed_batches": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "expected_batches": 20,
+  "expected_records": 1000,
+  "next_batch": null,
+  "updated_at_utc": "2026-10-12T06:52:15.479279+00:00",
+  "final_records": 1000,
+  "final_jsonl_sha256": "1dd58478b66afd901d61f50f0ae41e7341e88b7935ced845b82a7316642a367a",
+  "final_csv_sha256": "5efe5ada8c304be7122c746eb6770e34e053d5d433f725f8761ede0cc99be3aa"
+}

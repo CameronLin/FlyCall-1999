@@ -1,0 +1,21 @@
+batch,records,label_counts,split_counts,filtered_sha256
+001,50,"{""sidewalk_maintenance"": 50}","{""train"": 42, ""test"": 8}",4eaa8979e598c6f335b745e4750213175d4a907fef8f715510cde37ee55b6e3c
+002,50,"{""sidewalk_maintenance"": 50}","{""train"": 30, ""validation"": 20}",9009ca910441fa423d2ec1f49352ec32a03fcf344763eae511c91439c57d33ce
+003,50,"{""sidewalk_maintenance"": 50}","{""train"": 28, ""test"": 22}",cd70dc65f7b2889712a4af62d774e31e5c3c075751431a187aab07f95e5dda3d
+004,50,"{""sidewalk_maintenance"": 50}","{""train"": 40, ""validation"": 10}",0ead810a55e0704b5fdb0f5317b9a83e10a69d14a9f63e527f45ed23e46647ba
+005,50,"{""road_surface_defect"": 50}","{""train"": 40, ""validation"": 10}",82c587ef9e61f2482f72b49810aaabb0d57c29fe81ab89c9dec34597be09ac67
+006,50,"{""road_surface_defect"": 50}","{""test"": 8, ""train"": 42}",0a2e5a3e3e7a44ea1f9970e674dee9ced4a52d41dd3dfc1e75fb2ddeec4a083a
+007,50,"{""road_surface_defect"": 50}","{""train"": 40, ""validation"": 10}",d9cb9770931140830719c83fab5fe680b0712862db0db138e00dc520d81004a6
+008,50,"{""road_surface_defect"": 50}","{""train"": 18, ""test"": 22, ""validation"": 10}",e2ba551278d813fdd8e9ebcb3322c588bec34c23c8cf190ad9f32aa1f3266b4f
+009,50,"{""park_general_maintenance"": 50}","{""train"": 50}",1f21b18046b96e96f4c53bfe588c9de8c59fff96b66a52c4d24ed26f065c5f18
+010,50,"{""park_general_maintenance"": 50}","{""train"": 50}",9dc643fbb0e669d862d42f5b5e3e55475e9839adebffc3814b79ec3c71bcd5e6
+011,50,"{""park_general_maintenance"": 50}","{""train"": 12, ""validation"": 30, ""test"": 8}",7a50a79b97ed0273fd7cfd39dd448ef519932a3ca89cd38cb5cd92615baaa9d6
+012,50,"{""park_general_maintenance"": 50}","{""train"": 28, ""test"": 22}",152b7ee4333e655d5d363497fd83da31424125cd2de9d1a20a026135a65a36e7
+013,50,"{""waste_truck_service"": 50}","{""train"": 35, ""validation"": 15}",5462068693e89f13e156ca53528c8c00f00a381b068cb9ce1cb1a5069b1f155e
+014,50,"{""waste_truck_service"": 50}","{""train"": 40, ""test"": 10}",c163fd407ffd6e7a0f0eace93f43cd44a5f65084cafcab79fc857b1b6506bb70
+015,50,"{""waste_truck_service"": 50}","{""train"": 50}",832745e744ea86413b3c0fc3bb9720dfb31287162b42bbf7021da92326387623
+016,50,"{""waste_truck_service"": 50}","{""train"": 15, ""test"": 20, ""validation"": 15}",5635b8b48a7b8f6acf250f0a0e0adff0d3737c749e4c368c24f454781e1b4c7c
+017,50,"{""street_cleaning"": 50}","{""train"": 50}",6918c24008664311764a4d187b6ca28315b0a801e716ee31d4c9ce755cbba529
+018,50,"{""street_cleaning"": 50}","{""train"": 50}",9de167b858aff2723e69cd4d41c8f6f1e1207bac38b05246578a348502690915
+019,50,"{""street_cleaning"": 50}","{""train"": 40, ""validation"": 10}",f805962f6f3f244996c5daeb3f1cf910de20ddb48fd32ffa183c5ecfaa6165b1
+020,50,"{""street_cleaning"": 50}","{""test"": 30, ""validation"": 20}",0c9c45854d6a96b16df5ad483d9c61acf4e80675c22dd8297e6a56f67253aca1
