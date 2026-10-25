@@ -1,0 +1,13 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+/-
+
+# Local environment and transient experiment data
+.scratch/**/env/
+
+# MaleCNS bulk data exceeds GitHub's 100 MB per-file limit.
+data/connectome/malecns_v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather
+data/connectome/derived/malecns_v1.0/edges.parquet
+data/connectome/derived/malecns_v1.0/nodes.parquet
+.scratch/1999-connectome-demo/m1-1-resource-audit-unapproved-threads-4/malecns_v1.0/*.parquet
