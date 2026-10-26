@@ -1,0 +1,30 @@
+{
+  "candidate_names": [
+    "logistic_regression",
+    "mlp",
+    "pca_mlp",
+    "lda_logistic_regression",
+    "fly_a_to_fly_b"
+  ],
+  "created_at_utc": "2026-10-26T02:45:46.679450+00:00",
+  "data_status": "synthetic",
+  "formal_test_eligible": false,
+  "input_run_dirs": [
+    ".scratch\\1999-connectome-demo\\runs\\m2-2b-e5-seed-42-current-runner-20261026",
+    ".scratch\\1999-connectome-demo\\runs\\m3-2-fly-ab-seed-42-crlf-fix-20261026",
+    ".scratch\\1999-connectome-demo\\runs\\m2-2b-e5-seed-1337-current-runner-20261026",
+    ".scratch\\1999-connectome-demo\\runs\\m3-2-fly-ab-seed-1337-20261026",
+    ".scratch\\1999-connectome-demo\\runs\\m2-2b-e5-seed-2026-current-runner-20261026",
+    ".scratch\\1999-connectome-demo\\runs\\m3-2-fly-ab-seed-2026-20261026"
+  ],
+  "review_status": "pending_manual_review",
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1337,
+    2026
+  ],
+  "selection_rule": "highest mean validation Macro-F1 across the predeclared seeds; ties use higher mean validation accuracy, then candidate name in ascending lexical order",
+  "status": "pre_registered",
+  "test": "not_run; no test rows, predictions, or metrics may be opened"
+}

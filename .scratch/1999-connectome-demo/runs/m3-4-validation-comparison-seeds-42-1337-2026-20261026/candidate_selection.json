@@ -1,0 +1,73 @@
+{
+  "candidate_list_locked": false,
+  "candidate_names": [
+    "logistic_regression",
+    "mlp",
+    "pca_mlp",
+    "lda_logistic_regression",
+    "fly_a_to_fly_b"
+  ],
+  "configuration_locked": false,
+  "formal_test_eligible": false,
+  "input_artifacts": [
+    {
+      "metrics_sha256": "31dad8f4786b2adb6d0725279a594e2d533fe406c29e47a7b36906bc6d1b79fd",
+      "registration_sha256": "d97c2f664f7a17172899790cdab05b356644247728c42bb86413b410a8653d6a",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m2-2b-e5-seed-42-current-runner-20261026",
+      "run_id": "m2-2b-e5-seed-42-current-runner-20261026",
+      "run_manifest_sha256": "41aefb0431d4f671d55c82b888660b640c9cfbc6d38f9489f14eb345668dcc8e",
+      "seed": 42
+    },
+    {
+      "metrics_sha256": "b0a52c884cf02fa269b559c9a2aff7e1121dcdab20100350f2edcaf9b5b93e01",
+      "registration_sha256": "acd751da373a5a00f7ebf6a743daffde63836695000b4c01f8020b402198d536",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m3-2-fly-ab-seed-42-crlf-fix-20261026",
+      "run_id": "m3-2-fly-ab-seed-42-crlf-fix-20261026",
+      "run_manifest_sha256": "380401251ca8110e86beae42e157feb552fe9639566e3e7e1920e72fee4f4d27",
+      "seed": 42
+    },
+    {
+      "metrics_sha256": "d291b4270ab2c3c9c3cb3302c9656adaff815d592641b39f1dc7c98470f632eb",
+      "registration_sha256": "6b9bc551c73604a4398a4ac980f731598ea2b59cedeb0705a101e92c937659a2",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m2-2b-e5-seed-1337-current-runner-20261026",
+      "run_id": "m2-2b-e5-seed-1337-current-runner-20261026",
+      "run_manifest_sha256": "8bed30d4493ffd8e67c8ade66fae691f16564dbf4263b1738af0c203ff55182b",
+      "seed": 1337
+    },
+    {
+      "metrics_sha256": "517f0fa54540468cbc50f3835aff2fd48afe4ba6648127f429669630072ee7df",
+      "registration_sha256": "e8b7fb93a5dd9cb051295360bf8b99dacbd2184f8377127a5dba40349f92cc66",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m3-2-fly-ab-seed-1337-20261026",
+      "run_id": "m3-2-fly-ab-seed-1337-20261026",
+      "run_manifest_sha256": "859e039a637f1f30e3a0a4c58d4231e24ab03a8aa9fe5ddb14c774fc54ffc65a",
+      "seed": 1337
+    },
+    {
+      "metrics_sha256": "4338cc10bb6304ad24f86a5ae0404fd15259b3898ce13794bf2edd617d438d38",
+      "registration_sha256": "4edc1f06826e222db3183ec9f9a55ffd774022368c2191773fb9c8ff9ad39216",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m2-2b-e5-seed-2026-current-runner-20261026",
+      "run_id": "m2-2b-e5-seed-2026-current-runner-20261026",
+      "run_manifest_sha256": "d2f3767237362e9fe4f86d517a44c054afe2a168b6851daab1da4311274de93f",
+      "seed": 2026
+    },
+    {
+      "metrics_sha256": "089a06e97667024df278c151054de100323a0a737d0dd99a160fd9bf1d3d5aae",
+      "registration_sha256": "d9eb4ff90053ccf9dbdeb6d338f87507959bbcfcc1690119906f1954768d248d",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m3-2-fly-ab-seed-2026-20261026",
+      "run_id": "m3-2-fly-ab-seed-2026-20261026",
+      "run_manifest_sha256": "79c86e2c07fb460874b37330a914e53ad634aac7e5b310591e2256d8fad7f773",
+      "seed": 2026
+    }
+  ],
+  "manual_review_gate_passed": false,
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1337,
+    2026
+  ],
+  "selection_rule": "highest mean validation Macro-F1 across the predeclared seeds; ties use higher mean validation accuracy, then candidate name in ascending lexical order",
+  "status": "provisional_pending_manual_review",
+  "test": "not_run",
+  "validation_winner": "mlp"
+}

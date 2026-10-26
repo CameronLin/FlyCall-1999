@@ -1,0 +1,970 @@
+{
+  "candidate_names": [
+    "logistic_regression",
+    "mlp",
+    "pca_mlp",
+    "lda_logistic_regression",
+    "fly_a_to_fly_b"
+  ],
+  "candidates": {
+    "fly_a_to_fly_b": {
+      "aggregate_confusion_matrix": [
+        [
+          37,
+          36,
+          9,
+          1,
+          7
+        ],
+        [
+          5,
+          83,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          2,
+          84,
+          1,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          90,
+          0
+        ],
+        [
+          21,
+          30,
+          12,
+          2,
+          25
+        ]
+      ],
+      "per_class": {
+        "park_general_maintenance": {
+          "f1": {
+            "mean": 0.86622122470741,
+            "sample_std": 0.06347852538592884
+          },
+          "precision": {
+            "mean": 0.8179793119648773,
+            "sample_std": 0.13099949634633676
+          },
+          "recall": {
+            "mean": 0.9333333333333332,
+            "sample_std": 0.033333333333333326
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "road_surface_defect": {
+          "f1": {
+            "mean": 0.6923188248489454,
+            "sample_std": 0.08171657321271021
+          },
+          "precision": {
+            "mean": 0.5560584884484255,
+            "sample_std": 0.09031663785296497
+          },
+          "recall": {
+            "mean": 0.9222222222222222,
+            "sample_std": 0.05091750772173154
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "sidewalk_maintenance": {
+          "f1": {
+            "mean": 0.3896863370547581,
+            "sample_std": 0.41046922436224736
+          },
+          "precision": {
+            "mean": 0.37345679012345673,
+            "sample_std": 0.37500952586590275
+          },
+          "recall": {
+            "mean": 0.41111111111111115,
+            "sample_std": 0.45501322732096156
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "street_cleaning": {
+          "f1": {
+            "mean": 0.3841595441595442,
+            "sample_std": 0.1505944422932872
+          },
+          "precision": {
+            "mean": 0.7351851851851853,
+            "sample_std": 0.1333719080002284
+          },
+          "recall": {
+            "mean": 0.2777777777777778,
+            "sample_std": 0.15030832509409647
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "waste_truck_service": {
+          "f1": {
+            "mean": 0.9679098150806241,
+            "sample_std": 0.015613479417231811
+          },
+          "precision": {
+            "mean": 0.9381109481915934,
+            "sample_std": 0.0293302858408606
+          },
+          "recall": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        }
+      },
+      "run_ids": [
+        "m3-2-fly-ab-seed-42-crlf-fix-20261026",
+        "m3-2-fly-ab-seed-1337-20261026",
+        "m3-2-fly-ab-seed-2026-20261026"
+      ],
+      "seed_count": 3,
+      "seeds": [
+        42,
+        1337,
+        2026
+      ],
+      "validation_accuracy": {
+        "by_seed": {
+          "1337": 0.6666666666666666,
+          "2026": 0.7866666666666666,
+          "42": 0.6733333333333333
+        },
+        "mean": 0.7088888888888888,
+        "sample_std": 0.06743995957997118
+      },
+      "validation_macro_f1": {
+        "by_seed": {
+          "1337": 0.586713633398565,
+          "2026": 0.7393366540907524,
+          "42": 0.6541271600214518
+        },
+        "mean": 0.6600591491702564,
+        "sample_std": 0.07648423355664959
+      }
+    },
+    "lda_logistic_regression": {
+      "aggregate_confusion_matrix": [
+        [
+          87,
+          3,
+          0,
+          0,
+          0
+        ],
+        [
+          15,
+          75,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          90,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          90,
+          0
+        ],
+        [
+          0,
+          27,
+          0,
+          0,
+          63
+        ]
+      ],
+      "per_class": {
+        "park_general_maintenance": {
+          "f1": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "road_surface_defect": {
+          "f1": {
+            "mean": 0.7692307692307692,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 0.7142857142857143,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 0.8333333333333334,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "sidewalk_maintenance": {
+          "f1": {
+            "mean": 0.90625,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 0.8529411764705882,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 0.9666666666666667,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "street_cleaning": {
+          "f1": {
+            "mean": 0.823529411764706,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 0.6999999999999998,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "waste_truck_service": {
+          "f1": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        }
+      },
+      "run_ids": [
+        "m2-2b-e5-seed-42-current-runner-20261026",
+        "m2-2b-e5-seed-1337-current-runner-20261026",
+        "m2-2b-e5-seed-2026-current-runner-20261026"
+      ],
+      "seed_count": 3,
+      "seeds": [
+        42,
+        1337,
+        2026
+      ],
+      "validation_accuracy": {
+        "by_seed": {
+          "1337": 0.9,
+          "2026": 0.9,
+          "42": 0.9
+        },
+        "mean": 0.9,
+        "sample_std": 0.0
+      },
+      "validation_macro_f1": {
+        "by_seed": {
+          "1337": 0.8998020361990949,
+          "2026": 0.8998020361990949,
+          "42": 0.8998020361990949
+        },
+        "mean": 0.8998020361990949,
+        "sample_std": 0.0
+      }
+    },
+    "logistic_regression": {
+      "aggregate_confusion_matrix": [
+        [
+          66,
+          18,
+          0,
+          0,
+          6
+        ],
+        [
+          0,
+          90,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          90,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          90,
+          0
+        ],
+        [
+          15,
+          9,
+          9,
+          0,
+          57
+        ]
+      ],
+      "per_class": {
+        "park_general_maintenance": {
+          "f1": {
+            "mean": 0.9523809523809522,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 0.9090909090909091,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "road_surface_defect": {
+          "f1": {
+            "mean": 0.8695652173913043,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 0.7692307692307693,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "sidewalk_maintenance": {
+          "f1": {
+            "mean": 0.7719298245614036,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 0.8148148148148148,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 0.7333333333333333,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "street_cleaning": {
+          "f1": {
+            "mean": 0.7450980392156863,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 0.9047619047619048,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 0.6333333333333333,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "waste_truck_service": {
+          "f1": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        }
+      },
+      "run_ids": [
+        "m2-2b-e5-seed-42-current-runner-20261026",
+        "m2-2b-e5-seed-1337-current-runner-20261026",
+        "m2-2b-e5-seed-2026-current-runner-20261026"
+      ],
+      "seed_count": 3,
+      "seeds": [
+        42,
+        1337,
+        2026
+      ],
+      "validation_accuracy": {
+        "by_seed": {
+          "1337": 0.8733333333333333,
+          "2026": 0.8733333333333333,
+          "42": 0.8733333333333333
+        },
+        "mean": 0.8733333333333334,
+        "sample_std": 0.0
+      },
+      "validation_macro_f1": {
+        "by_seed": {
+          "1337": 0.8677948067098693,
+          "2026": 0.8677948067098693,
+          "42": 0.8677948067098693
+        },
+        "mean": 0.8677948067098692,
+        "sample_std": 0.0
+      }
+    },
+    "mlp": {
+      "aggregate_confusion_matrix": [
+        [
+          79,
+          5,
+          0,
+          0,
+          6
+        ],
+        [
+          0,
+          90,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          88,
+          0,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          90,
+          0
+        ],
+        [
+          22,
+          3,
+          4,
+          0,
+          61
+        ]
+      ],
+      "per_class": {
+        "park_general_maintenance": {
+          "f1": {
+            "mean": 0.9668488160291439,
+            "sample_std": 0.02902525943466969
+          },
+          "precision": {
+            "mean": 0.9562724014336919,
+            "sample_std": 0.019865815714051646
+          },
+          "recall": {
+            "mean": 0.9777777777777779,
+            "sample_std": 0.03849001794597504
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "road_surface_defect": {
+          "f1": {
+            "mean": 0.9584859584859585,
+            "sample_std": 0.038823231002648735
+          },
+          "precision": {
+            "mean": 0.9220779220779219,
+            "sample_std": 0.0723086280887016
+          },
+          "recall": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "sidewalk_maintenance": {
+          "f1": {
+            "mean": 0.828232799544275,
+            "sample_std": 0.021641774355426267
+          },
+          "precision": {
+            "mean": 0.8017144146176404,
+            "sample_std": 0.10633984891807205
+          },
+          "recall": {
+            "mean": 0.8777777777777778,
+            "sample_std": 0.11706281947614151
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "street_cleaning": {
+          "f1": {
+            "mean": 0.7574058882508431,
+            "sample_std": 0.12879643996584533
+          },
+          "precision": {
+            "mean": 0.8882850241545893,
+            "sample_std": 0.06265951428792639
+          },
+          "recall": {
+            "mean": 0.6777777777777777,
+            "sample_std": 0.18954135676924425
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "waste_truck_service": {
+          "f1": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "precision": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        }
+      },
+      "run_ids": [
+        "m2-2b-e5-seed-42-current-runner-20261026",
+        "m2-2b-e5-seed-1337-current-runner-20261026",
+        "m2-2b-e5-seed-2026-current-runner-20261026"
+      ],
+      "seed_count": 3,
+      "seeds": [
+        42,
+        1337,
+        2026
+      ],
+      "validation_accuracy": {
+        "by_seed": {
+          "1337": 0.92,
+          "2026": 0.88,
+          "42": 0.92
+        },
+        "mean": 0.9066666666666667,
+        "sample_std": 0.023094010767585053
+      },
+      "validation_macro_f1": {
+        "by_seed": {
+          "1337": 0.9178662352185395,
+          "2026": 0.8705679592636114,
+          "42": 0.9181498829039813
+        },
+        "mean": 0.902194692462044,
+        "sample_std": 0.027389921569913177
+      }
+    },
+    "pca_mlp": {
+      "aggregate_confusion_matrix": [
+        [
+          74,
+          8,
+          0,
+          1,
+          7
+        ],
+        [
+          4,
+          86,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          89,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          90,
+          0
+        ],
+        [
+          17,
+          7,
+          0,
+          1,
+          65
+        ]
+      ],
+      "per_class": {
+        "park_general_maintenance": {
+          "f1": {
+            "mean": 0.9943502824858758,
+            "sample_std": 0.009785597782875051
+          },
+          "precision": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "recall": {
+            "mean": 0.9888888888888889,
+            "sample_std": 0.01924500897298752
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "road_surface_defect": {
+          "f1": {
+            "mean": 0.9005944995864351,
+            "sample_std": 0.0073341541987331435
+          },
+          "precision": {
+            "mean": 0.852170868347339,
+            "sample_std": 0.023223869018276142
+          },
+          "recall": {
+            "mean": 0.9555555555555556,
+            "sample_std": 0.01924500897298752
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "sidewalk_maintenance": {
+          "f1": {
+            "mean": 0.7960095019851763,
+            "sample_std": 0.030266243533457055
+          },
+          "precision": {
+            "mean": 0.7716581133919843,
+            "sample_std": 0.04045154136677194
+          },
+          "recall": {
+            "mean": 0.8222222222222223,
+            "sample_std": 0.01924500897298752
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "street_cleaning": {
+          "f1": {
+            "mean": 0.8024691358024691,
+            "sample_std": 0.021383343303319504
+          },
+          "precision": {
+            "mean": 0.9027777777777777,
+            "sample_std": 0.024056261216234387
+          },
+          "recall": {
+            "mean": 0.7222222222222222,
+            "sample_std": 0.01924500897298752
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        },
+        "waste_truck_service": {
+          "f1": {
+            "mean": 0.989247311827957,
+            "sample_std": 0.018624202231923397
+          },
+          "precision": {
+            "mean": 0.9791666666666666,
+            "sample_std": 0.03608439182435161
+          },
+          "recall": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          },
+          "support_per_seed": [
+            30,
+            30,
+            30
+          ]
+        }
+      },
+      "run_ids": [
+        "m2-2b-e5-seed-42-current-runner-20261026",
+        "m2-2b-e5-seed-1337-current-runner-20261026",
+        "m2-2b-e5-seed-2026-current-runner-20261026"
+      ],
+      "seed_count": 3,
+      "seeds": [
+        42,
+        1337,
+        2026
+      ],
+      "validation_accuracy": {
+        "by_seed": {
+          "1337": 0.9066666666666666,
+          "2026": 0.88,
+          "42": 0.9066666666666666
+        },
+        "mean": 0.8977777777777778,
+        "sample_std": 0.015396007178389992
+      },
+      "validation_macro_f1": {
+        "by_seed": {
+          "1337": 0.9053589276540096,
+          "2026": 0.8787402258151301,
+          "42": 0.9055032855436081
+        },
+        "mean": 0.8965341463375825,
+        "sample_std": 0.015410156244165396
+      }
+    }
+  },
+  "comparison_id": "m3-4-validation-comparison-seeds-42-1337-2026-20261026",
+  "data_status": "synthetic",
+  "dataset_source_sha256": {
+    "csv": "5efe5ada8c304be7122c746eb6770e34e053d5d433f725f8761ede0cc99be3aa",
+    "jsonl": "e5931c3517e7194d04582fbd96bf971ab26aefc4c86cfb2007e3a68d61af49e4",
+    "manifest": "d60f97f9948da568fbdf9ff00953f088ddbc117ce99ed64ebc10a00b4cad87fb",
+    "taxonomy": "0263dab66cd2bb867cf76323e66fa946069e36378f57b7cd10aa4ae3993d3823"
+  },
+  "e5_identity": {
+    "max_seq_length": 512,
+    "model_file_sha256": [
+      [
+        "1_Pooling/config.json",
+        "987f7a67a38fa564c849bb5d277c52ab9088a84368fc0be31a354125aebb12a0"
+      ],
+      [
+        "config.json",
+        "69137736cab8b8903a07fe8afaafdda25aac55415a12a55d1bffa9f581abf959"
+      ],
+      [
+        "model.safetensors",
+        "1a55775f53449dac10a2bcbc312469fac40b96d53198c407081a831f81c98477"
+      ],
+      [
+        "modules.json",
+        "c6e29747481e8b5dd2b58401966aeac910de39092f90cda9a704b1545f902b04"
+      ],
+      [
+        "sentence_bert_config.json",
+        "948201d8329907aae938fa62f9ceeed53f5694dacc2b87b9f3b78b37ee986529"
+      ],
+      [
+        "sentencepiece.bpe.model",
+        "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+      ],
+      [
+        "special_tokens_map.json",
+        "d05497f1da52c5e09554c0cd874037a083e1dc1b9cfd48034d1c717f1afc07a7"
+      ],
+      [
+        "tokenizer.json",
+        "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+      ],
+      [
+        "tokenizer_config.json",
+        "a1d6bc8734a6f635dc158508bef000f8e2e5a759c7d92f984b2c86e5ff53425b"
+      ]
+    ],
+    "model_id": "intfloat/multilingual-e5-small",
+    "normalize_embeddings": true,
+    "pooling": "masked_mean",
+    "prefix": "query: ",
+    "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3"
+  },
+  "formal_test_eligible": false,
+  "graph_source_sha256": {
+    "edges_parquet": "afa69be2078eaf136d00511539145dc82ea54af5aa2f52ffdcb87501488e2175",
+    "graph_manifest": "5300c6cefdc6b84a854545e64f4131baa3fc42f0bde97a83f68fcc1c3769cf40",
+    "io_manifest": "48148a1d64cc5402b17db99dff61ad42a3c29bef8d422ebfa6a25e375e07f585",
+    "nodes_parquet": "a8ad1e6a42c0a386d4bdef517ac628c29a5b7b8f023c51b43cce8e0354087428"
+  },
+  "input_artifacts": [
+    {
+      "metrics_sha256": "31dad8f4786b2adb6d0725279a594e2d533fe406c29e47a7b36906bc6d1b79fd",
+      "registration_sha256": "d97c2f664f7a17172899790cdab05b356644247728c42bb86413b410a8653d6a",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m2-2b-e5-seed-42-current-runner-20261026",
+      "run_id": "m2-2b-e5-seed-42-current-runner-20261026",
+      "run_manifest_sha256": "41aefb0431d4f671d55c82b888660b640c9cfbc6d38f9489f14eb345668dcc8e",
+      "seed": 42
+    },
+    {
+      "metrics_sha256": "b0a52c884cf02fa269b559c9a2aff7e1121dcdab20100350f2edcaf9b5b93e01",
+      "registration_sha256": "acd751da373a5a00f7ebf6a743daffde63836695000b4c01f8020b402198d536",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m3-2-fly-ab-seed-42-crlf-fix-20261026",
+      "run_id": "m3-2-fly-ab-seed-42-crlf-fix-20261026",
+      "run_manifest_sha256": "380401251ca8110e86beae42e157feb552fe9639566e3e7e1920e72fee4f4d27",
+      "seed": 42
+    },
+    {
+      "metrics_sha256": "d291b4270ab2c3c9c3cb3302c9656adaff815d592641b39f1dc7c98470f632eb",
+      "registration_sha256": "6b9bc551c73604a4398a4ac980f731598ea2b59cedeb0705a101e92c937659a2",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m2-2b-e5-seed-1337-current-runner-20261026",
+      "run_id": "m2-2b-e5-seed-1337-current-runner-20261026",
+      "run_manifest_sha256": "8bed30d4493ffd8e67c8ade66fae691f16564dbf4263b1738af0c203ff55182b",
+      "seed": 1337
+    },
+    {
+      "metrics_sha256": "517f0fa54540468cbc50f3835aff2fd48afe4ba6648127f429669630072ee7df",
+      "registration_sha256": "e8b7fb93a5dd9cb051295360bf8b99dacbd2184f8377127a5dba40349f92cc66",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m3-2-fly-ab-seed-1337-20261026",
+      "run_id": "m3-2-fly-ab-seed-1337-20261026",
+      "run_manifest_sha256": "859e039a637f1f30e3a0a4c58d4231e24ab03a8aa9fe5ddb14c774fc54ffc65a",
+      "seed": 1337
+    },
+    {
+      "metrics_sha256": "4338cc10bb6304ad24f86a5ae0404fd15259b3898ce13794bf2edd617d438d38",
+      "registration_sha256": "4edc1f06826e222db3183ec9f9a55ffd774022368c2191773fb9c8ff9ad39216",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m2-2b-e5-seed-2026-current-runner-20261026",
+      "run_id": "m2-2b-e5-seed-2026-current-runner-20261026",
+      "run_manifest_sha256": "d2f3767237362e9fe4f86d517a44c054afe2a168b6851daab1da4311274de93f",
+      "seed": 2026
+    },
+    {
+      "metrics_sha256": "089a06e97667024df278c151054de100323a0a737d0dd99a160fd9bf1d3d5aae",
+      "registration_sha256": "d9eb4ff90053ccf9dbdeb6d338f87507959bbcfcc1690119906f1954768d248d",
+      "run_dir": "C:\\Users\\polarbear\\OneDrive\\桌面\\1999-calls\\FlyCall-1999\\.scratch\\1999-connectome-demo\\runs\\m3-2-fly-ab-seed-2026-20261026",
+      "run_id": "m3-2-fly-ab-seed-2026-20261026",
+      "run_manifest_sha256": "79c86e2c07fb460874b37330a914e53ad634aac7e5b310591e2256d8fad7f773",
+      "seed": 2026
+    }
+  ],
+  "label_order": [
+    "sidewalk_maintenance",
+    "road_surface_defect",
+    "park_general_maintenance",
+    "waste_truck_service",
+    "street_cleaning"
+  ],
+  "review_status": "pending_manual_review",
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1337,
+    2026
+  ],
+  "selection_rule": "highest mean validation Macro-F1 across the predeclared seeds; ties use higher mean validation accuracy, then candidate name in ascending lexical order",
+  "status": "validation_complete_pending_manual_review",
+  "test": {
+    "input_count": 0,
+    "metrics": null,
+    "prediction_count": 0,
+    "status": "not_run"
+  },
+  "validation_winner": "mlp"
+}
