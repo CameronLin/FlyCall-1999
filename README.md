@@ -70,7 +70,7 @@ $env:PYTHONPATH = "$PWD\src;$PWD\tests;$PWD\scripts"
 
 ## 檔案索引
 
-資料版本、草案、封存檔、正式生成歷程、複核包、逐檔用途、搬移路徑與 SHA-256，請見[合成資料詳細索引](data/1999_synthetic/README.md)。舊路徑相容連結供歷史文件解析；新文件請使用索引中的新路徑。
+專案各資料夾與程式檔案用途請見[資料夾與檔案導覽](docs/PROJECT_FILE_GUIDE.md)。合成資料版本、草案、封存檔、正式生成歷程、複核包、逐檔用途、搬移路徑與 SHA-256，請見[合成資料詳細索引](data/1999_synthetic/README.md)。舊路徑相容連結供歷史文件解析；新文件請使用索引中的新路徑。
 
 ## Connectome 開發資料
 

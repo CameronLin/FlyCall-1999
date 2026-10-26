@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FlyCall-1999 專案進度、模型比較與驗收狀態簡報">
+  <title>FlyCall-1999 專案說明簡報</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --navy: #11273d;
+      --navy-2: #1f4059;
+      --teal: #1b9191;
+      --teal-pale: #daf1ef;
+      --gold: #ebae44;
+      --paper: #f6f9fb;
+      --ink: #1e3345;
+      --muted: #576c7c;
+      --line: #dae3e9;
+      --blue: #4a7ea7;
+      --orange: #d38746;
+      --red: #b8534c;
+      --white: #fff;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: radial-gradient(ellipse at 18% 12%, #1e3c53 0, transparent 35%), #0b1c2b; color: var(--ink); }
+    body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 18px 18px 78px; }
+    .deck { width: min(100%, calc((100vh - 116px) * 16 / 9)); aspect-ratio: 16 / 9; position: relative; overflow: hidden; border-radius: 18px; background: var(--paper); box-shadow: 0 24px 80px #0007; }
+    .slide { display: none; position: absolute; inset: 0; padding: 5.5% 6%; background: var(--paper); overflow: auto; }
+    .slide.active { display: flex; flex-direction: column; }
+    .slide::before { content: ""; position: absolute; inset: 0 0 auto; height: 8px; background: var(--teal); }
+    .eyebrow { color: var(--teal); text-transform: uppercase; letter-spacing: .12em; font-weight: 800; font-size: clamp(10px, 1.15vw, 14px); margin-bottom: 10px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { color: var(--navy); font-size: clamp(27px, 3.2vw, 42px); line-height: 1.2; margin-bottom: 15px; }
+    h2 { color: var(--navy); font-size: clamp(19px, 2vw, 25px); margin-bottom: 10px; }
+    h3 { color: var(--navy); font-size: clamp(15px, 1.6vw, 20px); margin-bottom: 9px; }
+    p, li { font-size: clamp(13px, 1.45vw, 18px); line-height: 1.55; }
+    .rule { height: 1px; background: var(--line); margin: 2px 0 22px; flex: none; }
+    .footer { margin-top: auto; padding-top: 12px; color: var(--muted); font-size: clamp(9px, .95vw, 12px); display: flex; justify-content: space-between; }
+    .footer a { color: var(--teal); font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .cover { background: var(--navy); color: var(--white); padding: 8% 7%; }
+    .cover::before { background: var(--teal); height: 11px; }
+    .cover .eyebrow { color: #a9e2dc; }
+    .cover h1 { color: var(--white); font-size: clamp(34px, 4.5vw, 58px); max-width: 76%; margin: 7% 0 18px; }
+    .cover .subtitle { color: #cfdee7; font-size: clamp(17px, 2.15vw, 27px); }
+    .cover .status { border-top: 2px solid var(--gold); padding-top: 16px; margin-top: 8%; font-weight: 750; font-size: clamp(14px, 1.7vw, 21px); }
+    .cover .date { position: absolute; bottom: 8%; color: #b1c6d3; font-size: clamp(10px, 1.1vw, 14px); }
+    .network { position: absolute; width: 27%; height: 60%; right: 5%; top: 17%; opacity: .9; }
+    .network svg { width: 100%; height: 100%; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .card { background: var(--white); border: 1px solid var(--line); border-radius: 15px; padding: clamp(15px, 2vw, 23px); box-shadow: 0 5px 18px #193b5208; position: relative; }
+    .card::before { content: ""; position: absolute; left: 0; top: 17px; bottom: 17px; width: 5px; border-radius: 0 5px 5px 0; background: var(--accent, var(--teal)); }
+    .card p:last-child { margin-bottom: 0; }
+    .takeaway { background: var(--teal-pale); color: var(--navy); border-radius: 12px; padding: 14px 20px; text-align: center; font-weight: 750; margin-top: 22px; }
+    .dataset-head { display: flex; align-items: center; gap: 20px; margin-bottom: 19px; }
+    .dataset-count { color: var(--teal); font-size: clamp(45px, 6vw, 73px); line-height: 1; font-weight: 850; }
+    .pills { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 10px 0 24px; }
+    .pill { background: var(--white); border: 1px solid var(--line); border-radius: 10px; padding: 12px 6px; text-align: center; font-weight: 700; font-size: clamp(11px, 1.2vw, 15px); }
+    .split3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .split-card { border-radius: 13px; padding: 15px 20px; background: var(--white); border: 1px solid var(--line); }
+    .split-card strong { display: block; color: var(--navy); font-size: clamp(18px, 2vw, 25px); margin-bottom: 3px; }
+    .arch-rows { display: grid; gap: 18px; margin-top: 3px; }
+    .arch-row { display: grid; grid-template-columns: 145px 1fr; align-items: stretch; gap: 16px; }
+    .arch-label { display: flex; align-items: center; color: var(--muted); font-size: clamp(14px, 1.4vw, 17px); font-weight: 800; }
+    .arch-flow { display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr 40px 1fr; align-items: center; gap: 8px; }
+    .arch-flow.baseline { grid-template-columns: 1.2fr 40px 1fr 40px 1fr; }
+    .arch-node { min-height: 93px; padding: 13px 11px; border: 2px solid #d6e1e8; border-radius: 14px; background: white; color: var(--navy); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-size: clamp(15px, 1.65vw, 20px); font-weight: 800; line-height: 1.28; }
+    .arch-node small { color: var(--muted); font-size: clamp(13px, 1.2vw, 15px); font-weight: 700; margin-top: 6px; }
+    .arch-node.primary { border-color: var(--teal); background: #e7f5f3; }
+    .arch-node.graph { border-color: var(--blue); background: #edf3f8; }
+    .arch-node.output { border-color: var(--gold); background: #fff6e5; }
+    .arch-arrow { text-align: center; color: var(--teal); font-size: clamp(27px, 3vw, 36px); font-weight: 900; }
+    .arch-caption { margin: 8px 0 0 161px; color: var(--muted); font-size: 13px; }
+    .code-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .code-card { overflow: hidden; border-radius: 14px; border: 1px solid #29455b; background: var(--navy); color: #f4f7fa; }
+    .code-head { padding: 13px 17px; background: var(--navy-2); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .code-head strong { font-size: 17px; color: white; }
+    .code-head span { font-size: 11px; color: #b7d6df; }
+    pre { margin: 0; padding: 19px 20px; overflow: auto; color: #e9f5f5; font: 600 clamp(13px, 1.35vw, 16px)/1.72 Consolas, "Cascadia Code", monospace; }
+    code .kw { color: #86d7cf; }
+    code .cm { color: #adc1cd; }
+    .code-caption { padding: 0 18px 16px; margin: 0; color: #d2e0e8; font-size: 13px; line-height: 1.5; }
+    .code-source { color: var(--muted); font-size: 14px; margin: 13px 2px 0; }
+    .chart-caption { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .chart { display: grid; gap: 17px; }
+    .chart-row { display: grid; grid-template-columns: 190px 1fr 91px 150px; align-items: center; gap: 12px; }
+    .chart-name { font-weight: 750; font-size: clamp(13px, 1.4vw, 17px); }
+    .track { height: 20px; background: var(--line); border-radius: 12px; overflow: hidden; }
+    .bar { height: 100%; width: var(--value); border-radius: inherit; background: var(--bar, var(--teal)); }
+    .score { color: var(--navy); font-weight: 850; font-size: 17px; }
+    .acc { font-size: 12px; color: var(--muted); }
+    .small-note { margin-top: auto; background: var(--teal-pale); border-radius: 11px; padding: 12px 16px; font-size: 14px; font-weight: 700; }
+    .metric { font-size: clamp(21px, 2.5vw, 32px); color: var(--navy); font-weight: 850; }
+    .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 2px 0 19px; }
+    .stat { display: flex; align-items: center; gap: 13px; padding: 13px 17px; border-radius: 13px; background: white; border: 1px solid var(--line); }
+    .stat b { font-size: clamp(28px, 3.4vw, 42px); color: var(--stat-color, var(--navy)); }
+    .stat span { font-size: clamp(12px, 1.35vw, 16px); font-weight: 700; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 28px 0; }
+    .step { background: white; border: 1px solid var(--line); border-radius: 14px; padding: 18px 16px; min-height: 170px; }
+    .step .num { color: var(--accent); font-size: 27px; font-weight: 850; }
+    .step h2 { margin: 8px 0; font-size: clamp(15px, 1.65vw, 20px); }
+    .step p { font-size: clamp(11px, 1.2vw, 15px); color: var(--muted); }
+    .conclusion { background: var(--navy); color: white; padding: 7% 7%; }
+    .conclusion::before { background: var(--gold); }
+    .conclusion h1 { color: white; font-size: clamp(35px, 4.1vw, 53px); margin: 22px 0 26px; }
+    .conclusion .lead { color: white; font-size: clamp(20px, 2.4vw, 30px); font-weight: 800; line-height: 1.35; }
+    .conclusion .rule { background: var(--teal); margin: 28px 0; }
+    .conclusion .key { color: #a9e2dc; }
+    .conclusion .caution { color: #edc57d; font-weight: 750; }
+    .sources { font-size: 11px; color: #b1c6d3; margin-top: auto; }
+    .toolbar { position: fixed; left: 50%; bottom: 17px; transform: translateX(-50%); display: flex; align-items: center; gap: 7px; padding: 7px 9px; border: 1px solid #ffffff24; border-radius: 15px; color: white; background: #152e43ef; box-shadow: 0 10px 36px #0007; backdrop-filter: blur(14px); z-index: 10; }
+    .toolbar button { border: 1px solid transparent; color: white; background: #213e56; border-radius: 9px; padding: 8px 11px; font: inherit; cursor: pointer; transition: background .15s ease, transform .15s ease; }
+    .toolbar button:hover, .toolbar button:focus-visible { background: var(--teal); outline: 2px solid #a9e2dc; transform: translateY(-1px); }
+    #toggle-notes { background: #1c5666; }
+    #fullscreen { background: var(--teal); }
+    #counter { min-width: 58px; text-align: center; font-variant-numeric: tabular-nums; }
+    .progress { position: fixed; left: 0; top: 0; width: 100%; height: 4px; z-index: 20; background: #ffffff22; }
+    .progress span { display: block; height: 100%; width: 10%; background: var(--gold); transition: width .2s ease; }
+    .notes { display: none; position: fixed; z-index: 9; bottom: 77px; left: 50%; transform: translateX(-50%); width: min(900px, calc(100vw - 28px)); max-height: 34vh; overflow: auto; padding: 17px 22px; border: 1px solid #496174; border-radius: 14px; color: white; background: #11273df2; box-shadow: 0 15px 45px #0006; }
+    .notes.visible { display: block; }
+    .notes h2 { color: #a9e2dc; font-size: 15px; margin-bottom: 7px; }
+    .notes p { font-size: 15px; line-height: 1.55; margin-bottom: 0; }
+    .hint { color: #b1c6d3; font-size: 11px; padding: 0 5px; }
+    @media (max-width: 760px) {
+      body { padding: 8px 8px 75px; justify-content: flex-start; }
+      .deck { width: 100%; aspect-ratio: auto; min-height: calc(100vh - 100px); border-radius: 12px; }
+      .slide { position: relative; min-height: calc(100vh - 100px); padding: 26px 22px; }
+      .slide:not(.active) { display: none; }
+      .cover h1 { max-width: 100%; margin-top: 17%; }
+      .network { opacity: .22; width: 36%; right: 2%; }
+      .grid3, .grid2 { grid-template-columns: 1fr; }
+      .pills { grid-template-columns: repeat(2, 1fr); }
+      .arch-row { grid-template-columns: 1fr; gap: 6px; }
+      .arch-flow, .arch-flow.baseline { grid-template-columns: 1fr; gap: 5px; }
+      .arch-node { min-height: 64px; }
+      .arch-arrow { line-height: .9; transform: rotate(90deg); }
+      .arch-caption { margin: 0; }
+      .code-grid { grid-template-columns: 1fr; }
+      pre { font-size: 12px; padding: 12px 14px; }
+      .chart-row { grid-template-columns: 1fr 75px; gap: 7px; }
+      .track { grid-column: 1 / 2; grid-row: 2; }
+      .acc { grid-column: 2; grid-row: 2; }
+      .stat-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .toolbar { gap: 4px; bottom: 8px; }
+      .toolbar button { padding: 7px 8px; font-size: 12px; }
+      .hint { display: none; }
+    }
+    @media print {
+      @page { size: 13.333in 7.5in; margin: 0; }
+      html, body { width: 100%; height: auto; min-height: 0; padding: 0; background: white; }
+      body { display: block; }
+      .progress, .toolbar, .notes { display: none !important; }
+      .deck { width: 100%; height: auto; aspect-ratio: auto; overflow: visible; box-shadow: none; }
+      .slide, .slide.active { display: flex !important; position: relative; width: 100vw; height: 100vh; page-break-after: always; break-after: page; overflow: hidden; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><span id="progress"></span></div>
+  <main class="deck" id="deck" aria-label="FlyCall-1999 專案簡報">
+    <section class="slide cover active" data-title="專案介紹" aria-label="第 1 頁：專案介紹">
+      <div class="eyebrow">FLYCALL-1999　/　RESEARCH BRIEFING</div>
+      <h1>Connectome 限制下的<br>1999 案件分類研究</h1>
+      <p class="subtitle">專案進度、模型比較與驗收狀態</p>
+      <div class="status">技術原型完成　·　人工複核與正式 test 尚待完成</div>
+      <div class="date">2026-10-26　|　繁體中文簡報</div>
+      <div class="network" aria-hidden="true">
+        <svg viewBox="0 0 260 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M55 45L190 93L75 175L194 254L65 319M190 93L194 254M75 175L194 254M55 45L75 175" stroke="#537f91" stroke-width="3"/>
+          <circle cx="55" cy="45" r="12" fill="#1b9191"/><circle cx="190" cy="93" r="12" fill="#ebae44"/>
+          <circle cx="75" cy="175" r="15" fill="#1b9191"/><circle cx="194" cy="254" r="12" fill="#ebae44"/>
+          <circle cx="65" cy="319" r="12" fill="#1b9191"/>
+        </svg>
+      </div>
+    </section>
+
+    <section class="slide" data-title="研究問題" aria-label="第 2 頁：研究問題">
+      <div class="eyebrow">01　研究目標</div><h1>我們想回答什麼問題？</h1><div class="rule"></div>
+      <div class="grid3">
+        <article class="card" style="--accent:var(--teal)"><h2>市政通話分類</h2><p>從 R/L 對話辨識主要案件類別。</p></article>
+        <article class="card" style="--accent:var(--gold)"><h2>表示瓶頸</h2><p>E5 能保留豐富語意，但分類表示仍需壓縮並兼顧可用訊息。</p></article>
+        <article class="card" style="--accent:var(--blue)"><h2>Connectome 想法</h2><p>用 Fly A 轉換表示，再由 Fly B 分類；檢驗拓樸限制下的工程可行性。</p></article>
+      </div>
+      <div class="takeaway">研究定位：可行性原型；不預設 Connectome 必然勝過一般分類器。</div>
+      <div class="footer"><span>FlyCall-1999　•　專案說明</span><span>02 / 11</span></div>
+    </section>
+
+    <section class="slide" data-title="資料設計" aria-label="第 3 頁：資料設計">
+      <div class="eyebrow">02　資料</div><h1>平衡、固定切分、合成來源</h1><div class="rule"></div>
+      <div class="dataset-head"><div class="dataset-count">1,000</div><h2>筆正式合成通話<br>五類各 200 筆</h2></div>
+      <div class="pills"><div class="pill">人行道維護</div><div class="pill">道路表面</div><div class="pill">公園綠地</div><div class="pill">垃圾車服務</div><div class="pill">路面清潔</div></div>
+      <div class="split3">
+        <div class="split-card"><strong>訓練　700 筆</strong><span>用於模型訓練</span></div>
+        <div class="split-card"><strong>驗證　150 筆</strong><span>比較模型與設定</span></div>
+        <div class="split-card"><strong>測試　150 筆</strong><span>保留作最後一次評估</span></div>
+      </div>
+      <p class="small-note">R=客服、L=來電民眾；Pilot 與正式資料分開。合成資料便於控制實驗，但不等同真實來電分布。</p>
+      <div class="footer"><span>資料來源：正式資料 v1.0.0</span><span>03 / 11</span></div>
+    </section>
+
+    <section class="slide" data-title="模型架構" aria-label="第 4 頁：模型架構">
+      <div class="eyebrow">03　模型架構</div><h1>模型如何從通話走到五類分數？</h1><div class="rule"></div>
+      <div class="arch-rows">
+        <div class="arch-row">
+          <div class="arch-label">文字分類基準</div>
+          <div class="arch-flow baseline">
+            <div class="arch-node primary"><strong>通話 → E5</strong><small>文字嵌入 · 384 維</small></div><div class="arch-arrow">→</div>
+            <div class="arch-node"><strong>MLP</strong><small>hidden size 16</small></div><div class="arch-arrow">→</div>
+            <div class="arch-node output"><strong>五類分數</strong><small>分類 logits</small></div>
+          </div>
+        </div>
+        <div class="arch-row">
+          <div class="arch-label">Connectome 路徑</div>
+          <div class="arch-flow">
+            <div class="arch-node primary"><strong>通話 → E5</strong><small>文字嵌入 · 384 維</small></div><div class="arch-arrow">→</div>
+            <div class="arch-node graph"><strong>Fly A</strong><small>384 → 32 維表示</small></div><div class="arch-arrow">→</div>
+            <div class="arch-node graph"><strong>Fly B</strong><small>32 維 → 分類</small></div><div class="arch-arrow">→</div>
+            <div class="arch-node output"><strong>五類分數</strong><small>32 → 5 logits</small></div>
+          </div>
+        </div>
+      </div>
+      <p class="arch-caption">兩條路徑共用固定版本的 multilingual-e5-small 嵌入；Fly A/B 是 Connectome 工程候選。</p>
+      <div class="takeaway">M4 展示鎖定 MLP（seed 42）；分類分數需人工確認，不連接真實派工。</div>
+      <div class="footer"><span>圖中維度與順序依 predictor.py 的鎖定推論流程</span><span>04 / 11</span></div>
+    </section>
+
+    <section class="slide" data-title="實際程式片段" aria-label="第 5 頁：實際程式片段">
+      <div class="eyebrow">04　程式如何串接</div><h1>Fly A 產生表示，Fly B 輸出分類 logits</h1><div class="rule"></div>
+      <div class="code-grid">
+        <article class="code-card">
+          <div class="code-head"><strong>Fly A.forward</strong><span>graph_core.py · 262–268</span></div>
+          <pre><code><span class="cm"># E5 嵌入 → 正規化 32 維表示</span>
+normalized = embeddings / norm
+drives = torch.tanh(
+    self.input_projection(normalized)
+)
+output = self.graph_core(drives)
+output_norm = torch.linalg.vector_norm(
+    output, ord=2, dim=1, keepdim=True
+)
+return output / output_norm</code></pre>
+          <p class="code-caption">把 E5 嵌入投影到 32 維，送入圖核心，再正規化輸出。</p>
+        </article>
+        <article class="code-card">
+          <div class="code-head"><strong>Fly B.forward</strong><span>graph_core.py · 320–322</span></div>
+          <pre><code><span class="cm"># Fly A 的輸出必須是 32 維</span>
+if fly_a_output.ndim != 2 or fly_a_output.shape[1] != 32:
+    raise GraphCoreError("fly_a_output must have shape (batch, 32)")
+drives = self.input_adapter(
+    fly_a_output
+)
+graph_output = self.graph_core(drives)
+return self.readout(graph_output)</code></pre>
+          <p class="code-caption">Fly B 經圖核心後，用 readout 產生五類 logits。</p>
+        </article>
+      </div>
+      <p class="code-source">原始碼節錄；略去 norm 計算、輸入型別與有限值檢查。推論階段會確認 E5 輸出為 384 維。</p>
+      <div class="footer"><span><a href="../src/flycall_data/graph_core.py">開啟完整 graph_core.py</a>　·　<a href="../src/flycall_data/predictor.py">開啟 predictor.py</a></span><span>05 / 11</span></div>
+    </section>
+
+    <section class="slide" data-title="驗證比較" aria-label="第 6 頁：驗證比較">
+      <div class="eyebrow">05　模型比較</div><h1>相同訓練預算下的驗證集結果</h1><div class="rule"></div>
+      <div class="chart-caption">Macro-F1 平均值　｜　三個 seed：42、1337、2026</div>
+      <div class="chart">
+        <div class="chart-row"><div class="chart-name">MLP</div><div class="track"><div class="bar" style="--value:91.04%;--bar:var(--teal)"></div></div><div class="score">0.9104</div><div class="acc">Acc 0.9133　·　SD 0.0302</div></div>
+        <div class="chart-row"><div class="chart-name">Gated E5 residual</div><div class="track"><div class="bar" style="--value:90.48%;--bar:var(--blue)"></div></div><div class="score">0.9048</div><div class="acc">Acc 0.9089　·　SD 0.0084</div></div>
+        <div class="chart-row"><div class="chart-name">純 Fly A → Fly B</div><div class="track"><div class="bar" style="--value:80.40%;--bar:var(--orange)"></div></div><div class="score">0.8040</div><div class="acc">Acc 0.8244　·　SD 0.0218</div></div>
+      </div>
+      <div class="small-note">MLP 比 residual 高 0.0056 Macro-F1。以上是合成資料的 validation-only 結果，不是正式 test 結論。</div>
+      <div class="footer"><span>Matched-budget comparison　•　validation only</span><span>06 / 11</span></div>
+    </section>
+
+    <section class="slide" data-title="Residual 解讀" aria-label="第 7 頁：Residual 解讀">
+      <div class="eyebrow">06　結果解讀</div><h1>Residual 保留原始 E5 訊號</h1><div class="rule"></div>
+      <div class="grid3">
+        <article class="card" style="--accent:var(--orange)"><h2>純 Fly A → Fly B</h2><p>Fly A 壓縮成 32 維，Fly B 只依賴這個表示。</p><div class="metric">Macro-F1　0.8040</div></article>
+        <article class="card" style="--accent:var(--teal)"><h2>Gated E5 residual</h2><p>Fly A 表示之外，增加保留原始 E5 訊號的 gated 路徑。</p><div class="metric">Macro-F1　0.9048</div></article>
+        <article class="card" style="--accent:var(--blue)"><h2>一般 MLP</h2><p>直接由 E5 嵌入分類，作為文字分類基準。</p><div class="metric">Macro-F1　0.9104</div></article>
+      </div>
+      <div class="takeaway">解讀：結果符合「低維瓶頸可能損失部分分類訊號」的假設；目前仍不是因果證明。</div>
+      <div class="footer"><span>Residual 保留旁路資訊，仍須以正式評估確認</span><span>07 / 11</span></div>
+    </section>
+
+    <section class="slide" data-title="M4 驗收" aria-label="第 8 頁：M4 驗收">
+      <div class="eyebrow">07　工程驗收</div><h1>M4：模型已接上三種本機介面</h1><div class="rule"></div>
+      <div class="grid3">
+        <article class="card" style="--accent:var(--teal)"><h2>Predictor API</h2><p>共用鎖定模型與 E5 runtime。</p></article>
+        <article class="card" style="--accent:var(--blue)"><h2>命令列 CLI</h2><p>載入相同 checkpoint，輸出類別與分數。</p></article>
+        <article class="card" style="--accent:var(--gold)"><h2>Streamlit UI</h2><p>展示五類分數，並標示待人工確認。</p></article>
+      </div>
+      <div class="takeaway" style="font-size:clamp(16px,2.2vw,27px);margin-top:25px">API　=　CLI　=　Streamlit</div>
+      <p style="text-align:center;color:var(--teal);font-weight:800;margin:14px 0">標籤一致　·　logits 最大差異 0.0　·　機率最大差異 0.0</p>
+      <p class="small-note">驗收使用獨立撰寫的合成示例，未讀取資料集或 test split；這證明介面一致，不代表正式 test 已執行。</p>
+      <div class="footer"><span>鎖定 MLP：seed 42　·　384→16→5　·　80 epochs</span><span>08 / 11</span></div>
+    </section>
+
+    <section class="slide" data-title="人工複核" aria-label="第 9 頁：人工複核">
+      <div class="eyebrow">08　品質關卡</div><h1>正式結果仍需人工複核</h1><div class="rule"></div>
+      <div class="stat-grid">
+        <div class="stat" style="--stat-color:var(--navy)"><b>399</b><span>筆複核樣本</span></div>
+        <div class="stat" style="--stat-color:var(--orange)"><b>103</b><span>筆需特別確認</span></div>
+        <div class="stat" style="--stat-color:var(--red)"><b>24</b><span>筆 AI 建議 revise</span></div>
+      </div>
+      <div class="grid2">
+        <article class="card" style="--accent:var(--teal)"><h2>人工要確認</h2><p>主訴類別與情境家族<br>對話自然度、前後一致<br>模糊類別邊界與資料品質</p></article>
+        <article class="card" style="--accent:var(--gold)"><h2>目前狀態</h2><p>399 筆人工欄位仍 pending<br>AI pass 不等於人工核准<br>依規格逐類、跨 split 複核</p></article>
+      </div>
+      <p style="color:var(--red);font-weight:800;text-align:center;margin:15px 0 0">可複核 test 文字品質；不要查看 test 預測或分數。</p>
+      <div class="footer"><span>正式複核工作簿位於 outputs/flycall-1999-formal-review-pack-v1.0/</span><span>09 / 11</span></div>
+    </section>
+
+    <section class="slide" data-title="後續流程" aria-label="第 10 頁：後續流程">
+      <div class="eyebrow">09　下一步</div><h1>先複核，再執行一次正式測試</h1><div class="rule"></div>
+      <div class="steps">
+        <article class="step" style="--accent:var(--orange)"><div class="num">01</div><h2>完成人工複核</h2><p>處理標記項目與 AI revise 建議。</p></article>
+        <article class="step" style="--accent:var(--blue)"><div class="num">02</div><h2>核准模型設定</h2><p>確認鎖定 MLP、seed 42 與 checkpoint。</p></article>
+        <article class="step" style="--accent:var(--teal)"><div class="num">03</div><h2>執行一次 test</h2><p>測試集不反覆調參，保留執行紀錄。</p></article>
+        <article class="step" style="--accent:var(--navy)"><div class="num">04</div><h2>整理最終報告</h2><p>呈現測試結果、限制與人工決定。</p></article>
+      </div>
+      <div class="takeaway">目前：人工複核 pending　·　正式 test = not_run　·　test 尚未用於模型輸入</div>
+      <div class="footer"><span>若人工複核造成資料變更，需建立新版本並重跑必要驗證</span><span>10 / 11</span></div>
+    </section>
+
+    <section class="slide conclusion" data-title="結論" aria-label="第 11 頁：結論">
+      <div class="eyebrow">10　結論</div>
+      <h1>可展示的技術原型，<br>尚未形成正式效能結論。</h1>
+      <div class="rule"></div>
+      <p class="key">已完成：訓練流程、鎖定 MLP、API／CLI／UI 一致性驗收。</p>
+      <p>待完成：人工複核、候選核准、一次性正式 test 與最終報告。</p>
+      <p class="caution">限制：目前是合成資料；不代表真實市政通話效能，也不執行自動派工。</p>
+      <div class="sources">簡報依據：Spec v0.2　·　專案 README　·　M3.4 validation report　·　M4 acceptance report　·　正式複核摘要</div>
+      <div class="footer" style="color:#b1c6d3"><span>謝謝</span><span>11 / 11</span></div>
+    </section>
+  </main>
+
+  <aside class="notes" id="notes" aria-live="polite" aria-label="講者備註">
+    <h2 id="notes-title">講者備註</h2><p id="notes-text"></p>
+  </aside>
+  <nav class="toolbar" aria-label="簡報控制">
+    <button id="prev" type="button" aria-label="上一頁">← 上一頁</button>
+    <span id="counter" aria-live="polite">01 / 11</span>
+    <button id="next" type="button" aria-label="下一頁">下一頁 →</button>
+    <button id="toggle-notes" type="button" aria-label="切換講者備註">講稿 N</button>
+    <button id="fullscreen" type="button" aria-label="全螢幕播放">全螢幕</button>
+    <span class="hint">← → 切頁　·　Home/End 跳頁　·　P 列印</span>
+  </nav>
+  <script>
+    (() => {
+      const slides = [...document.querySelectorAll('.slide')];
+      const notes = [
+        '今天介紹的是 FlyCall-1999，一個用臺灣 1999 市政通話研究案件分類與 Connectome 表示方法的工程原型。專案已完成主要模型訓練、鎖定模型推論及展示介面驗收；但資料仍待人工複核，正式 test 也尚未執行。因此今天可以說明系統做到了什麼，不能把目前的 validation 數字說成最終效能。',
+        '民眾來電是一段對話，客服會追問細節，而模型要從整段內容判斷主要案件類別。本研究除了建立一般分類基準，也探索受果蠅神經連結拓樸限制的兩段式表示：Fly A 把文字表示轉成低維訊號，Fly B 再做分類。研究問題是這條受限表示路徑能否運作，以及它與一般分類器的差異；我們不預設 Connectome 一定勝過標準模型。',
+        '正式資料是 1,000 筆合成通話，五類各 200 筆；切分為 700 筆訓練、150 筆驗證及 150 筆測試。資料使用 R 代表客服、L 代表來電民眾，Pilot 與正式資料分開。合成資料讓流程可控，卻不能代表真實市民來電的全部分布，所以最後仍需逐筆檢查內容，也要謹慎解讀泛化能力。',
+        '兩條模型路徑共用 multilingual E5 文字嵌入。一般 MLP 將 384 維嵌入映射到五類；Connectome 路徑先由 Fly A 壓縮成 32 維表示，再交給 Fly B 分類。介面顯示分類分數，但把結果標示為待人工確認。這是研究原型，不會連接真實派工系統。',
+        '這頁的程式碼直接節錄自 graph_core.py。Fly A 將輸入正規化、投影成 32 維，再由圖核心產生表示；Fly B 接收這個 32 維向量，通過自己的輸入投影和圖核心，最後用 readout 輸出五個 logits。畫面省略了實際程式中的輸入形狀、有限值和向量長度檢查。',
+        '這裡比較相同訓練預算下、三個 seed 的平均 validation 結果。MLP 的 Macro-F1 為 0.9104，gated E5 residual 為 0.9048，純 Fly A 到 Fly B 為 0.8040；accuracy 分別是 0.9133、0.9089、0.8244。MLP 比 residual 高 0.0056 Macro-F1。這個差距不大，而且只是合成資料的驗證集結果，還不是正式測試結論。',
+        '純 Fly A/B 路徑只讓 Fly B 看到 Fly A 壓縮後的低維表示。Residual 候選增加一條保留 E5 原始嵌入訊號的 gated 路徑，讓分類器同時利用壓縮表示與原始語意特徵。驗證結果比純 Fly A/B 高很多、接近 MLP，與「低維瓶頸可能損失部分分類資訊」的解釋相符；但這是依目前實驗做的解讀，不能單靠這些數字證明因果。',
+        'M4 把鎖定的 MLP 接到共用 predictor、CLI 與 Streamlit 介面。驗收載入實際 checkpoint 及固定版本的 E5，三個介面對同一筆獨立撰寫的合成示例輸出一致：預測標籤相同，logits 與機率最大差異都是 0。這證明技術整合一致，不代表模型已通過正式 test。畫面只做模擬呈現，仍要求人工確認。',
+        '正式複核資料包包含 399 筆抽樣，涵蓋全部 validation、test 與部分 train 家族；目前人工決定都還是 pending。當中有 103 筆需特別確認、24 筆 AI 建議修改。人工要判斷主訴分類、情境家族、對話自然度、類別邊界及資料品質。AI pass 只是提示，不是人工核准。人工可檢查測試資料品質，但此階段不能看模型在 test 上的預測或分數。',
+        '程式、訓練流程、模型鎖定、CLI/API/UI 一致性驗收已完成；一次性 test gate 的保護測試也已通過。正式 test 本身仍是 not_run。接下來先完成複核並核准候選及設定，再執行一次正式 test，最後整理報告。如果人工複核導致資料或標籤變更，則應先建立新資料版本並重跑必要驗證，不能把變更直接套進目前鎖定版本。',
+        'FlyCall-1999 已具備可展示、可重現的技術原型，也完成了一般模型與 Connectome 路徑的驗證集比較。現階段可說明架構與工程驗收成果，但不能宣稱已證明真實服務效能，也不能用於自動派工。正式結論還要等人工複核、候選核准與一次性 test。這個界線是專案設計的一部分，確保 test 不被反覆調參污染。'
+      ];
+      let current = 0;
+      const counter = document.getElementById('counter');
+      const progress = document.getElementById('progress');
+      const notesPanel = document.getElementById('notes');
+      const notesTitle = document.getElementById('notes-title');
+      const notesText = document.getElementById('notes-text');
+      function show(index) {
+        current = Math.max(0, Math.min(slides.length - 1, index));
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === current);
+          slide.setAttribute('aria-hidden', i === current ? 'false' : 'true');
+        });
+        counter.textContent = `${String(current + 1).padStart(2, '0')} / ${slides.length}`;
+        progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+        notesTitle.textContent = `講者備註｜${String(current + 1).padStart(2, '0')}：${slides[current].dataset.title}`;
+        notesText.textContent = notes[current];
+        history.replaceState(null, '', `#${current + 1}`);
+      }
+      document.getElementById('prev').addEventListener('click', () => show(current - 1));
+      document.getElementById('next').addEventListener('click', () => show(current + 1));
+      document.getElementById('toggle-notes').addEventListener('click', () => notesPanel.classList.toggle('visible'));
+      document.getElementById('fullscreen').addEventListener('click', async () => {
+        if (!document.fullscreenElement) await document.documentElement.requestFullscreen?.();
+        else await document.exitFullscreen?.();
+      });
+      document.addEventListener('keydown', event => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        if (['ArrowRight', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); show(current + 1); }
+        else if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); show(current - 1); }
+        else if (event.key === 'Home') show(0);
+        else if (event.key === 'End') show(slides.length - 1);
+        else if (event.key.toLowerCase() === 'n') notesPanel.classList.toggle('visible');
+        else if (event.key.toLowerCase() === 'p') window.print();
+      });
+      const initial = Number(location.hash.slice(1));
+      show(Number.isInteger(initial) && initial > 0 ? initial - 1 : 0);
+    })();
+  </script>
+</body>
+</html>
