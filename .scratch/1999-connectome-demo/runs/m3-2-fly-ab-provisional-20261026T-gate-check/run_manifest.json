@@ -1,0 +1,49 @@
+{
+  "candidate_registration": "pre_registered_candidates.json",
+  "code_sha256": {
+    "evaluation": "152d0437ce8a6b9c449189993b4cd70560d8e691aeaab1d5c4a3c6263f1c2269",
+    "graph_core": "f59861f63eeab0a04ed94efa7a4216e4ba9a229f10b7c34b84c493f50a3529d7",
+    "inputs": "592327bb9efd81f6d923c8da2a933e2893b288183270ded797816e9a0377b788",
+    "loader": "71ce629a44725ee627d25b83cc499dd2bcceafc7354f5f0b985c42e7fe759ff7",
+    "runner": "eedb43e7dbe22fc6ee6ab5b81405d8eb15a5f0589505da4172843b4568236ec7",
+    "trainer": "02905743ffcc92919d1be8883d12ac52092edac17dee8e8228735ecf0e145a1b"
+  },
+  "configuration_fingerprint": "c2ef9f2ba52431ad7be55b9be4aad528a5e8a421f4a939849fac7c146563d573",
+  "created_at_utc": "2026-10-26T02:12:58.102809+00:00",
+  "dependency_inputs": {
+    "lock": {
+      "path": ".scratch\\1999-connectome-demo\\requirements-m3-2-fly-ab-windows.lock",
+      "sha256": "bf2cf3412785c2e6ae2518f9a57b8d3fb8d2158bbb95af939f188f0e763c8cd3"
+    },
+    "requirements": {
+      "path": ".scratch\\1999-connectome-demo\\requirements-m3-2-fly-ab-windows.in",
+      "sha256": "7929871012d94e73a6731cd7ab46a4971bfcde739c9fcd16f7688411d3403da5"
+    }
+  },
+  "elapsed_seconds": 0.0015768000012030825,
+  "environment": {
+    "device": "cpu",
+    "implementation": "CPython",
+    "machine": "AMD64",
+    "packages": {
+      "numpy": "2.5.4",
+      "pyarrow": "26.0.0",
+      "torch": "2.14.1"
+    },
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.3"
+  },
+  "error": "graph provenance pin mismatch; Parquet files have not been opened: M1.2 manifest current=4edcb82d6f5f88c5e8afac62a948368a0d50a87b1c443e0ad91e1e30605b7a88, pinned=5300c6cefdc6b84a854545e64f4131baa3fc42f0bde97a83f68fcc1c3769cf40; M1.3 I/O manifest current=440f6876822d3f36ce7cd34bb250da2a0a532fbbfdd11bdac182fa4b154cbab8, pinned=48148a1d64cc5402b17db99dff61ad42a3c29bef8d422ebfa6a25e375e07f585",
+  "error_type": "M32InputGateError",
+  "finished_at_utc": "2026-10-26T02:12:58.179406+00:00",
+  "git_commit": "176896885be0b5457d7d930a5015f4dfd3286f71",
+  "run_id": "m3-2-fly-ab-provisional-20261026T-gate-check",
+  "schema_version": 1,
+  "status": "blocked",
+  "stopped_at_phase": "graph-provenance-preflight",
+  "test": {
+    "metrics": "not_run",
+    "model_inputs": 0,
+    "status": "not_run"
+  }
+}
