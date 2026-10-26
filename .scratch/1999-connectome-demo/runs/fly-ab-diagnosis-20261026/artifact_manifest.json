@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "scope": "validation-only exploratory Fly A/B diagnostics; test not run",
+  "data_status": "synthetic",
+  "review_status": "pending_manual_review",
+  "test": {
+    "status": "not_run",
+    "model_inputs": 0
+  },
+  "full_unit_test_count": 141,
+  "source_code_sha256": {
+    "src/flycall_data/fly_ab_diagnostics.py": "6eeb0d32eddf1c9f48a1eee1e089cf05d5df9f57f3231bd81722147b01eb3e46",
+    "src/flycall_data/fly_ab_training.py": "02905743ffcc92919d1be8883d12ac52092edac17dee8e8228735ecf0e145a1b",
+    "src/flycall_data/graph_core.py": "b5d77b32bc0fa0e7ef0024b881d85c80d48c20ef9cd11e2d897e3f656589959d",
+    "scripts/diagnose_fly_a_b.py": "b7b6d7bbc2b47410aa6bf050df9537c3c8270efcf8670773d2e7527e00319120",
+    "scripts/tune_fly_b_e5_residual.py": "683604daac3502609bddcb9ffb137b9ef96a0c084e5281c130345fb2285120e4",
+    "tests/test_fly_ab_diagnostics.py": "e36e2c121eb2e00872ae86e6218dfda008efd051faec3826fe693968057023e5",
+    "tests/test_fly_ab_training.py": "f86707823f77e989ba17cfed87a5caab0c4caef17f50d088df91856e2bb22407",
+    "tests/test_graph_core.py": "1359fd566d431fd8a12f2c57be9b51716d2fc7bb32b38b9c771c8e6ead36848e"
+  },
+  "files": {
+    "checkpoints/gated-e5-residual/seed-1337/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "885feb97b560402ef7742a65e27767770a13103a9416385394c5fe1abca44b9e"
+    },
+    "checkpoints/gated-e5-residual/seed-2026/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "2704f218865484a20b595ef8f0fe9426297d26981ad9fb0eb2981105fff301c7"
+    },
+    "checkpoints/gated-e5-residual/seed-42/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "1304604e8aba3977127a781fbd64138fd2ccfbe83b618a1d5e7b4f36c5b63239"
+    },
+    "checkpoints/residual-follow-up/residual_gate_0_long/seed-1337/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "c896331e82cfc78f7cc74004f609e1b9111f73c695f07279729cbcea215cd72d"
+    },
+    "checkpoints/residual-follow-up/residual_gate_0_long/seed-2026/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "83f871e22b6c5b3d3a9da598327009235a75e71889060ece396722683f9fa809"
+    },
+    "checkpoints/residual-follow-up/residual_gate_0_long/seed-42/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "46f2be6dc915ee1829cef81e9d910e69b32a344127700df5438e63434efc4ad8"
+    },
+    "checkpoints/residual-follow-up/residual_gate_0_lr3_long/seed-1337/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "f14df7bae48111dcfed9128136cbe8be813fa6b70aac746399206279c12a8508"
+    },
+    "checkpoints/residual-follow-up/residual_gate_0_lr3_long/seed-2026/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "05585f19b3f2badcb6bbfc34c49f20af5202b0ee160ff490deded6e1e561739b"
+    },
+    "checkpoints/residual-follow-up/residual_gate_0_lr3_long/seed-42/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "c36e4fdac1c6ca9d5f0a4e6d2e497269e650039097cc804d3bb4c5657a906514"
+    },
+    "checkpoints/residual-follow-up/residual_gate_m2_long/seed-1337/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "74976b325a95e71f6b97eab1134276bd9fef896b57de7ac59436abe8705c9ef9"
+    },
+    "checkpoints/residual-follow-up/residual_gate_m2_long/seed-2026/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "0e2fab22ae063d64661b27d51f6852e196b536fd109fdad7e640202483e11491"
+    },
+    "checkpoints/residual-follow-up/residual_gate_m2_long/seed-42/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "511185fe2ca7f6b4a8f6f03779dad8820b4c3c9ed4f218d307da7ae3f99bc649"
+    },
+    "checkpoints/residual-follow-up/residual_gate_m2_lr3_long/seed-1337/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "8f23fb612a8821c63c02eafd98fb1ef752815fa3f687172882df3afb01b8308b"
+    },
+    "checkpoints/residual-follow-up/residual_gate_m2_lr3_long/seed-2026/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "551060bfccf02d54b32445a09d09f3ada9bf46e22ebff68008508104b191895b"
+    },
+    "checkpoints/residual-follow-up/residual_gate_m2_lr3_long/seed-42/fly-b-residual-checkpoint.pt": {
+      "bytes": 152063,
+      "sha256": "f9402aea17822033af93020996bfdd2a98d2f498140b98af9165453a0bf2346a"
+    },
+    "diagnosis.json": {
+      "bytes": 149783,
+      "sha256": "3d702086935378c6e57de1661bbb2114ac3462581f24e5c0a2ed6c42690be5ee"
+    },
+    "probe_results.json": {
+      "bytes": 70291,
+      "sha256": "ac01e8aeddffcf9d46f89b759947bc2ddea004996971d07caedd024a29f26176"
+    },
+    "report.md": {
+      "bytes": 6482,
+      "sha256": "d3ed4f575fb701fa8a07918939d6db2da65892c7743b0cbd3b4ecf30cb13cbc8"
+    },
+    "residual_followup.json": {
+      "bytes": 57064,
+      "sha256": "5dc0089daf01b24d25383b73acff0c5912b5585dd29e848d5e8e97561b483e75"
+    },
+    "tuning_results.json": {
+      "bytes": 12886,
+      "sha256": "0e45cd0bda087e103f17efd9e9f01b12ac081ac38f8178b95e5ee596e364979f"
+    }
+  }
+}

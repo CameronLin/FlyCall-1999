@@ -1,0 +1,1797 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-10-26T03:32:18.461746+00:00",
+  "kind": "gated_e5_residual_stability_sweep",
+  "status": "exploratory_validation_sweep_complete_pending_manual_review",
+  "data_status": "synthetic",
+  "review_status": "pending_manual_review",
+  "seeds": [
+    42,
+    1337,
+    2026
+  ],
+  "configurations": {
+    "residual_gate_m2_long": {
+      "configuration": {
+        "gate_logit_init": -2.0,
+        "learning_rate": 0.001,
+        "max_epochs": 200,
+        "patience": 25,
+        "batch_size": 32,
+        "gradient_clip_norm": 1.0
+      },
+      "validation_macro_f1": {
+        "mean": 0.8945279571175225,
+        "sample_std": 0.011122101327820181
+      },
+      "validation_accuracy": {
+        "mean": 0.9,
+        "sample_std": 0.011547005383792526
+      },
+      "delta_macro_f1_vs_original_mean": 0.2344688079472661,
+      "delta_macro_f1_vs_control_mean": 0.1438130399218033,
+      "by_seed": [
+        {
+          "seed": 42,
+          "selected_epoch": 197,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_m2_long/seed-42/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "511185fe2ca7f6b4a8f6f03779dad8820b4c3c9ed4f218d307da7ae3f99bc649",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 0.9985714285714286,
+            "macro_f1": 0.9985714103496217,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 0.9928571428571429,
+                "f1": 0.996415770609319,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 0.9929078014184397,
+                "recall": 1.0,
+                "f1": 0.9964412811387899,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                139,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.8861137483782671,
+          "validation_accuracy": 0.8933333333333333,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.7073170731707317,
+              "recall": 0.9666666666666667,
+              "f1": 0.8169014084507042,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.9375,
+              "recall": 1.0,
+              "f1": 0.967741935483871,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.9666666666666667,
+              "recall": 0.9666666666666667,
+              "f1": 0.9666666666666667,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 1.0,
+              "recall": 0.5333333333333333,
+              "f1": 0.6956521739130436,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.6541271600214518,
+          "original_accuracy": 0.6733333333333333,
+          "control_residual_macro_f1": 0.7861194403950827,
+          "control_residual_accuracy": 0.7933333333333333,
+          "delta_macro_f1_vs_original": 0.2319865883568153,
+          "delta_accuracy_vs_original": 0.21999999999999997,
+          "delta_macro_f1_vs_control_residual": 0.09999430798318432,
+          "residual_gate": 0.848507285118103,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        },
+        {
+          "seed": 1337,
+          "selected_epoch": 155,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_m2_long/seed-1337/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "74976b325a95e71f6b97eab1134276bd9fef896b57de7ac59436abe8705c9ef9",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                140,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.8903325644526088,
+          "validation_accuracy": 0.8933333333333333,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.7567567567567568,
+              "recall": 0.9333333333333333,
+              "f1": 0.835820895522388,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.9310344827586207,
+              "recall": 0.9,
+              "f1": 0.9152542372881356,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 0.8260869565217391,
+              "recall": 0.6333333333333333,
+              "f1": 0.7169811320754716,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.586713633398565,
+          "original_accuracy": 0.6666666666666666,
+          "control_residual_macro_f1": 0.574083816501632,
+          "control_residual_accuracy": 0.66,
+          "delta_macro_f1_vs_original": 0.3036189310540438,
+          "delta_accuracy_vs_original": 0.22666666666666668,
+          "delta_macro_f1_vs_control_residual": 0.3162487479509768,
+          "residual_gate": 0.7722446322441101,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        },
+        {
+          "seed": 2026,
+          "selected_epoch": 132,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_m2_long/seed-2026/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "0e2fab22ae063d64661b27d51f6852e196b536fd109fdad7e640202483e11491",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                140,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.9071375585216916,
+          "validation_accuracy": 0.9133333333333333,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.7317073170731707,
+              "recall": 1.0,
+              "f1": 0.8450704225352113,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 1.0,
+              "recall": 0.5666666666666667,
+              "f1": 0.7234042553191489,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.7393366540907524,
+          "original_accuracy": 0.7866666666666666,
+          "control_residual_macro_f1": 0.8919414946904428,
+          "control_residual_accuracy": 0.9,
+          "delta_macro_f1_vs_original": 0.1678009044309392,
+          "delta_accuracy_vs_original": 0.1266666666666667,
+          "delta_macro_f1_vs_control_residual": 0.01519606383124883,
+          "residual_gate": 0.7444286942481995,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        }
+      ]
+    },
+    "residual_gate_m2_lr3_long": {
+      "configuration": {
+        "gate_logit_init": -2.0,
+        "learning_rate": 0.003,
+        "max_epochs": 200,
+        "patience": 25,
+        "batch_size": 32,
+        "gradient_clip_norm": 1.0
+      },
+      "validation_macro_f1": {
+        "mean": 0.9016710956077064,
+        "sample_std": 0.014522917762818251
+      },
+      "validation_accuracy": {
+        "mean": 0.9066666666666666,
+        "sample_std": 0.013333333333333364
+      },
+      "delta_macro_f1_vs_original_mean": 0.24161194643745007,
+      "delta_macro_f1_vs_control_mean": 0.15095617841198727,
+      "by_seed": [
+        {
+          "seed": 42,
+          "selected_epoch": 62,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_m2_lr3_long/seed-42/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "f9402aea17822033af93020996bfdd2a98d2f498140b98af9165453a0bf2346a",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 0.9985714285714286,
+            "macro_f1": 0.9985714103496217,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 0.9928571428571429,
+                "f1": 0.996415770609319,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 0.9929078014184397,
+                "recall": 1.0,
+                "f1": 0.9964412811387899,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                139,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.8861137483782671,
+          "validation_accuracy": 0.8933333333333333,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.7073170731707317,
+              "recall": 0.9666666666666667,
+              "f1": 0.8169014084507042,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.9375,
+              "recall": 1.0,
+              "f1": 0.967741935483871,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.9666666666666667,
+              "recall": 0.9666666666666667,
+              "f1": 0.9666666666666667,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 1.0,
+              "recall": 0.5333333333333333,
+              "f1": 0.6956521739130436,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.6541271600214518,
+          "original_accuracy": 0.6733333333333333,
+          "control_residual_macro_f1": 0.7861194403950827,
+          "control_residual_accuracy": 0.7933333333333333,
+          "delta_macro_f1_vs_original": 0.2319865883568153,
+          "delta_accuracy_vs_original": 0.21999999999999997,
+          "delta_macro_f1_vs_control_residual": 0.09999430798318432,
+          "residual_gate": 0.8244587182998657,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        },
+        {
+          "seed": 1337,
+          "selected_epoch": 83,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_m2_lr3_long/seed-1337/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "8f23fb612a8821c63c02eafd98fb1ef752815fa3f687172882df3afb01b8308b",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                140,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.9040283440654612,
+          "validation_accuracy": 0.9066666666666666,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.7777777777777778,
+              "recall": 0.9333333333333333,
+              "f1": 0.8484848484848485,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.9333333333333333,
+              "recall": 0.9333333333333333,
+              "f1": 0.9333333333333333,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 0.8695652173913043,
+              "recall": 0.6666666666666666,
+              "f1": 0.7547169811320754,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.586713633398565,
+          "original_accuracy": 0.6666666666666666,
+          "control_residual_macro_f1": 0.574083816501632,
+          "control_residual_accuracy": 0.66,
+          "delta_macro_f1_vs_original": 0.3173147106668962,
+          "delta_accuracy_vs_original": 0.24,
+          "delta_macro_f1_vs_control_residual": 0.3299445275638292,
+          "residual_gate": 0.8097047209739685,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        },
+        {
+          "seed": 2026,
+          "selected_epoch": 62,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_m2_lr3_long/seed-2026/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "551060bfccf02d54b32445a09d09f3ada9bf46e22ebff68008508104b191895b",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                140,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.9148711943793911,
+          "validation_accuracy": 0.92,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.75,
+              "recall": 1.0,
+              "f1": 0.8571428571428571,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 1.0,
+              "recall": 0.6,
+              "f1": 0.7499999999999999,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.7393366540907524,
+          "original_accuracy": 0.7866666666666666,
+          "control_residual_macro_f1": 0.8919414946904428,
+          "control_residual_accuracy": 0.9,
+          "delta_macro_f1_vs_original": 0.17553454028863869,
+          "delta_accuracy_vs_original": 0.13333333333333341,
+          "delta_macro_f1_vs_control_residual": 0.022929699688948313,
+          "residual_gate": 0.7796862125396729,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        }
+      ]
+    },
+    "residual_gate_0_long": {
+      "configuration": {
+        "gate_logit_init": 0.0,
+        "learning_rate": 0.001,
+        "max_epochs": 200,
+        "patience": 25,
+        "batch_size": 32,
+        "gradient_clip_norm": 1.0
+      },
+      "validation_macro_f1": {
+        "mean": 0.8977272339742388,
+        "sample_std": 0.00817579597966009
+      },
+      "validation_accuracy": {
+        "mean": 0.9022222222222221,
+        "sample_std": 0.007698003589194996
+      },
+      "delta_macro_f1_vs_original_mean": 0.23766808480398235,
+      "delta_macro_f1_vs_control_mean": 0.14701231677851956,
+      "by_seed": [
+        {
+          "seed": 42,
+          "selected_epoch": 200,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_0_long/seed-42/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "46f2be6dc915ee1829cef81e9d910e69b32a344127700df5438e63434efc4ad8",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 0.9985714285714286,
+            "macro_f1": 0.9985714103496217,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 0.9928571428571429,
+                "f1": 0.996415770609319,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 0.9929078014184397,
+                "recall": 1.0,
+                "f1": 0.9964412811387899,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                139,
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.8884885225069554,
+          "validation_accuracy": 0.8933333333333333,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.7,
+              "recall": 0.9333333333333333,
+              "f1": 0.8,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.9090909090909091,
+              "recall": 1.0,
+              "f1": 0.9523809523809523,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 1.0,
+              "recall": 0.9666666666666667,
+              "f1": 0.983050847457627,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 1.0,
+              "recall": 0.5666666666666667,
+              "f1": 0.7234042553191489,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.6541271600214518,
+          "original_accuracy": 0.6733333333333333,
+          "control_residual_macro_f1": 0.7861194403950827,
+          "control_residual_accuracy": 0.7933333333333333,
+          "delta_macro_f1_vs_original": 0.23436136248550365,
+          "delta_accuracy_vs_original": 0.21999999999999997,
+          "delta_macro_f1_vs_control_residual": 0.10236908211187268,
+          "residual_gate": 0.9562323689460754,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        },
+        {
+          "seed": 1337,
+          "selected_epoch": 192,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_0_long/seed-1337/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "c896331e82cfc78f7cc74004f609e1b9111f73c695f07279729cbcea215cd72d",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                140,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.9040283440654612,
+          "validation_accuracy": 0.9066666666666666,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.7777777777777778,
+              "recall": 0.9333333333333333,
+              "f1": 0.8484848484848485,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.9333333333333333,
+              "recall": 0.9333333333333333,
+              "f1": 0.9333333333333333,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 0.8695652173913043,
+              "recall": 0.6666666666666666,
+              "f1": 0.7547169811320754,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.586713633398565,
+          "original_accuracy": 0.6666666666666666,
+          "control_residual_macro_f1": 0.574083816501632,
+          "control_residual_accuracy": 0.66,
+          "delta_macro_f1_vs_original": 0.3173147106668962,
+          "delta_accuracy_vs_original": 0.24,
+          "delta_macro_f1_vs_control_residual": 0.3299445275638292,
+          "residual_gate": 0.9407574534416199,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        },
+        {
+          "seed": 2026,
+          "selected_epoch": 145,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_0_long/seed-2026/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "83f871e22b6c5b3d3a9da598327009235a75e71889060ece396722683f9fa809",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                140,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.9006648353502996,
+          "validation_accuracy": 0.9066666666666666,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.725,
+              "recall": 0.9666666666666667,
+              "f1": 0.8285714285714285,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.9375,
+              "recall": 1.0,
+              "f1": 0.967741935483871,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 1.0,
+              "recall": 0.5666666666666667,
+              "f1": 0.7234042553191489,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.7393366540907524,
+          "original_accuracy": 0.7866666666666666,
+          "control_residual_macro_f1": 0.8919414946904428,
+          "control_residual_accuracy": 0.9,
+          "delta_macro_f1_vs_original": 0.16132818125954718,
+          "delta_accuracy_vs_original": 0.12,
+          "delta_macro_f1_vs_control_residual": 0.008723340659856804,
+          "residual_gate": 0.9302870035171509,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        }
+      ]
+    },
+    "residual_gate_0_lr3_long": {
+      "configuration": {
+        "gate_logit_init": 0.0,
+        "learning_rate": 0.003,
+        "max_epochs": 200,
+        "patience": 25,
+        "batch_size": 32,
+        "gradient_clip_norm": 1.0
+      },
+      "validation_macro_f1": {
+        "mean": 0.9047976558526801,
+        "sample_std": 0.008365445212703824
+      },
+      "validation_accuracy": {
+        "mean": 0.9088888888888889,
+        "sample_std": 0.007698003589194996
+      },
+      "delta_macro_f1_vs_original_mean": 0.2447385066824238,
+      "delta_macro_f1_vs_control_mean": 0.154082738656961,
+      "by_seed": [
+        {
+          "seed": 42,
+          "selected_epoch": 67,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_0_lr3_long/seed-42/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "c36e4fdac1c6ca9d5f0a4e6d2e497269e650039097cc804d3bb4c5657a906514",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                140,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.8952367176378747,
+          "validation_accuracy": 0.9,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.7368421052631579,
+              "recall": 0.9333333333333333,
+              "f1": 0.8235294117647058,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.9090909090909091,
+              "recall": 1.0,
+              "f1": 0.9523809523809523,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.9666666666666667,
+              "recall": 0.9666666666666667,
+              "f1": 0.9666666666666667,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 1.0,
+              "recall": 0.6,
+              "f1": 0.7499999999999999,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.6541271600214518,
+          "original_accuracy": 0.6733333333333333,
+          "control_residual_macro_f1": 0.7861194403950827,
+          "control_residual_accuracy": 0.7933333333333333,
+          "delta_macro_f1_vs_original": 0.24110955761642294,
+          "delta_accuracy_vs_original": 0.22666666666666668,
+          "delta_macro_f1_vs_control_residual": 0.10911727724279197,
+          "residual_gate": 0.9489778280258179,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        },
+        {
+          "seed": 1337,
+          "selected_epoch": 68,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_0_lr3_long/seed-1337/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "f14df7bae48111dcfed9128136cbe8be813fa6b70aac746399206279c12a8508",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                140,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.9107706093189964,
+          "validation_accuracy": 0.9133333333333333,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.8235294117647058,
+              "recall": 0.9333333333333333,
+              "f1": 0.8749999999999999,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.9375,
+              "recall": 1.0,
+              "f1": 0.967741935483871,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.9333333333333333,
+              "recall": 0.9333333333333333,
+              "f1": 0.9333333333333333,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 0.875,
+              "recall": 0.7,
+              "f1": 0.7777777777777777,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.586713633398565,
+          "original_accuracy": 0.6666666666666666,
+          "control_residual_macro_f1": 0.574083816501632,
+          "control_residual_accuracy": 0.66,
+          "delta_macro_f1_vs_original": 0.3240569759204315,
+          "delta_accuracy_vs_original": 0.2466666666666667,
+          "delta_macro_f1_vs_control_residual": 0.33668679281736447,
+          "residual_gate": 0.9362736344337463,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        },
+        {
+          "seed": 2026,
+          "selected_epoch": 81,
+          "checkpoint": "checkpoints/residual-follow-up/residual_gate_0_lr3_long/seed-2026/fly-b-residual-checkpoint.pt",
+          "checkpoint_sha256": "05585f19b3f2badcb6bbfc34c49f20af5202b0ee160ff490deded6e1e561739b",
+          "parameter_counts": {
+            "adapter": 1056,
+            "graph_core": 2216,
+            "readout": 165,
+            "total": 15726,
+            "e5_residual_projection": 12288,
+            "residual_gate": 1
+          },
+          "train": {
+            "labels": [
+              "sidewalk_maintenance",
+              "road_surface_defect",
+              "park_general_maintenance",
+              "waste_truck_service",
+              "street_cleaning"
+            ],
+            "accuracy": 1.0,
+            "macro_f1": 1.0,
+            "per_class": {
+              "sidewalk_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "road_surface_defect": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "park_general_maintenance": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "waste_truck_service": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              },
+              "street_cleaning": {
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 140
+              }
+            },
+            "confusion_matrix": [
+              [
+                140,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                140,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                140,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                140,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                140
+              ]
+            ]
+          },
+          "validation_macro_f1": 0.9083856406011694,
+          "validation_accuracy": 0.9133333333333333,
+          "validation_per_class": {
+            "sidewalk_maintenance": {
+              "precision": 0.7435897435897436,
+              "recall": 0.9666666666666667,
+              "f1": 0.8405797101449275,
+              "support": 30
+            },
+            "road_surface_defect": {
+              "precision": 0.9375,
+              "recall": 1.0,
+              "f1": 0.967741935483871,
+              "support": 30
+            },
+            "park_general_maintenance": {
+              "precision": 0.967741935483871,
+              "recall": 1.0,
+              "f1": 0.9836065573770492,
+              "support": 30
+            },
+            "waste_truck_service": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 30
+            },
+            "street_cleaning": {
+              "precision": 1.0,
+              "recall": 0.6,
+              "f1": 0.7499999999999999,
+              "support": 30
+            }
+          },
+          "original_macro_f1": 0.7393366540907524,
+          "original_accuracy": 0.7866666666666666,
+          "control_residual_macro_f1": 0.8919414946904428,
+          "control_residual_accuracy": 0.9,
+          "delta_macro_f1_vs_original": 0.169048986510417,
+          "delta_accuracy_vs_original": 0.1266666666666667,
+          "delta_macro_f1_vs_control_residual": 0.016444145910726626,
+          "residual_gate": 0.9421731233596802,
+          "checkpoint_reload_validation_logits_max_abs_diff": 0.0,
+          "test": "not_run"
+        }
+      ]
+    }
+  },
+  "highest_mean_validation_macro_f1_configuration": "residual_gate_0_lr3_long",
+  "selection_rule": "highest mean validation Macro-F1 across the same three seeds; this is exploratory and not a final model lock",
+  "test": {
+    "status": "not_run",
+    "model_inputs": 0,
+    "metrics": null
+  },
+  "formal_test_eligible": false,
+  "source_code_sha256": {
+    "src/flycall_data/fly_ab_diagnostics.py": "6eeb0d32eddf1c9f48a1eee1e089cf05d5df9f57f3231bd81722147b01eb3e46",
+    "src/flycall_data/fly_ab_training.py": "02905743ffcc92919d1be8883d12ac52092edac17dee8e8228735ecf0e145a1b",
+    "src/flycall_data/graph_core.py": "b5d77b32bc0fa0e7ef0024b881d85c80d48c20ef9cd11e2d897e3f656589959d",
+    "scripts/diagnose_fly_a_b.py": "b7b6d7bbc2b47410aa6bf050df9537c3c8270efcf8670773d2e7527e00319120",
+    "scripts/tune_fly_b_e5_residual.py": "683604daac3502609bddcb9ffb137b9ef96a0c084e5281c130345fb2285120e4",
+    "tests/test_fly_ab_diagnostics.py": "e36e2c121eb2e00872ae86e6218dfda008efd051faec3826fe693968057023e5",
+    "tests/test_fly_ab_training.py": "f86707823f77e989ba17cfed87a5caab0c4caef17f50d088df91856e2bb22407",
+    "tests/test_graph_core.py": "1359fd566d431fd8a12f2c57be9b51716d2fc7bb32b38b9c771c8e6ead36848e"
+  },
+  "input_artifacts": {
+    "42": {
+      "run_manifest.json": "380401251ca8110e86beae42e157feb552fe9639566e3e7e1920e72fee4f4d27",
+      "predictions.csv": "505018a7f4ada695977e9a759982f89300da88d08be6b072c4d9e2f39021d7db",
+      "graph_definition.json": "675918a42b25c3c41fb84cff9449e3c12828ce344d9eb30d13a2ec6010be4722",
+      "fly-a-checkpoint.pt": "e7cf2babd84e14ba9e965f990dec300da69bd132280696a64849802755850e19"
+    },
+    "1337": {
+      "run_manifest.json": "859e039a637f1f30e3a0a4c58d4231e24ab03a8aa9fe5ddb14c774fc54ffc65a",
+      "predictions.csv": "b492b82bf21deba71fdba446f38ada660080b6a2451eadb8c5c992e0534ca48b",
+      "graph_definition.json": "675918a42b25c3c41fb84cff9449e3c12828ce344d9eb30d13a2ec6010be4722",
+      "fly-a-checkpoint.pt": "dcb3dbca770e9330038982063881a8380c9882d78218e7b22d61f491ab17e635"
+    },
+    "2026": {
+      "run_manifest.json": "79c86e2c07fb460874b37330a914e53ad634aac7e5b310591e2256d8fad7f773",
+      "predictions.csv": "c12e5c79c602bf06bdac551b4b490381fa0e24e824b31551fd273c7232cd861b",
+      "graph_definition.json": "675918a42b25c3c41fb84cff9449e3c12828ce344d9eb30d13a2ec6010be4722",
+      "fly-a-checkpoint.pt": "b2c3a4ff167030e5b7fa4b11eed7cc0c68129862a65bedf30acec686127c7ac9"
+    }
+  }
+}
