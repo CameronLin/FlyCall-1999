@@ -1,0 +1,2 @@
+# Optional local UI dependency; model/runtime packages come from the M2.2b environment.
+streamlit==1.66.0

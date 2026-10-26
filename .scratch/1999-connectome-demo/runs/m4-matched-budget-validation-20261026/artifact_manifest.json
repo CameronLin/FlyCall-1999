@@ -1,0 +1,65 @@
+{
+  "scope": "M4 matched-budget validation comparison and actual MLP checkpoint interface acceptance; test not run",
+  "review_status": "pending_manual_review",
+  "test": {
+    "status": "not_run",
+    "model_inputs": 0
+  },
+  "files": {
+    "checkpoints/pure-fly-a-to-fly-b/seed-1337/fly-b.pt": {
+      "bytes": 101829,
+      "sha256": "7568f89b98b2e36708a2ea7a0ef39b1d9bf6dfac0f76ce25eeeca0da80f7d9db"
+    },
+    "checkpoints/pure-fly-a-to-fly-b/seed-2026/fly-b.pt": {
+      "bytes": 101829,
+      "sha256": "aab9e63552e06f51092af4bd1e222ee5568c46b3d811ec0893aedfabeafdf5bd"
+    },
+    "checkpoints/pure-fly-a-to-fly-b/seed-42/fly-b.pt": {
+      "bytes": 101829,
+      "sha256": "abb6ffde29cc17ee70c39dfdb26492defe52a211235582fa560e183770f81858"
+    },
+    "matched_budget_comparison.json": {
+      "bytes": 43551,
+      "sha256": "ec55f7e7d9fc4d9c91b9fa01945412ab5b2381374645eba129c7ad9fa0a52444"
+    },
+    "report.md": {
+      "bytes": 1414,
+      "sha256": "33b488464ec644f32d2b2d5ef64903048daf9629ed6345b7937cc102f97a924d"
+    },
+    "m4_live_acceptance.py": {
+      "bytes": 7969,
+      "sha256": "12facfb84d030bad6fd6ce920117d17041078a75e97052e4362b0887a19df47b"
+    },
+    "m4_live_acceptance.json": {
+      "bytes": 1243,
+      "sha256": "9e669d266331e399b1ce6707916c68baf79be9454a2fb136f307604429be413a"
+    },
+    "m4_live_acceptance_report.md": {
+      "bytes": 3463,
+      "sha256": "7c4cf9008e2cacf6c49e24d34de37c9e0e775dcb6d88a0900d2c8acaf1d12c75"
+    }
+  },
+  "status": "m4_technical_acceptance_passed_pending_manual_review",
+  "acceptance": {
+    "candidate": "mlp",
+    "candidate_seed": 42,
+    "manifest_path": ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/locked_model_manifest.json",
+    "manifest_sha256": "f050e8c64ae875c56048cb80e1c879d295e0f115ed20f361cfdeaafc45ccfe7c",
+    "checkpoint_path": ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/m2-mlp-checkpoint.joblib",
+    "checkpoint_sha256": "d4a30ffba9e37fc68a150129d7418666251086020619d9767bc1395dafd559bf",
+    "cli_api_streamlit_match": true,
+    "maximum_absolute_output_delta": 0.0,
+    "test_data_accessed": false,
+    "manual_review_status": "pending_manual_review"
+  },
+  "references": {
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/locked_model_manifest.json": {
+      "bytes": 2674,
+      "sha256": "f050e8c64ae875c56048cb80e1c879d295e0f115ed20f361cfdeaafc45ccfe7c"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/m2-mlp-checkpoint.joblib": {
+      "bytes": 26238,
+      "sha256": "d4a30ffba9e37fc68a150129d7418666251086020619d9767bc1395dafd559bf"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "candidate": "mlp",
+  "predicted_label": "sidewalk_maintenance",
+  "label_order": [
+    "sidewalk_maintenance",
+    "road_surface_defect",
+    "park_general_maintenance",
+    "waste_truck_service",
+    "street_cleaning"
+  ],
+  "probabilities": [
+    0.718184479821766,
+    0.0840321452284481,
+    0.01077835576541626,
+    0.02703094507149463,
+    0.15997407411287506
+  ],
+  "logits": [
+    2.7310144901275635,
+    0.585487425327301,
+    -1.4681719541549683,
+    -0.548729658126831,
+    1.229299783706665
+  ],
+  "stages": [
+    "Pinned E5 384-dimensional embedding",
+    "mlp classifier"
+  ],
+  "cli_api_max_abs_probability_delta": 0.0,
+  "cli_api_max_abs_logit_delta": 0.0,
+  "streamlit_api_max_abs_probability_delta": 0.0,
+  "streamlit_api_max_abs_logit_delta": 0.0,
+  "review_status": "pending_manual_review",
+  "data_status": "synthetic",
+  "dispatch_status": "simulated_only",
+  "human_confirmation_required": true,
+  "streamlit_score_rows": 5,
+  "streamlit_manual_confirmation_notice_rendered": true,
+  "streamlit_exceptions": 0,
+  "test_data_accessed": false,
+  "transcript": "M4 interface acceptance synthetic transcript: potholes reported.",
+  "tolerance": 1e-07
+}
