@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 /-
+*.inspect.ndjson
 
 # Local environment and transient experiment data
 .scratch/**/env/

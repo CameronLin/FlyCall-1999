@@ -208,7 +208,6 @@ data/1999_synthetic/
 |---|---|---|---|
 | [`outputs/.DS_Store`](../../outputs/.DS_Store) | 用途與狀態未能從檔名確認。 | 待確認 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx`](../../outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx) | 正式資料複核工作簿：validation/test 全數及 train 家族抽樣；摘要記錄 399 筆人工決定皆 pending。 | 複核包／待人工決定 | 否（複核材料，非分類樣本） |
-| [`outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx.inspect.ndjson`](../../outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx.inspect.ndjson) | 工作簿檢視工具輸出的結構化產物；來源細節未記錄。 | 檢視產物／待確認 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-formal-review-pack-v1.0/review_summary_v1.0.md`](../../outputs/flycall-1999-formal-review-pack-v1.0/review_summary_v1.0.md) | 正式資料複核抽樣、風險與自動檢查摘要。 | 複核摘要／報告 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-review-decisions-v1/FlyCall_1999_助理獨立複核決定_v1.0.xlsx`](../../outputs/flycall-1999-review-decisions-v1/FlyCall_1999_助理獨立複核決定_v1.0.xlsx) | Pilot 與家族的助理獨立複核決定活頁簿。 | 助理複核／非人工核准 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-review-decisions-v1/independent_review_decisions_v1.0.md`](../../outputs/flycall-1999-review-decisions-v1/independent_review_decisions_v1.0.md) | 助理獨立複核的決定摘要、修訂界線與合併規則。 | 助理複核文件 | 否（複核材料，非分類樣本） |
@@ -217,7 +216,6 @@ data/1999_synthetic/
 | [`outputs/flycall-1999-review-pack-assistant-review-v1/validation_report_independent_review_v1.0.md`](../../outputs/flycall-1999-review-pack-assistant-review-v1/validation_report_independent_review_v1.0.md) | 獨立複核建議工作簿版本、欄位與 ID 核對報告。 | 複核包驗證報告 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-review-pack-second-review-v1/FlyCall_1999_情境家族第二次複核建議_v1.0.xlsx`](../../outputs/flycall-1999-review-pack-second-review-v1/FlyCall_1999_情境家族第二次複核建議_v1.0.xlsx) | 情境家族第二次複核建議活頁簿。 | 複核建議／人工狀態待確認 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-review-pack-second-review-v1/FlyCall_1999_第二次複核資料包_v1.1.xlsx`](../../outputs/flycall-1999-review-pack-second-review-v1/FlyCall_1999_第二次複核資料包_v1.1.xlsx) | Pilot 與情境家族第二次複核資料包。 | 複核包／人工狀態待確認 | 否（複核材料，非分類樣本） |
-| [`outputs/flycall-1999-review-pack-second-review-v1/FlyCall_1999_第二次複核資料包_v1.1.xlsx.inspect.ndjson`](../../outputs/flycall-1999-review-pack-second-review-v1/FlyCall_1999_第二次複核資料包_v1.1.xlsx.inspect.ndjson) | 工作簿檢視工具輸出的結構化產物；來源細節未記錄。 | 檢視產物／待確認 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-review-pack-v1/FlyCall_1999_人工複核資料包_v1.0.xlsx`](../../outputs/flycall-1999-review-pack-v1/FlyCall_1999_人工複核資料包_v1.0.xlsx) | Pilot 50 筆及情境家族 75 項人工複核資料包；使用者曾表示已完成，本次未逐格核對決定值。 | 人工複核來源／細項未核對 | 否（複核材料，非分類樣本） |
 
 ## 舊路徑與文件連結相容 symlink
@@ -263,13 +261,13 @@ data/1999_synthetic/
 ## 完成後核對
 
 - 搬移檔案逐筆 SHA-256 與來源清單一致；正式 JSONL 為 1,000 筆，Pilot v1.2.1、v1.2.2、v1.2.3 各為 50 筆。
-- 正式 JSONL/CSV、Pilot JSONL、taxonomy/merge map/manifest YAML、活頁簿與生成／驗證程式內容未修改；outputs 全部保留原位。
+- 正式 JSONL/CSV、Pilot JSONL、taxonomy/merge map/manifest YAML、活頁簿與生成／驗證程式內容未修改；原始複核活頁簿均保留原位。2026-10-26 另移除兩份可由原始活頁簿重建的 `*.inspect.ndjson` 檢視輸出，並加入 Git 忽略規則。
 - 所有搬移前已有效的 Markdown 相對連結均以新連結或相容 symlink 維持有效；程式常數路徑透過相容 symlink 仍指向正確檔案。完整檢查結果以本次完成檢查為準。
 - 原有 `archive/` 內容保留；所有待確認檔案保留原內容，未判定為可刪除或過期。
 - 專案目錄不是 Git repository，沒有 `git status --short`。
 
 ## 待確認項目
 
-- outputs 中 `*.inspect.ndjson` 與 `.DS_Store` 的實際用途不明，留在原位。
+- `*.inspect.ndjson` 是活頁簿檢視工具產物，不是複核資料來源；2026-10-26 已移除 outputs 中兩份副本。`.DS_Store` 不在目前工作目錄的 outputs 清單中。
 - 部分較早或建議型複核活頁簿的逐格人工決定狀態未在摘要中確認；AI／助理建議不視為人工通過。
 - 正式 1,000 筆仍待人工逐筆複核；Pilot v1.2.3 仍為 `pending_manual_review`。
