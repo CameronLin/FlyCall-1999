@@ -65,10 +65,8 @@ class LoadFrozenDatasetTests(unittest.TestCase):
         ]
 
     def write_jsonl_rows(self, rows: list[dict[str, object]]) -> None:
-        self.paths.jsonl_path.write_text(
-            "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows),
-            encoding="utf-8",
-        )
+        with self.paths.jsonl_path.open("w", encoding="utf-8", newline="") as stream:
+            stream.write("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows))
 
     def write_csv_rows(self, rows: list[dict[str, object]]) -> None:
         output = io.StringIO(newline="")
@@ -81,7 +79,8 @@ class LoadFrozenDatasetTests(unittest.TestCase):
             rendered = dict(row)
             rendered["speaker_map"] = str(rendered["speaker_map"])
             writer.writerow(rendered)
-        self.paths.csv_path.write_text(output.getvalue(), encoding="utf-8")
+        with self.paths.csv_path.open("w", encoding="utf-8", newline="") as stream:
+            stream.write(output.getvalue())
 
     def write_consistent_rows(self, rows: list[dict[str, object]]) -> None:
         self.write_jsonl_rows(rows)

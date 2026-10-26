@@ -207,24 +207,38 @@ def _parse_yaml(raw: bytes, source: str, issues: list[ContractIssue]) -> dict[st
     except UnicodeDecodeError as exc:
         _issue(issues, "yaml_encoding", f"YAML 不是有效 UTF-8：{exc}", source=source)
         return None
-    ruby = (
-        'require "yaml"; require "json"; '
-        'print JSON.generate(YAML.safe_load(STDIN.read, '
-        'permitted_classes: [], permitted_symbols: [], aliases: true))'
-    )
     try:
-        result = subprocess.run(
-            ["ruby", "-EUTF-8", "-e", ruby],
-            input=raw,
-            capture_output=True,
-            check=True,
+        import yaml
+    except ImportError:
+        yaml = None
+
+    if yaml is not None:
+        try:
+            value = yaml.safe_load(raw.decode("utf-8"))
+        except yaml.YAMLError as exc:
+            _issue(issues, "yaml_parse_error", f"{source} 無法解析：{exc}", source=source)
+            return None
+    else:
+        # Keep the existing Ruby safe-load fallback for lightweight environments
+        # that do not install PyYAML (the M2.2b lock includes it).
+        ruby = (
+            'require "yaml"; require "json"; '
+            'print JSON.generate(YAML.safe_load(STDIN.read, '
+            'permitted_classes: [], permitted_symbols: [], aliases: true))'
         )
-        value = json.loads(result.stdout.decode("utf-8"))
-    except (OSError, subprocess.CalledProcessError, UnicodeDecodeError, json.JSONDecodeError) as exc:
-        stderr = getattr(exc, "stderr", b"")
-        detail = stderr.decode("utf-8", errors="replace").strip() if isinstance(stderr, bytes) else str(exc)
-        _issue(issues, "yaml_parse_error", f"{source} 無法解析：{detail or exc}", source=source)
-        return None
+        try:
+            result = subprocess.run(
+                ["ruby", "-EUTF-8", "-e", ruby],
+                input=raw,
+                capture_output=True,
+                check=True,
+            )
+            value = json.loads(result.stdout.decode("utf-8"))
+        except (OSError, subprocess.CalledProcessError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            stderr = getattr(exc, "stderr", b"")
+            detail = stderr.decode("utf-8", errors="replace").strip() if isinstance(stderr, bytes) else str(exc)
+            _issue(issues, "yaml_parse_error", f"{source} 無法解析：{detail or exc}", source=source)
+            return None
     if not isinstance(value, dict):
         _issue(
             issues,
