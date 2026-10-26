@@ -11,9 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import platform
-import resource
 import struct
-import sys
 import time
 from collections import deque
 from pathlib import Path
@@ -21,6 +19,8 @@ from typing import Any, Iterable, Sequence
 
 import pyarrow as pa
 import pyarrow.parquet as pq
+
+from .runtime_resources import peak_rss_bytes
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -498,11 +498,7 @@ def run_archived_demo_io_check(
         },
         "execution": {
             "elapsed_seconds": round(time.perf_counter() - started, 6),
-            "peak_rss_bytes": (
-                resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-                if sys.platform == "darwin"
-                else resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024
-            ),
+            "peak_rss_bytes": peak_rss_bytes(),
             "python_version": platform.python_version(),
             "pyarrow_version": pa.__version__,
             "node_count_loaded": len(node_ids),

@@ -61,4 +61,5 @@ gain_e = 1e-6 + softplus(raw_e)
 
 - 2026-10-16：依使用者已確認的 M3.0 v1.1 工程契約建立 ticket。Ticket 只定義小型 fixture 核心與驗收條件；本次沒有開始實作、寫測試、安裝套件、下載／載入模型或訓練。
 - 2026-10-16：依使用者指示先寫 fixture 測試，紅燈確認缺少 `flycall_data.graph_core` 後新增核心；專用測試 12/12 通過。資源、套件與 fixture 細節見 `docs/research/m3-1-small-fixture-model-core-report.md`。因本次明確限制不得讀 M1.3 manifest，保留實際 32+32 manifest ID 對照項目未勾選，ticket 維持 `in-progress`；未讀正式資料／connectome 產物，未做正式訓練。
+- 2026-10-26：依目前後續開發任務唯讀核對 M1.3 `io_manifest.json`：500 nodes、2,216 edges、32 unique input IDs、32 unique output IDs、0 overlap；全部 outputs 在 M1.3 宣告的 T=4 reachability check 中 reachable。`graph_core` constructors 保留呼叫端提供的 I/O order。補足先前保留的 32+32 manifest 對照項目；M3.1 fixture-only ticket 完成。這次 manifest 檢查未讀取 edge/node Parquet；M3.2 ticket 才核對固定 graph checksum 並使用該子圖。
 - 2026-10-16：依後續授權只讀指定 `io_manifest.json` 的 ordered I/O ID 欄位，確認 input/output 各 32 個、唯一、互斥；以實際 ID 與合成 edges 驗證 graph core、Fly A／Fly B 的節點順序和端到端 fixture logits。M3.1 專用測試 13/13 通過，所有驗收條件完成，ticket 標記 `completed`。未讀 Parquet、完整子圖或正式資料，未訓練或開始 M3.2。

@@ -1,9 +1,13 @@
 # M3.0 Fly A／Fly B 資料流與訓練契約
 
-版本：v1.2｜日期：2026-10-21｜狀態：工程契約已確認；E5 runtime 仍受 M2.2b 資源閘門阻擋  
-依據：`1999-connectome-demo-spec-v0.2.md`、M1.2 engineering demo manifest、M1.3 I/O manifest、M2.1 loader 契約及 M2.2a smoke test 報告。此文件只凍結首版工程介面，不代表生物學主張或正式模型效能，也不代表已開始 M3.1。
+版本：v1.5｜日期：2026-10-26｜狀態：工程契約已確認；三個 M3.2 provisional train/validation seeds 與 M3.4 validation-only 比較已完成，人工複核與 test gate 仍未通過
+依據：`1999-connectome-demo-spec-v0.2.md`、M1.2 engineering demo manifest、M1.3 I/O manifest、M2.1 loader 契約及 M2.2a smoke test 報告。此文件只凍結首版工程介面，不代表生物學主張或正式模型效能；M3.1 fixture core 已另行完成，M3.2 狀態見本文件更新。
 
-v1.2 更新：記錄使用者選定的 multilingual-e5-small revision 與受限試跑設定。此更新未下載、安裝或載入模型，M2.2b 資源閘門仍為 blocked。
+v1.4 更新：Windows checkout 的 CRLF 曾造成 M1.2/M1.3 manifest 工作目錄 bytes 與 pin 不同；LF-normalized manifest bytes 與 pins 及 Git HEAD 完全相符，故 runner 現以正規化文字內容檢查 pin，未更動 manifest 或 digest，Parquet 仍以原始 bytes 驗證。PyArrow 26.0.0 在後續實際 run 成功讀取固定 graph，沒有 policy bypass。M3.2 seed 42／1337／2026 的 train/validation runs 均完成（500 nodes、2,216 edges、700/150 split、checkpoint reload max absolute difference 0.0；test `not_run`／0 model inputs）。M2.2b 同三 seed 及五候選的 M3.4 比較亦已完成，暫定 validation winner 為 MLP；所有結果仍 synthetic／pending_manual_review，candidate lock 與 test gate 保持關閉。細節見 [M3.2 follow-up report](../../.scratch/1999-connectome-demo/research/m3-2-pyarrow-application-control-block-20261026.md)、[M3.2 work ticket](../../.scratch/1999-connectome-demo/issues/12-m3-2-fly-ab-provisional-training.md) 與 [M3.4 validation report](../../.scratch/1999-connectome-demo/runs/m3-4-validation-comparison-seeds-42-1337-20261026/report.md)。
+
+v1.3 更新（歷史狀態）：補記 Windows x64 CPU 上已完成的 E5 資源閘門、固定 revision runtime、tokenizer／pooling／輸出驗證及 train/validation 暫行 run。當時 M3.2 runner 停於 manifest pin mismatch，PyArrow 也遭 Windows Application Control 阻擋；後續以 v1.4 記錄的 CRLF 調查與實際 run 更新狀態。
+
+v1.2 更新（歷史狀態）：記錄使用者選定的 multilingual-e5-small revision 與受限試跑設定；當時尚未下載、安裝或載入模型，M2.2b 資源閘門仍為 blocked。
 
 v1.1 初版記錄未修改 spec、案件資料、split 或 M1.1／M1.2／M1.3 產物。v1.2 僅依使用者決定更新 spec 的嵌入設定，未修改案件資料、split 或 connectome 產物；未下載／安裝／載入模型、訓練或使用 test 指標。
 
@@ -37,9 +41,9 @@ M1.2 manifest SHA-256：`5300c6cefdc6b84a854545e64f4131baa3fc42f0bde97a83f68fcc1
 ### 3.1 文字到 Fly A input nodes
 
 1. 唯一文字特徵來源是正式資料的 transcript `text`；不得把 label、ID、scenario／family、split 或其他 metadata 當模型特徵。Pilot 不併入正式資料流程。
-2. 使用者於 2026-10-21 選定 `intfloat/multilingual-e5-small`，不再把 multilingual-e5-large 作為本專案候選。目標為 revision `614241f622f53c4eeff9890bdc4f31cfecc418b3`、384 維、masked mean pooling；這是設定決定，不是本機已下載或 runtime 已驗證的結果。**下載／安裝／載入前**仍必須核對官方 model card、授權、檔案大小、CPU 套件解析下載量、峰值 RAM 預估、即時可用磁碟與安裝後空間；最壞情境須保留至少 4 GiB。沒有可驗證數據或不符合保留線就停止，不下載、不安裝、不載入。
+2. 使用者於 2026-10-21 選定 `intfloat/multilingual-e5-small`，不再把 multilingual-e5-large 作為本專案候選。目標為 revision `614241f622f53c4eeff9890bdc4f31cfecc418b3`、384 維、masked mean pooling。2026-10-26 已在本機 Windows x64 CPU 隔離環境通過下載前資源閘門並驗證固定 revision runtime；本機核對結果見 M2.2b Windows gate report。未來新增／重建環境或改變 batch、sequence length、裝置、模型檔案時，仍須重新核對官方 model card、授權、檔案大小、CPU 套件解析下載量、峰值 RAM、即時可用磁碟與安裝後空間，並保留至少 4 GiB；未通過即停止。
 3. 前處理保留原始繁體中文、標點及 `R:`／`L:` 標記，不刪除或改寫聲道角色、不轉簡體、不添加案件類別提示。以嚴格 UTF-8 解碼；保持來源 Unicode code-point 序列，不做 NFC／NFKC／NFKD 轉換。任何無效文字需明確失敗。
-4. 目標 prefix 固定為 `query: `，token 上限為 512；目標 pooling 是 attention-mask-aware masked mean pooling，輸出維度為 384，輸出做 L2 normalization。這些值已由官方資料查核並由使用者選定；實際 tokenizer／encoder 行為仍須在受限驗證中核對。使用的 prefix literal、revision、token limit、實際 `d`、截斷政策及每筆截斷情況須在 embedding manifest 記錄。M3.1 前處理不自行正規化 Unicode；tokenizer 內部若有 normalization，須核對並記錄實際行為。不得靜默截斷。受限試跑裝置為 CPU、`batch_size=1`；在 M2.2b resource gate 通過前不得下載、安裝、載入或產生 embedding。
+4. 目標 prefix 固定為 `query: `，token 上限為 512；目標 pooling 是 attention-mask-aware masked mean pooling，輸出維度為 384，輸出做 L2 normalization。2026-10-26 runtime 已核對 tokenizer class、`Precompiled` normalizer fingerprint、right truncation、masked mean pooling、384 維與 unit norm；每筆 prefix、revision、token limit、實際 `d`、截斷政策及截斷情況寫入 embedding manifest。M3.1 前處理不自行正規化 Unicode；E5 tokenizer 內部 normalization fingerprint 已記錄。不得靜默截斷。受限試跑裝置為 CPU、`batch_size=1`；模型輸入僅限 train／validation，人工複核前維持 provisional，test 不得進入 encoder 或 cache。
 5. Encoder 輸出 `e∈R^d` 先做 L2 normalization，再送入 trainable affine projection `W_A∈R^(32×d), b_A∈R^32`，以 `tanh(W_A e+b_A)` 產生連續 FP32 drives。projection 只由 train split 的 Fly A loss 更新；validation 只 transform，test 不 fit、不選模。
 6. 32 個 drives 依 M1.3 `input_node_ids` 清單順序注入對應合成 input nodes；不得把 node ID 數值當特徵，也不得對 nodes 賦予生物語意。
 
@@ -106,7 +110,7 @@ Fixture／除錯固定一個 training seed。正式模型比較須至少三個�
 
 實測實體 RAM 為 `8,589,934,592` bytes（8 GiB，M2.2a run report）。M3.0 草案記錄的磁碟可用量 `22,543,347,712` bytes 是當時快照；M2.2a 報告中的 `23,655,501,824` bytes 是另一時間點。兩者都不是目前可用空間，下載前必須刷新即時值。受限試跑的目標設定為 CPU、`batch_size=1`；過去以 batch 4 作出的估算不可當成 batch 1 的實測或安全上界。
 
-M2.2a 隔離環境沒有 PyTorch／E5 encoder。任何安裝套件或下載／載入模型前，先提供可核驗的官方 model card／revision、每個模型檔案與總 bytes、CPU 套件 resolver 下載量、安裝後／暫存空間、峰值 RSS 預估及即時可用磁碟。保守情境至少保留 4 GiB；不能確認就停止等使用者檢視。不得下載大型模型或 GPU wheel。M3.1 fixture 可在既有環境下進行；若所需套件不存在，先列出精確需求與資源預檢，不自行安裝。
+M2.2a 隔離環境原本沒有 PyTorch／E5 encoder。2026-10-26 在 `%TEMP%` 建立的另一個隔離 CPU 環境已通過 M2.2b gate 並載入固定 E5 revision；該次峰值與空間證據見 M2.2b Windows gate report。M3.1 fixture 可在既有環境下進行；若其他工作需要新增套件，先列出精確需求與資源預檢。M3.2 的 PyArrow native extension 目前被 Windows Application Control 阻擋，不能讀取 Parquet graph table，需等待可核准的 runtime。
 
 圖核心採 sparse edge list；不用完整 connectome、不建 dense adjacency、不重讀 M1.1 原始檔。任何提高 batch、T、state width 或加入 encoder 都須重新估算資源。
 
@@ -118,4 +122,9 @@ Checkpoint／run manifest 至少保存：encoder ID、官方 revision、license/
 
 ## 8. M3.0 完成狀態與後續
 
-首版架構、train／validation／test 邊界、weight semantics、resource gate 與人工複核限制已由使用者確認並記錄。M3.0 只完成契約決策；M3.1 是獨立的小型 fixture 模型核心 ticket。E5 small 的 revision、prefix、token 上限、pooling 與輸出維度目標已選定；本機尚未下載、安裝或載入，resource gate 仍由 M2.2b 管理。模型選擇不等於資源放行。
+首版架構、train／validation／test 邊界、weight semantics、resource gate 與人工複核限制已由使用者確認並記錄。M3.0 契約與 M3.1 fixture core 已完成。M3.2 三個 real-graph train/validation provisional seeds 與 M3.4 validation-only comparison 均已執行；暫定比較候選尚未人工鎖定。正式資料仍為 `pending_manual_review`，不得產生正式效能結論或 test 指標。
+
+
+## v1.5 exploratory Fly A/B diagnosis (2026-10-26)
+
+The three-seed M3.4 report remains the authoritative provisional comparison and still names MLP as the validation winner. A separate diagnosis found that a frozen Fly A 32-D output retained less label signal than raw E5. A separate gated E5 residual into the Fly B graph, with a four-configuration train/validation sweep, reached mean validation Macro-F1 0.9048 and accuracy 0.9089 across the three seeds. This selected-on-validation candidate does not replace the M3.4 winner, is not locked, and has not used test data. Full measurements, source hashes, checkpoint hashes, and tests are in [issue 16](../../.scratch/1999-connectome-demo/issues/16-fly-ab-representation-diagnosis.md) and the [diagnosis report](../../.scratch/1999-connectome-demo/runs/fly-ab-diagnosis-20261026/report.md).

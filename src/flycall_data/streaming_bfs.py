@@ -10,7 +10,6 @@ from __future__ import annotations
 import hashlib
 import heapq
 import json
-import resource
 import shutil
 import subprocess
 import sys
@@ -21,6 +20,8 @@ from typing import Any
 import pyarrow as pa
 import pyarrow.compute as pc
 import pyarrow.parquet as pq
+
+from .runtime_resources import peak_rss_bytes
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -165,8 +166,7 @@ def _integer(name: str, value: int, minimum: int, maximum: int) -> int:
 
 
 def _current_peak_rss_bytes() -> int:
-    peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    return int(peak if sys.platform == "darwin" else peak * 1024)
+    return peak_rss_bytes()
 
 
 def _physical_memory_bytes() -> int | None:

@@ -12,7 +12,7 @@
 
 ## 產物
 
-- 首版契約：[docs/research/m3-0-connectome-classifier-contract.md](../../../docs/research/m3-0-connectome-classifier-contract.md)（v1.2；模型目標選擇已記錄，runtime 仍受 M2.2b gate 阻擋）
+- 首版契約：[docs/research/m3-0-connectome-classifier-contract.md](../../../docs/research/m3-0-connectome-classifier-contract.md)（v1.4；E5 runtime 與三 seed M3.2 train/validation runs 已通過；M3.4／人工複核狀態見各工作票）
 - 下一項獨立實作工作：08 M3.1 小型 fixture 模型核心。
 
 ## 驗收條件
@@ -27,9 +27,9 @@
 - [x] 記錄正式資料仍 pending_manual_review；M3.1 僅用小型 fixtures，不使用正式資料訓練；下載／安裝／載入前需核對官方 model card、revision、檔案與套件下載量、峰值 RAM、即時磁碟空間並保留至少 4 GiB。
 - [x] 核對使用者確認的契約與現行 spec v0.2；沒有硬性衝突。將 spec 暫定項目具體化；2026-10-21 僅更新 E5 目標設定文字，未修改程式以外的任何資料或模型產物，未安裝套件、下載／載入模型、訓練或使用 test 指標。
 
-## 尚待下載前核對
+## E5 與後續狀態
 
-E5 的目標 model card／license、revision、prefix、tokenizer 上限及預期輸出維度已有官方來源查核並由使用者選定；尚未確認本機 runtime 輸出。M2.2b 在任何套件安裝或模型下載／載入前，仍須刷新 RAM／swap／即時磁碟、確認單一隔離環境、核算必要模型檔與 CPU wheel 的總 bytes、評估安裝／staging 與 peak RSS，並在最壞情境至少保留 4 GiB。M3.0 completed 不代表 M2.2b resource gate 通過。
+E5 的目標 model card／license、revision、prefix、tokenizer 上限及輸出維度已有官方來源查核並由使用者選定；2026-10-26 已通過 Windows 資源閘門及 runtime 驗證，見 M2.2b report。M3.2 graph provenance 已確認是 Windows CRLF checkout 造成表面 bytes 差異；正規化後仍完全匹配原 pin。PyArrow 26.0.0 在後續實際 run 可正常讀圖，三個 provisional seeds 均完成。沒有修改 pin、manifest 或 Windows trust policy；人工複核與 test gate 仍未完成。
 
 ## 後續關係
 

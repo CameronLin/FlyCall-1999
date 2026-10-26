@@ -11,6 +11,7 @@ from flycall_data.graph_core import (
     CLASS_ORDER,
     FlyA,
     FlyB,
+    FlyBWithE5Residual,
     GraphCoreError,
     SparseGraphCore,
     distance_preserving_loss,
@@ -67,6 +68,35 @@ def make_core(steps: int = 2) -> SparseGraphCore:
 
 
 class SparseGraphCoreTests(unittest.TestCase):
+    def test_fly_b_e5_residual_joins_before_graph_and_backpropagates(self) -> None:
+        model = FlyBWithE5Residual(make_core(), embedding_dim=384)
+        fly_a_output = torch.nn.functional.normalize(
+            torch.randn((3, 32), generator=torch.Generator().manual_seed(31)), dim=1
+        )
+        e5_embedding = torch.nn.functional.normalize(
+            torch.randn((3, 384), generator=torch.Generator().manual_seed(32)), dim=1
+        )
+
+        logits = model(fly_a_output, e5_embedding)
+        self.assertEqual(tuple(logits.shape), (3, len(CLASS_ORDER)))
+        self.assertTrue(torch.all(torch.isfinite(logits)))
+        self.assertAlmostEqual(float(model.residual_gate.detach()), 1 / (1 + torch.exp(torch.tensor(2.0)).item()), places=6)
+        self.assertEqual(model.parameter_counts["total"], model.fly_b.parameter_counts["total"] + 384 * 32 + 1)
+        self.assertFalse(model.checkpoint_metadata()["classifier_shortcut"])
+
+        logits.square().mean().backward()
+        self.assertIsNotNone(model.e5_residual_projection.weight.grad)
+        self.assertGreater(float(model.e5_residual_projection.weight.grad.abs().sum()), 0.0)
+        self.assertIsNotNone(model.fly_b.graph_core.raw_edge_parameters.grad)
+        self.assertGreater(float(model.fly_b.graph_core.raw_edge_parameters.grad.abs().sum()), 0.0)
+
+    def test_fly_b_e5_residual_rejects_invalid_shapes_and_non_finite_values(self) -> None:
+        model = FlyBWithE5Residual(make_core(), embedding_dim=384)
+        with self.assertRaisesRegex(GraphCoreError, "shape"):
+            model(torch.zeros((2, 31)), torch.zeros((2, 384)))
+        with self.assertRaisesRegex(GraphCoreError, "finite"):
+            model(torch.zeros((2, 32)), torch.full((2, 384), float("nan")))
+
     def test_actual_m13_manifest_io_order_is_preserved_in_synthetic_fixture(self) -> None:
         input_ids, output_ids = read_m13_io_node_ids()
         self.assertEqual(len(input_ids), 32)

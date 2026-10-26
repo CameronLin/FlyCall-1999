@@ -332,6 +332,86 @@ class FlyB(nn.Module):
         }
 
 
+class FlyBWithE5Residual(nn.Module):
+    """Exploratory Fly B that adds a gated E5 residual before its graph core.
+
+    Both the Fly A adapter output and the projected E5 residual become drives
+    for Fly B's ordered input nodes. Classification still passes through the
+    Fly B graph core and readout; there is no encoder-to-readout shortcut.
+    """
+
+    def __init__(
+        self,
+        graph_core: SparseGraphCore,
+        embedding_dim: int = 384,
+        label_order: Sequence[str] = CLASS_ORDER,
+        gate_logit_init: float = -2.0,
+    ) -> None:
+        super().__init__()
+        if isinstance(embedding_dim, bool) or not isinstance(embedding_dim, int) or embedding_dim < 1:
+            raise GraphCoreError("embedding_dim must be a positive integer")
+        if not isinstance(gate_logit_init, (int, float)) or not torch.isfinite(torch.tensor(float(gate_logit_init))):
+            raise GraphCoreError("gate_logit_init must be finite")
+        self.fly_b = FlyB(graph_core, label_order=label_order)
+        self.embedding_dim = embedding_dim
+        self.gate_logit_init = float(gate_logit_init)
+        self.e5_residual_projection = nn.Linear(embedding_dim, 32, bias=False)
+        self.residual_gate_logit = nn.Parameter(torch.tensor(self.gate_logit_init))
+
+    @property
+    def parameter_counts(self) -> dict[str, int]:
+        residual = sum(parameter.numel() for parameter in self.e5_residual_projection.parameters())
+        return {
+            **self.fly_b.parameter_counts,
+            "e5_residual_projection": residual,
+            "residual_gate": self.residual_gate_logit.numel(),
+            "total": self.fly_b.parameter_counts["total"] + residual + self.residual_gate_logit.numel(),
+        }
+
+    @property
+    def residual_gate(self) -> torch.Tensor:
+        """Current blend weight in [0, 1], exposed for diagnostics and reporting."""
+
+        return torch.sigmoid(self.residual_gate_logit)
+
+    def forward(self, fly_a_output: torch.Tensor, e5_embedding: torch.Tensor) -> torch.Tensor:
+        if not isinstance(fly_a_output, torch.Tensor) or not isinstance(e5_embedding, torch.Tensor):
+            raise GraphCoreError("Fly A output and E5 embedding must be in-memory tensors")
+        if fly_a_output.ndim != 2 or fly_a_output.shape[1] != 32:
+            raise GraphCoreError("fly_a_output must have shape (batch, 32)")
+        if e5_embedding.ndim != 2 or e5_embedding.shape != (fly_a_output.shape[0], self.embedding_dim):
+            raise GraphCoreError(f"e5_embedding must have shape (batch, {self.embedding_dim})")
+        if (
+            not fly_a_output.is_floating_point()
+            or not e5_embedding.is_floating_point()
+            or fly_a_output.dtype != self.fly_b.input_adapter.weight.dtype
+            or e5_embedding.dtype != self.e5_residual_projection.weight.dtype
+            or fly_a_output.device != e5_embedding.device
+        ):
+            raise GraphCoreError("Fly A output and E5 embedding must share the model dtype and device")
+        if not torch.all(torch.isfinite(fly_a_output)) or not torch.all(torch.isfinite(e5_embedding)):
+            raise GraphCoreError("Fly A output and E5 embedding must contain only finite values")
+        fly_a_drives = self.fly_b.input_adapter(fly_a_output)
+        e5_residual = self.e5_residual_projection(e5_embedding)
+        drives = fly_a_drives + self.residual_gate * e5_residual
+        graph_output = self.fly_b.graph_core(drives)
+        return self.fly_b.readout(graph_output)
+
+    def checkpoint_metadata(self) -> dict[str, object]:
+        return {
+            "model_kind": "FlyBWithE5Residual",
+            "input_width": 32,
+            "e5_embedding_dim": self.embedding_dim,
+            "output_width": 5,
+            "label_order": list(self.fly_b.label_order),
+            "parameter_counts": self.parameter_counts,
+            "fusion": "fly_b_adapter(fly_a_output)+sigmoid(gate)*bias_free_e5_projection(e5_embedding)",
+            "gate_logit_init": self.gate_logit_init,
+            "classifier_shortcut": False,
+            "graph_core": self.fly_b.graph_core.checkpoint_metadata(),
+        }
+
+
 def distance_preserving_loss(
     embeddings: torch.Tensor, representations: torch.Tensor
 ) -> torch.Tensor:

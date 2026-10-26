@@ -137,9 +137,9 @@ def probe_induced_subgraph(
     max_scan_edges = _validate_integer(
         "max_scan_edges", max_scan_edges, _MAX_SCAN_EDGES
     )
+    _ensure_probe_destination(edge_path, destination)
     if not edge_path.is_file():
         raise SubgraphProbeError(f"edges_path does not exist: {edge_path}")
-    _ensure_probe_destination(edge_path, destination)
 
     adjacency: dict[int, set[int]] = {}
     scanned_edges: list[tuple[int, int, int]] = []
