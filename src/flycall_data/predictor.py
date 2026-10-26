@@ -7,7 +7,7 @@ import json
 import math
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Callable, Sequence
 
 from .e5_runtime import E5_MODEL_FILE_SHA256, load_e5_encoder
 from .evaluation import LABEL_ORDER
@@ -411,7 +411,12 @@ class FlyCallPredictor:
             stages=stages,
         )
 
-    def predict(self, transcript: str) -> DemoPrediction:
+    def predict(
+        self,
+        transcript: str,
+        *,
+        progress_callback: Callable[[str, str], None] | None = None,
+    ) -> DemoPrediction:
         if not isinstance(transcript, str) or not transcript.strip():
             raise PredictorError("enter a non-empty transcript before predicting.")
         try:
@@ -419,6 +424,8 @@ class FlyCallPredictor:
         except UnicodeEncodeError as error:
             raise PredictorError("transcript must be valid UTF-8 text.") from error
         prefixed = E5_SMALL_CONFIG.prefix + transcript
+        if progress_callback is not None:
+            progress_callback("embedding", "running")
         vectors = self.encoder.encode([prefixed])
         if len(vectors) != 1 or len(vectors[0]) != E5_SMALL_CONFIG.output_dimension:
             raise PredictorError("E5 did not return exactly one 384-dimensional embedding.")
@@ -428,9 +435,15 @@ class FlyCallPredictor:
         norm = math.sqrt(sum(value * value for value in embedding))
         if not math.isclose(norm, 1.0, rel_tol=1e-4, abs_tol=1e-4):
             raise PredictorError("E5 returned a vector that is not L2-normalized.")
-        logits = self._predict_embedding(embedding)
+        if progress_callback is not None:
+            progress_callback("embedding", "complete")
+        logits = self._predict_embedding(embedding, progress_callback=progress_callback)
+        if progress_callback is not None:
+            progress_callback("output", "running")
         probabilities = _softmax(logits)
         predicted_index = max(range(len(LABEL_ORDER)), key=probabilities.__getitem__)
+        if progress_callback is not None:
+            progress_callback("output", "complete")
         return DemoPrediction(
             candidate_name=self.candidate_name,
             predicted_label=LABEL_ORDER[predicted_index],
@@ -440,7 +453,12 @@ class FlyCallPredictor:
             stages=self.stages,
         )
 
-    def _predict_embedding(self, embedding: Sequence[float]) -> tuple[float, ...]:
+    def _predict_embedding(
+        self,
+        embedding: Sequence[float],
+        *,
+        progress_callback: Callable[[str, str], None] | None = None,
+    ) -> tuple[float, ...]:
         if self.backend == "e5_baseline":
             import numpy as np
 
@@ -448,15 +466,21 @@ class FlyCallPredictor:
             model = checkpoint["model"] if "model" in checkpoint else checkpoint["classifier"]
             features: Any = (tuple(embedding),)
             candidate_name = checkpoint["candidate"]
+            if progress_callback is not None:
+                progress_callback("classifier", "running")
             if candidate_name == "logistic_regression":
                 raw = np.asarray(model.decision_function(np.asarray(features, dtype=np.float64)), dtype=np.float64)
                 class_index = {str(label): index for index, label in enumerate(model.classes_)}
+                if progress_callback is not None:
+                    progress_callback("classifier", "complete")
                 return _checked_logits(raw[0, [class_index[label] for label in LABEL_ORDER]])
             if candidate_name == "lda_logistic_regression":
                 reduced = checkpoint["lda"].transform(np.asarray(features, dtype=np.float64))
                 raw = np.asarray(checkpoint["classifier"].decision_function(reduced), dtype=np.float64)
                 classifier = checkpoint["classifier"]
                 class_index = {str(label): index for index, label in enumerate(classifier.classes_)}
+                if progress_callback is not None:
+                    progress_callback("classifier", "complete")
                 return _checked_logits(raw[0, [class_index[label] for label in LABEL_ORDER]])
             if candidate_name == "pca_mlp":
                 features = checkpoint["preprocessor"].transform(features)
@@ -464,12 +488,22 @@ class FlyCallPredictor:
 
             with torch.no_grad():
                 raw = model(torch.tensor(features, dtype=torch.float32, device="cpu")).cpu().numpy()
+            if progress_callback is not None:
+                progress_callback("classifier", "complete")
             return _checked_logits(raw[0])
         if self.backend == "fly_a_to_fly_b":
             import torch
 
             values = torch.tensor((tuple(embedding),), dtype=torch.float32, device="cpu")
             with torch.no_grad():
-                logits = self.model["fly_b"](self.model["fly_a"](values))[0].tolist()
+                if progress_callback is not None:
+                    progress_callback("fly_a", "running")
+                fly_a_output = self.model["fly_a"](values)
+                if progress_callback is not None:
+                    progress_callback("fly_a", "complete")
+                    progress_callback("fly_b", "running")
+                logits = self.model["fly_b"](fly_a_output)[0].tolist()
+                if progress_callback is not None:
+                    progress_callback("fly_b", "complete")
             return _checked_logits(logits)
         raise PredictorError(f"unsupported predictor backend {self.backend!r}.")
