@@ -2,11 +2,11 @@
 
 **What to build:** 依 spec v0.2 建立可重現的 `intfloat/multilingual-e5-small` 凍結嵌入流程與 embedding cache，比較 `embedding → Logistic Regression`、`embedding → MLP`、`embedding → PCA(k) → MLP`。此 ticket 將 spec M2.2 與 M2.3 的前三項必要 baseline 收在同一實作工作；不包含 Fly A／Fly B、LDA、共用正式 evaluator 或一次性 test 評估。
 
-**Blocked by:** 01 M2.1 資料契約與唯讀 loader (completed); E5 execution resource gate 未通過。最新唯讀重查（2026-10-21 Asia/Taipei）讀得 swap free 628 MiB（低於 1 GiB），Activity Monitor 記憶體壓力圖為黃／琥珀色（非綠色），因此不得下載或安裝。指定 multilingual-e5-small revision 的 9 個檔案在本機 Hugging Face cache 可見且大小符合既有 metadata；內容 checksum 與 runtime 未驗證。磁碟規劃估算在保守情境下仍高於 4 GiB 保留線，但尚非安裝實測上界。Fixture-only 開發不受此資源阻塞。
+**Blocked by:** 01 M2.1 資料契約與唯讀 loader (completed); E5 Windows resource gate passed on 2026-10-26. The 2026-10-21 macOS swap/Activity Monitor snapshot below is historical and does not describe this computer.
 
-**Status:** blocked (fixture-only subtask completed; E5 下載／載入與正式資料 embedding 尚 blocked)
+**Status:** completed for provisional M2.2b scope (Windows E5 gate, train/validation comparison, and runtime/cache regression coverage passed; formal test evaluation remains gated by M2.4 and manual review)
 
-**Latest resource gate:** blocked — Activity Monitor pressure must be green and swap free must be at least 1 GiB before the previously authorized restricted validation can be reconsidered. Latest measured swap free is 628 MiB; disk estimate alone does not override this failure. See [latest read-only preflight](../research/m2-2b-e5-resource-preflight-20261016.md#最新唯讀資源閘門重查2026-10-21-asiataipei).
+**Latest resource gate:** passed for this Windows x64 CPU environment; 6.33 GiB RAM and 4.80 GiB commit were available before model load, full-run peak working set was 1.24 GiB, and project disk free stayed above 774 GiB. See [Windows gate and provisional run report](../research/m2-2b-e5-windows-gate-and-provisional-run-20261026.md).
 
 ## 依賴與邊界
 
@@ -16,13 +16,13 @@
 - 在人工複核門檻通過前，任何正式資料上的執行只可標示 `smoke_test`／`provisional`；不得產生正式效能結論或使用 test。
 - 本 ticket 不修改正式資料、Pilot、split、taxonomy、M1.1／M1.2／M1.3 產物或 M2.2a 結果。不得另行 random split。
 
-## 已選定的模型目標（尚未 runtime 驗證）
+## 已選定且已 runtime 驗證的模型目標
 
 2026-10-16 查核官方 Hugging Face model card 與檔案樹：
 
 - 使用者於 2026-10-21 選定唯一專案目標 `intfloat/multilingual-e5-small`；不再把 multilingual-e5-large 作為候選。官方頁面標示 MIT license。
 - 目標 revision：`614241f622f53c4eeff9890bdc4f31cfecc418b3`；prefix：`query: `；`max_seq_length=512`；output dimension：384；pooling：masked mean pooling；`normalize_embeddings=true`。
-- 受限試跑預定裝置為 CPU、`batch_size=1`。這是試跑設定，不宣稱已驗證實際 runtime 或輸出。
+- Windows 受限執行已確認 CPU、`batch_size=1`，載入成功；固定 384 維、mean pooling、Normalize module 與 tokenizer 行為均於本機核對。
 - 官方 `main` 的該 revision 已有前次唯讀查核紀錄。使用前仍須在資源閘門允許時確認不可變 commit、必要檔案及 SHA-256，並於執行時驗證模型輸出維度及 tokenizer 行為。
 - 2026-10-16 官方 revision API 列出 SentenceTransformer 推論保守必要集合共 9 檔、`492,795,290` bytes（`469.97 MiB`）：`model.safetensors`、`config.json`、`modules.json`、`sentence_bert_config.json`、`1_Pooling/config.json`、`tokenizer.json`、`tokenizer_config.json`、`special_tokens_map.json`、`sentencepiece.bpe.model`。其中 `sentencepiece.bpe.model` 是 slow-tokenizer fallback；若日後固定 fast-only loader 並 runtime 證明不需 fallback，才可重新核定最小集合。當時未有本機副本；2026-10-21 唯讀盤點已在 Hugging Face cache 找到該 revision 的 9 個檔案及相符大小，但尚未核對本機 checksum 或載入。完整 repository 約 2.28 GB，含替代 `pytorch_model.bin`、ONNX／OpenVINO 檔案及 README；不能直接下載整個 repository。
 - 官方頁面及檔案參考：
@@ -35,7 +35,9 @@
 
 ## 資源閘門
 
-**目前狀態以最新重查為準：blocked。** 2026-10-21 swap free 為 628 MiB，低於 1 GiB，Activity Monitor 壓力圖為黃／琥珀色而非綠色。磁碟保守預算約剩 27.85 GiB，但部分安裝／暫存額度不是已證明上界。完整的當次快照、cache 大小及分項估算見資源報告「最新唯讀資源閘門重查」；以下 2026-10-16 資源數據為歷史快照。
+**目前狀態以最新 Windows 執行為準：passed。** 2026-10-26 CPython 3.14.3 x64；模型載入前可用 RAM 6.33 GiB、commit 4.80 GiB、Windows memory load 59%、專案磁碟可用約 774.98 GiB。完整 E5 embedding run 峰值 working set 1.24 GiB，峰值 pagefile 2.24 GiB；執行後可用 RAM 5.66 GiB、commit 4.10 GiB、磁碟約 774.94 GiB。各項均高於現行停止線。詳見 [Windows gate report](../research/m2-2b-e5-windows-gate-and-provisional-run-20261026.md)。以下 2026-10-16／21 資源資料均為舊 macOS 電腦的歷史快照，不再代表目前執行環境。
+
+### Historical macOS preflight notes (superseded by the Windows run above)
 
 2026-10-16 最新唯讀預檢：實測 RAM `8,589,934,592` bytes；macOS 14.5 arm64；最新 `df -Pk .` 可用 `21,161,712 KiB`（`20.18 GiB`）。預檢較早磁碟快照為 `23,260,176 KiB`，累計相差 `2,098,464 KiB`（約 2.00 GiB）；原因未查明，不推測為特定程序。`~/.cache/uv` 實測 `1,207,952 KiB`，已計入磁碟佔用。M2.2a CPython 3.13.0 環境已有 NumPy 2.5.4／scikit-learn 1.9.1；M3.1 CPython 3.14.8 環境已有 PyTorch 2.14.1；兩者分開，均缺其餘 E5 stack，不可視為整合環境。
 
@@ -43,7 +45,7 @@
 
 本次以 PyPI metadata 為來源、以實際 CPython 3.13 與 3.14 interpreter 執行 `uv pip compile --only-binary :all: --no-cache --no-python-downloads`，兩者各自成功解析同一組 42 個版本。wheel bytes 合計分別為 `198,701,986` bytes（3.13）及 `198,750,040` bytes（3.14）；已在資源報告逐一列出 direct／transitive 套件及 wheel bytes。這是索引 metadata 計算，不是 wheel 下載或安裝實測。依保守預算（模型 cache 469.97 MiB、等量下載 staging、套件 wheels 189.5 MiB、venv 解壓配置 1.5 GiB、embedding/cache 16 MiB、run/temp 256 MiB），以最新 `20.18 GiB` 可用量扣除資源預算及預檢中已觀察的 `2.00 GiB` 波動 reserve，估計仍剩 `15.31 GiB`，高於 4 GiB 線；其中 venv、staging 及波動 reserve 都不是未來硬性上界。
 
-E5 peak RSS 仍只有按 float32 權重、batch 4／512 token 張量尺寸與既有非 E5 fixture RSS 推估約 2.5–3.0 GiB；模型 load／embedding 未執行。兩個 Python resolver 閉包成功不等於單一整合環境已安裝及 runtime 相容。**資源閘門仍 blocked**；不得下載或載入模型，直到下列條件全數通過並取得使用者核准：
+截至 2026-10-21，E5 peak RSS 只有按 float32 權重、batch 4／512 token 張量尺寸與非 E5 fixture RSS 推估約 2.5–3.0 GiB，當時尚未載入模型，因此資源閘門仍 blocked。以下是該次歷史快照的下載前檢查清單；Windows 實測已於 2026-10-26 通過並取代這個狀態：
 
 1. 記錄 Python 版本、架構及當下 RAM／磁碟快照；確認既有隔離環境，不改系統 Python。
 2. 使用者核准後，在單一隔離環境安裝選定並鎖定的 CPU 執行版本；量測安裝目錄、wheel cache／暫存實際值與整合 import。
@@ -89,18 +91,18 @@ Encoder 保持凍結。所有有擬合狀態的轉換只可 `fit` train；valida
 
 預期產物：可測試的 embedding／cache／baseline 模組及隔離依賴宣告、fixture tests、train／validation-only smoke runner、embedding manifest、三個候選的 provisional 比較報告。所有生成檔寫在 `.scratch/1999-connectome-demo/`；不改正式資料或 M2.2a 既有輸出。
 
-- [ ] 在任何安裝／模型下載前完成並通過上述資源閘門；精確列出 model files、CPU wheel、安裝、cache/temp、peak RSS 與保留空間。未通過時只可完成 fixture 部分，ticket 不得標記完成。
-- [ ] 將不可變 model revision、license/source、每個必要檔案 SHA-256、`query: ` prefix、512-token 上限、masked mean pooling／384 維與實際 L2-normalization 寫入 encoder／embedding manifest；執行時核對實際輸出維度。
-- [ ] 以 TDD 測試前處理、截斷報告、可重現 cache key、cache 命中及失效、維度／標籤順序與錯誤輸入；fixture 不下載或載入 E5。
-- [ ] 以測試證明所有估計參數只在 train fit，validation 僅 transform；test transcript 不會到達 tokenizer、encoder、cache、任何 fit／transform／predict 或指標程式。
-- [ ] 驗證三個 classifier 流程只接收 train／validation，沿用 scenario_family split，不重新切分；預先記錄有限候選、PCA k、seed 與依賴版本。
-- [ ] 通過資源閘門後，才可用正式 train／validation 做一個固定 seed 的 `smoke_test`／`provisional` 比較；完整記錄資料契約稽核、split counts、來源 SHA、模型與套件版本、截斷、train／validation metrics、耗時、peak RSS 與磁碟變化。Test input、預測及指標皆為零／`not_run`。
-- [ ] 正式 JSONL、CSV、taxonomy、split manifest、Pilot、M1.1／M1.2／M1.3 產物及既有 M2.2a 結果在執行前後 checksum 不變；不更改 `review_status`。
-- [ ] 報告及輸出明確標示合成資料、`pending_manual_review`、`smoke_test`／`provisional`；人工品質閘門未通過時不產生正式效能結論。
+- [x] 在安裝／模型下載前完成即時資源閘門並在隔離環境通過；記錄必要 model files、CPU dependency lock、venv/cache、peak RSS 與保留空間。詳見 Windows gate report。
+- [x] 將不可變 model revision、license/source、每個必要檔案 SHA-256、`query: ` prefix、512-token 上限、masked mean pooling／384 維與實際 L2-normalization 寫入 encoder／embedding manifest；執行時核對實際輸出維度。
+- [x] 以 TDD 測試前處理、截斷報告、可重現 cache key、cache 命中及失效、維度／標籤順序與錯誤輸入；fixture 不下載或載入 E5。
+- [x] 以測試證明所有估計參數只在 train fit，validation 僅 transform；test transcript 不會到達 tokenizer、encoder、cache、任何 fit／transform／predict 或指標程式。
+- [x] 驗證三個 classifier 流程只接收 train／validation，沿用 frozen scenario-family split，不重新切分；seed 42、PCA k=32、候選參數與依賴版本先行登錄。
+- [x] 通過資源閘門後，以 frozen train／validation 執行固定 seed 的 `smoke_test`／`provisional` 比較；記錄契約稽核、split counts、來源 SHA、模型與套件版本、截斷、指標、耗時、peak RSS 與磁碟變化。Test downstream input、預測及指標皆為零／`not_run`。
+- [x] 正式 JSONL、CSV、taxonomy、split manifest 及其餘凍結輸入執行前後 checksum 不變；未更改 `review_status`。
+- [x] 報告及輸出標示合成資料、`pending_manual_review`、`smoke_test`／`provisional`；沒有產生正式效能結論。
 
 ## 尚未建立的後續工作
 
-Spec v0.2 的 M2.4 共用 evaluator／報告器及 test 一次性 gate 目前沒有獨立 ticket；本 ticket 不建立或實作 M2.4，也不執行 test 評估。Spec M2.3 的 LDA baseline 同樣不在本 ticket 的三模型範圍內，是否另建後續 ticket 留待檢視。
+M2.3 LDA baseline 與 M2.4 evaluator/test gate 已各有獨立 tickets 11 與 10。本 ticket 不執行 test 評估；新 runtime 與 model-file SHA cache key 的 regression coverage 完成前，狀態維持 in-progress。
 
 ## Fixture-only 進度（2026-10-16）
 
@@ -126,14 +128,15 @@ Spec v0.2 的 M2.4 共用 evaluator／報告器及 test 一次性 gate 目前沒
   PYTHONPATH=src /private/tmp/flycall-m31-preflight-venv/bin/python -m unittest discover -s tests -p 'test_embedding_torch.py' -v
   ```
 
-**仍未完成／阻塞：**
+**目前仍未完成／阻塞：**
 
-- [ ] E5 資源閘門：官方 revision 檔案 bytes／可用 metadata SHA 與 CPython 3.13／3.14 no-install wheel resolver 已完成。使用者已核准受限驗證，但當次即時預檢顯示 swap 已用約 14.51 GiB／15 GiB，僅餘約 0.49 GiB，因此未建立環境、下載、安裝或載入。單一整合環境 footprint、實際 E5 peak RSS、cache／temporary staging 上界及本機模型 checksum 仍未核實；資源閘門維持 blocked，待系統記憶體壓力解除後重新檢查。
-- [ ] 實際 E5 tokenizer／encoder adapter、512-token 截斷統計與實際 384 維輸出核對未執行。
-- [ ] 正式資料 train／validation embedding 與三模型 provisional 比較未執行；正式資料、CSV／JSONL、test split 及任何 connectome 產物均未讀取。
-- [ ] 人工複核品質閘門尚未通過；不可發布正式效能或 test 結果。M2.4 test 一次性 evaluator 不屬於本 ticket。
+- [x] E5 Windows 資源閘門與固定 revision runtime 已通過；九個必要檔案 checksum、整合 CPU runtime、peak working set 與可用空間均已核對，見 2026-10-26 Windows gate report。
+- [x] 實際 E5 tokenizer、512-token 截斷統計、masked mean pooling、384 維輸出與 unit norm 已核對；850 筆 train／validation inputs 中 0 筆截斷。
+- [x] Frozen split 上 700 train／150 validation 的 E5 embeddings 與四個 provisional 候選已執行，test 下游輸入／預測／指標為 0／`not_run`；資料與結果仍是 synthetic／pending manual review／provisional。
+- [x] Fixture regression coverage for the new runtime and model-file SHA cache key is complete; `test_e5_runtime` and `test_embedding_pipeline` passed.
+- [x] 人工複核品質閘門尚未通過；不可發布正式效能或 test 結果。M2.4 test 一次性 evaluator 不屬於本 ticket。
 
-Fixture 完成只是可注入 encoder 與合成 embedding pipeline 的工程測試，不是 E5 結果、正式資料 smoke test 或正式分類效能。整張 ticket 維持 `blocked`，直到 E5 資源閘門及其餘範圍按限制完成。
+既有 fixture 測試不等於 E5 結果；目前 E5 train／validation run 也只可用作暫行流程驗證，不能代表通過人工複核或正式分類效能。整張 ticket 維持 `in-progress`，直到 runtime/cache regression coverage 及其他 ticket 範圍完成。
 
 ## Comments
 
@@ -144,3 +147,9 @@ Fixture 完成只是可注入 encoder 與合成 embedding pipeline 的工程測�
 - 2026-10-16：使用者核准受限環境驗證後，重新執行唯讀資源預檢。RAM 為 8,589,934,592 bytes，磁碟可用 21,767,932 KiB；`memory_pressure -Q` 顯示 30% free，但 `sysctl vm.swapusage` 顯示 15,360 MiB 中 14,854.06 MiB 已用、僅 505.94 MiB 可用。依停止條件判定有顯著記憶體壓力，在建立環境、下載／安裝套件或模型之前停止。沒有修改現有 Python 環境、下載或清理任何檔案，也沒有讀取正式資料、test、載入模型或執行 embedding。詳見 `../research/m2-2b-e5-resource-preflight-20261016.md` 的「受限環境驗證執行前停機」；E5 gate 與整張 ticket 保持 `blocked`。
 - 2026-10-21：使用者選定 multilingual-e5-small 為專案唯一嵌入目標，並指定固定 revision、query prefix、512 tokens、384 維、masked mean pooling、L2 normalization、CPU／batch 1 受限試跑。新增中央設定 `src/flycall_data/model_config.py`，並將 cache settings 的 key 欄位明確化為 model ID、revision、prefix、preprocessing、截斷、pooling、normalization、dtype、輸出維度及執行裝置／batch；mock fixture 測試確認 small／large 與 revision 不共用 cache。TDD 先因設定模組及新欄位缺失而失敗，再完成實作後通過 7 個相關測試。未下載、安裝或載入模型／依賴，未讀正式資料／Pilot／connectome／test rows，未執行 embedding、訓練或分類評估。small 僅為使用者選定，未通過本機驗證；資源閘門及整張 ticket 維持 `blocked`。
 - 2026-10-21：依使用者要求完成 M2.2b E5 small 唯讀資源重查，詳見資源預檢報告「最新唯讀資源閘門重查」。實測 RAM 8,589,934,592 bytes、swap total 16,384 MiB／used 15,756 MiB／free 628 MiB、專案磁碟可用約 30.90 GiB；Activity Monitor 壓力圖為黃／琥珀色，非綠色。程序名稱篩選 `python`、`pip`、`uv`、`torch`、`install` 均未見符合列。指定 revision 的 Hugging Face cache 路徑存在，9 個必要檔案大小合計 492,795,290 bytes；僅核對路徑與大小，未核對 checksum 或載入。沿用 CPython 3.13 wheel 閉包估算 189.50 MiB；保守磁碟增量情境約 3.05 GiB，推估剩約 27.85 GiB，但 venv／staging／暫存尚未實測且非硬上界。因 swap free 低於 1 GiB 且壓力非綠色，資源閘門與 ticket 維持 `blocked`。沒有下載／安裝／載入、embedding、正式資料／Pilot／connectome／test rows 存取或 M2.3 fixture 測試。
+- 2026-10-26：在新 Windows 11 x64 電腦完成即時資源檢查、CPython 3.14.3 隔離環境安裝與模型 runtime 驗證；資源閘門通過。九個 pinned model files（492,795,290 bytes）逐一通過大小/SHA；Sentence Transformers 6 runtime 確認 XLM-R tokenizer、normalizer fingerprint、512-token right truncation、masked mean pooling、384 維及 unit norm。使用固定候選與設定指紋，只處理 700 train／150 validation；850 筆中 0 筆截斷。完成 E5→LR、E5→MLP、E5→PCA(32)→MLP 及後續 ticket 11 的 E5→LDA(4)→LR provisional runs。完整 embedding cache 增加 6,873,061 bytes，peak working set 1,332,563,968 bytes；執行後可用 RAM 5.66 GiB、commit 4.10 GiB、磁碟約 774.94 GiB。來源 checksums 不變，test downstream count/prediction/metrics 為零／`not_run`。詳見 Windows gate report 與兩個 run artifacts。此結果仍為 synthetic／pending_manual_review／smoke_test／provisional；新 runtime 與 cache hash 的 fixture regression coverage 尚待補齊，因此 ticket 維持 in-progress。
+
+
+- 2026-10-26 regression closeout: the selected M2 suite passed 58 tests: E5 runtime (7), evaluation/ledger (17), embedding pipeline (9), embedding Logistic Regression (3), embedding PyTorch baselines (2), LDA baseline (6), text baselines (5), and frozen dataset loader contract (9). Loader tests validated frozen source contracts; no formal test rows entered tokenization, embedding, model fitting/prediction, or formal test metrics. Windows CSV fixture newline handling was corrected so multiline transcripts compare consistently. M2.2b provisional scope is complete; outputs remain synthetic, pending manual review, smoke-test/provisional only.
+- 2026-10-26 cache provenance correction: audit found that re-normalizing a cached vector changed 236/850 per-record hashes in the 20261025T185218Z rerun. Cache hits now validate unit norm and return the exact stored values. Corrected run `m2-2b-e5-provisional-20261026T015843Z` verifies all 850 cache vectors against its manifest with zero mismatches, no cache writes, and unchanged frozen data checksums. Its per-candidate validation accuracy/Macro-F1 matches the full run: LR 0.873/0.868, MLP 0.920/0.918, PCA(32)-MLP 0.907/0.906, and LDA(4)-LR 0.900/0.900. Test remains `not_run`.
+- 2026-10-26 multi-seed closeout: reran the current M2.2b runner for seeds 42, 1337, and 2026. Each run completed all four E5 baselines, saved and reload-verified candidate checkpoints, and produced fixed-taxonomy-order train/validation logits. The three manifests report zero tokenizer test inputs, embeddings, predictions, and metrics; all recorded output hashes pass. These runs feed the M3.4 validation-only comparison and remain provisional/pending manual review.

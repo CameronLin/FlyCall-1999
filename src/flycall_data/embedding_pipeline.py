@@ -43,6 +43,7 @@ class EmbeddingSettings:
     output_dimension: int
     device: str
     batch_size: int
+    model_file_sha256: tuple[tuple[str, str], ...] = ()
 
     def __post_init__(self) -> None:
         for name in (
@@ -64,6 +65,20 @@ class EmbeddingSettings:
             raise ValueError("output_dimension must be a positive integer.")
         if not isinstance(self.batch_size, int) or self.batch_size < 1:
             raise ValueError("batch_size must be a positive integer.")
+        if not isinstance(self.model_file_sha256, tuple):
+            raise ValueError("model_file_sha256 must be a tuple of (name, sha256) pairs.")
+        file_names: set[str] = set()
+        for entry in self.model_file_sha256:
+            if not isinstance(entry, tuple) or len(entry) != 2:
+                raise ValueError("model_file_sha256 entries must be (name, sha256) pairs.")
+            name, digest = entry
+            if not isinstance(name, str) or not name or name.startswith(("/", "\\")) or ".." in Path(name).parts:
+                raise ValueError("model file names must be non-empty relative paths.")
+            if name in file_names:
+                raise ValueError("model_file_sha256 must not contain duplicate names.")
+            if not isinstance(digest, str) or len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+                raise ValueError("model file SHA-256 values must be lowercase hexadecimal digests.")
+            file_names.add(name)
 
 
 class EmbeddingCache:
@@ -178,7 +193,7 @@ def embed_texts(
             continue
         cached = cache.get(key)
         if cached is not None:
-            result_by_key[key] = _validate_vector(cached, settings)
+            result_by_key[key] = _validate_cached_vector(cached, settings)
         else:
             missing_text_by_key[key] = text
 
@@ -251,6 +266,8 @@ class BaselineResult:
     validation_record_ids: tuple[str, ...]
     train_predictions: tuple[str, ...]
     validation_predictions: tuple[str, ...]
+    train_logits: tuple[tuple[float, ...], ...]
+    validation_logits: tuple[tuple[float, ...], ...]
     train_metrics: dict[str, Any]
     validation_metrics: dict[str, Any]
     parameters: dict[str, Any]
@@ -308,6 +325,10 @@ def run_baseline(
         model.fit(train.features, train.labels)
         train_predictions = tuple(str(value) for value in model.predict(train.features))
         validation_predictions = tuple(str(value) for value in model.predict(validation.features))
+        train_logits = _scores_in_label_order(model.decision_function(train.features), model.classes_, labels)
+        validation_logits = _scores_in_label_order(
+            model.decision_function(validation.features), model.classes_, labels
+        )
         parameters = {"C": 1.0, "max_iter": 1000, "solver": "lbfgs", "random_state": seed}
         transform_fit_record_ids: tuple[str, ...] = ()
         transform_state = None
@@ -335,7 +356,7 @@ def run_baseline(
                 "components": [list(row) for row in preprocessor.components],
                 "fit_record_ids": list(preprocessor.fit_record_ids),
             }
-        model, train_predictions, validation_predictions = _fit_torch_mlp(
+        model, train_predictions, validation_predictions, train_logits, validation_logits = _fit_torch_mlp(
             train_features,
             train.labels,
             validation_features,
@@ -364,6 +385,8 @@ def run_baseline(
         validation_record_ids=validation.record_ids,
         train_predictions=train_predictions,
         validation_predictions=validation_predictions,
+        train_logits=train_logits,
+        validation_logits=validation_logits,
         train_metrics=classification_metrics(train.labels, train_predictions, labels),
         validation_metrics=classification_metrics(validation.labels, validation_predictions, labels),
         parameters=parameters,
@@ -407,7 +430,13 @@ def _fit_torch_mlp(
     hidden_size: int,
     epochs: int,
     learning_rate: float,
-) -> tuple[Any, tuple[str, ...], tuple[str, ...]]:
+) -> tuple[
+    Any,
+    tuple[str, ...],
+    tuple[str, ...],
+    tuple[tuple[float, ...], ...],
+    tuple[tuple[float, ...], ...],
+]:
     torch = _require_torch()
     nn = torch.nn
     x_train = torch.tensor(train_features, dtype=torch.float32, device="cpu")
@@ -430,13 +459,39 @@ def _fit_torch_mlp(
             optimizer.step()
         model.eval()
         with torch.no_grad():
-            train_indices = model(x_train).argmax(dim=1).tolist()
-            validation_indices = model(x_validation).argmax(dim=1).tolist()
+            train_scores = model(x_train)
+            validation_scores = model(x_validation)
+            train_indices = train_scores.argmax(dim=1).tolist()
+            validation_indices = validation_scores.argmax(dim=1).tolist()
     return (
         model,
         tuple(label_order[index] for index in train_indices),
         tuple(label_order[index] for index in validation_indices),
+        tuple(tuple(float(value) for value in row) for row in train_scores.tolist()),
+        tuple(tuple(float(value) for value in row) for row in validation_scores.tolist()),
     )
+
+
+def _scores_in_label_order(
+    scores: Any,
+    observed_labels: Sequence[Any],
+    label_order: Sequence[str],
+) -> tuple[tuple[float, ...], ...]:
+    """Reorder sklearn decision scores to the fixed taxonomy order."""
+
+    try:
+        import numpy as np
+    except ImportError as error:
+        raise RuntimeError("Logistic Regression score reporting requires the existing NumPy environment.") from error
+    matrix = np.asarray(scores, dtype=np.float64)
+    observed = tuple(str(label) for label in observed_labels)
+    if matrix.ndim != 2 or matrix.shape[1] != len(observed) or set(observed) != set(label_order):
+        raise ValueError("classifier decision scores do not match the fixed label order.")
+    order = [observed.index(label) for label in label_order]
+    selected = matrix[:, order]
+    if not np.isfinite(selected).all():
+        raise ValueError("classifier decision scores must be finite.")
+    return tuple(tuple(float(value) for value in row) for row in selected.tolist())
 
 
 def _require_torch() -> Any:
@@ -486,6 +541,29 @@ def _finite_float(value: object, *, context: str) -> float:
 
 
 def _validate_vector(vector: Sequence[float], settings: EmbeddingSettings) -> tuple[float, ...]:
+    values = _checked_vector_values(vector, settings)
+    if settings.normalize_embeddings:
+        norm = math.sqrt(sum(value * value for value in values))
+        if norm == 0.0:
+            raise ValueError("cannot L2-normalize a zero norm embedding.")
+        values = tuple(value / norm for value in values)
+    return values
+
+
+def _validate_cached_vector(vector: Sequence[float], settings: EmbeddingSettings) -> tuple[float, ...]:
+    """Validate persisted vectors without renormalizing and changing their hashes."""
+
+    values = _checked_vector_values(vector, settings)
+    if settings.normalize_embeddings:
+        norm = math.sqrt(sum(value * value for value in values))
+        if norm == 0.0:
+            raise ValueError("cached embedding has a zero norm.")
+        if not math.isclose(norm, 1.0, rel_tol=1e-6, abs_tol=1e-6):
+            raise ValueError("cached embedding is not already L2-normalized.")
+    return values
+
+
+def _checked_vector_values(vector: Sequence[float], settings: EmbeddingSettings) -> tuple[float, ...]:
     if isinstance(vector, (str, bytes)):
         raise ValueError("encoder output must be a numeric vector.")
     values = tuple(_finite_float(value, context="embedding") for value in vector)
@@ -493,9 +571,4 @@ def _validate_vector(vector: Sequence[float], settings: EmbeddingSettings) -> tu
         raise ValueError(
             f"embedding dimension mismatch: expected {settings.output_dimension}, got {len(values)}."
         )
-    if settings.normalize_embeddings:
-        norm = math.sqrt(sum(value * value for value in values))
-        if norm == 0.0:
-            raise ValueError("cannot L2-normalize a zero norm embedding.")
-        values = tuple(value / norm for value in values)
     return values

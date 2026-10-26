@@ -1,0 +1,322 @@
+{
+  "candidate_settings_fingerprint": "a55d37b58ed1dcf303f9a28dca686586fe194ac8977bbdd3df42e08f6d191d67",
+  "checkpoint_reload_verified": true,
+  "code_sha256": {
+    "e5_runtime": "881c81bf81204bb0a3661a39396404f1fbdefb5f18da9151a7e92ef30e3fe23a",
+    "embedding_pipeline": "7d34c5b03bdd0698d8fbe6595c62ce84fc2b0c5f805d5e25a037a81f900e1506",
+    "evaluation": "152d0437ce8a6b9c449189993b4cd70560d8e691aeaab1d5c4a3c6263f1c2269",
+    "lda_baseline": "780697f0618b7b0911c9ad5ac0f653bf02b6d726b635a508743ffa41ff64531a",
+    "runner": "3615282e70e15153ed85f3f54a2aa643fafb737fa0d2bbb3fa38d35e82729380"
+  },
+  "created_at_utc": "2026-10-26T02:44:17.346134+00:00",
+  "data_status": "synthetic",
+  "dataset_audit": {
+    "family_count": 66,
+    "label_count": 5,
+    "label_counts": {
+      "park_general_maintenance": 200,
+      "road_surface_defect": 200,
+      "sidewalk_maintenance": 200,
+      "street_cleaning": 200,
+      "waste_truck_service": 200
+    },
+    "label_split_counts": {
+      "park_general_maintenance": {
+        "test": 30,
+        "train": 140,
+        "validation": 30
+      },
+      "road_surface_defect": {
+        "test": 30,
+        "train": 140,
+        "validation": 30
+      },
+      "sidewalk_maintenance": {
+        "test": 30,
+        "train": 140,
+        "validation": 30
+      },
+      "street_cleaning": {
+        "test": 30,
+        "train": 140,
+        "validation": 30
+      },
+      "waste_truck_service": {
+        "test": 30,
+        "train": 140,
+        "validation": 30
+      }
+    },
+    "manifest_version": "frozen-1.0",
+    "record_count": 1000,
+    "source_sha256": {
+      "csv": "5efe5ada8c304be7122c746eb6770e34e053d5d433f725f8761ede0cc99be3aa",
+      "jsonl": "e5931c3517e7194d04582fbd96bf971ab26aefc4c86cfb2007e3a68d61af49e4",
+      "manifest": "d60f97f9948da568fbdf9ff00953f088ddbc117ce99ed64ebc10a00b4cad87fb",
+      "taxonomy": "0263dab66cd2bb867cf76323e66fa946069e36378f57b7cd10aa4ae3993d3823"
+    },
+    "split_counts": {
+      "test": 150,
+      "train": 700,
+      "validation": 150
+    },
+    "taxonomy_version": "1.3"
+  },
+  "dataset_source": "formal_dataset_v1.0.0",
+  "dataset_source_paths": {
+    "csv": "data/1999_synthetic/formal/v1.0.0/formal_dataset_v1.0.0.csv",
+    "jsonl": "data/1999_synthetic/formal/v1.0.0/formal_dataset_v1.0.0.jsonl",
+    "manifest": "data/1999_synthetic/taxonomy/current/formal_split_manifest_frozen_v1.0.yaml",
+    "taxonomy": "data/1999_synthetic/taxonomy/current/taxonomy_v1.3.yaml"
+  },
+  "dependency_inputs": {
+    "lock": {
+      "path": ".scratch/1999-connectome-demo/requirements-m2-2b-e5-windows.lock",
+      "sha256": "3d6ba4b4d57555704a27783fcb0c1cbc8cf5de3821dcbc541c7e7d5f2ecc701e"
+    },
+    "requirements": {
+      "path": ".scratch/1999-connectome-demo/requirements-m2-2b-e5-windows.in",
+      "sha256": "beeedcbd232fe91322cebde2cf76c23d847d1b988d7255e8ae162506a11ad8ee"
+    }
+  },
+  "environment": {
+    "device": "cpu",
+    "implementation": "CPython",
+    "machine": "AMD64",
+    "packages": {
+      "numpy": "2.5.4",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "sentence-transformers": "6.0.0",
+      "sentencepiece": "0.2.2",
+      "tokenizers": "0.23.3",
+      "torch": "2.14.1",
+      "transformers": "5.20.2"
+    },
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.3",
+    "torch_cuda_available": false
+  },
+  "evaluation_status": "smoke_test",
+  "family_overlap_count": 0,
+  "model_manifest": {
+    "batch_size": 1,
+    "device": "cpu",
+    "files": [
+      {
+        "bytes": 200,
+        "path": "1_Pooling/config.json",
+        "sha256": "987f7a67a38fa564c849bb5d277c52ab9088a84368fc0be31a354125aebb12a0"
+      },
+      {
+        "bytes": 655,
+        "path": "config.json",
+        "sha256": "69137736cab8b8903a07fe8afaafdda25aac55415a12a55d1bffa9f581abf959"
+      },
+      {
+        "bytes": 470641600,
+        "path": "model.safetensors",
+        "sha256": "1a55775f53449dac10a2bcbc312469fac40b96d53198c407081a831f81c98477"
+      },
+      {
+        "bytes": 387,
+        "path": "modules.json",
+        "sha256": "c6e29747481e8b5dd2b58401966aeac910de39092f90cda9a704b1545f902b04"
+      },
+      {
+        "bytes": 57,
+        "path": "sentence_bert_config.json",
+        "sha256": "948201d8329907aae938fa62f9ceeed53f5694dacc2b87b9f3b78b37ee986529"
+      },
+      {
+        "bytes": 5069051,
+        "path": "sentencepiece.bpe.model",
+        "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+      },
+      {
+        "bytes": 167,
+        "path": "special_tokens_map.json",
+        "sha256": "d05497f1da52c5e09554c0cd874037a083e1dc1b9cfd48034d1c717f1afc07a7"
+      },
+      {
+        "bytes": 17082730,
+        "path": "tokenizer.json",
+        "sha256": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+      },
+      {
+        "bytes": 443,
+        "path": "tokenizer_config.json",
+        "sha256": "a1d6bc8734a6f635dc158508bef000f8e2e5a759c7d92f984b2c86e5ff53425b"
+      }
+    ],
+    "local_files_only": true,
+    "max_seq_length": 512,
+    "model_frozen": true,
+    "model_id": "intfloat/multilingual-e5-small",
+    "modules": [
+      "sentence_transformers.models.Transformer",
+      "sentence_transformers.models.Pooling",
+      "sentence_transformers.models.Normalize"
+    ],
+    "normalization": "model Normalize module; output norm checked at runtime",
+    "output_dimension": 384,
+    "pooling": "masked_mean",
+    "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "snapshot_path": "C:\\Users\\polarbear\\AppData\\Local\\Temp\\flycall-m22b\\hf-home\\hub\\models--intfloat--multilingual-e5-small\\snapshots\\614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "tokenizer_class": "XLMRobertaTokenizer",
+    "tokenizer_normalizer": "Precompiled",
+    "tokenizer_normalizer_sha256": "c1944f72967dbd5754934af4c2d87d050c6fb4e8a8321b607b0edc4f57ec6c23",
+    "total_bytes": 492795290,
+    "truncation_side": "right",
+    "trust_remote_code": false
+  },
+  "outputs": {
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/candidate_reports/lda_logistic_regression.md": {
+      "bytes": 3362,
+      "sha256": "9566352071f26b3dbd1162bf6caa635136b5ddd418cacde609b1a0253033c877"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/candidate_reports/logistic_regression.md": {
+      "bytes": 3672,
+      "sha256": "0e273ac830877923f70e7b3f251c4be777f8d8dc93f808b6a58f2e92ce655e8a"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/candidate_reports/mlp.md": {
+      "bytes": 3182,
+      "sha256": "0bb4c289ff9b8adec50f4928d750138c02d8e4d7ba657a16b9c2a1e9090a72a6"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/candidate_reports/pca_mlp.md": {
+      "bytes": 3411,
+      "sha256": "b6f3618dd0d140f14f143256864ea8235ff0d433affee5a5ae296ee13a7ee55b"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/embedding_manifest.json": {
+      "bytes": 572724,
+      "sha256": "6fe3e85e4bde62957c8d8f8d507f7663ba1958553dbbc630a4639043e84bf013"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/m2-3-lda-logistic-checkpoint.joblib": {
+      "bytes": 47771,
+      "sha256": "82aeeecc85ab574d0cc435ef57a4dada1972975755d505c3fa4ddde317e0e333"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/m2-logistic_regression-checkpoint.joblib": {
+      "bytes": 17308,
+      "sha256": "e8f832b87c965f8cffecb47bd57fe10aea9d69ba1cef586e68eede4886d3b6b1"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/m2-mlp-checkpoint.joblib": {
+      "bytes": 26238,
+      "sha256": "d4a30ffba9e37fc68a150129d7418666251086020619d9767bc1395dafd559bf"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/m2-pca_mlp-checkpoint.joblib": {
+      "bytes": 111211,
+      "sha256": "18be1fd0b6e06aaf8e26aa4e4e4e5dcff55bdc71e1f906a8af6c68a61707bc83"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/metrics.json": {
+      "bytes": 38338,
+      "sha256": "31dad8f4786b2adb6d0725279a594e2d533fe406c29e47a7b36906bc6d1b79fd"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/pre_registered_candidates.json": {
+      "bytes": 2946,
+      "sha256": "d97c2f664f7a17172899790cdab05b356644247728c42bb86413b410a8653d6a"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/predictions.csv": {
+      "bytes": 624304,
+      "sha256": "2a6db988130fa429a7d28a2e66928c616691f412e81844efde50ea716aad9d01"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/report.md": {
+      "bytes": 2999,
+      "sha256": "86a2a561a97a0b5212bd94f1257000e1e2d748e9ae0de30647c945fa34d272f0"
+    },
+    ".scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/tokenization_diagnostics.csv": {
+      "bytes": 43239,
+      "sha256": "2b28ec69430174e3c84d38bbc535c713f8687d09affde4b979588c3220e6794d"
+    }
+  },
+  "package_versions": {
+    "numpy": "2.5.4",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.18.1",
+    "sentence-transformers": "6.0.0",
+    "sentencepiece": "0.2.2",
+    "tokenizers": "0.23.3",
+    "torch": "2.14.1",
+    "transformers": "5.20.2"
+  },
+  "resource_measurements": {
+    "after_embedding": {
+      "available_commit_bytes": 1708797952,
+      "available_ram_bytes": 3804680192,
+      "memory_load_percent": 77,
+      "model_snapshot_bytes": 492795290,
+      "process_peak_pagefile_bytes": 2323415040,
+      "process_peak_working_set_bytes": 1306828800,
+      "project_disk_free_bytes": 830857633792,
+      "total_physical_ram_bytes": 16866881536
+    },
+    "after_model_load": {
+      "available_commit_bytes": 1738547200,
+      "available_ram_bytes": 3830403072,
+      "memory_load_percent": 77,
+      "model_snapshot_bytes": 492795290,
+      "process_peak_pagefile_bytes": 2323415040,
+      "process_peak_working_set_bytes": 1306828800,
+      "project_disk_free_bytes": 830857633792,
+      "total_physical_ram_bytes": 16866881536
+    },
+    "after_run": {
+      "available_commit_bytes": 1635127296,
+      "available_ram_bytes": 3777126400,
+      "memory_load_percent": 77,
+      "model_snapshot_bytes": 492795290,
+      "process_peak_pagefile_bytes": 2392502272,
+      "process_peak_working_set_bytes": 1344794624,
+      "project_disk_free_bytes": 830856024064,
+      "total_physical_ram_bytes": 16866881536
+    },
+    "before_model_load": {
+      "available_commit_bytes": 2862952448,
+      "available_ram_bytes": 4903026688,
+      "memory_load_percent": 70,
+      "model_snapshot_bytes": 492795290,
+      "process_peak_pagefile_bytes": 1111015424,
+      "process_peak_working_set_bytes": 128671744,
+      "project_disk_free_bytes": 830857986048,
+      "total_physical_ram_bytes": 16866881536
+    },
+    "cache_bytes_added": 0,
+    "cache_bytes_total": 6873061,
+    "disk_reserve_bytes": 4294967296,
+    "embedding_seconds": 0.5520652999985032,
+    "loader_seconds": 0.12075529999856371,
+    "model_load_seconds": 10.32124940000358,
+    "peak_pagefile_bytes": 2392502272,
+    "peak_working_set_bytes": 1344794624,
+    "project_disk_free_after_bytes": 830856024064,
+    "project_disk_free_before_bytes": 830857986048,
+    "rss_stop_threshold_bytes": 3758096384,
+    "tokenization_diagnostics_seconds": 0.22202220000326633
+  },
+  "result_status": "provisional",
+  "review_status": "pending_manual_review",
+  "run_id": "m2-2b-e5-seed-42-current-runner-20261026",
+  "source_checksums_unchanged": true,
+  "source_sha256_after": {
+    "csv": "5efe5ada8c304be7122c746eb6770e34e053d5d433f725f8761ede0cc99be3aa",
+    "jsonl": "e5931c3517e7194d04582fbd96bf971ab26aefc4c86cfb2007e3a68d61af49e4",
+    "manifest": "d60f97f9948da568fbdf9ff00953f088ddbc117ce99ed64ebc10a00b4cad87fb",
+    "taxonomy": "0263dab66cd2bb867cf76323e66fa946069e36378f57b7cd10aa4ae3993d3823"
+  },
+  "source_sha256_before": {
+    "csv": "5efe5ada8c304be7122c746eb6770e34e053d5d433f725f8761ede0cc99be3aa",
+    "jsonl": "e5931c3517e7194d04582fbd96bf971ab26aefc4c86cfb2007e3a68d61af49e4",
+    "manifest": "d60f97f9948da568fbdf9ff00953f088ddbc117ce99ed64ebc10a00b4cad87fb",
+    "taxonomy": "0263dab66cd2bb867cf76323e66fa946069e36378f57b7cd10aa4ae3993d3823"
+  },
+  "split_inputs": {
+    "train": 700,
+    "validation": 150
+  },
+  "test": {
+    "embedding_count": 0,
+    "metrics": null,
+    "prediction_count": 0,
+    "status": "not_run",
+    "transcript_count_passed_to_tokenizer": 0
+  }
+}

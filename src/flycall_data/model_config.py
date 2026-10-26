@@ -1,7 +1,7 @@
-"""Central, non-loading model target configuration for embedding workflows.
+"""Central, non-loading model configuration for embedding workflows.
 
-The selected E5 values describe a target for a future restricted CPU trial.
-This module never resolves, downloads, or instantiates model dependencies.
+The status records the locally verified runtime; this module itself never
+resolves, downloads, or instantiates model dependencies.
 """
 
 from __future__ import annotations
@@ -50,6 +50,7 @@ class EmbeddingModelConfig:
         preprocessing_version: str,
         truncation_policy: str,
         dtype: str = "float32",
+        model_file_sha256: tuple[tuple[str, str], ...] = (),
     ) -> EmbeddingSettings:
         """Build a cache-key settings value without loading the model."""
 
@@ -69,6 +70,7 @@ class EmbeddingModelConfig:
             output_dimension=self.output_dimension,
             device=self.trial_device,
             batch_size=self.trial_batch_size,
+            model_file_sha256=model_file_sha256,
         )
 
 
@@ -82,5 +84,5 @@ E5_SMALL_CONFIG = EmbeddingModelConfig(
     normalize_embeddings=True,
     trial_device="cpu",
     trial_batch_size=1,
-    status="selected_not_downloaded_or_loaded",
+    status="runtime_verified_cpu",
 )

@@ -1,0 +1,10 @@
+# CPython 3.14 x64, Windows, CPU-only; the companion lock contains all transitive hashes.
+--index-url https://download.pytorch.org/whl/cpu
+--extra-index-url https://pypi.org/simple
+
+torch==2.14.1
+sentence-transformers==6.0.0
+transformers==5.20.2
+sentencepiece==0.2.2
+scikit-learn==1.9.1
+numpy==2.5.4

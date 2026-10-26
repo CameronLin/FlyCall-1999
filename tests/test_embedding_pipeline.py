@@ -60,7 +60,7 @@ def settings(**overrides: object) -> EmbeddingSettings:
 
 
 class EmbeddingPipelineTests(unittest.TestCase):
-    def test_central_e5_target_configuration_is_explicit_and_unverified(self) -> None:
+    def test_central_e5_target_configuration_matches_verified_runtime(self) -> None:
         self.assertEqual(E5_SMALL_CONFIG.model_id, "intfloat/multilingual-e5-small")
         self.assertEqual(E5_SMALL_CONFIG.revision, "614241f622f53c4eeff9890bdc4f31cfecc418b3")
         self.assertEqual(E5_SMALL_CONFIG.prefix, "query: ")
@@ -70,7 +70,7 @@ class EmbeddingPipelineTests(unittest.TestCase):
         self.assertTrue(E5_SMALL_CONFIG.normalize_embeddings)
         self.assertEqual(E5_SMALL_CONFIG.trial_device, "cpu")
         self.assertEqual(E5_SMALL_CONFIG.trial_batch_size, 1)
-        self.assertEqual(E5_SMALL_CONFIG.status, "selected_not_downloaded_or_loaded")
+        self.assertEqual(E5_SMALL_CONFIG.status, "runtime_verified_cpu")
 
     def test_central_configuration_builds_complete_cache_settings(self) -> None:
         cache_settings = E5_SMALL_CONFIG.embedding_settings(
@@ -103,6 +103,22 @@ class EmbeddingPipelineTests(unittest.TestCase):
         self.assertEqual(first.features, ((0.6, 0.8),))
         self.assertEqual(second, first)
 
+    def test_cache_hit_preserves_exact_vector_and_rejects_non_normalized_payload(self) -> None:
+        vector = [0.5773502691896257] * 3
+        encoder = MockEncoder([vector])
+        cache_settings = settings(output_dimension=3)
+        with tempfile.TemporaryDirectory() as directory:
+            cache = EmbeddingCache(Path(directory))
+            first = embed_texts(text_batch("R: stable cache"), encoder, cache_settings, cache)
+            second = embed_texts(text_batch("R: stable cache"), encoder, cache_settings, cache)
+            self.assertEqual(first.features, second.features)
+            self.assertEqual(len(encoder.inputs), 1)
+
+            bad_text = "R: corrupted cache"
+            cache.put(cache.key_for(bad_text, cache_settings), [1.0, 1.0, 1.0])
+            with self.assertRaisesRegex(ValueError, "not already L2-normalized"):
+                embed_texts(text_batch(bad_text), encoder, cache_settings, cache)
+
     def test_cache_key_isolated_by_model_revision_and_each_embedding_setting(self) -> None:
         encoder = MockEncoder([[3.0, 4.0]])
         base = settings()
@@ -120,6 +136,7 @@ class EmbeddingPipelineTests(unittest.TestCase):
             replace(base, dtype="float64"),
             replace(base, device="mps"),
             replace(base, batch_size=2),
+            replace(base, model_file_sha256=(("model.safetensors", "a" * 64),)),
         ]
         with tempfile.TemporaryDirectory() as directory:
             cache = EmbeddingCache(Path(directory))
@@ -129,11 +146,22 @@ class EmbeddingPipelineTests(unittest.TestCase):
                 text = variant if isinstance(variant, str) else "R: 相同文字"
                 embed_texts(text_batch(text), encoder, variant_settings, cache)
 
-        self.assertEqual(len(encoder.inputs), 14)
+        self.assertEqual(len(encoder.inputs), 15)
         self.assertNotEqual(
             EmbeddingCache.key_for("R: 相同文字", base),
             EmbeddingCache.key_for("R: 相同文字", replace(base, output_dimension=3)),
         )
+
+    def test_model_file_hash_settings_are_validated(self) -> None:
+        with self.assertRaisesRegex(ValueError, "SHA-256"):
+            settings(model_file_sha256=(("model.safetensors", "not-a-hash"),))
+        with self.assertRaisesRegex(ValueError, "relative paths"):
+            settings(model_file_sha256=(("../model.safetensors", "a" * 64),))
+        with self.assertRaisesRegex(ValueError, "duplicate names"):
+            settings(model_file_sha256=(
+                ("model.safetensors", "a" * 64),
+                ("model.safetensors", "b" * 64),
+            ))
 
     def test_wrong_dimension_non_finite_and_zero_norm_fail_explicitly(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

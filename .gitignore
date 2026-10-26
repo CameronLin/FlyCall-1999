@@ -5,6 +5,8 @@ __pycache__/
 
 # Local environment and transient experiment data
 .scratch/**/env/
+/.scratch/1999-connectome-demo/caches/
+/.scratch/1999-connectome-demo/test-ledger/
 
 # MaleCNS bulk data exceeds GitHub's 100 MB per-file limit.
 data/connectome/malecns_v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather

@@ -6,7 +6,8 @@ dataset, tokenize text, create embeddings, or accept a test batch.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+import time
 from typing import Any
 
 import numpy as np
@@ -41,6 +42,9 @@ class LDABaselineResult:
     train_metrics: dict[str, Any]
     validation_metrics: dict[str, Any]
     parameters: dict[str, Any]
+    timings_seconds: dict[str, float]
+    lda_model: Any = field(repr=False, compare=False)
+    classifier: Any = field(repr=False, compare=False)
     evaluation_status: str = "smoke_test/provisional"
     data_status: str = "synthetic_fixture"
     review_status: str = "pending_manual_review"
@@ -87,8 +91,12 @@ def run_lda_logistic_baseline(
 
     lda_dimension = min(4, len(LABEL_ORDER) - 1)
     lda = LinearDiscriminantAnalysis(solver="svd", n_components=lda_dimension)
+    started = time.perf_counter()
     train_reduced = lda.fit_transform(train_matrix, np.asarray(train.labels))
+    lda_fit_transform_seconds = time.perf_counter() - started
+    started = time.perf_counter()
     validation_reduced = lda.transform(validation_matrix)
+    lda_validation_transform_seconds = time.perf_counter() - started
 
     classifier = LogisticRegression(
         C=1.0,
@@ -96,12 +104,16 @@ def run_lda_logistic_baseline(
         random_state=seed,
         solver="lbfgs",
     )
+    started = time.perf_counter()
     classifier.fit(train_reduced, np.asarray(train.labels))
+    classifier_fit_seconds = time.perf_counter() - started
 
+    started = time.perf_counter()
     train_logits = _scores_in_label_order(classifier, train_reduced)
     validation_logits = _scores_in_label_order(classifier, validation_reduced)
     train_predictions = tuple(str(value) for value in classifier.predict(train_reduced))
     validation_predictions = tuple(str(value) for value in classifier.predict(validation_reduced))
+    prediction_seconds = time.perf_counter() - started
 
     return LDABaselineResult(
         candidate="lda_logistic_regression",
@@ -139,6 +151,14 @@ def run_lda_logistic_baseline(
             "evaluation_splits": ["train", "validation"],
             "test": "not_run",
         },
+        timings_seconds={
+            "lda_fit_and_train_transform": lda_fit_transform_seconds,
+            "lda_validation_transform": lda_validation_transform_seconds,
+            "classifier_fit": classifier_fit_seconds,
+            "prediction_and_scores": prediction_seconds,
+        },
+        lda_model=lda,
+        classifier=classifier,
     )
 
 
