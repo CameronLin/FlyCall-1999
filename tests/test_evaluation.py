@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import json
+import os
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -7,10 +11,13 @@ from pathlib import Path
 from flycall_data.evaluation import (
     LABEL_ORDER,
     PredictionBatch,
+    PersistentTestRunLedger,
+    TestRunReservation,
     TestEvaluationAuthorization,
     TestEvaluationLockedError,
     classification_metrics,
     evaluate_predictions,
+    fingerprint_candidate_list,
     render_markdown_report,
     write_markdown_report,
 )
@@ -68,6 +75,22 @@ def valid_unlock() -> TestEvaluationAuthorization:
         configuration_locked=True,
         manual_review_gate_passed=True,
         approval_reference="fixture-approval",
+    )
+
+
+def reserve_fixture(ledger: PersistentTestRunLedger, *, config: str = "b" * 64) -> TestRunReservation:
+    candidate_names = ("fixture-candidate", "other-candidate")
+    return ledger.reserve(
+        candidate_name="fixture-candidate",
+        candidate_names=candidate_names,
+        candidate_list_fingerprint=fingerprint_candidate_list(candidate_names),
+        configuration_fingerprint=config,
+        candidate_list_locked=True,
+        configuration_locked=True,
+        manual_review_gate_passed=True,
+        manual_review_summary_sha256="c" * 64,
+        approval_reference="fixture-review-approval",
+        source_sha256={"fixture-manifest": "d" * 64, "fixture-model": "e" * 64},
     )
 
 
@@ -250,6 +273,166 @@ class EvaluationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = write_markdown_report(report, Path(directory) / "fixture-report.md")
             self.assertEqual(path.read_text(encoding="utf-8"), rendered)
+
+    def test_process_local_unlock_is_restricted_to_synthetic_fixture_data(self) -> None:
+        with self.assertRaisesRegex(TestEvaluationLockedError, "restricted to synthetic fixtures"):
+            evaluate_predictions(
+                batch("train"), batch("validation"), test=batch("test"),
+                test_unlock=valid_unlock(), candidate_name="fixture-candidate",
+                configuration_fingerprint="fixture-config-sha256", data_status="synthetic",
+            )
+
+    def test_durable_ledger_rejects_unlocked_or_inconsistent_reservations(self) -> None:
+        candidate_names = ("fixture-candidate", "other-candidate")
+        valid_kwargs = {
+            "candidate_name": "fixture-candidate",
+            "candidate_names": candidate_names,
+            "candidate_list_fingerprint": fingerprint_candidate_list(candidate_names),
+            "configuration_fingerprint": "b" * 64,
+            "candidate_list_locked": True,
+            "configuration_locked": True,
+            "manual_review_gate_passed": True,
+            "manual_review_summary_sha256": "c" * 64,
+            "approval_reference": "fixture-review-approval",
+            "source_sha256": {"fixture-manifest": "d" * 64},
+        }
+        invalid_variants = (
+            ({"candidate_list_locked": False}, "locked candidate list"),
+            ({"configuration_locked": False}, "locked configuration"),
+            ({"manual_review_gate_passed": False}, "manual review quality gate"),
+            ({"approval_reference": "  "}, "approval reference"),
+            ({"candidate_list_fingerprint": "f" * 64}, "does not match"),
+            ({"candidate_name": "not-predeclared"}, "predeclared candidate list"),
+            ({"source_sha256": {"fixture-manifest": "bad"}}, "lowercase SHA-256"),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            ledger = PersistentTestRunLedger(Path(directory))
+            for overrides, message in invalid_variants:
+                kwargs = {**valid_kwargs, **overrides}
+                with self.subTest(overrides=overrides):
+                    with self.assertRaisesRegex(TestEvaluationLockedError, message):
+                        ledger.reserve(**kwargs)
+            self.assertEqual(list(Path(directory).iterdir()), [])
+
+    def test_durable_reservation_persists_and_candidate_cannot_be_reserved_twice(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            first_ledger = PersistentTestRunLedger(Path(directory))
+            reservation = reserve_fixture(first_ledger)
+            second_ledger = PersistentTestRunLedger(Path(directory))
+            payload = second_ledger.validate_reservation(reservation)
+
+            self.assertEqual(payload["status"], "reserved")
+            self.assertFalse(payload["test_input_read_at_reservation"])
+            with self.assertRaisesRegex(TestEvaluationLockedError, "already reserved or consumed"):
+                reserve_fixture(second_ledger, config="f" * 64)
+
+            script = r"""
+import sys
+from pathlib import Path
+from flycall_data.evaluation import PersistentTestRunLedger, TestEvaluationLockedError, fingerprint_candidate_list
+
+candidate_names = ("fixture-candidate", "other-candidate")
+ledger = PersistentTestRunLedger(Path(sys.argv[1]))
+try:
+    ledger.reserve(
+        candidate_name="fixture-candidate",
+        candidate_names=candidate_names,
+        candidate_list_fingerprint=fingerprint_candidate_list(candidate_names),
+        configuration_fingerprint="b" * 64,
+        candidate_list_locked=True,
+        configuration_locked=True,
+        manual_review_gate_passed=True,
+        manual_review_summary_sha256="c" * 64,
+        approval_reference="fixture-review-approval",
+        source_sha256={"fixture-manifest": "d" * 64},
+    )
+except TestEvaluationLockedError:
+    print("locked")
+else:
+    raise SystemExit("second process unexpectedly reserved the same candidate")
+"""
+            environment = os.environ.copy()
+            source_root = str(Path(__file__).resolve().parents[1] / "src")
+            environment["PYTHONPATH"] = os.pathsep.join(
+                [source_root, environment.get("PYTHONPATH", "")]
+            ).rstrip(os.pathsep)
+            process = subprocess.run(
+                [sys.executable, "-c", script, directory],
+                check=False,
+                capture_output=True,
+                text=True,
+                timeout=15,
+                env=environment,
+            )
+            self.assertEqual(process.returncode, 0, process.stderr)
+            self.assertEqual(process.stdout.strip(), "locked")
+
+    def test_durable_reservation_detects_record_tampering(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            ledger = PersistentTestRunLedger(Path(directory))
+            reservation = reserve_fixture(ledger)
+            with reservation.record_path.open("ab") as stream:
+                stream.write(b" ")
+
+            with self.assertRaisesRegex(TestEvaluationLockedError, "checksum changed"):
+                PersistentTestRunLedger(Path(directory)).validate_reservation(reservation)
+
+    def test_durable_gate_is_atomically_consumed_once_before_metrics(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            ledger = PersistentTestRunLedger(Path(directory))
+            reservation = reserve_fixture(ledger)
+            configuration = reservation.configuration_fingerprint
+            report = evaluate_predictions(
+                batch("train"), batch("validation"), test=batch("test"),
+                test_reservation=reservation, test_ledger=ledger,
+                candidate_name="fixture-candidate", configuration_fingerprint=configuration,
+            )
+
+            self.assertEqual(report["evaluation_status"], "smoke_test/provisional")
+            self.assertEqual(report["review_status"], "pending_manual_review")
+            self.assertEqual(report["splits"]["test"]["status"], "fixture_only_evaluated")
+            self.assertEqual(report["test_authorization"]["mode"], "persistent_one_use_ledger")
+            self.assertEqual(json.loads(reservation.record_path.read_text(encoding="utf-8"))["status"], "evaluating")
+
+            with self.assertRaises(TestEvaluationLockedError):
+                evaluate_predictions(
+                    batch("train"), batch("validation"), test=batch("test"),
+                    test_reservation=reservation,
+                    test_ledger=PersistentTestRunLedger(Path(directory)),
+                    candidate_name="fixture-candidate", configuration_fingerprint=configuration,
+                )
+
+            ledger.finalize(
+                reservation,
+                status="completed",
+                test_source_sha256="f" * 64,
+                output_sha256="a" * 64,
+            )
+            finalized = json.loads(reservation.record_path.read_text(encoding="utf-8"))
+            self.assertEqual(finalized["status"], "completed")
+            self.assertEqual(finalized["test_source_sha256"], "f" * 64)
+            with self.assertRaises(TestEvaluationLockedError):
+                reserve_fixture(PersistentTestRunLedger(Path(directory)), config="9" * 64)
+
+    def test_durable_finalization_requires_output_provenance_and_failure_stays_consumed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            ledger = PersistentTestRunLedger(Path(directory))
+            reservation = reserve_fixture(ledger)
+            with self.assertRaisesRegex(TestEvaluationLockedError, "require both test source and output"):
+                ledger.finalize(reservation, status="completed")
+            with self.assertRaisesRegex(TestEvaluationLockedError, "only after evaluation was consumed"):
+                ledger.finalize(
+                    reservation,
+                    status="completed",
+                    test_source_sha256="f" * 64,
+                    output_sha256="a" * 64,
+                )
+
+            ledger.finalize(reservation, status="failed_after_reservation")
+            failed = json.loads(reservation.record_path.read_text(encoding="utf-8"))
+            self.assertEqual(failed["status"], "failed_after_reservation")
+            with self.assertRaisesRegex(TestEvaluationLockedError, "already reserved or consumed"):
+                reserve_fixture(PersistentTestRunLedger(Path(directory)), config="9" * 64)
 
 
 if __name__ == "__main__":

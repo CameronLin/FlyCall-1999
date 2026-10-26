@@ -9,7 +9,6 @@ import hashlib
 import json
 import os
 import platform
-import resource
 import shutil
 import sys
 import time
@@ -19,6 +18,11 @@ from datetime import datetime, timezone
 from importlib.metadata import version
 from pathlib import Path
 from typing import Any
+
+try:
+    import resource
+except ImportError:  # Windows does not provide the POSIX resource module.
+    resource = None  # type: ignore[assignment]
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -42,12 +46,70 @@ DEFAULT_OUTPUT_PARENT = PROJECT_ROOT / ".scratch/1999-connectome-demo/runs"
 
 
 def _physical_ram_bytes() -> int:
-    return int(os.sysconf("SC_PHYS_PAGES") * os.sysconf("SC_PAGE_SIZE"))
+    if hasattr(os, "sysconf"):
+        return int(os.sysconf("SC_PHYS_PAGES") * os.sysconf("SC_PAGE_SIZE"))
+    if os.name == "nt":
+        import ctypes
+
+        class MemoryStatusEx(ctypes.Structure):
+            _fields_ = [
+                ("dwLength", ctypes.c_ulong),
+                ("dwMemoryLoad", ctypes.c_ulong),
+                ("ullTotalPhys", ctypes.c_ulonglong),
+                ("ullAvailPhys", ctypes.c_ulonglong),
+                ("ullTotalPageFile", ctypes.c_ulonglong),
+                ("ullAvailPageFile", ctypes.c_ulonglong),
+                ("ullTotalVirtual", ctypes.c_ulonglong),
+                ("ullAvailVirtual", ctypes.c_ulonglong),
+                ("ullAvailExtendedVirtual", ctypes.c_ulonglong),
+            ]
+
+        status = MemoryStatusEx()
+        status.dwLength = ctypes.sizeof(status)
+        if not ctypes.WinDLL("kernel32", use_last_error=True).GlobalMemoryStatusEx(ctypes.byref(status)):
+            raise ctypes.WinError(ctypes.get_last_error())
+        return int(status.ullTotalPhys)
+    raise RuntimeError("Unable to determine physical memory on this platform.")
 
 
 def _peak_rss_bytes() -> int:
-    value = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
-    return value if platform.system() == "Darwin" else value * 1024
+    if resource is not None:
+        value = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
+        return value if platform.system() == "Darwin" else value * 1024
+    if os.name == "nt":
+        import ctypes
+        from ctypes import wintypes
+
+        class ProcessMemoryCounters(ctypes.Structure):
+            _fields_ = [
+                ("cb", wintypes.DWORD),
+                ("PageFaultCount", wintypes.DWORD),
+                ("PeakWorkingSetSize", ctypes.c_size_t),
+                ("WorkingSetSize", ctypes.c_size_t),
+                ("QuotaPeakPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
+                ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+                ("PagefileUsage", ctypes.c_size_t),
+                ("PeakPagefileUsage", ctypes.c_size_t),
+            ]
+
+        counters = ProcessMemoryCounters()
+        counters.cb = ctypes.sizeof(counters)
+        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        psapi = ctypes.WinDLL("psapi", use_last_error=True)
+        psapi.GetProcessMemoryInfo.argtypes = (
+            wintypes.HANDLE,
+            ctypes.POINTER(ProcessMemoryCounters),
+            wintypes.DWORD,
+        )
+        psapi.GetProcessMemoryInfo.restype = wintypes.BOOL
+        if not psapi.GetProcessMemoryInfo(
+            kernel32.GetCurrentProcess(), ctypes.byref(counters), counters.cb
+        ):
+            raise ctypes.WinError(ctypes.get_last_error())
+        return int(counters.PeakWorkingSetSize)
+    raise RuntimeError("Unable to determine peak resident memory on this platform.")
 
 
 def _sha256_json(value: Any) -> str:

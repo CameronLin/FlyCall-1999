@@ -6,9 +6,16 @@ embeddings, or test rows from disk.
 
 from __future__ import annotations
 
+import hashlib
+import json
+import os
+import tempfile
+import uuid
+from contextlib import contextmanager
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Iterator, Sequence
 
 
 LABEL_ORDER = (
@@ -70,11 +77,11 @@ class TestEvaluationAuthorization:
     _consumed_candidates: set[str] = field(default_factory=set, init=False, repr=False)
 
     def validate(self, candidate_name: str, configuration_fingerprint: str) -> None:
-        if not self.candidate_list_locked:
+        if self.candidate_list_locked is not True:
             raise TestEvaluationLockedError("test evaluation requires a locked candidate list.")
-        if not self.configuration_locked:
+        if self.configuration_locked is not True:
             raise TestEvaluationLockedError("test evaluation requires locked configuration settings.")
-        if not self.manual_review_gate_passed:
+        if self.manual_review_gate_passed is not True:
             raise TestEvaluationLockedError("test evaluation requires the manual review quality gate to pass.")
         if not self.approval_reference:
             raise TestEvaluationLockedError("test evaluation requires an explicit approval reference.")
@@ -88,6 +95,327 @@ class TestEvaluationAuthorization:
     def consume(self, candidate_name: str, configuration_fingerprint: str) -> None:
         self.validate(candidate_name, configuration_fingerprint)
         self._consumed_candidates.add(candidate_name)
+
+
+@dataclass
+class TestRunReservation:
+    """Durable one-use reservation that must be written before reading test rows."""
+
+    candidate_name: str
+    configuration_fingerprint: str
+    reservation_id: str
+    record_path: Path
+    record_sha256: str
+
+
+class PersistentTestRunLedger:
+    """Cross-process, fail-closed reservation ledger for a future test runner.
+
+    Calling ``reserve`` consumes the candidate/configuration slot before the
+    caller opens or tokenizes test inputs. A failed process leaves the slot
+    consumed. This class does not read a dataset or run an evaluation.
+    """
+
+    def __init__(self, root: Path) -> None:
+        self.root = Path(root)
+
+    def reserve(
+        self,
+        *,
+        candidate_name: str,
+        candidate_names: Sequence[str],
+        candidate_list_fingerprint: str,
+        configuration_fingerprint: str,
+        candidate_list_locked: bool,
+        configuration_locked: bool,
+        manual_review_gate_passed: bool,
+        manual_review_summary_sha256: str,
+        approval_reference: str,
+        source_sha256: dict[str, str],
+    ) -> TestRunReservation:
+        """Persist an irreversible one-use reservation before any test access."""
+
+        if isinstance(candidate_names, (str, bytes)):
+            raise TestEvaluationLockedError("candidate_names must be a sequence of candidate names.")
+        candidates = tuple(candidate_names)
+        if (
+            not isinstance(candidate_name, str)
+            or not candidate_name
+            or candidate_name != candidate_name.strip()
+            or not candidates
+            or any(
+                not isinstance(name, str) or not name or name != name.strip()
+                for name in candidates
+            )
+        ):
+            raise TestEvaluationLockedError("candidate names must be non-empty, trimmed strings.")
+        if candidate_list_locked is not True:
+            raise TestEvaluationLockedError("test evaluation requires a locked candidate list.")
+        if configuration_locked is not True:
+            raise TestEvaluationLockedError("test evaluation requires locked configuration settings.")
+        if manual_review_gate_passed is not True:
+            raise TestEvaluationLockedError("test evaluation requires the manual review quality gate to pass.")
+        if not isinstance(approval_reference, str) or not approval_reference.strip():
+            raise TestEvaluationLockedError("test evaluation requires an explicit approval reference.")
+        if len(set(candidates)) != len(candidates) or candidate_name not in candidates:
+            raise TestEvaluationLockedError("candidate must be in a unique, predeclared candidate list.")
+        expected_candidate_list_fingerprint = fingerprint_candidate_list(candidates)
+        _require_sha256(candidate_list_fingerprint, "candidate_list_fingerprint")
+        if candidate_list_fingerprint != expected_candidate_list_fingerprint:
+            raise TestEvaluationLockedError("candidate list fingerprint does not match the locked candidate names.")
+        _require_sha256(configuration_fingerprint, "configuration_fingerprint")
+        _require_sha256(manual_review_summary_sha256, "manual_review_summary_sha256")
+        if not isinstance(source_sha256, dict) or not source_sha256:
+            raise TestEvaluationLockedError("test reservation requires source file checksums.")
+        checked_sources: dict[str, str] = {}
+        for name, digest in source_sha256.items():
+            if not isinstance(name, str) or not name:
+                raise TestEvaluationLockedError("source checksum names must be non-empty strings.")
+            _require_sha256(digest, f"source_sha256[{name}]")
+            checked_sources[name] = digest
+
+        reservation_id = uuid.uuid4().hex
+        payload = {
+            "schema_version": 1,
+            "status": "reserved",
+            "reservation_id": reservation_id,
+            "reserved_at_utc": datetime.now(timezone.utc).isoformat(),
+            "candidate_name": candidate_name,
+            "candidate_names": list(candidates),
+            "candidate_list_fingerprint": candidate_list_fingerprint,
+            "candidate_list_locked": True,
+            "configuration_fingerprint": configuration_fingerprint,
+            "configuration_locked": True,
+            "manual_review_gate_passed": True,
+            "manual_review_summary_sha256": manual_review_summary_sha256,
+            "approval_reference": approval_reference.strip(),
+            "source_sha256": dict(sorted(checked_sources.items())),
+            "test_input_read_at_reservation": False,
+        }
+        # A candidate may consume the test split only once, even if someone
+        # later changes its configuration fingerprint.
+        identity = hashlib.sha256(candidate_name.encode("utf-8")).hexdigest()
+        record_path = self.root / f"{identity}.json"
+        self.root.mkdir(parents=True, exist_ok=True)
+        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
+        try:
+            descriptor = os.open(record_path, flags, 0o600)
+        except FileExistsError as error:
+            raise TestEvaluationLockedError(
+                "test authorization was already reserved or consumed for this candidate."
+            ) from error
+        encoded = json.dumps(
+            payload,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+        with os.fdopen(descriptor, "wb") as stream:
+            stream.write(encoded)
+            stream.flush()
+            os.fsync(stream.fileno())
+        return TestRunReservation(
+            candidate_name=candidate_name,
+            configuration_fingerprint=configuration_fingerprint,
+            reservation_id=reservation_id,
+            record_path=record_path,
+            record_sha256=hashlib.sha256(encoded).hexdigest(),
+        )
+
+    def validate_reservation(self, reservation: TestRunReservation) -> dict[str, Any]:
+        """Re-read a pending reservation before the caller accesses test input."""
+
+        return self._read_reservation(reservation, allowed_statuses={"reserved"})
+
+    def consume_for_evaluation(self, reservation: TestRunReservation) -> dict[str, Any]:
+        """Atomically consume a reserved slot before evaluation metrics run.
+
+        If this process exits after the transition, the candidate remains
+        consumed. A later attempt fails closed instead of repeating test work.
+        """
+
+        if not isinstance(reservation, TestRunReservation):
+            raise TypeError("consume_for_evaluation requires a TestRunReservation.")
+        record_path = self._checked_record_path(reservation)
+        with self._exclusive_record_lock(record_path):
+            payload = self._read_reservation(reservation, allowed_statuses={"reserved"})
+            payload["status"] = "evaluating"
+            payload["evaluation_started_at_utc"] = datetime.now(timezone.utc).isoformat()
+            reservation.record_sha256 = self._write_record_payload(record_path, payload)
+            return payload
+
+    def _checked_record_path(self, reservation: TestRunReservation) -> Path:
+        if not isinstance(reservation, TestRunReservation):
+            raise TypeError("reservation must be a TestRunReservation.")
+        if (
+            not isinstance(reservation.candidate_name, str)
+            or not reservation.candidate_name
+            or reservation.candidate_name != reservation.candidate_name.strip()
+        ):
+            raise TestEvaluationLockedError("reservation candidate name is invalid.")
+        record_path = reservation.record_path.resolve(strict=True)
+        ledger_root = self.root.resolve(strict=True)
+        try:
+            record_path.relative_to(ledger_root)
+        except ValueError as error:
+            raise TestEvaluationLockedError("reservation record is outside this ledger root.") from error
+        expected_identity = hashlib.sha256(reservation.candidate_name.encode("utf-8")).hexdigest()
+        expected_path = (ledger_root / f"{expected_identity}.json").resolve(strict=True)
+        if record_path != expected_path:
+            raise TestEvaluationLockedError("reservation record path does not match its candidate identity.")
+        return record_path
+
+    def _read_reservation(
+        self,
+        reservation: TestRunReservation,
+        *,
+        allowed_statuses: set[str],
+    ) -> dict[str, Any]:
+
+        if not isinstance(reservation, TestRunReservation):
+            raise TypeError("validate_reservation requires a TestRunReservation.")
+        _require_sha256(reservation.record_sha256, "reservation_record_sha256")
+        record_path = self._checked_record_path(reservation)
+        try:
+            record_bytes = record_path.read_bytes()
+            if hashlib.sha256(record_bytes).hexdigest() != reservation.record_sha256:
+                raise TestEvaluationLockedError("reservation record checksum changed after it was created.")
+            payload = json.loads(record_bytes.decode("utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError) as error:
+            raise TestEvaluationLockedError("reservation record is unreadable or invalid.") from error
+        candidates = payload.get("candidate_names")
+        if (
+            payload.get("schema_version") != 1
+            or payload.get("status") not in allowed_statuses
+            or payload.get("reservation_id") != reservation.reservation_id
+            or payload.get("candidate_name") != reservation.candidate_name
+            or payload.get("configuration_fingerprint") != reservation.configuration_fingerprint
+            or not isinstance(candidates, list)
+            or reservation.candidate_name not in candidates
+            or payload.get("candidate_list_fingerprint") != fingerprint_candidate_list(candidates)
+            or payload.get("candidate_list_locked") is not True
+            or payload.get("configuration_locked") is not True
+            or payload.get("manual_review_gate_passed") is not True
+            or not payload.get("approval_reference")
+            or payload.get("test_input_read_at_reservation") is not False
+        ):
+            raise TestEvaluationLockedError("reservation record does not match an active, valid reservation.")
+        _require_sha256(payload.get("configuration_fingerprint"), "configuration_fingerprint")
+        _require_sha256(payload.get("candidate_list_fingerprint"), "candidate_list_fingerprint")
+        _require_sha256(payload.get("manual_review_summary_sha256"), "manual_review_summary_sha256")
+        source_sha256 = payload.get("source_sha256")
+        if not isinstance(source_sha256, dict) or not source_sha256:
+            raise TestEvaluationLockedError("reservation source checksum map is missing or invalid.")
+        for name, digest in source_sha256.items():
+            if not isinstance(name, str) or not name:
+                raise TestEvaluationLockedError("reservation source checksum names are invalid.")
+            _require_sha256(digest, f"source_sha256[{name}]")
+        return payload
+
+    @contextmanager
+    def _exclusive_record_lock(self, record_path: Path) -> Iterator[None]:
+        lock_path = record_path.with_name(f"{record_path.name}.lock")
+        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0)
+        try:
+            descriptor = os.open(lock_path, flags, 0o600)
+        except FileExistsError as error:
+            raise TestEvaluationLockedError("test reservation is being consumed or finalized concurrently.") from error
+        try:
+            yield
+        finally:
+            os.close(descriptor)
+            try:
+                lock_path.unlink()
+            except FileNotFoundError:
+                pass
+
+    @staticmethod
+    def _write_record_payload(record_path: Path, payload: dict[str, Any]) -> str:
+        encoded = json.dumps(
+            payload,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+        temporary_path: str | None = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                mode="wb",
+                dir=record_path.parent,
+                prefix=f".{record_path.stem}.",
+                delete=False,
+            ) as stream:
+                temporary_path = stream.name
+                stream.write(encoded)
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(temporary_path, record_path)
+            temporary_path = None
+        finally:
+            if temporary_path and os.path.exists(temporary_path):
+                os.unlink(temporary_path)
+        return hashlib.sha256(encoded).hexdigest()
+
+    def finalize(
+        self,
+        reservation: TestRunReservation,
+        *,
+        status: str,
+        test_source_sha256: str | None = None,
+        output_sha256: str | None = None,
+    ) -> Path:
+        """Record completion or failure without releasing the consumed slot."""
+
+        if not isinstance(reservation, TestRunReservation):
+            raise TypeError("finalize requires the reservation returned by reserve().")
+        if status not in {"completed", "failed_after_reservation"}:
+            raise ValueError("status must be completed or failed_after_reservation.")
+        if status == "completed" and (test_source_sha256 is None or output_sha256 is None):
+            raise TestEvaluationLockedError(
+                "completed test runs require both test source and output SHA-256 values."
+            )
+        for name, digest in (("test_source_sha256", test_source_sha256), ("output_sha256", output_sha256)):
+            if digest is not None:
+                _require_sha256(digest, name)
+        record_path = self._checked_record_path(reservation)
+        with self._exclusive_record_lock(record_path):
+            payload = self._read_reservation(
+                reservation,
+                allowed_statuses={"reserved", "evaluating"},
+            )
+            if status == "completed" and payload["status"] != "evaluating":
+                raise TestEvaluationLockedError("a test run can complete only after evaluation was consumed.")
+            payload["status"] = status
+            payload["finalized_at_utc"] = datetime.now(timezone.utc).isoformat()
+            payload["test_source_sha256"] = test_source_sha256
+            payload["output_sha256"] = output_sha256
+            reservation.record_sha256 = self._write_record_payload(record_path, payload)
+        return record_path
+
+
+def _require_sha256(value: str, name: str) -> None:
+    if (
+        not isinstance(value, str)
+        or len(value) != 64
+        or any(char not in "0123456789abcdef" for char in value)
+    ):
+        raise TestEvaluationLockedError(f"{name} must be a lowercase SHA-256 digest.")
+
+
+def fingerprint_candidate_list(candidate_names: Sequence[str]) -> str:
+    """Hash the ordered, UTF-8 candidate-name list used by the durable gate."""
+
+    if isinstance(candidate_names, (str, bytes)):
+        raise ValueError("candidate_names must be a sequence of names, not a string.")
+    names = tuple(candidate_names)
+    if not names or any(not isinstance(name, str) or not name or name != name.strip() for name in names):
+        raise ValueError("candidate_names must contain non-empty, trimmed strings.")
+    if len(set(names)) != len(names):
+        raise ValueError("candidate_names must not contain duplicates.")
+    encoded = json.dumps(list(names), ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 
 
 def classification_metrics(
@@ -146,11 +474,18 @@ def evaluate_predictions(
     *,
     test: PredictionBatch | None = None,
     test_unlock: TestEvaluationAuthorization | None = None,
+    test_reservation: TestRunReservation | None = None,
+    test_ledger: PersistentTestRunLedger | None = None,
     candidate_name: str | None = None,
     configuration_fingerprint: str | None = None,
     label_order: Sequence[str] = LABEL_ORDER,
+    data_status: str = "synthetic_fixture",
 ) -> dict[str, Any]:
-    """Evaluate train/validation fixture predictions; test is locked by default."""
+    """Evaluate predictions; test requires a fixture unlock or prior durable reservation.
+
+    A formal caller must reserve and validate a slot before it opens test input.
+    The evaluator only receives prediction batches and never reads a dataset.
+    """
 
     if not isinstance(train, PredictionBatch) or train.split != "train":
         raise ValueError("evaluate_predictions requires a train PredictionBatch first.")
@@ -158,16 +493,44 @@ def evaluate_predictions(
         raise ValueError("evaluate_predictions requires a validation PredictionBatch second.")
     if test is not None and (not isinstance(test, PredictionBatch) or test.split != "test"):
         raise ValueError("test must be a test PredictionBatch when supplied.")
-    if test is None and test_unlock is not None:
-        raise ValueError("test_unlock cannot be supplied without a test batch.")
-    if test is not None:
-        if test_unlock is None:
+    if label_order is None or tuple(label_order) != LABEL_ORDER:
+        raise ValueError("label_order must match the fixed taxonomy order.")
+    if data_status not in {"synthetic_fixture", "synthetic"}:
+        raise ValueError("data_status must be 'synthetic_fixture' or 'synthetic'.")
+    if test is None:
+        if any(value is not None for value in (test_unlock, test_reservation, test_ledger)):
+            raise ValueError("test authorization cannot be supplied without a test batch.")
+    else:
+        durable_test_payload: dict[str, Any] | None = None
+        if test_unlock is not None and (test_reservation is not None or test_ledger is not None):
+            raise ValueError("use either a fixture unlock or a durable reservation, not both.")
+        if test_unlock is None and (test_reservation is None or test_ledger is None):
             raise TestEvaluationLockedError("test split is locked until an explicit unlock is supplied.")
         if configuration_fingerprint is None:
             raise TestEvaluationLockedError("test evaluation requires a configuration fingerprint.")
-        test_unlock.validate(candidate_name or "", configuration_fingerprint)
-    if label_order is None or tuple(label_order) != LABEL_ORDER:
-        raise ValueError("label_order must match the fixed taxonomy order.")
+        if not candidate_name:
+            raise TestEvaluationLockedError("test evaluation requires a candidate name.")
+        if test_unlock is not None:
+            if data_status != "synthetic_fixture":
+                raise TestEvaluationLockedError(
+                    "process-local test unlocks are restricted to synthetic fixtures."
+                )
+            test_unlock.validate(candidate_name, configuration_fingerprint)
+        elif test_reservation is not None and test_ledger is not None:
+            if not isinstance(test_ledger, PersistentTestRunLedger):
+                raise TypeError("test_ledger must be a PersistentTestRunLedger.")
+            if not isinstance(test_reservation, TestRunReservation):
+                raise TypeError("test_reservation must be a TestRunReservation.")
+            if (
+                test_reservation.candidate_name != candidate_name
+                or test_reservation.configuration_fingerprint != configuration_fingerprint
+            ):
+                raise TestEvaluationLockedError(
+                    "test reservation differs from the candidate or configuration being evaluated."
+                )
+            durable_test_payload = test_ledger.consume_for_evaluation(test_reservation)
+        else:
+            raise TestEvaluationLockedError("test split is locked until an explicit unlock is supplied.")
 
     batches = [train, validation] + ([test] if test is not None else [])
     seen_records: set[str] = set()
@@ -187,8 +550,9 @@ def evaluate_predictions(
         seen_families.update(batch.family_ids)
 
     if test is not None:
-        assert test_unlock is not None and configuration_fingerprint is not None
-        test_unlock.consume(candidate_name or "", configuration_fingerprint)
+        if test_unlock is not None:
+            assert configuration_fingerprint is not None and candidate_name is not None
+            test_unlock.consume(candidate_name, configuration_fingerprint)
 
     splits: dict[str, Any] = {
         "train": _evaluate_batch(train),
@@ -196,16 +560,35 @@ def evaluate_predictions(
         "test": {"status": "not_run"},
     }
     if test is not None:
-        splits["test"] = {**_evaluate_batch(test), "status": "fixture_only_evaluated"}
+        test_status = (
+            "fixture_only_evaluated"
+            if data_status == "synthetic_fixture"
+            else "durably_unlocked_evaluated"
+        )
+        splits["test"] = {**_evaluate_batch(test), "status": test_status}
 
-    return {
+    report = {
         "evaluation_status": "smoke_test/provisional",
-        "data_status": "synthetic_fixture",
+        "data_status": data_status,
         "review_status": "pending_manual_review",
         "candidate_name": candidate_name or "fixture-candidate",
         "label_order": list(LABEL_ORDER),
         "splits": splits,
     }
+    if test is not None:
+        if durable_test_payload is not None:
+            report["test_authorization"] = {
+                "mode": "persistent_one_use_ledger",
+                "reservation_id": durable_test_payload["reservation_id"],
+                "candidate_list_fingerprint": durable_test_payload["candidate_list_fingerprint"],
+                "configuration_fingerprint": durable_test_payload["configuration_fingerprint"],
+            }
+        else:
+            report["test_authorization"] = {
+                "mode": "process_local_fixture_unlock",
+                "candidate_name": candidate_name,
+            }
+    return report
 
 
 def _evaluate_batch(batch: PredictionBatch) -> dict[str, Any]:
