@@ -62,3 +62,5 @@ $env:PYTHONPATH = "$PWD\src;$PWD\tests;$PWD\scripts"
 - 整組實驗（18 次 Fly B 訓練＋9 次 SVM）在 Windows CPU 上耗時 67 秒。
 
 ## Comments
+
+- 2026-11-13：後續工作已拆成工作票 18–22：傳導物質符號來源、固定符號圖核心、Fly A／Fly B 各自調參、300 增強＋200 抑制子圖、三張圖比較。
