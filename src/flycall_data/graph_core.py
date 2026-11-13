@@ -10,7 +10,7 @@ import hashlib
 import json
 import math
 from pathlib import Path
-from typing import Sequence
+from typing import Mapping, Sequence
 
 import torch
 from torch import nn
@@ -79,12 +79,30 @@ def _initial_raw_edge_parameters(
     return raw_parameters
 
 
+def _checked_node_signs(
+    node_ids: tuple[int, ...], node_signs: Mapping[int, int]
+) -> tuple[int, ...]:
+    if not isinstance(node_signs, Mapping):
+        raise GraphCoreError("node_signs must map every node ID to +1 or -1")
+    if set(node_signs) != set(node_ids):
+        raise GraphCoreError("node_signs must cover exactly the graph node IDs")
+    signs = tuple(node_signs[node_id] for node_id in node_ids)
+    if any(isinstance(value, bool) or value not in (1, -1) for value in signs):
+        raise GraphCoreError("node_signs values must be +1 (excitatory) or -1 (inhibitory)")
+    return signs
+
+
 class SparseGraphCore(nn.Module):
     """Fixed directed edge support with trainable positive gains.
 
     `node_ids`, `input_node_ids`, `output_node_ids`, and edge tuples are all
     supplied by the caller. Input/output order is preserved exactly. Each
     edge tuple is `(source_id, target_id, source_weight)`.
+
+    Optional `node_signs` (+1 excitatory / -1 inhibitory per node) fix the sign
+    of every outgoing edge by its source neuron (Dale's principle). Signs are a
+    constant, non-persistent buffer: training changes only edge magnitudes,
+    which stay strictly positive. Without `node_signs` the core is unchanged.
     """
 
     def __init__(
@@ -94,6 +112,7 @@ class SparseGraphCore(nn.Module):
         output_node_ids: Sequence[int],
         edges: Sequence[tuple[int, int, int]],
         steps: int = 2,
+        node_signs: Mapping[int, int] | None = None,
     ) -> None:
         super().__init__()
         self.node_ids = _checked_ids("node_ids", node_ids)
@@ -163,9 +182,61 @@ class SparseGraphCore(nn.Module):
         self.register_buffer("in_degrees", in_degrees)
         self.raw_edge_parameters = nn.Parameter(torch.tensor(raw_init, dtype=torch.float32))
 
+        self.node_signs: tuple[int, ...] | None = None
+        self._initial_sign_summary: dict[str, object] | None = None
+        if node_signs is not None:
+            self.node_signs = _checked_node_signs(self.node_ids, node_signs)
+            edge_signs = torch.tensor(
+                [self.node_signs[self.node_index[source]] for source, _, _ in self.edges],
+                dtype=torch.float32,
+            )
+            # Non-persistent: a checkpoint can never overwrite the fixed signs;
+            # the constructor supplies them and metadata/topology hash verify them.
+            self.register_buffer("edge_signs", edge_signs, persistent=False)
+            self._initial_sign_summary = self._sign_summary(self.edge_gains.detach())
+
     @property
     def edge_gains(self) -> torch.Tensor:
+        """Strictly positive trainable magnitudes (never sign-flipped)."""
+
         return F.softplus(self.raw_edge_parameters) + self.epsilon
+
+    @property
+    def signed_edge_weights(self) -> torch.Tensor:
+        """Effective edge weights: fixed sign × trainable magnitude."""
+
+        gains = self.edge_gains
+        return gains if self.node_signs is None else gains * self.edge_signs
+
+    @property
+    def node_signs_sha256(self) -> str | None:
+        if self.node_signs is None:
+            return None
+        payload = json.dumps(
+            {"node_ids": self.node_ids, "node_signs": self.node_signs}, separators=(",", ":")
+        ).encode("utf-8")
+        return hashlib.sha256(payload).hexdigest()
+
+    def _sign_summary(self, gains: torch.Tensor) -> dict[str, object]:
+        if self.node_signs is None:
+            raise GraphCoreError("sign summary requires node_signs")
+        inhibitory = self.edge_signs < 0
+        inhibitory_total = float(gains[inhibitory].sum())
+        excitatory_total = float(gains[~inhibitory].sum())
+        return {
+            "excitatory_node_count": sum(1 for value in self.node_signs if value > 0),
+            "inhibitory_node_count": sum(1 for value in self.node_signs if value < 0),
+            "excitatory_edge_count": int((~inhibitory).sum()),
+            "inhibitory_edge_count": int(inhibitory.sum()),
+            "excitatory_gain_total": excitatory_total,
+            "inhibitory_gain_total": inhibitory_total,
+            "inhibitory_gain_fraction": inhibitory_total / (inhibitory_total + excitatory_total),
+        }
+
+    def sign_summary(self) -> dict[str, object]:
+        """Counts and magnitude totals per sign for the current parameters."""
+
+        return self._sign_summary(self.edge_gains.detach())
 
     @property
     def topology_sha256(self) -> str:
@@ -175,6 +246,8 @@ class SparseGraphCore(nn.Module):
             "output_node_ids": self.output_node_ids,
             "edges": self.edges,
         }
+        if self.node_signs is not None:
+            payload["node_signs"] = self.node_signs
         encoded = json.dumps(payload, separators=(",", ":"), sort_keys=True).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()
 
@@ -202,7 +275,7 @@ class SparseGraphCore(nn.Module):
             1, self.input_index, input_drives
         )
         degree = self.in_degrees.clamp_min(1).to(dtype=input_drives.dtype).unsqueeze(0)
-        gains = self.edge_gains
+        gains = self.signed_edge_weights
 
         for _ in range(self.steps):
             messages = hidden.index_select(1, self.source_index) * gains.unsqueeze(0)
@@ -214,7 +287,7 @@ class SparseGraphCore(nn.Module):
         return hidden.index_select(1, self.output_index)
 
     def checkpoint_metadata(self) -> dict[str, object]:
-        return {
+        metadata: dict[str, object] = {
             "node_ids": list(self.node_ids),
             "input_node_ids": list(self.input_node_ids),
             "output_node_ids": list(self.output_node_ids),
@@ -226,6 +299,18 @@ class SparseGraphCore(nn.Module):
             "aggregation": "fixed-indegree-including-self-loops",
             "edge_parameter_count": len(self.edges),
         }
+        if self.node_signs is not None:
+            assert self._initial_sign_summary is not None
+            summary = self._initial_sign_summary
+            metadata.update({
+                "edge_sign_rule": "fixed-by-source-node-dale",
+                "node_signs_sha256": self.node_signs_sha256,
+                "excitatory_node_count": summary["excitatory_node_count"],
+                "inhibitory_node_count": summary["inhibitory_node_count"],
+                "excitatory_edge_count": summary["excitatory_edge_count"],
+                "inhibitory_edge_count": summary["inhibitory_edge_count"],
+            })
+        return metadata
 
 
 class FlyA(nn.Module):

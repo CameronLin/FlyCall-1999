@@ -32,6 +32,8 @@ class GraphDefinition:
     output_node_ids: tuple[int, ...]
     edges: tuple[tuple[int, int, int], ...]
     steps: int = 2
+    # Optional fixed (node_id, +1/-1) pairs; None keeps the all-positive core.
+    node_signs: tuple[tuple[int, int], ...] | None = None
 
     def build_core(self) -> SparseGraphCore:
         return SparseGraphCore(
@@ -40,6 +42,7 @@ class GraphDefinition:
             output_node_ids=self.output_node_ids,
             edges=self.edges,
             steps=self.steps,
+            node_signs=None if self.node_signs is None else dict(self.node_signs),
         )
 
 
