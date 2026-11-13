@@ -8,7 +8,7 @@
 
 ## 範圍
 
-以 spec v0.2、M2.1 資料契約、M1.2 engineering demo 子圖及 M1.3 I/O manifest 為依據，記錄 Fly A／Fly B 的資料流、圖計算、edge weight、訓練、驗證、資料品質及資源限制。2026-10-21 依使用者最新決定更新 spec v0.2 的 E5 目標設定；正式案件資料、Pilot、M1.1／M1.2／M1.3 產物保持不變。
+以 spec、M2.1 資料契約、M1.2 engineering demo 子圖及 M1.3 I/O manifest 為依據，記錄 Fly A／Fly B 的資料流、圖計算、edge weight、訓練、驗證、資料品質及資源限制。2026-10-21 依使用者最新決定更新 spec 的 E5 目標設定；正式案件資料、Pilot、M1.1／M1.2／M1.3 產物保持不變。
 
 ## 產物
 
@@ -25,7 +25,7 @@
 - [x] 記錄 Fly A train-only pairwise distance-preserving loss、validation stress 最小化及較早 epoch tie-break；凍結 A 後 Fly B 用 train cross-entropy，validation Macro-F1 選模，平手依較低 validation loss、較早 epoch。
 - [x] 記錄 fixture／除錯一個固定 seed、正式比較至少三個事先記錄的 training seeds，報告平均與標準差；test 只在人工複核門檻及設定鎖定後對預先聲明候選一次性使用。
 - [x] 記錄正式資料仍 pending_manual_review；M3.1 僅用小型 fixtures，不使用正式資料訓練；下載／安裝／載入前需核對官方 model card、revision、檔案與套件下載量、峰值 RAM、即時磁碟空間並保留至少 4 GiB。
-- [x] 核對使用者確認的契約與現行 spec v0.2；沒有硬性衝突。將 spec 暫定項目具體化；2026-10-21 僅更新 E5 目標設定文字，未修改程式以外的任何資料或模型產物，未安裝套件、下載／載入模型、訓練或使用 test 指標。
+- [x] 核對使用者確認的契約與現行 spec；沒有硬性衝突。將 spec 暫定項目具體化；2026-10-21 僅更新 E5 目標設定文字，未修改程式以外的任何資料或模型產物，未安裝套件、下載／載入模型、訓練或使用 test 指標。
 
 ## E5 與後續狀態
 
@@ -38,6 +38,6 @@ M3.1 小型 fixture 模型核心依賴本 ticket 與 M1.3 I/O manifest；本 tic
 ## Comments
 
 - 2026-10-16：初版 M3.0 契約草案完成，等待使用者決策。
-- 2026-10-16：使用者確認首版工程契約；更新契約至 v1.1，記錄資料流、T、A/B adapter 與 readout、edge prior／正值參數化、固定入度聚合、訓練與選模、資料品質 gate 及資源 gate。逐項比對 spec v0.2，確認無硬性衝突；未修改 spec 或任何資料／模型產物。M3.0 驗收條件全數完成，狀態設為 completed。
+- 2026-10-16：使用者確認首版工程契約；更新契約至 v1.1，記錄資料流、T、A/B adapter 與 readout、edge prior／正值參數化、固定入度聚合、訓練與選模、資料品質 gate 及資源 gate。逐項比對 spec，確認無硬性衝突；未修改 spec 或任何資料／模型產物。M3.0 驗收條件全數完成，狀態設為 completed。
 - 同日建立 08 M3.1「小型 fixture 模型核心」ticket；未開始其實作。
-- 2026-10-21：依使用者選定的 multilingual-e5-small 設定更新 spec v0.2 與契約至 v1.2，並更新本 ticket 的設定與資源閘門說明。模型未下載、安裝或載入；M2.2b 維持 blocked，M3.0 ticket 狀態仍為 completed。
+- 2026-10-21：依使用者選定的 multilingual-e5-small 設定更新 spec 與契約至 v1.2，並更新本 ticket 的設定與資源閘門說明。模型未下載、安裝或載入；M2.2b 維持 blocked，M3.0 ticket 狀態仍為 completed。

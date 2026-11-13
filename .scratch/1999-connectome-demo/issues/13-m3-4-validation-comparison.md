@@ -43,7 +43,7 @@ Each M2 run contains the four text/embedding baselines; each M3 run contains the
 
 ## Human review required before formal test
 
-Spec v0.2 section 7.3 requires at least 20 manually reviewed records per class spanning train, validation and test, plus a human disposition for every record flagged `需人工特別確認` and every AI `revise` record. The frozen review pack contains 399 rows (validation 150, test 150, train 99); its AI labels are suggestions, not approval. Record decisions separately and do not change dataset `review_status` fields. The test portion must remain unopened until the candidate, checkpoint seed, settings and selection rule are locked. The existing workbook is [正式資料人工複核資料包 v1.0](../../../outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx).
+Spec section 7.3 requires at least 20 manually reviewed records per class spanning train, validation and test, plus a human disposition for every record flagged `需人工特別確認` and every AI `revise` record. The frozen review pack contains 399 rows (validation 150, test 150, train 99); its AI labels are suggestions, not approval. Record decisions separately and do not change dataset `review_status` fields. The test portion must remain unopened until the candidate, checkpoint seed, settings and selection rule are locked. The existing workbook is [正式資料人工複核資料包 v1.0](../../../outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx).
 
 ## Comments
 

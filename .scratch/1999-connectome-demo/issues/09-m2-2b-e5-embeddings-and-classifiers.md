@@ -1,6 +1,6 @@
 # 09: M2.2b 凍結 E5 嵌入與一般分類比較
 
-**What to build:** 依 spec v0.2 建立可重現的 `intfloat/multilingual-e5-small` 凍結嵌入流程與 embedding cache，比較 `embedding → Logistic Regression`、`embedding → MLP`、`embedding → PCA(k) → MLP`。此 ticket 將 spec M2.2 與 M2.3 的前三項必要 baseline 收在同一實作工作；不包含 Fly A／Fly B、LDA、共用正式 evaluator 或一次性 test 評估。
+**What to build:** 依 spec 建立可重現的 `intfloat/multilingual-e5-small` 凍結嵌入流程與 embedding cache，比較 `embedding → Logistic Regression`、`embedding → MLP`、`embedding → PCA(k) → MLP`。此 ticket 將 spec M2.2 與 M2.3 的前三項必要 baseline 收在同一實作工作；不包含 Fly A／Fly B、LDA、共用正式 evaluator 或一次性 test 評估。
 
 **Blocked by:** 01 M2.1 資料契約與唯讀 loader (completed); E5 Windows resource gate passed on 2026-10-26. The 2026-10-21 macOS swap/Activity Monitor snapshot below is historical and does not describe this computer.
 
@@ -140,7 +140,7 @@ M2.3 LDA baseline 與 M2.4 evaluator/test gate 已各有獨立 tickets 11 與 10
 
 ## Comments
 
-- 2026-10-16：依 spec v0.2、M2.1、M2.2a、M3.0 契約及現有程式盤點建立。確認目前只有 01 M2.1 與 06 M2.2a 涵蓋 M2 工作；M2.2a 不取代 spec M2.2／M2.3。沒有修改 spec、資料、split、connectome 產物或既有模型結果，沒有讀取 test rows、下載／載入模型、安裝依賴、執行 embedding 或訓練。
+- 2026-10-16：依 spec、M2.1、M2.2a、M3.0 契約及現有程式盤點建立。確認目前只有 01 M2.1 與 06 M2.2a 涵蓋 M2 工作；M2.2a 不取代 spec M2.2／M2.3。沒有修改 spec、資料、split、connectome 產物或既有模型結果，沒有讀取 test rows、下載／載入模型、安裝依賴、執行 embedding 或訓練。
 - 同日：官方卡片核實 MIT、`query: `、512-token cap；model config／pooling config 顯示 384 維 mean pooling。環境中 E5／PyTorch 依賴缺失。模型與 tokenizer 公開檔案大小可做初步估算，但實際 CPU 依賴解析 bytes 與 8 GiB 下峰值 RSS 尚無可信估算，因此 E5 執行階段保持 blocked；fixture-only 工作可先開始。
 - 同日：依使用者指示先確認並重用 M2.2a scikit-learn 環境及 M3.1 PyTorch fixture 環境；不建環境、不重複安裝。完成 TDD fixture-only cache／encoder／LR／MLP／PCA→MLP，10 個不同測試案例通過（含跨環境重跑）；未讀正式資料、test rows、E5 或 connectome 產物，未下載／載入模型、安裝套件或訓練正式資料。更新 fixture 子項完成紀錄；E5 resource gate、實際 E5 embeddings 與正式資料流程仍 blocked，整張 ticket 未完成。
 - 2026-10-16：完成唯讀 E5 resource preflight，詳見 `../research/m2-2b-e5-resource-preflight-20261016.md`。核對指定官方 revision 的 9 檔保守必要集合、bytes／可用 SHA、MIT、`query: `、512 tokens、384 維 mean pooling；PyPI metadata resolver 對 CPython 3.13／3.14 arm64 各解析 42 個 wheel，合計分別 198,701,986／198,750,040 bytes。沒有下載任何 wheel／模型或安裝套件。最新 RAM 8,589,934,592 bytes、磁碟可用 21,162,832 KiB；扣除明列資源預算與預檢期間觀察到的 2.00 GiB 波動 reserve 後估計仍餘 15.31 GiB。E5 RSS、整合 runtime 及安裝／cache footprint 仍未實測或證明上界，故資源閘門及 ticket 保持 `blocked`，等待使用者核准下載與安裝。

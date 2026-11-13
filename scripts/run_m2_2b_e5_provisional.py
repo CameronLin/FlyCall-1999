@@ -491,7 +491,7 @@ def run(snapshot_dir: Path, run_dir: Path, *, seed: int = 42) -> None:
         elif split == "validation":
             validation_rows.append(row)
     if len(train_rows) != 700 or len(validation_rows) != 150:
-        raise RuntimeError("frozen train/validation counts differ from the v0.2 dataset contract.")
+        raise RuntimeError("frozen train/validation counts differ from the formal dataset contract.")
 
     cache_settings = E5_SMALL_CONFIG.embedding_settings(
         preprocessing_version="transcript-only-v1",

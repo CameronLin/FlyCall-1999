@@ -1,6 +1,6 @@
 # FlyCall-1999 專案資料夾與檔案導覽
 
-盤點日期：2026-10-26。這份文件說明專案目前的資料夾用途、重要檔案，以及哪些檔案是正式來源、歷史紀錄或可再生產物。它是導覽，不會取代 `README.md`、v0.2 規格或 `data/1999_synthetic/README.md` 中的詳細資料版本清單。
+盤點日期：2026-10-26。這份文件說明專案目前的資料夾用途、重要檔案，以及哪些檔案是正式來源、歷史紀錄或可再生產物。它是導覽，不會取代 `README.md`、專案規格正本或 `data/1999_synthetic/README.md` 中的詳細資料版本清單。
 
 ## 盤點範圍
 
@@ -12,13 +12,12 @@
 
 ## 專案根目錄：未放在子資料夾的檔案
 
-根目錄的散置檔案共 8 個；`requirements-connectome.txt`、兩份 spec 等也都在這份清單內：
+根目錄的散置檔案共 7 個；`requirements-connectome.txt` 與 spec 正本等也都在這份清單內：
 
 | 檔案 | 用途 |
 |---|---|
 | `README.md` | 專案摘要、目前資料與模型狀態、執行方式、Connectome 來源及完整測試方式。快速了解現況先看這份。 |
-| `1999-connectome-demo-spec-v0.2.md` | 目前規格：問題定義、資料契約、防止 test 洩漏、模型流程、驗收與工作項目。 |
-| `1999-connectome-demo-spec-v0.1.md` | 舊版規格，保留設計演進紀錄；目前以 v0.2 為準。 |
+| `1999-connectome-demo-spec.md` | 專案唯一規格正本：問題定義、資料契約、防止 test 洩漏、模型流程、驗收與工作項目。 |
 | `AGENTS.md` | 專案工作規則入口，指向 `.scratch` issue tracker 與 domain 文件。 |
 | `app.py` | Streamlit 本機研究展示的應用程式入口。 |
 | `requirements-demo.txt` | 本機模型推論／demo 的 Python 套件需求。 |

@@ -20,7 +20,7 @@
 - 不讀取／載入正式 JSONL、CSV、taxonomy 或 frozen split manifest；不以 train、validation、test 資料訓練或計算指標。
 - 除唯讀讀取 M1.3 I/O manifest 的有序 IDs 外，不讀取 M1.1／M1.2／M1.3 edge/node 資料；不修改其任何產物，不建立 connectome index 或子圖。
 - 不下載／載入 E5、其他模型、GPU wheel；不安裝系統套件、不訓練正式模型、不產生正式 checkpoint。
-- 不修改 spec v0.2、正式資料、Pilot、split、taxonomy、來源或 graph manifest。
+- 不修改 spec、正式資料、Pilot、split、taxonomy、來源或 graph manifest。
 
 ## 核心公式與不變條件
 

@@ -1,6 +1,6 @@
 # 06: M2.2a 輕量文字分類基線 smoke test
 
-**What to build:** 在既有正式合成資料上建立可重現、低資源的文字分類基線 smoke test，作為 spec v0.2 預訓練 embedding 流程之外的補充對照。此 ticket 不取代 spec 的 M2.2 Encoder／embedding cache 或 M2.3 baseline。
+**What to build:** 在既有正式合成資料上建立可重現、低資源的文字分類基線 smoke test，作為 spec 預訓練 embedding 流程之外的補充對照。此 ticket 不取代 spec 的 M2.2 Encoder／embedding cache 或 M2.3 baseline。
 
 **Blocked by:** 01 M2.1 資料契約與唯讀 loader (completed)
 

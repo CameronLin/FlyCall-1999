@@ -6,7 +6,7 @@
 
 ## Findings
 
-- Spec basis: v0.2 §§7.3, 9, 11. Original M3.2/M3.4 artifacts and the M3.4 provisional winner (`mlp`) were preserved.
+- Spec basis: §§7.3, 9, 11. Original M3.2/M3.4 artifacts and the M3.4 provisional winner (`mlp`) were preserved.
 - Frozen representation probe: raw E5 MLP mean validation Macro-F1 `0.9022` (SD `0.0274`); Fly A's frozen 32-D output MLP `0.7758` (SD `0.0434`), a `0.1264` gap. Therefore, the registered decision rule skipped B-only schedule changes.
 - First gated-residual control: mean validation Macro-F1 `0.7507` (SD `0.1619`), accuracy `0.7844` (SD `0.1202`), mean Δ F1 vs original Fly A→B `+0.0907`; it improved two seeds and regressed seed 1337, so a preregistered stability sweep followed.
 - Best of four residual settings: gate logit init `0`, Adam LR `0.003`, batch `32`, maximum `200` epochs, patience `25`, gradient clip `1.0`; mean validation Macro-F1 `0.9048` (SD `0.0084`), accuracy `0.9089` (SD `0.0077`). This is `+0.2447` F1 and `+0.2000` accuracy versus original Fly A→B, and within `0.0026` F1 / `0.0022` accuracy of the saved MLP validation mean.

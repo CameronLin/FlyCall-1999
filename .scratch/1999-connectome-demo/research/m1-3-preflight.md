@@ -5,7 +5,7 @@
 
 ## 已讀文件與範圍
 
-依序檢查專案 `AGENTS.md`、M1.3 ticket、`1999-connectome-demo-spec-v0.2.md`，並參照本機 issue tracker/domain 慣例。M1.3 使用唯讀輸入：
+依序檢查專案 `AGENTS.md`、M1.3 ticket、`1999-connectome-demo-spec.md`，並參照本機 issue tracker/domain 慣例。M1.3 使用唯讀輸入：
 
 `data/connectome/derived/malecns_v1.0/subgraphs/engineering-demo-v1.0/`
 

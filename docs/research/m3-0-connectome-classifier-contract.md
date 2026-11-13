@@ -1,7 +1,7 @@
 # M3.0 Fly A／Fly B 資料流與訓練契約
 
 版本：v1.5｜日期：2026-10-26｜狀態：工程契約已確認；三個 M3.2 provisional train/validation seeds 與 M3.4 validation-only 比較已完成，人工複核與 test gate 仍未通過
-依據：`1999-connectome-demo-spec-v0.2.md`、M1.2 engineering demo manifest、M1.3 I/O manifest、M2.1 loader 契約及 M2.2a smoke test 報告。此文件只凍結首版工程介面，不代表生物學主張或正式模型效能；M3.1 fixture core 已另行完成，M3.2 狀態見本文件更新。
+依據：`1999-connectome-demo-spec.md`、M1.2 engineering demo manifest、M1.3 I/O manifest、M2.1 loader 契約及 M2.2a smoke test 報告。此文件只凍結首版工程介面，不代表生物學主張或正式模型效能；M3.1 fixture core 已另行完成，M3.2 狀態見本文件更新。
 
 v1.4 更新：Windows checkout 的 CRLF 曾造成 M1.2/M1.3 manifest 工作目錄 bytes 與 pin 不同；LF-normalized manifest bytes 與 pins 及 Git HEAD 完全相符，故 runner 現以正規化文字內容檢查 pin，未更動 manifest 或 digest，Parquet 仍以原始 bytes 驗證。PyArrow 26.0.0 在後續實際 run 成功讀取固定 graph，沒有 policy bypass。M3.2 seed 42／1337／2026 的 train/validation runs 均完成（500 nodes、2,216 edges、700/150 split、checkpoint reload max absolute difference 0.0；test `not_run`／0 model inputs）。M2.2b 同三 seed 及五候選的 M3.4 比較亦已完成，暫定 validation winner 為 MLP；所有結果仍 synthetic／pending_manual_review，candidate lock 與 test gate 保持關閉。細節見 [M3.2 follow-up report](../../.scratch/1999-connectome-demo/research/m3-2-pyarrow-application-control-block-20261026.md)、[M3.2 work ticket](../../.scratch/1999-connectome-demo/issues/12-m3-2-fly-ab-provisional-training.md) 與 [M3.4 validation report](../../.scratch/1999-connectome-demo/runs/m3-4-validation-comparison-seeds-42-1337-20261026/report.md)。
 
@@ -11,9 +11,9 @@ v1.2 更新（歷史狀態）：記錄使用者選定的 multilingual-e5-small r
 
 v1.1 初版記錄未修改 spec、案件資料、split 或 M1.1／M1.2／M1.3 產物。v1.2 僅依使用者決定更新 spec 的嵌入設定，未修改案件資料、split 或 connectome 產物；未下載／安裝／載入模型、訓練或使用 test 指標。
 
-## 1. 與 spec v0.2 的核對
+## 1. 與現行 spec 的核對
 
-未發現使用者確認的契約與 spec v0.2 的硬性要求衝突。以下是把 spec 中暫定／抽象要求具體化：
+未發現使用者確認的契約與 spec 的硬性要求衝突。以下是把 spec 中暫定／抽象要求具體化：
 
 - spec 的 frozen encoder、trainable input adapter、shared-weight recurrent message passing、固定入度正規化、既有 edge trainable parameter、Fly A/B 分階段訓練及 validation checkpoint selection，均保留。
 - `T=2` 作首版主設定、`T=4` 作預先聲明的 validation ablation，補足 spec 未固定模型 T 的部分；M1.3 的 `T=4` 仍只代表拓樸可達性檢查。

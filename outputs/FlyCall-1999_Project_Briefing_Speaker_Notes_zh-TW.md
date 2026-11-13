@@ -48,7 +48,7 @@ FlyCall-1999 已具備可展示、可重現的技術原型，也完成了一般�
 
 ## 簡報依據
 
-- `1999-connectome-demo-spec-v0.2.md`
+- `1999-connectome-demo-spec.md`
 - `README.md`
 - `.scratch/1999-connectome-demo/runs/m3-4-validation-comparison-seeds-42-1337-2026-20261026/report.md`
 - `.scratch/1999-connectome-demo/runs/m4-matched-budget-validation-20261026/m4_live_acceptance_report.md`

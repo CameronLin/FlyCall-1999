@@ -685,6 +685,6 @@ elif selected_section == "examples":
 
 st.divider()
 st.caption(
-    "本頁依據：1999-connectome-demo-spec-v0.2.md、formal_generation_plan_v1.3.md、"
+    "本頁依據：1999-connectome-demo-spec.md、formal_generation_plan_v1.3.md、"
     "M2.2b Windows gate report、M3.4 validation comparison report、M4 matched-budget report。"
 )

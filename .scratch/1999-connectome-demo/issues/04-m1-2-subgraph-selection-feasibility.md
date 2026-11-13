@@ -1,6 +1,6 @@
 # 04: M1.2 確定性子圖選取與可行性驗證
 
-**What to build:** 依有效 spec v0.2 驗證從唯讀 M1.1 edge/node Parquet 選取固定規模子圖的可重現性、資源成本與拓樸摘要。正式選取前先完成小圖 fixture 與有界 probe；不得把 probe 樣本當成正式子圖。
+**What to build:** 依現行 spec 驗證從唯讀 M1.1 edge/node Parquet 選取固定規模子圖的可重現性、資源成本與拓樸摘要。正式選取前先完成小圖 fixture 與有界 probe；不得把 probe 樣本當成正式子圖。
 
 **Blocked by:** 03 M1.1 有向圖匯入器 (completed)
 
@@ -9,7 +9,7 @@
 ## Scope
 
 - 只讀取 `data/connectome/derived/malecns_v1.0/edges.parquet` 與 `nodes.parquet`；不讀取或使用 `m1-1-resource-audit-unapproved-threads-4/`，不讀／改寫來源 Feather，不變更 1999 案件資料。
-- 先用小型稀疏 fixture 驗證 spec v0.2 §4 的無向視圖 BFS 選點、固定排序、種子重現性，以及依所選節點保留全部有向 induced edges。
+- 先用小型稀疏 fixture 驗證 spec §4 的無向視圖 BFS 選點、固定排序、種子重現性，以及依所選節點保留全部有向 induced edges。
 - 接著做有明確 row/node/edge 上限的唯讀小型 feasibility probe；bounded scan 的結果只用來量測 IO、連通性與資源，不可視為全圖 BFS 結果或正式子圖。
 - 記錄 M1.1 edge/node checksum、探測參數、row/node/edge 上限、選點與 induced-edge 規則、節點／邊數、弱／強連通摘要、孤立點、密度、度數摘要、耗時及峰值資源。
 - 在任何全圖掃描或大量寫入前，實測可用 RAM、目的磁碟空間、暫存佔用與保守峰值需求；RAM 以 8 GiB 為上限，DuckDB 設定不得高於 2 GiB／2 threads。若不能保留安全磁碟餘裕即停止，不發布正式輸出。
@@ -18,7 +18,7 @@
 
 ## Spec assumptions and unresolved selection choices
 
-Spec v0.2 §4 提出：若有可靠腦區候選則從該集合選 seed，否則使用完整候選集；以無向視圖 BFS 擴張，固定排序與 seed，選 500 nodes，僅在選定節點間保留原始有向 edges；同一 seed 巢狀比較 1,000／2,000 nodes。該節同時將腦區、規模及子圖選法列為尚待實驗／老師討論的工程假設。M1.1 目前只提供 endpoint node IDs，沒有可確認的腦區或細胞類型欄位，因此不得假稱已採用區域限制。
+Spec §4 提出：若有可靠腦區候選則從該集合選 seed，否則使用完整候選集；以無向視圖 BFS 擴張，固定排序與 seed，選 500 nodes，僅在選定節點間保留原始有向 edges；同一 seed 巢狀比較 1,000／2,000 nodes。該節同時將腦區、規模及子圖選法列為尚待實驗／老師討論的工程假設。M1.1 目前只提供 endpoint node IDs，沒有可確認的腦區或細胞類型欄位，因此不得假稱已採用區域限制。
 
 探測結果應比較下列 seed 候選，不可自行指定為研究正式決策：
 
@@ -49,7 +49,7 @@ Spec v0.2 §4 提出：若有可靠腦區候選則從該集合選 seed，否則�
 
 ## Comments
 
-- 2026-10-13: No pre-existing M1.2 ticket found. Created from spec v0.2 and local Markdown tracker convention. M1.1 is completed. Initial work is limited to fixture tests and a bounded feasibility probe; no formal subgraph will be published in this phase.
+- 2026-10-13: No pre-existing M1.2 ticket found. Created from the spec and local Markdown tracker convention. M1.1 is completed. Initial work is limited to fixture tests and a bounded feasibility probe; no formal subgraph will be published in this phase.
 - 2026-10-13: At ticket creation, proposed public test seam `probe_induced_subgraph(edges_path, seed_node_id, node_limit, max_scan_edges, output_dir)` awaited confirmation, as required by the repository's TDD skill.
 - 2026-10-13: User confirmed the Python feasibility-probe seam; it is not a frozen public API. Seven fixture tests and the full 22-test suite passed. Five bounded-prefix calls (50,000 rows each at most) compared a fixed baseline, uniform seeded, median weak-degree, and highest weak-degree seeds plus one reproducibility rerun. Every real-data call reached `budget_exhausted`; details and pre/post checksums are in `../research/m1-2-feasibility-probe.md`. No formal subgraph was published. Seed policy and the 500-node assumption remain unresolved, so status stays `in-progress`.
 - 2026-10-15: Resource budget reassessed using the scattered-row-group disk-index/BFS benchmark. The measured edge sample covered 1.3810% of edge rows and the node sample 0.5932%; sample-scaled index/spill values are explicitly not treated as full-data bounds. At the lowest 15.36 GiB free-space snapshot minus the observed near-4 GiB movement and existing benchmark artifacts, conservative availability is ~11.33 GiB. Current full-stage component budget is ~18.893 GiB including the 4 GiB reserve (or ~23.419 GiB if separate full oriented-row staging is needed), so the resource gate is **not passed**. A lower-cap abort-on-cap configuration is documented for review but does not establish that full outputs fit. No full scan, index, formal subgraph, cleanup, or model operation was performed. M1.2 remains `in-progress`; see `../research/m1-2-feasibility-probe.md`.

@@ -2,7 +2,7 @@
 
 本專案整理臺灣 1999 客服與民眾的合成通話資料，用於市政服務案件分類研究。正式資料使用 `R=客服`、`L=來電民眾`；Pilot 僅供試產與複核，與正式資料分開。
 
-專案也包含 MaleCNS v1.0 connectome 的來源稽核、匯入、子圖可行性檢查，以及 Fly A/B 圖分類模型核心與訓練流程。各階段範圍與限制記錄在 `1999-connectome-demo-spec-v0.2.md` 及 `.scratch/1999-connectome-demo/issues/`。
+專案也包含 MaleCNS v1.0 connectome 的來源稽核、匯入、子圖可行性檢查，以及 Fly A/B 圖分類模型核心與訓練流程。各階段範圍與限制記錄在 `1999-connectome-demo-spec.md` 及 `.scratch/1999-connectome-demo/issues/`。
 
 ## 目前正式資料
 
@@ -25,7 +25,7 @@ M3.4 已使用 M2.2b 與 M3.2／M3.3 的 seed 42、1337、2026 run 完成五個�
 
 開發／展示用 MLP seed-42 模型已依照使用者指定鎖定；正式人工審查與核准尚未完成，test gate 仍關閉。詳見 [M3.4 工作票](.scratch/1999-connectome-demo/issues/13-m3-4-validation-comparison.md) 與 [M3.2 工作票](.scratch/1999-connectome-demo/issues/12-m3-2-fly-ab-provisional-training.md)。
 
-依 Spec v0.2 §7.3，正式報告需每類至少人工複核 20 筆並涵蓋 train／validation／test，另須處理所有「需人工特別確認」與 AI `revise` 記錄；AI 建議不能代替人工決定。候選、checkpoint seed 與設定已鎖定；接下來須先完成 [正式資料複核活頁簿](outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx) 中的人工複核並記錄決定，再執行一次性 test 評估。人工決定另行記錄，不修改資料列的 `review_status`。
+依 Spec §7.3，正式報告需每類至少人工複核 20 筆並涵蓋 train／validation／test，另須處理所有「需人工特別確認」與 AI `revise` 記錄；AI 建議不能代替人工決定。候選、checkpoint seed 與設定已鎖定；接下來須先完成 [正式資料複核活頁簿](outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx) 中的人工複核並記錄決定，再執行一次性 test 評估。人工決定另行記錄，不修改資料列的 `review_status`。
 
 ## M3.5 Fly A/B representation diagnosis
 

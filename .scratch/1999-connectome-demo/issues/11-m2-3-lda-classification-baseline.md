@@ -1,6 +1,6 @@
 # 11: M2.3 E5→LDA→Logistic Regression baseline
 
-**What to build:** 依 spec v0.2 與使用者確認的方法契約，建立 multilingual-e5-small 384 維 embedding 上的 LDA 監督式降維及 Logistic Regression 分類流程。
+**What to build:** 依 spec 與使用者確認的方法契約，建立 multilingual-e5-small 384 維 embedding 上的 LDA 監督式降維及 Logistic Regression 分類流程。
 
 **Blocked by:** None for the provisional train/validation scope; the manual-review gate still blocks formal claims and all test use.
 

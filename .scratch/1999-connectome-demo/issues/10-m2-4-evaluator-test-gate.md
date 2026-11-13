@@ -1,6 +1,6 @@
 # 10: M2.4 共用評估器與 test 一次性 gate
 
-**What to build:** 依 Demo Spec v0.2 建立跨分類候選共用的分類指標、錯誤清單、成本摘要與 provisional 報告介面，並提供明確條件及一次性消耗的 test 評估 gate。
+**What to build:** 依 Demo Spec 建立跨分類候選共用的分類指標、錯誤清單、成本摘要與 provisional 報告介面，並提供明確條件及一次性消耗的 test 評估 gate。
 
 **Blocked by:** None for provisional train/validation reporting. Durable test unlock and test evaluation remain blocked by the manual-review gate and candidate/config approval.
 
@@ -47,7 +47,7 @@
 - 2026-10-26: After the Windows runtime-resource portability fix and installation of the declared DuckDB 1.5.6 test dependency into the isolated E5 environment, complete `unittest` discovery passed 131/131 tests. This verifies the durable test-gate regression suite only; no real test rows were read and the formal one-time test reservation remains unused.
 - 2026-10-26: After adding optional Streamlit `AppTest` coverage for missing-model and synthetic prediction UI states, full `unittest` discovery passed 133/133 tests. The one-time test reservation remains unused; no test rows or transcript content were read.
 
-- 2026-10-19：依 Demo Spec v0.2 與本機 ticket 慣例建立。盤點確認之前沒有 M2.4 獨立 ticket；M2.2b 明確把共用 evaluator 與 test gate 留在本票範圍之外。尚未讀取正式資料、test rows 或模型產物。
+- 2026-10-19：依 Demo Spec 與本機 ticket 慣例建立。盤點確認之前沒有 M2.4 獨立 ticket；M2.2b 明確把共用 evaluator 與 test gate 留在本票範圍之外。尚未讀取正式資料、test rows 或模型產物。
 - 2026-10-19：完成 fixture-only TDD 切片。先新增 `tests/test_evaluation.py` 並執行，因 `flycall_data.evaluation` 尚不存在而紅；新增 evaluator 後測試轉綠。共用固定 taxonomy label order 與純 Python metrics，M2.2a／M2.2b metrics 改接同一 helper。test 需要明確候選清單、設定 fingerprint、人工複核 gate 與 approval reference；fixture unlock 每候選每 process 僅能消耗一次。完整測試結果與限制見 `../research/m2-4-evaluator-fixture-report.md`。
 - 本次相關測試共 24 項通過：evaluator 11、embedding pipeline 5、M2.2a text baseline 5、M2.2b Logistic fixture integration 3。只使用合成 fixtures；沒有呼叫 M2.1 loader、讀正式 JSONL／CSV／Pilot／test rows 或 connectome，沒有載入 PyTorch／E5／預訓練模型，沒有下載／安裝依賴或產生正式指標。
 - （截至 2026-10-19 的歷史狀態）尚未完成 M2.4 與 M2.2／M2.3 正式候選預測整合、成本量測、持久化 test-run ledger 與人工複核 gate 後的報告；當時 M2.2b E5 gate 仍 blocked。後續狀態見以下 2026-10-26 comments。

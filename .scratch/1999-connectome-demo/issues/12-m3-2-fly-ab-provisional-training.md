@@ -64,11 +64,11 @@ All three preregistered runs completed on the 500-node / 2,216-edge M1.3 enginee
 | 1337 | 37 | 0.00567240 | 17 | 0.6667 | 0.586714 | passed (≤1e-6) | `not_run`; 0 inputs |
 | 2026 | 10 | 0.00701145 | 57 | 0.7867 | 0.739337 | passed (≤1e-6) | `not_run`; 0 inputs |
 
-Every output file's byte count and SHA-256 match its run manifest. These are completed training and validation runs on synthetic data; they remain provisional pending the Spec v0.2 manual-review gate.
+Every output file's byte count and SHA-256 match its run manifest. These are completed training and validation runs on synthetic data; they remain provisional pending the spec's manual-review gate.
 
-## Spec v0.2 M3.3 coverage
+## Spec M3.3 coverage
 
-Spec v0.2 lists Fly B training as M3.3. This ticket records M3.2 and M3.3 together because one real-graph run must first select and freeze Fly A before training Fly B on the same preregistered seed and train/validation inputs.
+The spec lists Fly B training as M3.3. This ticket records M3.2 and M3.3 together because one real-graph run must first select and freeze Fly A before training Fly B on the same preregistered seed and train/validation inputs.
 
 - [x] Fly B loads the source-checked selected Fly A checkpoint and keeps all Fly A parameters frozen during classification training.
 - [x] Fly B fits only train labels; validation Macro-F1, then validation loss and earlier epoch select its checkpoint. No joint Fly A/Fly B fine-tuning occurs.
@@ -77,7 +77,7 @@ Spec v0.2 lists Fly B training as M3.3. This ticket records M3.2 and M3.3 togeth
 
 ## Comments
 
-- 2026-10-26: Opened after verifying the Windows E5 gate, M2.2b train/validation embeddings, M2.3 checkpoint, and M1.3 32+32 I/O manifest. The first run is pinned to T=2 and seed 42 per Spec v0.2; no test text has been sent to any model.
+- 2026-10-26: Opened after verifying the Windows E5 gate, M2.2b train/validation embeddings, M2.3 checkpoint, and M1.3 32+32 I/O manifest. The first run is pinned to T=2 and seed 42 per the spec; no test text has been sent to any model.
 - 2026-10-26: Installed the hash-locked PyArrow 26.0.0 wheel only in the isolated `%TEMP%/flycall-m22b/venv` environment. Importing `pyarrow.parquet` failed because Windows Application Control blocked `pyarrow.lib` (`DLL load failed ... 應用程式控制原則已封鎖此檔案`). No Parquet rows were opened and schema/row validation did not begin; no Fly A/B training or test-split access occurred. See [M3.2 Windows Parquet runtime gate report](../research/m3-2-pyarrow-application-control-block-20261026.md). Resume only with an approved runtime; no policy workaround was attempted.
 - 2026-10-26: Follow-up read-only SHA-256 preflight hashed raw file bytes without decoding Parquet. `nodes.parquet` (`a8ad1e6a…87428`) and `edges.parquet` (`afa69be2…e2175`) match the M1.2 output hashes. Current M1.2 `manifest.json` is `4edcb82d…b7a88` versus the pinned `5300c6ce…69cf40`; current M1.3 `io_manifest.json` is `440f6876…cbab8` versus the pinned `48148a1d…e07f585`. The I/O manifest itself still refers to the old M1.2 manifest hash. No data rows were parsed, and no graph tensors or training artifacts were produced. Provenance needs reconciliation; the mismatch is not silently accepted.
 - 2026-10-26: Implemented `src/flycall_data/fly_ab_training.py` as a train/validation-only trainer seam. Fly A is label-free and selected by minimum validation distance stress; Fly B loads a source-checked Fly A checkpoint, freezes it, and selects by validation Macro-F1 / loss / epoch. Checkpoints preserve the latest valid state atomically and record source hashes and training settings. Six synthetic in-memory trainer tests pass, including test-split rejection, deterministic A reload, frozen A, provenance mismatch rejection, non-finite failure preservation, and train/validation family isolation. These tests do not construct or train on the M1.3 graph.

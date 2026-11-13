@@ -3,7 +3,7 @@
 - Status: `exploratory_plan_written_before_new_probe_runs`
 - Data status: `synthetic`; review status: `pending_manual_review`
 - Scope: train/validation only. Test transcript, embedding, prediction, and metric access is prohibited.
-- Spec reference: `1999-connectome-demo-spec-v0.2.md`, §§7.3, 9, 11. The original M3.2/M3.4 runs and configuration remain immutable reference results.
+- Spec reference: `1999-connectome-demo-spec.md`, §§7.3, 9, 11. The original M3.2/M3.4 runs and configuration remain immutable reference results.
 - Existing reference: Fly A→B validation Macro-F1 mean 0.6601 (sample SD 0.0765), accuracy mean 0.7089 (SD 0.0674); MLP Macro-F1 mean 0.9022 (SD 0.0274), accuracy mean 0.9067 (SD 0.0231), across seeds 42, 1337, and 2026.
 
 ## Ordered experiment

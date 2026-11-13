@@ -10,7 +10,7 @@
 
 - 唯讀使用 `data/connectome/derived/malecns_v1.0/subgraphs/engineering-demo-v1.0/` 中的 `nodes.parquet`、`edges.parquet` 與 `manifest.json`。開始時核對 schema 與 SHA-256；不得改寫 M1.2、M1.1 或 MaleCNS 原始檔。
 - 將 M1.1 node ID 視為 endpoint IDs；不得推論神經元身分、腦區、感覺／運動功能或生物學角色。I/O 是此 engineering demo 的計算端點選擇。
-- 以可重現、明確記錄的規則選擇 input 與 output 節點。Spec v0.2 的初始配置為各 32 個、`T=4`；這是可調整的工程起始值，不是已驗證的生物學設定。input/output 集合須互斥且所有 ID 都存在於子圖。
+- 以可重現、明確記錄的規則選擇 input 與 output 節點。Spec 的初始配置為各 32 個、`T=4`；這是可調整的工程起始值，不是已驗證的生物學設定。input/output 集合須互斥且所有 ID 都存在於子圖。
 - 可達性依 `source_id -> target_id` 方向計算；每個 output 必須能在 1 至 `T` 條有向邊內，從至少一個 input 到達。不得將無向 BFS 的弱連通當成有向可達性。
 - 若任一 output 不可達，須按預先寫明且可重現的調整／重選規則再試，或停止並明確報告失敗；不得靜默更換節點或增加 `T`。
 - 輸出 I/O 選擇規則、seed/salt（若適用）、input/output IDs、`T`、方向、連通／可達摘要、來源與輸出 checksum，以及所有調整紀錄。

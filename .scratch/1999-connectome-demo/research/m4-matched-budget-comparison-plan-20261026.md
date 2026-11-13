@@ -1,7 +1,7 @@
 # M4 candidate confirmation: matched-budget validation plan
 
 - Status: preregistered before the matched-budget runs
-- Spec: v0.2 §§7.3, 9, 11. Train/validation only; test access prohibited.
+- Spec: §§7.3, 9, 11. Train/validation only; test access prohibited.
 - Purpose: compare the registered MLP, pure Fly A→B, and the already-run gated E5 residual under the same three frozen seeds and a maximum 200-epoch budget before preparing an M4 demo lock.
 
 ## Candidates and settings
