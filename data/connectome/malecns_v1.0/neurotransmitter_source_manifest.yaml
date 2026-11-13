@@ -1,0 +1,99 @@
+schema_version: 1
+ticket: "18 M0.2 neurotransmitter and synaptic sign source"
+recorded_on: "2026-11-13"
+dataset: MaleCNS v1.0
+source:
+  official_download_page: https://male-cns.janelia.org/download/
+  official_description: "Aggregate neurotransmitter predictions for each neuron. See manuscript methods section for details."
+  gcs_uri: "gs://flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather"
+  https_url: "https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather"
+  selected_file: body-neurotransmitters-male-cns-v1.0.feather
+  format: Apache Arrow Feather (Arrow IPC file, magic ARROW1)
+  authentication_required: false
+  object_metadata_observed:
+    observed_on: "2026-11-13"
+    content_length_bytes: 43282834
+    last_modified_utc: "2026-06-08T05:01:39Z"
+    generation: "1780894899156750"
+    etag: "3d842b12fe5c49eefade528d7dd24a1f"
+    accept_ranges: bytes
+    server_checksums:
+      md5_base64: "PYQrEv5cSe763lKNfdJKHw=="
+      crc32c_base64: "jcpNFg=="
+    full_object_sha256: "95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621"
+    local_md5_base64_matches_server: true
+    local_file_path: data/connectome/malecns_v1.0/body-neurotransmitters-male-cns-v1.0.feather
+    git: "ignored; rebuild locally with the command below"
+  download_command: >-
+    curl --fail --location --show-error --retry 3 --retry-delay 2
+    --header 'x-goog-if-generation-match: 1780894899156750'
+    --output data/connectome/malecns_v1.0/body-neurotransmitters-male-cns-v1.0.feather.partial
+    'https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/body-neurotransmitters-male-cns-v1.0.feather?generation=1780894899156750'
+    && mv data/connectome/malecns_v1.0/body-neurotransmitters-male-cns-v1.0.feather.partial
+    data/connectome/malecns_v1.0/body-neurotransmitters-male-cns-v1.0.feather
+  probe: "HEAD plus bytes 0-65535 range read; schema parsed from the embedded Arrow schema before the full download."
+observed_schema:
+  row_count: 1835518
+  unique_body_ids: 1835518
+  fields:
+    - {name: body, type: int64, meaning: "Segment/body ID; same ID space as body_pre/body_post in the connectome weights file."}
+    - {name: cell_type, type: string}
+    - {name: total_nt_predictions, type: int32, meaning: "Presynapse predictions for this body."}
+    - {name: predicted_nt_confidence, type: double}
+    - {name: predicted_nt, type: string, meaning: "Most frequent presynapse prediction for this body, or unclear."}
+    - {name: ground_truth, type: string, meaning: "Experimental cell-type ground truth where available."}
+    - {name: celltype_total_nt_predictions, type: int32}
+    - {name: celltype_predicted_nt, type: string}
+    - {name: celltype_predicted_nt_confidence, type: double}
+    - {name: consensus_nt, type: string, meaning: "Official recommended label (see below)."}
+  consensus_nt_values: [unclear, acetylcholine, glutamate, gaba, histamine, dopamine, octopamine, serotonin]
+official_semantics:
+  reference: "Berg S. et al., Cell 189(18), 5504-5526.e15 (2026), STAR Methods 'Assignment of neurotransmitter predictions', https://doi.org/10.1016/j.cell.2026.08.015 (read 2026-11-13)."
+  summary:
+    - "predictedNt is the most frequent presynapse prediction; bodies with < 50 presynaptic sites or predictedNtConfidence < 0.5 are unclear."
+    - "celltypePredictedNt pools all cells of a type; types with < 100 presynapses or confidence < 0.5 are unclear."
+    - "consensusNt copies celltypePredictedNt, overridden by experimental ground truth where available; octopamine and serotonin model results are set to unclear."
+    - "The paper states consensusNt is the recommended property for most analyses."
+project_decisions:
+  label_column: consensus_nt
+  extra_confidence_threshold: "none (the official unclear rules already apply a 0.5 confidence and presynapse-count floor)"
+  sign_rules:
+    acetylcholine: 1
+    gaba: -1
+    histamine: -1
+    glutamate: {primary_sign_glu_inhibitory: -1, sensitivity_sign_glu_excitatory: 1}
+    dopamine: excluded
+    octopamine: excluded
+    serotonin: excluded
+    unclear_or_missing: excluded
+    unknown_label: "hard failure; the mapping must be extended explicitly"
+  sign_unit: "neuron (Dale's principle): every outgoing edge takes the source neuron's sign"
+  rationale:
+    glutamate: >-
+      Shiu P.K. et al., "A Drosophila computational brain model reveals sensorimotor
+      processing," Nature 634, 210-219 (2024), https://doi.org/10.1038/s41586-024-07763-9,
+      Methods: assumes GABAergic and glutamatergic neurons are inhibitory by default,
+      notes glutamate can be either sign in Drosophila, and separately tests glutamate
+      as excitatory. This project mirrors that with a sensitivity variant. Difference:
+      Shiu et al. assign dopamine/octopamine/serotonin to excitatory; this project excludes them.
+    histamine: "Fast inhibitory transmission via histamine-gated chloride channels; decided -1 by the user on 2026-11-13."
+derived_outputs:
+  sign_table: data/connectome/derived/malecns_v1.0/neuron_signs_v1.0.parquet
+  sign_table_git: ignored
+  summary: data/connectome/derived/malecns_v1.0/neuron_signs_v1.0_summary.json
+  build_command: "python scripts/build_neurotransmitter_signs.py"
+authorization:
+  license: "Creative Commons Attribution 4.0 International (CC BY 4.0)"
+  license_url: https://creativecommons.org/licenses/by/4.0/
+  attribution: >-
+    MaleCNS v1.0 connectome data, produced by the FlyEM Project Team (HHMI
+    Janelia Research Campus), the University of Cambridge Department of
+    Zoology, the MRC Laboratory of Molecular Biology, and Google Research.
+    Berg S. et al., "Sexual dimorphism in the complete Drosophila male central
+    nervous system connectome," Cell 189(18), 5504-5526.e15 (2026),
+    https://doi.org/10.1016/j.cell.2026.08.015. Source:
+    https://male-cns.janelia.org/download/. Licensed CC BY 4.0.
+  changes_made: "Derived sign columns added in a separate table; the source file is unmodified."
+open_items:
+  - "360 of the 500 G0 engineering-subgraph nodes are absent from this table (likely non-neuron fragments in the segment-to-segment graph); ticket 21 must account for this."
+  - "Full M1.1 node-table coverage was not computed on this machine because the 1.05 GB weights file and derived nodes.parquet are not present locally."

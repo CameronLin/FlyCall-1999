@@ -13,4 +13,7 @@ __pycache__/
 data/connectome/malecns_v1.0/connectome-weights-male-cns-v1.0-minconf-0.5.feather
 data/connectome/derived/malecns_v1.0/edges.parquet
 data/connectome/derived/malecns_v1.0/nodes.parquet
+# Raw neurotransmitter table (~41 MiB) and its derived sign table are rebuilt locally.
+data/connectome/malecns_v1.0/body-neurotransmitters-male-cns-v1.0.feather
+data/connectome/derived/malecns_v1.0/neuron_signs_v1.0.parquet
 .scratch/1999-connectome-demo/m1-1-resource-audit-unapproved-threads-4/malecns_v1.0/*.parquet

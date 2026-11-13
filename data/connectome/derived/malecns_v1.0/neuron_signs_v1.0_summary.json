@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-11-13T10:49:32.853675+00:00",
+  "ticket": "18 M0.2",
+  "source": {
+    "path": "data/connectome/malecns_v1.0/body-neurotransmitters-male-cns-v1.0.feather",
+    "bytes": 43282834,
+    "sha256": "95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621"
+  },
+  "label_column": "consensus_nt",
+  "rules": {
+    "acetylcholine": 1,
+    "gaba": -1,
+    "histamine": -1,
+    "glutamate": {
+      "sign_glu_inhibitory": -1,
+      "sign_glu_excitatory": 1
+    },
+    "dopamine|octopamine|serotonin": "excluded (modulatory)",
+    "unclear|missing": "excluded",
+    "extra_confidence_threshold": "none; consensus_nt already applies the official 0.5 confidence and presynapse-count rules"
+  },
+  "output": {
+    "path": "data/connectome/derived/malecns_v1.0/neuron_signs_v1.0.parquet",
+    "parquet_sha256": "96e6faf455edcb21f539f13094366e8071c8610c67be4e90516f300e35bb6ebb",
+    "sign_content_sha256": "bddf0216a1b8b27b56c8350051d6511e4926e34cd072866add5dfdd8db461f4b"
+  },
+  "summary": {
+    "row_count": 1835518,
+    "consensus_nt_counts": {
+      "unclear": 1671117,
+      "acetylcholine": 104193,
+      "glutamate": 29443,
+      "gaba": 22196,
+      "histamine": 8024,
+      "dopamine": 396,
+      "octopamine": 101,
+      "serotonin": 48
+    },
+    "reason_counts": {
+      "acetylcholine": 104193,
+      "gaba": 22196,
+      "unclear_or_missing": 1671117,
+      "glutamate": 29443,
+      "modulatory": 545,
+      "histamine": 8024
+    },
+    "sign_glu_inhibitory": {
+      "excitatory": 104193,
+      "inhibitory": 59663,
+      "excluded": 1671662
+    },
+    "sign_glu_excitatory": {
+      "excitatory": 133636,
+      "inhibitory": 30220,
+      "excluded": 1671662
+    }
+  },
+  "g0_engineering_subgraph_coverage": {
+    "graph": ".scratch/1999-connectome-demo/runs/m3-2-fly-ab-seed-42-crlf-fix-20261026/graph_definition.json",
+    "sign_glu_inhibitory": {
+      "all_nodes": {
+        "nodes": 500,
+        "excitatory": 73,
+        "inhibitory": 57,
+        "excluded": 10,
+        "absent": 360
+      },
+      "input_nodes": {
+        "nodes": 32,
+        "excitatory": 6,
+        "inhibitory": 3,
+        "excluded": 2,
+        "absent": 21
+      },
+      "output_nodes": {
+        "nodes": 32,
+        "excitatory": 6,
+        "inhibitory": 7,
+        "excluded": 0,
+        "absent": 19
+      }
+    },
+    "sign_glu_excitatory": {
+      "all_nodes": {
+        "nodes": 500,
+        "excitatory": 107,
+        "inhibitory": 23,
+        "excluded": 10,
+        "absent": 360
+      },
+      "input_nodes": {
+        "nodes": 32,
+        "excitatory": 8,
+        "inhibitory": 1,
+        "excluded": 2,
+        "absent": 21
+      },
+      "output_nodes": {
+        "nodes": 32,
+        "excitatory": 11,
+        "inhibitory": 2,
+        "excluded": 0,
+        "absent": 19
+      }
+    }
+  }
+}
