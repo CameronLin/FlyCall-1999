@@ -285,6 +285,7 @@ class FlyB(nn.Module):
         self,
         graph_core: SparseGraphCore,
         label_order: Sequence[str] = CLASS_ORDER,
+        input_width: int = 32,
     ) -> None:
         super().__init__()
         self.label_order = tuple(label_order)
@@ -292,7 +293,12 @@ class FlyB(nn.Module):
             raise GraphCoreError("label_order must match the fixed taxonomy order")
         if len(graph_core.input_node_ids) != 32 or len(graph_core.output_node_ids) != 32:
             raise GraphCoreError("Fly B graph must have 32 ordered input and output nodes")
-        self.input_adapter = nn.Linear(32, 32)
+        if isinstance(input_width, bool) or not isinstance(input_width, int) or input_width < 1:
+            raise GraphCoreError("input_width must be a positive integer")
+        # 32 is the Fly A contract; other widths feed alternative reducers
+        # (e.g. LDA 4-D or raw E5 384-D) into the same graph core and readout.
+        self.input_width = input_width
+        self.input_adapter = nn.Linear(input_width, 32)
         self.graph_core = graph_core
         self.readout = nn.Linear(32, len(self.label_order))
 
@@ -311,8 +317,8 @@ class FlyB(nn.Module):
     def forward(self, fly_a_output: torch.Tensor) -> torch.Tensor:
         if not isinstance(fly_a_output, torch.Tensor):
             raise GraphCoreError("fly_a_output must be an in-memory torch.Tensor")
-        if fly_a_output.ndim != 2 or fly_a_output.shape[1] != 32:
-            raise GraphCoreError("fly_a_output must have shape (batch, 32)")
+        if fly_a_output.ndim != 2 or fly_a_output.shape[1] != self.input_width:
+            raise GraphCoreError(f"fly_a_output must have shape (batch, {self.input_width})")
         if not fly_a_output.is_floating_point() or fly_a_output.dtype != self.input_adapter.weight.dtype:
             raise GraphCoreError("fly_a_output must use the model floating-point dtype")
         if not torch.all(torch.isfinite(fly_a_output)):
@@ -324,7 +330,7 @@ class FlyB(nn.Module):
     def checkpoint_metadata(self) -> dict[str, object]:
         return {
             "model_kind": "FlyB",
-            "input_width": 32,
+            "input_width": self.input_width,
             "output_width": 5,
             "label_order": list(self.label_order),
             "parameter_counts": self.parameter_counts,

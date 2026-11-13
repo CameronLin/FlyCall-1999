@@ -10,6 +10,7 @@ import hashlib
 import math
 import os
 import tempfile
+import time
 from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -133,6 +134,7 @@ def _validate_splits(
     validation: EmbeddingSplit,
     *,
     require_labels: bool,
+    require_unit_norm: bool = True,
 ) -> int:
     if train.split != "train" or validation.split != "validation":
         raise ValueError("only train and validation splits are accepted; test is never a model input.")
@@ -156,6 +158,8 @@ def _validate_splits(
             raise ValueError("M3.2 uses CPU float32 embeddings only.")
         if not torch.all(torch.isfinite(values)):
             raise ValueError("embeddings must contain only finite values.")
+        if not require_unit_norm:
+            continue
         norms = torch.linalg.vector_norm(values, ord=2, dim=1)
         if torch.any(norms <= 0) or not torch.allclose(norms, torch.ones_like(norms), rtol=1e-4, atol=1e-4):
             raise ValueError("E5 embeddings must be non-zero and L2-normalized.")
@@ -237,11 +241,24 @@ def _write_checkpoint(payload: dict[str, Any], path: Path) -> str:
             torch.save(payload, stream)
             stream.flush()
             os.fsync(stream.fileno())
-        os.replace(temp_path, path)
+        _replace_with_retry(temp_path, path)
     finally:
         if temp_path and os.path.exists(temp_path):
             os.unlink(temp_path)
     return _file_sha256(path)
+
+
+def _replace_with_retry(source: str, target: Path, attempts: int = 6) -> None:
+    """Atomic replace that tolerates brief Windows sync/indexer locks (WinError 5)."""
+
+    for attempt in range(attempts):
+        try:
+            os.replace(source, target)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(0.1 * (2 ** attempt))
 
 
 def _file_sha256(path: Path) -> str:
@@ -303,11 +320,12 @@ def load_fly_b_checkpoint(
     checkpoint_path: Path,
     *,
     expected_source_sha256: dict[str, str],
+    input_width: int = 32,
 ) -> FlyB:
     """Load a source-checked Fly B checkpoint with the fixed five-label order."""
 
     source_hashes = _validate_sha256_map(expected_source_sha256, "expected_source_sha256")
-    model = FlyB(graph.build_core(), label_order=LABEL_ORDER)
+    model = FlyB(graph.build_core(), label_order=LABEL_ORDER, input_width=input_width)
     _load_checkpoint(
         model,
         Path(checkpoint_path),
@@ -432,92 +450,155 @@ def train_fly_b(
         with torch.no_grad():
             train_representations = model_a(train.embeddings).detach()
             validation_representations = model_a(validation.embeddings).detach()
-
-        labels = torch.tensor([LABEL_ORDER.index(label) for label in train.labels or ()], dtype=torch.long)
-        validation_labels = torch.tensor(
-            [LABEL_ORDER.index(label) for label in validation.labels or ()], dtype=torch.long
+        return _fit_fly_b_on_representations(
+            graph,
+            train,
+            validation,
+            train_representations,
+            validation_representations,
+            source_hashes=source_hashes,
+            checkpoint_path=Path(checkpoint_path),
+            config=config,
+            candidate_name=candidate_name,
         )
-        model = FlyB(graph.build_core(), label_order=LABEL_ORDER)
-        optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
-        generator = torch.Generator(device="cpu").manual_seed(config.seed)
-        history: list[dict[str, float]] = []
-        best_macro_f1 = -math.inf
-        best_validation_loss = math.inf
-        best_epoch = 0
-        best_state: dict[str, torch.Tensor] | None = None
-        stale_epochs = 0
 
-        for epoch in range(1, config.max_epochs + 1):
-            model.train()
-            weighted_loss = 0.0
-            seen_rows = 0
-            for indices in _training_batches(len(train.record_ids), config.batch_size, generator):
-                reps = train_representations.index_select(0, indices)
-                targets = labels.index_select(0, indices)
-                optimizer.zero_grad(set_to_none=True)
-                logits = model(reps)
-                loss = F.cross_entropy(logits, targets)
-                if not torch.isfinite(loss):
-                    raise FloatingPointError("non-finite Fly B loss; the latest valid checkpoint is preserved.")
-                loss.backward()
-                _check_finite_gradients(model, config.gradient_clip_norm)
-                optimizer.step()
-                weighted_loss += float(loss.detach()) * len(indices)
-                seen_rows += len(indices)
 
-            model.eval()
-            with torch.no_grad():
-                validation_logits = model(validation_representations)
-                validation_loss_tensor = F.cross_entropy(validation_logits, validation_labels)
-            if not torch.isfinite(validation_loss_tensor) or not torch.all(torch.isfinite(validation_logits)):
-                raise FloatingPointError("non-finite Fly B validation output; the latest valid checkpoint is preserved.")
-            validation_predictions = tuple(LABEL_ORDER[index] for index in validation_logits.argmax(dim=1).tolist())
-            validation_metrics = classification_metrics(validation.labels or (), validation_predictions, LABEL_ORDER)
-            macro_f1 = float(validation_metrics["macro_f1"])
-            validation_loss = float(validation_loss_tensor)
-            history.append({
-                "epoch": float(epoch),
-                "train_loss": weighted_loss / seen_rows,
-                "validation_loss": validation_loss,
-                "validation_macro_f1": macro_f1,
-            })
-            improved = macro_f1 > best_macro_f1 or (macro_f1 == best_macro_f1 and validation_loss < best_validation_loss)
-            if improved:
-                best_macro_f1 = macro_f1
-                best_validation_loss = validation_loss
-                best_epoch = epoch
-                best_state = {name: value.detach().cpu().clone() for name, value in model.state_dict().items()}
-                _write_checkpoint(
-                    _checkpoint_payload(model, task="fly_b", config=config, epoch=epoch, source_sha256=source_hashes),
-                    Path(checkpoint_path),
-                )
-                stale_epochs = 0
-            else:
-                stale_epochs += 1
-                if stale_epochs >= config.patience:
-                    break
+def train_fly_b_on_features(
+    graph: GraphDefinition,
+    train: EmbeddingSplit,
+    validation: EmbeddingSplit,
+    *,
+    source_sha256: dict[str, str],
+    checkpoint_path: Path,
+    config: TrainingConfig = TrainingConfig(),
+    candidate_name: str,
+) -> TrainingResult:
+    """Train Fly B on any precomputed train-fit reduction (e.g. LDA or raw E5).
 
-        if best_state is None:
-            raise FloatingPointError("Fly B did not produce a valid validation checkpoint.")
-        model.load_state_dict(best_state, strict=True)
+    ``train.embeddings`` / ``validation.embeddings`` hold the reduced features;
+    they need not be unit-normalized. The Fly B input adapter takes their width,
+    while the graph core and 5-class readout keep the M3.3 contract.
+    """
+
+    _validate_splits(train, validation, require_labels=True, require_unit_norm=False)
+    source_hashes = _validate_sha256_map(source_sha256, "source_sha256")
+    if set(train.labels or ()) != set(LABEL_ORDER):
+        raise ValueError("Fly B training data must contain every class in the fixed taxonomy order.")
+    with _seeded_cpu(config.seed, config.torch_threads):
+        return _fit_fly_b_on_representations(
+            graph,
+            train,
+            validation,
+            train.embeddings,
+            validation.embeddings,
+            source_hashes=source_hashes,
+            checkpoint_path=Path(checkpoint_path),
+            config=config,
+            candidate_name=candidate_name,
+        )
+
+
+def _fit_fly_b_on_representations(
+    graph: GraphDefinition,
+    train: EmbeddingSplit,
+    validation: EmbeddingSplit,
+    train_representations: torch.Tensor,
+    validation_representations: torch.Tensor,
+    *,
+    source_hashes: dict[str, str],
+    checkpoint_path: Path,
+    config: TrainingConfig,
+    candidate_name: str,
+) -> TrainingResult:
+    """Shared Fly B loop; callers must already be inside ``_seeded_cpu``."""
+
+    labels = torch.tensor([LABEL_ORDER.index(label) for label in train.labels or ()], dtype=torch.long)
+    validation_labels = torch.tensor(
+        [LABEL_ORDER.index(label) for label in validation.labels or ()], dtype=torch.long
+    )
+    model = FlyB(
+        graph.build_core(),
+        label_order=LABEL_ORDER,
+        input_width=int(train_representations.shape[1]),
+    )
+    optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
+    generator = torch.Generator(device="cpu").manual_seed(config.seed)
+    history: list[dict[str, float]] = []
+    best_macro_f1 = -math.inf
+    best_validation_loss = math.inf
+    best_epoch = 0
+    best_state: dict[str, torch.Tensor] | None = None
+    stale_epochs = 0
+
+    for epoch in range(1, config.max_epochs + 1):
+        model.train()
+        weighted_loss = 0.0
+        seen_rows = 0
+        for indices in _training_batches(len(train.record_ids), config.batch_size, generator):
+            reps = train_representations.index_select(0, indices)
+            targets = labels.index_select(0, indices)
+            optimizer.zero_grad(set_to_none=True)
+            logits = model(reps)
+            loss = F.cross_entropy(logits, targets)
+            if not torch.isfinite(loss):
+                raise FloatingPointError("non-finite Fly B loss; the latest valid checkpoint is preserved.")
+            loss.backward()
+            _check_finite_gradients(model, config.gradient_clip_norm)
+            optimizer.step()
+            weighted_loss += float(loss.detach()) * len(indices)
+            seen_rows += len(indices)
+
         model.eval()
         with torch.no_grad():
-            train_logits = model(train_representations)
             validation_logits = model(validation_representations)
-        train_predictions = tuple(LABEL_ORDER[index] for index in train_logits.argmax(dim=1).tolist())
+            validation_loss_tensor = F.cross_entropy(validation_logits, validation_labels)
+        if not torch.isfinite(validation_loss_tensor) or not torch.all(torch.isfinite(validation_logits)):
+            raise FloatingPointError("non-finite Fly B validation output; the latest valid checkpoint is preserved.")
         validation_predictions = tuple(LABEL_ORDER[index] for index in validation_logits.argmax(dim=1).tolist())
-        train_batch = PredictionBatch("train", train.record_ids, train.family_ids, train.labels or (), train_predictions)
-        validation_batch = PredictionBatch(
-            "validation", validation.record_ids, validation.family_ids, validation.labels or (), validation_predictions
-        )
-        report = evaluate_predictions(
-            train_batch,
-            validation_batch,
-            candidate_name=candidate_name,
-            data_status="synthetic",
-        )
-        checkpoint_path = Path(checkpoint_path)
+        validation_metrics = classification_metrics(validation.labels or (), validation_predictions, LABEL_ORDER)
+        macro_f1 = float(validation_metrics["macro_f1"])
+        validation_loss = float(validation_loss_tensor)
+        history.append({
+            "epoch": float(epoch),
+            "train_loss": weighted_loss / seen_rows,
+            "validation_loss": validation_loss,
+            "validation_macro_f1": macro_f1,
+        })
+        improved = macro_f1 > best_macro_f1 or (macro_f1 == best_macro_f1 and validation_loss < best_validation_loss)
+        if improved:
+            best_macro_f1 = macro_f1
+            best_validation_loss = validation_loss
+            best_epoch = epoch
+            best_state = {name: value.detach().cpu().clone() for name, value in model.state_dict().items()}
+            _write_checkpoint(
+                _checkpoint_payload(model, task="fly_b", config=config, epoch=epoch, source_sha256=source_hashes),
+                Path(checkpoint_path),
+            )
+            stale_epochs = 0
+        else:
+            stale_epochs += 1
+            if stale_epochs >= config.patience:
+                break
 
+    if best_state is None:
+        raise FloatingPointError("Fly B did not produce a valid validation checkpoint.")
+    model.load_state_dict(best_state, strict=True)
+    model.eval()
+    with torch.no_grad():
+        train_logits = model(train_representations)
+        validation_logits = model(validation_representations)
+    train_predictions = tuple(LABEL_ORDER[index] for index in train_logits.argmax(dim=1).tolist())
+    validation_predictions = tuple(LABEL_ORDER[index] for index in validation_logits.argmax(dim=1).tolist())
+    train_batch = PredictionBatch("train", train.record_ids, train.family_ids, train.labels or (), train_predictions)
+    validation_batch = PredictionBatch(
+        "validation", validation.record_ids, validation.family_ids, validation.labels or (), validation_predictions
+    )
+    report = evaluate_predictions(
+        train_batch,
+        validation_batch,
+        candidate_name=candidate_name,
+        data_status="synthetic",
+    )
     return TrainingResult(
         task="fly_b",
         model=model,

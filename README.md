@@ -27,6 +27,10 @@ M3.4 已使用 M2.2b 與 M3.2／M3.3 的 seed 42、1337、2026 run 完成五個�
 
 依 Spec §7.3，正式報告需每類至少人工複核 20 筆並涵蓋 train／validation／test，另須處理所有「需人工特別確認」與 AI `revise` 記錄；AI 建議不能代替人工決定。候選、checkpoint seed 與設定已鎖定；接下來須先完成 [正式資料複核活頁簿](outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx) 中的人工複核並記錄決定，再執行一次性 test 評估。人工決定另行記錄，不修改資料列的 `review_status`。
 
+## 降維器 × 分類器 交叉實驗
+
+為了分開評估 Fly A 降維與 Fly B 分類的貢獻，本實驗以三個 seed 在 validation 上比較 {E5, LDA, Fly A} × {SVM, Fly B} 的所有組合（test `not_run`）。結果：Fly A→SVM 為 0.7921，LDA→Fly B 為 0.8468（M3.2 訓練預算）或 0.8646（較長預算），LDA→SVM 為 0.8998，E5→SVM 為 0.9248。分類器固定為 SVM 時，Fly A 比 LDA 低約 0.11，是主要瓶頸。原本 Fly A→Fly B 的 0.66 中，另有約 0.13 來自 Fly B 在 M3.2 預算下訓練不足；給予較長訓練後，Fly B 在 Fly A 輸入上與 SVM 沒有明確差距。詳見 [工作票 17](.scratch/1999-connectome-demo/issues/17-reducer-classifier-factorial.md) 與 [報告](.scratch/1999-connectome-demo/runs/reducer-classifier-factorial-20261113/report.md)。
+
 ## M3.5 Fly A/B representation diagnosis
 
 A frozen three-seed probe measured raw E5 MLP validation Macro-F1 at 0.9022 versus 0.7758 for Fly A 32-D output. The best of four separately trained gated E5 residual settings reached 0.9048 Macro-F1 and 0.9089 accuracy across three seeds. This candidate was selected on the same validation set, remains exploratory, does not replace the M3.4 provisional MLP winner, and did not use test data. See the [diagnosis report](.scratch/1999-connectome-demo/runs/fly-ab-diagnosis-20261026/report.md).
