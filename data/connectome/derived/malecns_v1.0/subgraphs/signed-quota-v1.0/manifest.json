@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "ticket": "21 M1.4",
+  "created_at_utc": "2026-11-13T11:06:52.048503+00:00",
+  "status": "completed",
+  "stop_reason": null,
+  "seed": 810979,
+  "seed_rule": "minimum M1.2 hash priority among neurons with a +1/-1 sign (D3b)",
+  "hash_priority": {
+    "algorithm": "BLAKE2b-128",
+    "digest_bits": "128",
+    "salt_ascii": "FlyCallM12-v1",
+    "salt_hex": "466c7943616c6c4d31322d7631",
+    "node_id_encoding": "signed int64, 8 bytes, little-endian",
+    "rank_order": "digest bytes ascending; node_id ascending only on digest collision"
+  },
+  "quotas": {
+    "excitatory": 300,
+    "inhibitory": 200
+  },
+  "max_depth": 12,
+  "selection_sign_column": "sign_glu_inhibitory",
+  "skip_rules": [
+    "unsigned/excluded/absent from sign table",
+    "sign quota full"
+  ],
+  "expansion": "undirected (weak) view; only admitted nodes expand",
+  "layers": [
+    {
+      "depth": 1,
+      "frontier": 1,
+      "candidates": 820,
+      "admitted_excitatory": 122,
+      "admitted_inhibitory": 120,
+      "skipped_unsigned": 578,
+      "skipped_quota_full": 0
+    },
+    {
+      "depth": 2,
+      "frontier": 242,
+      "candidates": 421657,
+      "admitted_excitatory": 177,
+      "admitted_inhibitory": 80,
+      "skipped_unsigned": 6325,
+      "skipped_quota_full": 38
+    }
+  ],
+  "edge_scans_for_bfs": 2,
+  "counts": {
+    "excitatory": 300,
+    "inhibitory": 200
+  },
+  "sources": {
+    "edges_parquet_sha256": "d32d5be692b127e8b9132e418bbfc4a13fbc36e2f5fabc90293a1f04d5f133aa",
+    "sign_content_sha256": "bddf0216a1b8b27b56c8350051d6511e4926e34cd072866add5dfdd8db461f4b",
+    "neurotransmitter_source_sha256": "95c9289220663abeb3409f3ad9e5a7f8a53f8093f5139d15502cd08da8879621"
+  },
+  "test": "not applicable (graph construction only)",
+  "node_count": 500,
+  "edge_count": 6691,
+  "self_loops": 0,
+  "weak_components": 1,
+  "nodes_without_incoming_edges": 31,
+  "node_set_sha256": "0bad730e006744d59d0c8ba86db34d42a5d51bb0212bacb1db2dff05987ab90e",
+  "edge_set_sha256": "c1a2124db761b2796a6b7a4245d8c9e2ea7f3b0d64629aed1cdfe80407d3cf6e",
+  "consensus_nt_counts": {
+    "acetylcholine": 300,
+    "gaba": 144,
+    "glutamate": 56
+  },
+  "cell_type_prefix_counts": {
+    "IN": 266,
+    "AN": 56,
+    "SA": 35,
+    "DN": 29,
+    "SN": 24,
+    "GN": 12,
+    "CB": 10,
+    "PS": 6,
+    "WE": 5,
+    "<n": 4,
+    "JO": 4,
+    "MN": 4,
+    "PL": 3,
+    "AO": 3,
+    "IB": 3,
+    "LL": 3,
+    "LA": 2,
+    "SM": 2,
+    "AV": 2,
+    "PV": 2,
+    "AM": 2,
+    "CL": 2,
+    "BM": 2,
+    "VE": 2,
+    "dM": 2,
+    "aS": 1,
+    "ov": 1,
+    "pC": 1,
+    "SI": 1,
+    "Lo": 1,
+    "LC": 1,
+    "LP": 1,
+    "i2": 1,
+    "b1": 1,
+    "tp": 1,
+    "vP": 1,
+    "vM": 1,
+    "GF": 1,
+    "WG": 1,
+    "Ac": 1
+  },
+  "io_selection": {
+    "algorithm": "BLAKE2b-128 keyed hash-priority",
+    "salt": "FlyCallM13-IO-v1",
+    "salt_hex": "466c7943616c6c4d31332d494f2d7631",
+    "node_id_encoding": "signed int64, 8 bytes, little-endian",
+    "role_domain_separation": "ASCII role name + NUL + encoded node ID",
+    "rank_order": "digest bytes ascending; node_id ascending on digest collision",
+    "input_node_ids": [
+      12755,
+      13826,
+      14067,
+      23978,
+      199796,
+      516431,
+      521815,
+      522302,
+      522967,
+      529262,
+      800560,
+      801933,
+      802053,
+      802296,
+      804536,
+      804591,
+      805047,
+      805263,
+      805521,
+      807139,
+      808109,
+      808471,
+      808645,
+      809047,
+      809741,
+      809894,
+      811624,
+      813241,
+      813630,
+      817364,
+      902311,
+      908236
+    ],
+    "output_node_ids": [
+      10727,
+      11438,
+      13436,
+      15502,
+      15653,
+      17019,
+      17348,
+      25474,
+      37098,
+      41114,
+      204984,
+      221125,
+      250927,
+      514395,
+      524141,
+      800956,
+      800998,
+      801195,
+      802421,
+      803735,
+      803749,
+      803769,
+      804274,
+      806349,
+      810094,
+      811299,
+      812084,
+      812786,
+      815436,
+      815965,
+      817316,
+      909328
+    ],
+    "m1_3_rule_output_node_ids": [
+      13436,
+      15502,
+      15653,
+      17019,
+      17179,
+      17348,
+      25474,
+      37098,
+      41114,
+      204984,
+      221125,
+      250927,
+      514395,
+      524141,
+      800956,
+      800998,
+      802421,
+      802745,
+      803735,
+      803749,
+      803769,
+      804274,
+      806349,
+      810094,
+      811299,
+      812084,
+      812786,
+      815436,
+      815965,
+      817316,
+      909328,
+      1074160161
+    ],
+    "output_rule": "D5: outputs ranked by M1.3 keyed hash priority among non-input nodes reachable within max_steps",
+    "eligible_output_candidates": 404
+  },
+  "io_sign_composition": {
+    "input": {
+      "1": 20,
+      "-1": 12
+    },
+    "output": {
+      "1": 23,
+      "-1": 9
+    }
+  },
+  "reachability": {
+    "2": {
+      "all_outputs_reachable": true,
+      "unreachable_output_count": 0,
+      "hop_counts": {
+        "1": 20,
+        "2": 12
+      }
+    },
+    "4": {
+      "all_outputs_reachable": true,
+      "unreachable_output_count": 0,
+      "hop_counts": {
+        "1": 20,
+        "2": 12
+      }
+    }
+  },
+  "model_steps": 2,
+  "required_reachability_steps": 2,
+  "unreachable_policy": "Stop explicitly; do not silently reselect nodes, salts, or change T.",
+  "graphs": {
+    "G1_all_positive": {
+      "file": "graph_definition_G1_all_positive.json",
+      "sha256": "9b55c886de8ba8d862f1203d706564022c1da159b6c16fb1596e518cee1ce735",
+      "node_signs_sha256": "39c2643464987ea6822787b18765024723cde98d73a6bb2841363d22dc7982ba",
+      "excitatory_nodes": 500,
+      "inhibitory_nodes": 0,
+      "excitatory_edges": 6691,
+      "inhibitory_edges": 0
+    },
+    "G2_glu_inhibitory": {
+      "file": "graph_definition_G2_glu_inhibitory.json",
+      "sha256": "99d72219fdbdfb4ac639015417ada0cd2a7ba3b1510a71761270530a15d267a0",
+      "node_signs_sha256": "fcbc12b30478bf5062307d1ddeab7ddafdd8bcd27f91c81e51462b69a130b3b2",
+      "excitatory_nodes": 300,
+      "inhibitory_nodes": 200,
+      "excitatory_edges": 3740,
+      "inhibitory_edges": 2951
+    },
+    "G2_glu_excitatory": {
+      "file": "graph_definition_G2_glu_excitatory.json",
+      "sha256": "bd279ebbb4e2b1cd783067e5b99b9a2e3f41711d8b4d4088106fe4725ff97a74",
+      "node_signs_sha256": "b555e06874ffa1d48faae03f725a284db4ea49bd59c6a4a0437a092a6c21a9c2",
+      "excitatory_nodes": 356,
+      "inhibitory_nodes": 144,
+      "excitatory_edges": 4227,
+      "inhibitory_edges": 2464
+    }
+  },
+  "elapsed_seconds": 16.157098299998324,
+  "limitations": [
+    "Engineering sample; no biological region or function claim.",
+    "Seed differs from G0 (D3b), so G1 - G0 mixes seed, node set and composition differences.",
+    "G2_glu_excitatory keeps the same nodes, so it is not a 300/200 split."
+  ]
+}
