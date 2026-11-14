@@ -203,7 +203,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
 <nav class="bar" aria-label="章節">
   <div class="wrap">
     <span class="brand">FLYCALL-1999</span>
-    <a href="#pipeline">1 訓練流程</a><a href="#timing">2 耗時</a><a href="#scores">3 分數</a><a href="#tcompare">T4 vs T2</a><a href="#figures">4 腦部比較</a><a href="#glossary">名詞</a>
+    <a href="#pipeline">1 訓練流程</a><a href="#timing">2 耗時</a><a href="#scores">3 分數</a><a href="#tcompare">T4 vs T2</a>{{NAV_DATA}}<a href="#figures">4 腦部比較</a><a href="#glossary">名詞</a>
     <span class="sp"></span><button class="theme" id="theme" type="button">深淺色</button>
   </div>
 </nav>
@@ -212,7 +212,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
     <span class="eyebrow">工作票 20 · 22 · 23 · 24 ｜ 圖核心 T = {{STEPS}}（T 步 ＝ T 跳）</span>
     <h1>Fly A／Fly B 分析報告</h1>
     <p class="lead">同一套架構、四張果蠅連接子圖。Fly A（降維）與 Fly B（分類）各自調到最好之後，花了多少時間、分數如何，以及兩個「腦」在連線、神經元活化與損傷實驗上有什麼不同。</p>
-    <div class="meta"><span>只用 train／validation，test 未讀取</span><span>三個 seed：42、1337、2026</span><span>{{DATA_NOTE}}</span></div>
+    <div class="meta"><span>{{TEST_NOTE}}</span><span>三個 seed：42、1337、2026</span><span>{{DATA_NOTE}}</span></div>
     <div class="kpis">{{HERO}}</div>
   </header>
 
@@ -263,6 +263,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
   </section>
 
   {{T_COMPARE}}
+  {{DATA_COMPARE}}
 
   <section class="part" id="figures">
     <div class="part-head"><span class="part-no">04</span><h2>17 張腦部比較圖</h2>

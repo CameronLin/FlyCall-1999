@@ -206,6 +206,152 @@ def t_compare_section(tuning_dir: Path) -> str:
             f"<p class='note'>{t_compare_note(data)}</p></div></section>")
 
 
+
+E5_RUNS = {"v1.0.0": ".scratch/1999-connectome-demo/runs/m2-2b-e5-provisional-20261026T015843Z",
+           "v2.0.0": ".scratch/1999-connectome-demo/runs/m2-2b-e5-dataset-v2-seed-42-20261114"}
+TEST_RUN = {"v2.0.0": ".scratch/1999-connectome-demo/runs/test-evaluation-dataset-v2-20261114"}
+LABEL_ZH = {"sidewalk_maintenance": "人行道", "road_surface_defect": "道路", "park_general_maintenance": "公園",
+            "waste_truck_service": "垃圾車", "street_cleaning": "路面清潔"}
+BASELINE_ZH = {"logistic_regression": "E5 → LR", "mlp": "E5 → MLP", "pca_mlp": "E5 → PCA → MLP",
+               "lda_logistic_regression": "E5 → LDA → LR"}
+CHANGE = 0.02  # |difference of means| below this is reported as 持平
+
+
+def _val_predictions(run: str) -> dict[str, list[tuple[str, str]]]:
+    import csv
+    rows: dict[str, list[tuple[str, str]]] = {}
+    with (PROJECT_ROOT / run / "predictions.csv").open(encoding="utf-8") as stream:
+        for row in csv.DictReader(stream):
+            if row["split"] == "validation":
+                rows.setdefault(row["candidate"], []).append((row["expected"], row["predicted"]))
+    return rows
+
+
+def _per_class_f1(pairs: list[tuple[str, str]]) -> dict[str, float]:
+    out = {}
+    for label in LABEL_ZH:
+        tp = sum(e == label and p == label for e, p in pairs)
+        denom = sum(p == label for _, p in pairs) + sum(e == label for e, _ in pairs)
+        out[label] = 2 * tp / denom if denom else 0.0
+    return out
+
+
+def _change_badge(delta: float) -> str:
+    if abs(delta) < CHANGE:
+        return "<span class='badge flat'>持平</span>"
+    return "<span class='badge up'>上升</span>" if delta > 0 else "<span class='badge down'>下降</span>"
+
+
+def _score(result: dict) -> str:
+    m = result["macro_f1"]
+    return f"{m['mean']:.3f}" + ("" if m["std"] == 0 else f" ± {m['std']:.3f}")
+
+
+def dataset_compare_section() -> str:
+    """Dataset v1.0.0 → v2.0.0 comparison (validation; test exists for v2 only). Empty in the v1 report."""
+
+    if DATASET != "v2.0.0":
+        return ""
+    from collections import Counter
+
+    v1_run = RUNS_BY_DATASET["v1.0.0"][STEPS][0]
+    r1 = json.loads((PROJECT_ROOT / v1_run / "results.json").read_text(encoding="utf-8"))
+    r2 = json.loads((PROJECT_ROOT / TUNING / "results.json").read_text(encoding="utf-8"))
+    graphs = [g for g in GRAPH_NAME if g in r2["by_graph"] and g in r1["by_graph"]]
+
+    p1, p2 = _val_predictions(E5_RUNS["v1.0.0"]), _val_predictions(E5_RUNS["v2.0.0"])
+    base_rows = []
+    for cand, name in BASELINE_ZH.items():
+        a = statistics.fmean(_per_class_f1(p1[cand]).values())
+        b = statistics.fmean(_per_class_f1(p2[cand]).values())
+        base_rows.append(f"<tr><th scope='row'>{esc(name)}</th><td class='num'>{a:.3f}</td><td class='num'>{b:.3f}</td>"
+                         f"<td><b class='num'>{b - a:+.3f}</b> {_change_badge(b - a)}</td></tr>")
+    a = statistics.fmean(f1s(r1["by_graph"][graphs[0]]["final"]["lda_to_svm"]))
+    b = statistics.fmean(f1s(r2["by_graph"][graphs[0]]["final"]["lda_to_svm"]))
+    base_rows.append(f"<tr><th scope='row'>LDA → SVM</th><td class='num'>{a:.3f}</td><td class='num'>{b:.3f}</td>"
+                     f"<td><b class='num'>{b - a:+.3f}</b> {_change_badge(b - a)}</td></tr>")
+    base_table = ("<table class='tcmp'><thead><tr><th>基準模型</th><th>v1</th><th>v2</th><th>變化</th></tr></thead>"
+                  f"<tbody>{''.join(base_rows)}</tbody></table>")
+
+    combos = [c for c, _ in COMBOS if c != "lda_to_svm"]
+    counts = {"up": 0, "down": 0, "flat": 0}
+    all_up, all_down, rows = [], [], []
+    for c in combos:
+        cells, deltas = [], []
+        for g in graphs:
+            a = statistics.fmean(f1s(r1["by_graph"][g]["final"][c]))
+            b = statistics.fmean(f1s(r2["by_graph"][g]["final"][c]))
+            d = b - a
+            deltas.append(d)
+            counts["flat" if abs(d) < CHANGE else ("up" if d > 0 else "down")] += 1
+            cells.append(f"<td><span class='mono'>{a:.3f} → {b:.3f}</span><br><b class='num'>{d:+.3f}</b> {_change_badge(d)}</td>")
+        if all(d >= CHANGE for d in deltas):
+            all_up.append(dict(COMBOS)[c])
+        if all(d <= -CHANGE for d in deltas):
+            all_down.append(dict(COMBOS)[c])
+        rows.append(f"<tr><th scope='row'>{esc(dict(COMBOS)[c])}</th>{''.join(cells)}</tr>")
+    fly_table = (f"<table class='tcmp'><thead><tr><th>組合（T={STEPS}）</th>"
+                 + "".join(f"<th>{esc(GRAPH_NAME[g])}</th>" for g in graphs)
+                 + f"</tr></thead><tbody>{''.join(rows)}</tbody></table>")
+    best1 = max((statistics.fmean(f1s(r1["by_graph"][g]["final"][c])), g, c) for g in graphs for c in combos)
+    best2 = max((statistics.fmean(f1s(r2["by_graph"][g]["final"][c])), g, c) for g in graphs for c in combos)
+
+    f1_1, f1_2 = _per_class_f1(p1["mlp"]), _per_class_f1(p2["mlp"])
+    class_rows = "".join(
+        f"<tr><th scope='row'>{LABEL_ZH[l]}</th><td class='num'>{f1_1[l]:.2f}</td><td class='num'>{f1_2[l]:.2f}</td>"
+        f"<td><b class='num'>{f1_2[l] - f1_1[l]:+.2f}</b></td></tr>" for l in LABEL_ZH)
+    e1 = Counter((e, p) for e, p in p1["mlp"] if e != p)
+    e2 = Counter((e, p) for e, p in p2["mlp"] if e != p)
+    top = sorted(set(e1) | set(e2), key=lambda k: (-(e1[k] + e2[k]), k))[:5]
+    conf_rows = "".join(
+        f"<tr><th scope='row'>{LABEL_ZH[e]} → {LABEL_ZH[p]}</th><td class='num'>{e1[(e, p)]}</td><td class='num'>{e2[(e, p)]}</td></tr>"
+        for e, p in top)
+    class_table = ("<table class='tcmp'><thead><tr><th>類別（E5 → MLP）</th><th>v1 F1</th><th>v2 F1</th><th>變化</th></tr></thead>"
+                   f"<tbody>{class_rows}</tbody></table>")
+    conf_table = ("<table class='tcmp'><thead><tr><th>認錯（正解 → 預測）</th><th>v1 筆數</th><th>v2 筆數</th></tr></thead>"
+                  f"<tbody>{conf_rows}</tbody></table>")
+    sw_sc = lambda e: e[("sidewalk_maintenance", "street_cleaning")] + e[("street_cleaning", "sidewalk_maintenance")]
+    class_note = (f"人行道與路面清潔互相認錯：v1 {sw_sc(e1)} 筆 → v2 {sw_sc(e2)} 筆。"
+                  f"公園 F1 {f1_1['park_general_maintenance']:.2f} → {f1_2['park_general_maintenance']:.2f}："
+                  "拿掉 v1 的「一般公園」捷徑詞後，公園類別沒有變差。validation 共 150 筆、每類 30 筆，單一類別的數字波動較大。")
+
+    test_html = ""
+    test_path = PROJECT_ROOT / TEST_RUN["v2.0.0"] / "test_results.json"
+    if test_path.exists():
+        t = json.loads(test_path.read_text(encoding="utf-8"))
+        sel, res = t["selected_fly_model"], t["results"]
+        t_sel, g_sel, c_sel = sel.split("/")
+        sel_name = f"{t_sel.replace('T', 'T=')}・{GRAPH_NAME[g_sel]}・{dict(COMBOS)[c_sel]}（依規則選定）"
+        named = [(sel_name, res[sel]), ("E5 → LR", res["e5_logistic_regression"]),
+                 ("E5 → MLP", res["e5_mlp"]), ("E5 → LDA → LR", res["e5_lda_logistic"]),
+                 ("LDA → SVM", res[f"T{STEPS}/G0/lda_to_svm"])]
+        test_rows = "".join(f"<tr><th scope='row'>{esc(n)}</th><td class='num'>{_score(r)}</td></tr>" for n, r in named)
+        test_html = ("<div class='panel'><h3>v2 的 test（只評估一次）</h3><div class='tablewrap'><table class='tcmp'>"
+                     f"<thead><tr><th>模型</th><th>test Macro-F1</th></tr></thead><tbody>{test_rows}</tbody></table></div>"
+                     "<p class='note'>讀 test 前已用 validation 鎖定 51 個候選與選模規則，每個候選只評估一次；"
+                     "E5 → LR 在 validation 很高、到 test 明顯下降，表示 test 的情境家族比較難。v1 的 test 從未打開，所以 test 沒有 v1 可比。</p></div>")
+
+    summary = (f"T={STEPS} 的 {sum(counts.values())} 個 Fly 組合：上升 {counts['up']}、下降 {counts['down']}、持平 {counts['flat']}"
+               f"（兩版平均差 ≥ {CHANGE} 才算升降）。")
+    if all_up:
+        summary += "四張圖都上升：" + "、".join(all_up) + "。"
+    if all_down:
+        summary += "四張圖都下降：" + "、".join(all_down) + "。"
+    summary += (f"最高分組合從 v1 的 {best1[0]:.3f}（{GRAPH_NAME[best1[1]]}・{dict(COMBOS)[best1[2]]}）"
+                f"變成 v2 的 {best2[0]:.3f}（{GRAPH_NAME[best2[1]]}・{dict(COMBOS)[best2[2]]}）。")
+    return ("<section class='part' id='datacompare'><div class='part-head'><span class='part-no'>03c</span>"
+            "<h2>資料 v1 與 v2 的比較</h2><p>類別、情境家族、split 與訓練流程都相同，只把 1,000 筆通話換成 v2.0.0"
+            "（逐筆撰寫、自動品質檢查通過、未經人工複核）。表中是 validation Macro-F1；兩版逐字稿不同，"
+            "所以差異同時反映資料與訓練隨機性。</p></div>"
+            f"<div class='panel'><h3>基準模型</h3><div class='tablewrap'>{base_table}</div>"
+            "<p class='note'>v2 的訓練集分數不再是 1.000，模型不能只靠背 v1 的固定句型。</p></div>"
+            f"<div class='panel'><h3>Fly A／Fly B 組合</h3><div class='tablewrap'>{fly_table}</div>"
+            f"<p class='note'>{esc(summary)}</p></div>"
+            f"<div class='panel'><h3>各類別</h3><div class='tablewrap'>{class_table}</div>"
+            f"<div class='tablewrap'>{conf_table}</div><p class='note'>{esc(class_note)}</p></div>"
+            f"{test_html}</section>")
+
+
 def build() -> str:
     tuning = json.loads((PROJECT_ROOT / TUNING / "results.json").read_text(encoding="utf-8"))
     timings = json.loads((PROJECT_ROOT / TUNING / "timings.json").read_text(encoding="utf-8"))
@@ -322,6 +468,9 @@ def build() -> str:
         "KIND_CARDS": kind_cards, "COMPARISONS": comparisons, "FIGURES": "".join(cards),
         "STEPS": str(STEPS), "T_COMPARE": t_compare_section(PROJECT_ROOT / TUNING),
         "DATA_NOTE": DATA_NOTES[DATASET],
+        "DATA_COMPARE": dataset_compare_section(),
+        "NAV_DATA": '<a href="#datacompare">v1 vs v2</a>' if DATASET == "v2.0.0" else "",
+        "TEST_NOTE": "調參只用 train／validation；test 另以鎖定設定評估一次" if DATASET == "v2.0.0" else "只用 train／validation，test 未讀取",
         "SOURCES": f"{Path(TUNING).name}、{Path(BRAIN).name}",
         "MINUTES_PER_GRAPH": f"{min(timings['by_graph'][g]['total_seconds'] for g in graphs if g != 'G0') / 60:.0f}–{max(timings['by_graph'][g]['total_seconds'] for g in graphs if g != 'G0') / 60:.0f}",
     }.items():
@@ -361,7 +510,9 @@ def combined(default_steps: int = 4) -> str:
         active = steps == default_steps
         frames.append(f"<iframe class='rep' id='rep-{steps}' title='T={steps} 報告' srcdoc=\"{doc}\"{'' if active else ' hidden'}></iframe>")
         buttons.append(f"<button type='button' class='tb' data-t='{steps}' aria-pressed='{str(active).lower()}'>T = {steps}</button>")
-    return (WRAPPER.replace("{{BUTTONS}}", "".join(buttons)).replace("{{FRAMES}}", "".join(frames)))
+    label = "資料 v2.0.0" if DATASET == "v2.0.0" else "存檔：資料 v1.0.0（目前報告改用 v2.0.0）"
+    return (WRAPPER.replace("{{BUTTONS}}", "".join(buttons)).replace("{{FRAMES}}", "".join(frames))
+            .replace("{{DATASET_LABEL}}", label))
 
 
 WRAPPER = """<!doctype html>
@@ -379,6 +530,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--f); display:
 .switch { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid var(--rule); background: var(--paper);
   padding: max(8px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 8px max(16px, env(safe-area-inset-left, 0px)); }
 .switch b { font-size: .92rem; }
+.switch b.ds { font-weight: 500; border: 1px solid var(--rule); border-radius: 6px; padding: 2px 8px; }
 .switch span { font-size: .8rem; color: var(--ink-2); }
 .seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; }
 .tb { font: inherit; font-size: .86rem; border: 0; background: transparent; color: var(--ink-2); padding: 4px 14px; cursor: pointer; }
@@ -390,7 +542,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--f); display:
 </head>
 <body>
 <div class="switch" role="group" aria-label="選擇圖核心步數 T">
-  <b>圖核心步數</b><div class="seg">{{BUTTONS}}</div>
+  <b class="ds">{{DATASET_LABEL}}</b><b>圖核心步數</b><div class="seg">{{BUTTONS}}</div>
   <span>T=4 報告內含「T=4 vs T=2」配對比較；兩份報告的版面與說明格式相同。</span>
 </div>
 {{FRAMES}}
