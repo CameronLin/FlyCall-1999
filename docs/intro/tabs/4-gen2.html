@@ -75,8 +75,10 @@
     <div class="block why"><span class="tag">為什麼</span><p>修正後，T=2 時只有 8–12% 的連線會影響輸出；改成 T=4，G0 可被訓練的連線從 12% 提高到 76%，想知道多傳幾跳有沒有幫助。</p></div>
     <div class="block result"><span class="tag">結果（資料 v1）</span><ul>
       <li>最高分：G2-glu+ 的 Fly A（距離＋類別分離）→ Fly B，<b>0.928</b>。</li>
-      <li>有抑制的圖（G2、G2-glu+）在「距離＋類別分離」組合上，T=4 一致變好；全部是增強的圖（G0、G1）持平或變差。</li>
+      <li>Fly A（距離＋類別分離）→ Fly B：有抑制的圖（G2、G2-glu+）T=4 變好（+0.02、+0.04），全部是增強的圖（G0、G1）變差（約 −0.05）。</li>
+      <li>但接 SVM 時不一致：G2 反而下降 0.014。所以「有抑制的圖適合 T=4」只在接 Fly B 時成立；換到資料 v2，T=4 大多持平或變差。</li>
     </ul></div>
+<!--INCLUDE:sections/chart_t_compare.html-->
     <div class="block meaning"><span class="tag">腦部比較（摘要）</span><ul>
       <li>同一張圖，分類的 Fly B 大幅改寫連線、大部分神經元變成在「分辨類別」；降維的 Fly A 幾乎維持原本的連線。資料 v1 與 v2、T=2 與 T=4 的方向都相同。</li>
       <li>完整的差異總表與 17 張圖（可切換資料 v1／v2 與 T=2／T=4）見<a href="#abdiff">第 3 節「Fly A 和 Fly B 的腦差在哪」</a>；訊號怎麼一跳一跳傳出去，見<a href="#fg-signal">第 2.7 節</a>的訊號傳遞互動頁。</li>

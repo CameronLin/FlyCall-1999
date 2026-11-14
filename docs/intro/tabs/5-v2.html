@@ -176,35 +176,15 @@
         完整數據與 77 筆 ID 記錄在 <code>data/1999_synthetic/formal/v2.0.0/KNOWN_ISSUES.md</code>，驗證程式在 <code>.scratch/1999-connectome-demo/runs/v2-known-issues-ablation-20261114/</code>。</div>
     </div>
     <div class="block result"><span class="tag">結果：重新訓練（validation）</span>
-      <div class="tablewrap"><table>
-        <thead><tr><th>項目</th><th class="num">v1</th><th class="num">v2</th><th>變化</th></tr></thead>
-        <tbody>
-          <tr><td>E5 → LR</td><td class="num">0.868</td><td class="num">0.953</td><td class="up">上升</td></tr>
-          <tr><td>E5 → MLP</td><td class="num">0.918</td><td class="num">0.946</td><td class="up">上升</td></tr>
-          <tr><td>LDA → SVM</td><td class="num">0.900</td><td class="num">0.913</td><td>持平</td></tr>
-          <tr><td>Fly A（距離＋類別分離）→ SVM（T=2）</td><td class="num">0.88–0.90</td><td class="num">0.93–0.94</td><td class="up">四張圖都上升</td></tr>
-          <tr><td>LDA → Fly B（T=2）</td><td class="num">0.86–0.90</td><td class="num">0.81–0.89</td><td class="down">多數下降</td></tr>
-        </tbody>
-      </table></div>
-      <ul>
-        <li>T=4 的優勢在 v2 消失，大多持平或變差；v1 的「有正負號的圖適合 T=4」不再成立。</li>
+<!--INCLUDE:sections/chart_retrain.html-->      <ul>
+        <li>E5 基準與 Fly A → SVM 全部上升；需要 Fly B 的組合有升有降，LDA → Fly B 四張圖都下降。</li>
+        <li>T=4 的優勢在 v2 消失，大多持平或變差；v1 的「有正負號的圖適合 T=4」不再成立（見<a href="#ch-tcompare">第 10 節的 T=2 vs T=4 圖</a>，切到「資料 v2」）。</li>
         <li>「人行道」與「路面清潔」互相認錯從 8 筆降到 2 筆；公園類拿掉捷徑詞後沒有變差。</li>
       </ul>
     </div>
     <!--INCLUDE:sections/training_time.html--><div class="block result"><span class="tag">結果：一次性 test 評估</span>
       <p>讀 test 前，先用 validation 鎖定 51 個候選與選模規則，並確認從存檔重新計算的 validation 完全一致；每個候選只評估一次。</p>
-      <div class="tablewrap"><table>
-        <thead><tr><th>模型</th><th class="num">test Macro-F1</th></tr></thead>
-        <tbody>
-          <tr class="hl"><td><b>依規則選定</b>：T=2・G2・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.887 ± 0.018</td></tr>
-          <tr><td>LDA → SVM</td><td class="num">0.899</td></tr>
-          <tr><td>E5 → LDA → LR</td><td class="num">0.891</td></tr>
-          <tr><td>E5 → MLP</td><td class="num">0.845</td></tr>
-          <tr><td>E5 → LR（validation 為 0.953）</td><td class="num">0.791</td></tr>
-          <tr><td>全部候選最高（僅參考，不改變選擇）：T=4・G2-glu+・Fly A（距離＋類別分離）→ SVM</td><td class="num">0.950 ± 0.004</td></tr>
-        </tbody>
-      </table></div>
-    </div>
+<!--INCLUDE:sections/chart_test.html-->    </div>
     <div class="block meaning"><span class="tag">解釋</span><ul>
       <li>去掉捷徑後，模型不能再靠背句型；validation 整體略升，但 test 顯示有些情境家族明顯比較難（E5 → LR 掉了 0.16）。</li>
       <li>經過「距離＋類別分離」訓練的 Fly A 表徵，在 test 上比原始 E5 穩定。</li>

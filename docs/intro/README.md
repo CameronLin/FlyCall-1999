@@ -27,6 +27,7 @@ python scripts/build_intro_html.py
 |---|---|---|
 | `sections/training_time.html` | `scripts/build_intro_training_time.py` | `independent-tuning-*` 的 `results.json`、`timings.json` |
 | `sections/brain_table.html`、`sections/brain_figs.html` | `scripts/build_intro_brain_section.py` | `fly-ab-brain-comparison-*` 的 `results.json`（文字沿用分析報告的 `figure_points()`） |
+| `sections/chart_retrain.html`、`chart_t_compare.html`、`chart_test.html` | `scripts/build_intro_result_charts.py` | `independent-tuning-*`、`m2-2b-e5-*` 的結果與 `test-evaluation-dataset-v2-*/test_results.json`（樣式 `css/charts.css`、切換 `js/charts.js`） |
 | `data/bfs_data.json` | `scripts/build_intro_bfs_data.py` | 子圖檔與本機重建的 MaleCNS `edges.parquet`（需要 DuckDB） |
 
 組裝時另外嵌入：
