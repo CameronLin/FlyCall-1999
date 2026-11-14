@@ -1094,6 +1094,39 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
         <li>「人行道」與「路面清潔」互相認錯從 8 筆降到 2 筆；公園類拿掉捷徑詞後沒有變差。</li>
       </ul>
     </div>
+    <div class="block what" id="training-time"><span class="tag">紀錄：訓練時間（v1 vs v2）</span>
+      <p>一次「獨立調參」要跑完四張圖（G0／G1／G2／G2-glu+）的所有組合，再用選出的設定做最後訓練：</p>
+      <ul>
+        <li><b>Fly A 交叉驗證</b>：2 種訓練目標 × 3 個學習率 × 3 個 seed × 5 折，每張圖 90 次，四張圖共 360 次。</li>
+        <li><b>Fly B 交叉驗證</b>：3 種輸入（LDA、距離版 Fly A、距離＋類別分離版 Fly A）× 3 個學習率 × 3 個 seed × 5 折，四張圖共 540 次。</li>
+        <li><b>最後訓練</b>：用選出的學習率與訓練長度，在全部 700 筆 train 上重新訓練。</li>
+      </ul>
+      <div class="tablewrap"><table>
+        <thead><tr><th>階段（四張圖合計，分鐘）</th><th class="num">v1 T=2</th><th class="num">v2 T=2</th><th class="num">v1 T=4</th><th class="num">v2 T=4</th></tr></thead>
+        <tbody>
+          <tr><td>Fly A 交叉驗證</td><td class="num">26.8</td><td class="num">29.0</td><td class="num">45.7</td><td class="num">43.5</td></tr>
+          <tr><td>Fly B 交叉驗證</td><td class="num">48.2</td><td class="num">38.8</td><td class="num">76.9</td><td class="num">53.8</td></tr>
+          <tr><td>最後訓練</td><td class="num">4.5</td><td class="num">2.4</td><td class="num">5.2</td><td class="num">2.9</td></tr>
+          <tr class="hl"><td><b>獨立調參總計</b></td><td class="num">79.4</td><td class="num">70.3</td><td class="num">127.8</td><td class="num">100.3</td></tr>
+          <tr><td>訓練後的腦部分析（活動、重要連線、移除測試；不訓練）</td><td class="num">8.9</td><td class="num">14.7</td><td class="num">11.3</td><td class="num">17.2</td></tr>
+        </tbody>
+      </table></div>
+      <p>為什麼 v2 的調參比較快？兩版的筆數（700／150）、E5 向量維度（384）、圖與模型大小都相同，所以<b>每個 epoch 的計算量一樣</b>，差別在訓練跑了幾個 epoch。調參使用 early stopping（validation 連續 25 個 epoch 沒進步就停），各折停下時的平均 epoch 數：</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>平均停止 epoch</th><th class="num">v1 T=2</th><th class="num">v2 T=2</th><th class="num">v1 T=4</th><th class="num">v2 T=4</th></tr></thead>
+        <tbody>
+          <tr><td>Fly A（360 次）</td><td class="num">47.9</td><td class="num">43.8</td><td class="num">46.3</td><td class="num">46.6</td></tr>
+          <tr class="hl"><td>Fly B（540 次）</td><td class="num">86.8</td><td class="num">52.0</td><td class="num">79.3</td><td class="num">43.5</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>Fly A 兩版差不多，所以 Fly A 的時間也差不多。</li>
+        <li>Fly B 在 v2 大約提早 35 個 epoch 就停（推測是 v2 的類別在 Fly A／LDA 表徵上分得比較開，較快達到最佳點，這點沒有另外驗證）；所以 Fly B 的交叉驗證和最後訓練都變短。例如 G2、T=2、輸入為「距離＋類別分離」版 Fly A 時，最後訓練長度從 v1 的 200 個 epoch（碰到上限）降到 v2 的 31 個。</li>
+        <li>總時間只少 1–2 成：每次都要多跑 25 個 epoch 才能確認「沒有再進步」，而且 Fly A 部分沒有變快。</li>
+        <li>腦部分析不訓練，兩版計算內容相同，但 v2 多花約 6 分鐘，原因沒有查明（可能是當時電腦負載）。</li>
+      </ul>
+      <p style="font-size:.9em;color:var(--neutral)">以上為 Windows x64 CPU 上的實際經過時間，由 <code>progress.log</code> 時間戳記算出（各 run 資料夾的 <code>timings.json</code>），會受當時電腦負載影響，不是精確的效能測量。其他步驟都很短：v2 的 1,000 筆 E5 編碼約 1.8 分鐘（另載入模型約 0.5 分鐘）；E5 基準分類器每個不到 1 秒；第一代固定預算的 Fly A／B（G0）每個 seed 約 6–9 秒。</p>
+    </div>
     <div class="block result"><span class="tag">結果：一次性 test 評估</span>
       <p>讀 test 前，先用 validation 鎖定 51 個候選與選模規則，並確認從存檔重新計算的 validation 完全一致；每個候選只評估一次。</p>
       <div class="tablewrap"><table>
