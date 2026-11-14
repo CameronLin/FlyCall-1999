@@ -86,4 +86,4 @@ M0 資料來源（連接圖、神經傳導物質）→ M1 連接圖匯入與子�
 - `docs/PROJECT_FILE_GUIDE.md`：資料夾與檔案用途
 - `1999-connectome-demo-spec.md`：原始規格
 - `.scratch/1999-connectome-demo/issues/`：每個階段的工作票（決策、數據、結論）
-- `outputs/FlyCall-1999_專案介紹.html`：完整圖文介紹（檔案很大，請只搜尋需要的段落）
+- `outputs/FlyCall-1999_專案介紹.html`：完整圖文介紹（檔案很大，請勿整份讀取）；要修改請改 `docs/intro/` 的原始檔，見 `docs/intro/README.md`

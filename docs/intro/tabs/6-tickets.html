@@ -1,0 +1,284 @@
+<div class="tabpanel" id="tab-tickets" data-label="工作票">
+<!-- ============================== 附錄 ============================== -->
+<!--
+  工作票卡片的格式（新增工作票時複製一個 <details class="tk">）：
+  <details class="tk">
+    <summary><span class="tk-no">NN</span><span class="tk-title">名稱</span><span class="st done">完成</span><span class="tk-one">一句話用途</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>…</dd>
+      <dt>變更與產出</dt><dd>…</dd>
+      <dt>結果</dt><dd>…</dd>
+      <dt>相依</dt><dd>…</dd>
+    </dl></div>
+  </details>
+  狀態樣式：st done（完成）、st retired（已停用）、st open（進行中）
+-->
+<section class="part" id="tickets">
+  <div class="part-head"><span class="part-no">附</span><h2>工作票一覽</h2></div>
+  <p class="date">位置：<code>.scratch/1999-connectome-demo/issues/NN-*.md</code>。每張工作票記錄要追蹤的問題、要變更或產出的東西、驗收條件、被哪張卡住，以及後續註記。點一下標題可以展開。</p>
+  <div class="tk-tools"><button type="button" data-open="1">全部展開</button><button type="button" data-open="0">全部收合</button></div>
+
+  <h3 class="tk-group">基礎建設：資料與果蠅連接圖</h3>
+
+  <details class="tk">
+    <summary><span class="tk-no">01</span><span class="tk-title">M2.1 資料契約與唯讀讀取器</span><span class="st done">完成</span><span class="tk-one">確保 1,000 筆通話每次讀進來都一樣、而且不會被改到</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>正式資料的「契約」：筆數、每類 200 筆、train／validation／test 為 700／150／150、66 個情境家族不跨 split、檔案校驗碼不變。</dd>
+      <dt>變更與產出</dt><dd><code>src/flycall_data/loader.py</code>：唯讀讀取 JSONL、CSV、taxonomy 與凍結切分設定，任何不一致都直接報錯，不自動修補或重新切分。</dd>
+      <dt>結果</dt><dd>正式資料載入通過所有檢查；之後每個實驗都透過它讀資料。資料 v2.0.0 也用同一套檢查。</dd>
+      <dt>相依</dt><dd>無；後續 06、07、09 都依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">02</span><span class="tk-title">M0.1 MaleCNS 資料來源</span><span class="st done">完成</span><span class="tk-one">選定並釘住果蠅神經系統的官方連線資料</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>要用哪一份果蠅連接圖、從哪裡下載、怎麼確認拿到的是同一份檔案。</dd>
+      <dt>變更與產出</dt><dd>選定雄果蠅神經系統（MaleCNS v1.0）官方檔 <code>connectome-weights-male-cns-v1.0-minconf-0.5.feather</code>（約 1 GB、1.5 億條連線）；<code>source_manifest.yaml</code> 記錄來源、版本與校驗碼。</dd>
+      <dt>結果</dt><dd>來源固定，完整檔案 SHA-256 已記錄，之後所有連接圖都由這份檔案衍生。</dd>
+      <dt>相依</dt><dd>無；03 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">03</span><span class="tk-title">M1.1 有向圖匯入器</span><span class="st done">完成</span><span class="tk-one">把原始連線檔轉成「點」和「有方向的邊」兩張表</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>原始檔的欄位（來源、目標、連線數）要怎麼轉成可運算的圖，以及轉換過程不能改到原始檔。</dd>
+      <dt>變更與產出</dt><dd><code>connectome_importer.py</code>、<code>scripts/import_malecns_v1.py</code>；輸出 <code>edges.parquet</code>、<code>nodes.parquet</code> 與匯入紀錄（因檔案太大，不放進 git）。</dd>
+      <dt>結果</dt><dd>匯入完成，邊數、點數與校驗碼都有紀錄，可在別台電腦重建。</dd>
+      <dt>相依</dt><dd>02；04 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">04</span><span class="tk-title">M1.2 子圖選取（500 點、2,216 邊）</span><span class="st done">完成</span><span class="tk-one">從整個神經系統選出一張固定、可重現的 500 點小圖</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>整張圖太大無法訓練，要用固定規則選出小圖，而且每次選出的結果完全一樣。</dd>
+      <dt>變更與產出</dt><dd><code>streaming_bfs.py</code> 等：從固定起點用 BFS 擴展兩層、以雜湊決定先後順序，保留 500 點之間所有原始連線；先用小型假資料驗證，再做有上限的可行性測試。</dd>
+      <dt>結果</dt><dd>得到 500 點、2,216 條邊的子圖（之後稱為 G0），校驗碼可重現。</dd>
+      <dt>相依</dt><dd>03；05 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">05</span><span class="tk-title">M1.3 輸入／輸出點與可達性</span><span class="st done">完成</span><span class="tk-one">選 32 個輸入點與 32 個輸出點，確認訊號傳得到</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>E5 向量從哪些神經元進入、結果從哪些神經元讀出；每個輸出點都要能在 T 跳內從某個輸入點走到。</dd>
+      <dt>變更與產出</dt><dd><code>io_reachability.py</code>；<code>io_manifest.json</code> 記錄選點規則、32＋32 個點、方向與每個輸出點的可達結果。輸入／輸出點只是計算用的端點，不代表生物功能。</dd>
+      <dt>結果</dt><dd>所有輸出點都可達；Fly A／Fly B 都使用這組點。</dd>
+      <dt>相依</dt><dd>04；07、08 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <h3 class="tk-group">基準模型與評估工具</h3>
+
+  <details class="tk">
+    <summary><span class="tk-no">06</span><span class="tk-title">M2.2a TF-IDF 輕量基準</span><span class="st done">完成</span><span class="tk-one">最簡單的對照組，確認整條流程跑得通</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>不用語言模型時，只靠字詞出現頻率能分得多好；同時確認「只用 train 訓練、test 不碰」的流程正確。</dd>
+      <dt>變更與產出</dt><dd><code>text_baseline.py</code>、<code>scripts/run_m2_2a_smoke_test.py</code>：字元 n-gram 與詞組 TF-IDF，搭配 LR 與 Linear SVM。</dd>
+      <dt>結果</dt><dd>validation 最高 0.980（字元 2–5 gram ＋ Linear SVM）。分數高得不尋常，顯示 v1 資料有固定句型與關鍵字，是後來資料改版（25）的線索之一。</dd>
+      <dt>相依</dt><dd>01。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">09</span><span class="tk-title">M2.2b E5 嵌入與分類器</span><span class="st done">完成</span><span class="tk-one">把通話轉成 E5 向量，建立主要的比較基準</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>E5 語言模型的固定版本與設定（384 維、前綴、長度上限），以及 E5 直接接分類器能到多少分。</dd>
+      <dt>變更與產出</dt><dd><code>e5_runtime.py</code>、<code>embedding_pipeline.py</code>、<code>scripts/run_m2_2b_e5_provisional.py</code>：E5 向量快取、LR／MLP／PCA→MLP 三種分類器與存檔；2026-11-14 加上 <code>--dataset-version</code>。</dd>
+      <dt>結果</dt><dd>資料 v1：E5 → LR 0.868、E5 → MLP 0.902。資料 v2：0.953、0.946。</dd>
+      <dt>相依</dt><dd>01；11、12、13 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">11</span><span class="tk-title">M2.3 E5 → LDA → LR</span><span class="st done">完成</span><span class="tk-one">先用 LDA 壓成 4 維再分類的對照組</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>「先降維、再分類」這種結構用傳統方法能做到多好，作為 Fly A → Fly B 的直接對照。</dd>
+      <dt>變更與產出</dt><dd><code>lda_baseline.py</code>：LDA 只用 train 建立，再接 Logistic Regression。</dd>
+      <dt>結果</dt><dd>資料 v1：0.900；資料 v2：0.907；v2 test：0.891。</dd>
+      <dt>相依</dt><dd>09。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">10</span><span class="tk-title">M2.4 評估器與 test 一次性閘門</span><span class="st done">完成</span><span class="tk-one">統一算分數，並確保 test 每個候選只能用一次</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>所有模型用同一套分數計算（Macro-F1、各類 F1、混淆矩陣）；test 在設定鎖定前不能打開，打開後同一候選不能重跑。</dd>
+      <dt>變更與產出</dt><dd><code>evaluation.py</code>：評分工具與 <code>PersistentTestRunLedger</code>（先寫入保留紀錄才能讀 test，用過就不能再用）。</dd>
+      <dt>結果</dt><dd>2026-11-14 實際用於資料 v2 的一次性 test 評估（51 個候選）；資料 v1 的 test 仍未打開。</dd>
+      <dt>相依</dt><dd>無；正式 test 評估依規格須先通過品質門檻（v2 依規格變更改用自動品質檢查）。</dd>
+    </dl></div>
+  </details>
+
+  <h3 class="tk-group">第一代果蠅模型</h3>
+
+  <details class="tk">
+    <summary><span class="tk-no">07</span><span class="tk-title">M3.0 資料流與訓練規則</span><span class="st done">完成</span><span class="tk-one">定下 Fly A／Fly B 的架構、運算方式與訓練規則</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>E5 → Fly A → Fly B 的每一步怎麼算：連線強度怎麼表示、訊號怎麼傳、各自用什麼目標訓練、怎麼選模，以及禁止繞過連接圖的捷徑。</dd>
+      <dt>變更與產出</dt><dd>契約文件 <code>docs/research/m3-0-connectome-classifier-contract.md</code>：每條連線一個正值強度、訊號共用 T 步；Fly A 只學「保留距離」，Fly B 學分類；主設定 T=2。</dd>
+      <dt>結果</dt><dd>後續所有果蠅模型的設計依據；之後的改版（19 的正負號、20 的類別分離、23 的跳數）都是在這份規則上修改。</dd>
+      <dt>相依</dt><dd>01、05。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">08</span><span class="tk-title">M3.1 小型模型核心</span><span class="st done">完成</span><span class="tk-one">先在小型假圖上寫好並測試訊號傳遞的程式</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>圖核心能不能正確地前向傳遞、算梯度、更新連線，而且只有存在的連線有參數。</dd>
+      <dt>變更與產出</dt><dd><code>graph_core.py</code>（SparseGraphCore）與測試：用手工建立的小圖驗證，不讀真實 500 點資料。</dd>
+      <dt>結果</dt><dd>核心通過測試，成為 Fly A／Fly B 的共同元件。</dd>
+      <dt>相依</dt><dd>05、07。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">12</span><span class="tk-title">M3.2 Fly A／B 第一次訓練</span><span class="st done">完成</span><span class="tk-one">在真實 500 點圖上用三個 seed 訓練</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>果蠅模型在真實連接圖上的實際表現，以及存檔能完全重新載入。</dd>
+      <dt>變更與產出</dt><dd><code>fly_ab_training.py</code>、<code>scripts/run_m3_2_fly_ab_provisional.py</code>；三個 seed 的 run（checkpoint、graph definition、預測）。</dd>
+      <dt>結果</dt><dd>validation Macro-F1：seed 42 為 0.654、1337 為 0.587、2026 為 0.739（平均 0.660），明顯低於基準且不穩定。</dd>
+      <dt>相依</dt><dd>08、09。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">13</span><span class="tk-title">M3.4 多 seed 比較</span><span class="st done">完成</span><span class="tk-one">把基準模型和果蠅模型放在同一張表比較</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>在相同資料、相同三個 seed 下，哪個候選在 validation 最好；比較規則事先登記。</dd>
+      <dt>變更與產出</dt><dd><code>comparison.py</code>、<code>scripts/compare_m3_4_validation.py</code>：先寫入預先登記，再讀各 run 的分數。</dd>
+      <dt>結果</dt><dd>E5 → MLP 0.902（暫定最佳）、E5 → LDA → LR 0.900、E5 → LR 0.868、Fly A → Fly B 0.660。</dd>
+      <dt>相依</dt><dd>09、12。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">14</span><span class="tk-title">M4.1 鎖定模型與推論 API</span><span class="st done">完成</span><span class="tk-one">把選定的模型鎖住，提供「輸入文字 → 五類分數」的工具</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>展示用模型的鎖定紀錄，以及推論時確認模型檔、E5 版本都沒有被換過。</dd>
+      <dt>變更與產出</dt><dd><code>predictor.py</code>、<code>scripts/predict_flycall.py</code>；依你的指定鎖定 E5 → MLP（seed 42）。結果固定標示「合成資料、模擬派送、需人工確認」。</dd>
+      <dt>結果</dt><dd>API 與命令列輸出完全一致。注意：這個鎖定模型是用資料 v1 訓練的。</dd>
+      <dt>相依</dt><dd>13；15 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">15</span><span class="tk-title">M4.2 Streamlit 展示</span><span class="st retired">已停用</span><span class="tk-one">網頁版展示介面（2026-11-14 移除）</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>用網頁顯示輸入、模型流程與五類分數，並確認和命令列結果一致。</dd>
+      <dt>變更與產出</dt><dd>原有 <code>app.py</code>、<code>pages/</code>、<code>.streamlit/</code> 與 Streamlit 測試。2026-11-14 依你的決定全部移除，推論改用 14 的命令列工具。</dd>
+      <dt>結果</dt><dd>曾通過技術驗收；目前已停用。</dd>
+      <dt>相依</dt><dd>14。</dd>
+    </dl></div>
+  </details>
+
+  <h3 class="tk-group">找出第一代分數低的原因</h3>
+
+  <details class="tk">
+    <summary><span class="tk-no">16</span><span class="tk-title">Fly A→B 表徵診斷</span><span class="st done">完成</span><span class="tk-one">查出分數低是 Fly A 壓縮時丟了資訊</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>Fly A 的 32 維輸出還保留多少分類資訊；能不能用不改架構的方式補救。</dd>
+      <dt>變更與產出</dt><dd><code>fly_ab_diagnostics.py</code>、<code>scripts/diagnose_fly_a_b.py</code>：凍結 Fly A 後接 MLP 測試；另做「E5 旁路」改良版與穩定性測試。</dd>
+      <dt>結果</dt><dd>原始 E5 接 MLP 0.902，Fly A 輸出接 MLP 只有 0.776，差 0.126。E5 旁路版最高 0.905，但因在同一份 validation 上挑選，只當研究候選。</dd>
+      <dt>相依</dt><dd>12、13。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">17</span><span class="tk-title">降維器 × 分類器交叉實驗</span><span class="st done">完成</span><span class="tk-one">把降維和分類拆開測，找出真正的瓶頸</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>分數低來自 Fly A 降維、Fly B 分類，還是兩者都有。你要求測 Fly A → SVM 與 LDA → Fly B。</dd>
+      <dt>變更與產出</dt><dd><code>reducer_classifier_factorial.py</code>：{E5, LDA, Fly A} × {SVM, Fly B} 交叉表，Fly B 另測較長的訓練。</dd>
+      <dt>結果</dt><dd>Fly A → SVM 0.792，比 LDA → SVM（0.900）低 0.108，Fly A 是主要瓶頸；Fly B 訓練加長後與 SVM 相當，原本是訓練不夠。</dd>
+      <dt>相依</dt><dd>12、16；20 依據這個結論設計。</dd>
+    </dl></div>
+  </details>
+
+  <h3 class="tk-group">第二代果蠅：有正負號的圖與各自調參</h3>
+
+  <details class="tk">
+    <summary><span class="tk-no">18</span><span class="tk-title">M0.2 神經傳導物質符號</span><span class="st done">完成</span><span class="tk-one">判斷每個神經元是增強還是抑制</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>原始連線資料沒有正負號，要另外找神經傳導物質資料，訂出「哪種物質算增強、哪種算抑制」。</dd>
+      <dt>變更與產出</dt><dd><code>neurotransmitter_signs.py</code>、<code>scripts/build_neurotransmitter_signs.py</code>；輸出神經元 → 符號表。你的決定：麩胺酸、組織胺算抑制；多巴胺等調節型物質排除；另做麩胺酸算增強的對照版。</dd>
+      <dt>結果</dt><dd>符號表完成，供 21 選點使用。</dd>
+      <dt>相依</dt><dd>無；21 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">19</span><span class="tk-title">M3.6 固定正負號的圖核心</span><span class="st done">完成</span><span class="tk-one">連線正負號固定，只訓練強弱</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>原本所有連線都是正的（全是增強）。要讓抑制神經元的出邊為負，而且訓練時只改大小、不改正負。</dd>
+      <dt>變更與產出</dt><dd><code>graph_core.py</code> 新增 <code>node_signs</code>：每個神經元一個 +1／−1，決定它所有出邊的符號；不提供時行為與舊版逐位元相同。</dd>
+      <dt>結果</dt><dd>以小圖測試通過；G2、G2-glu+ 都使用它。</dd>
+      <dt>相依</dt><dd>無（接上真實符號要等 18、21）；22 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">20</span><span class="tk-title">M3.7 Fly A／B 各自調參</span><span class="st done">完成</span><span class="tk-one">架構不變，讓 Fly A 和 Fly B 各自調到最好</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>你的中心思想：只改參數，讓 Fly A（降維）與 Fly B（分類）分別達到最好表現；規則要事先寫定，避免看了 validation 再改。</dd>
+      <dt>變更與產出</dt><dd><code>independent_tuning.py</code>、<code>scripts/run_independent_tuning.py</code>：依情境家族分組的 5 折交叉驗證、3 個 seed、3 種學習率，由交叉驗證決定 epoch；Fly A 新增「距離＋類別分離」（SupCon）目標。預先登記文件在 <code>research/</code>。</dd>
+      <dt>結果</dt><dd>加入類別分離後，Fly A → SVM 從 0.792 提升到 0.88–0.92；Fly B 已練到位。</dd>
+      <dt>相依</dt><dd>17 的結論；22 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">21</span><span class="tk-title">M1.4 300 增強＋200 抑制子圖</span><span class="st done">完成</span><span class="tk-one">依正負號重新選一張 500 點的圖</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>子圖仍是 500 點，但其中 300 個增強、200 個抑制；選點方式與輸入／輸出點要重新確認。</dd>
+      <dt>變更與產出</dt><dd><code>signed_subgraph.py</code>、<code>scripts/select_signed_subgraph.py</code>。你的決定：不用排名，改從有符號的起點做「名額限制 BFS」（起點 810979）；輸出點只選 T=2 內走得到的點。</dd>
+      <dt>結果</dt><dd>500 點、6,691 條邊；同一組點輸出三種符號設定（全正、麩胺酸抑制、麩胺酸增強），即 G1、G2、G2-glu+。</dd>
+      <dt>相依</dt><dd>18；22 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">22</span><span class="tk-title">四張圖比較</span><span class="st done">完成</span><span class="tk-one">分辨分數變化來自「換了點」還是「加了抑制」</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>只比原圖和新圖無法分辨原因，所以比較四張圖：G0 原圖、G1 新點全正、G2 新點有正負、G2-glu+（麩胺酸改當增強，檢查結論是否因此改變）。</dd>
+      <dt>變更與產出</dt><dd>用 20 的流程跑四張圖，並做 Fly A／Fly B 腦部比較（<code>brain_comparison.py</code>）。</dd>
+      <dt>結果</dt><dd>修正前程式：最高 0.922（G2-glu+），G0 明顯較差。修正跳數錯誤（23）後：最高 0.918（G1），G0 與新圖差距幾乎消失。</dd>
+      <dt>相依</dt><dd>19、20、21。</dd>
+    </dl></div>
+  </details>
+
+  <h3 class="tk-group">第二代果蠅：程式錯誤與步數比較</h3>
+
+  <details class="tk">
+    <summary><span class="tk-no">23</span><span class="tk-title">圖核心跳數錯誤與修正</span><span class="st done">完成</span><span class="tk-one">T=2 實際只傳 1 跳，修正成 T 步＝T 跳</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>做腦部比較時發現：程式第一步所有狀態都是 0，T 步只能傳 T−1 跳；只有輸入直接連到輸出的少數連線被訓練，G0 有 23／32 個輸出點永遠是 0。</dd>
+      <dt>變更與產出</dt><dd>你選擇「T 步＝T 跳」：<code>graph_core.py</code> 新增 <code>input_at_step_zero</code>（預設保留舊行為，舊存檔仍可正確載入），新增 <code>tests/test_graph_core_hops.py</code>；之後所有實驗用新語意重跑，舊結果保留作對照。</dd>
+      <dt>結果</dt><dd>修正後 G0 的 32 個輸出點全部收得到訊號；上一版的「換圖效果」主要來自這個錯誤。</dd>
+      <dt>相依</dt><dd>無；24 依賴它。</dd>
+    </dl></div>
+  </details>
+
+  <details class="tk">
+    <summary><span class="tk-no">24</span><span class="tk-title">T=2 vs T=4</span><span class="st done">完成</span><span class="tk-one">多傳幾跳有沒有幫助</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>修正後 T=2 只有 8–12% 的連線會影響輸出；改成 T=4（G0 76%、新圖 84%）是否變好。流程與 T=2 完全相同，只改步數。</dd>
+      <dt>變更與產出</dt><dd>T=4 的調參與腦部比較 run，以及 T4 − T2 的配對比較（三個 seed 同方向且平均差 ≥ 0.02 才算一致）。</dd>
+      <dt>結果</dt><dd>資料 v1：最高 0.928（G2-glu+），有抑制的圖在 T=4 一致變好。資料 v2：T=4 多半持平或變差，這個趨勢不再成立。</dd>
+      <dt>相依</dt><dd>23。</dd>
+    </dl></div>
+  </details>
+
+  <h3 class="tk-group">資料改版</h3>
+
+  <details class="tk">
+    <summary><span class="tk-no">25</span><span class="tk-title">正式資料 v2.0.0</span><span class="st done">完成</span><span class="tk-one">逐筆重寫 1,000 筆，重新訓練並做一次性 test</span></summary>
+    <div class="tk-body"><dl>
+      <dt>追蹤什麼</dt><dd>v1 資料評分約 65／100：模板化（開場白 8 種、約七成對話行重複）、捷徑詞「一般公園」、人工複核未完成。</dd>
+      <dt>變更與產出</dt><dd>逐筆重寫全部 1,000 筆（類別、家族、切分不變）；自動品質檢查取代人工複核（規格 §7.3 變更）；凍結於 <code>data/1999_synthetic/formal/v2.0.0/</code>；流程加上 <code>--dataset-version</code>；重跑 E5、T=2／T=4 調參、腦部比較、報告與一次性 test。</dd>
+      <dt>結果</dt><dd>重複行 19.6%、開場白 1,000 種。validation 整體略升；test：依規則選定的果蠅模型 0.887、LDA → SVM 0.899、E5 → LR 0.791。</dd>
+      <dt>相依</dt><dd>無；使用 01 的檢查、10 的 test 閘門與 20 的調參流程。</dd>
+    </dl></div>
+  </details>
+</section>

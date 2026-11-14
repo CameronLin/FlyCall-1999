@@ -68,6 +68,7 @@ $env:PYTHONPATH = "$PWD\src;$PWD\tests;$PWD\scripts"
 ## 檔案索引
 
 專案用語（Fly A／B、G0–G2-glu+、T-hop、一次性 test 等）請見[名詞表](CONTEXT.md)。
+專案介紹頁 `outputs/FlyCall-1999_專案介紹.html` 由 [docs/intro/](docs/intro/README.md) 的原始檔組成，修改後執行 `python scripts/build_intro_html.py`。
 專案各資料夾與程式檔案用途請見[資料夾與檔案導覽](docs/PROJECT_FILE_GUIDE.md)。合成資料版本、草案、封存檔、正式生成歷程、複核包、逐檔用途、搬移路徑與 SHA-256，請見[合成資料詳細索引](data/1999_synthetic/README.md)。舊路徑相容連結供歷史文件解析；新文件請使用索引中的新路徑。
 
 ## Connectome 開發資料

@@ -1,0 +1,309 @@
+<div class="tabpanel" id="tab-gen2" data-label="第二代">
+<p class="tab-intro"><span class="gen g2">第二代</span>有正負號的圖、Fly A／Fly B 各自調參、修正程式錯誤、比較 T=2 與 T=4，以及資料改版 v2.0.0（2026-11-13 → 11-14）。</p>
+<!-- ============================== 6 有正負號的圖 ============================== -->
+<section class="part" id="s5">
+  <div class="part-head"><span class="part-no">8</span><h2>有正負號的圖，Fly A／Fly B 各自調參</h2><span class="gen g2">第二代</span></div>
+  <p class="date">2026-11-13</p>
+  <div class="tickets"><span>18 神經傳導物質</span><span>19 固定正負號的圖核心</span><span>20 各自調參</span><span>21 300 增強＋200 抑制</span><span>22 四張圖比較</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><ul>
+      <li>原本的圖所有連線都是「增強」，但真實大腦有抑制神經元。希望改成 300 個增強點加 200 個抑制點，<b>只訓練連線強弱、不改正負號</b>。</li>
+      <li>依上一階段的結論，Fly A 和 Fly B 要分開調到最好，而且規則事先寫定。</li>
+    </ul></div>
+    <div class="block what"><span class="tag">做了什麼</span><ul>
+      <li>找到神經傳導物質資料，判斷每個神經元是增強或抑制（麩胺酸、組織胺算抑制）。</li>
+      <li>選出 300 增強＋200 抑制，共 500 點、<b>6,691 條連線</b>。</li>
+      <li>調參規則：依情境家族分組的 5 折交叉驗證、3 個 seed、3 種學習率，由交叉驗證決定訓練幾個 epoch。</li>
+      <li>Fly A 多一個訓練目標「<b>距離＋類別分離</b>」（SupCon）：壓縮時同時保留距離與類別差異。</li>
+      <li>比較四張圖：G0 原圖、G1 新選點全正、G2 新選點有正負、G2-glu+（麩胺酸改當增強，用來檢查結論會不會因此改變）。</li>
+    </ul></div>
+    <div class="block result"><span class="tag">結果（資料 v1、修正前程式）</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>組合</th><th class="num">G0</th><th class="num">G1</th><th class="num">G2</th><th class="num">G2-glu+</th></tr></thead>
+        <tbody>
+          <tr><td>Fly A（只保留距離）→ SVM</td><td class="num">0.764</td><td class="num">0.866</td><td class="num">0.888</td><td class="num">0.870</td></tr>
+          <tr><td>Fly A（距離＋類別分離）→ SVM</td><td class="num">0.881</td><td class="num">0.902</td><td class="num">0.919</td><td class="num">0.910</td></tr>
+          <tr><td>LDA → Fly B</td><td class="num">0.858</td><td class="num">0.900</td><td class="num">0.896</td><td class="num">0.907</td></tr>
+          <tr><td>Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.860</td><td class="num">0.904</td><td class="num">0.902</td><td class="num">0.922</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li><b>「距離＋類別分離」是最有效的改進</b>：Fly A → SVM 從 0.792 提升到 0.88–0.92。</li>
+      <li>Fly B 已練到位：LDA → Fly B 大約等於 LDA → SVM（0.900）。</li>
+      <li>G0 明顯比新圖差，看起來像「換圖有效」；下一階段發現這其實主要是程式錯誤造成的。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 7 程式錯誤 ============================== -->
+<section class="part" id="s6">
+  <div class="part-head"><span class="part-no">9</span><h2>發現程式錯誤，T=2 只傳了 1 跳</h2><span class="gen g2">第二代</span></div>
+  <p class="date">2026-11-13</p>
+  <div class="tickets"><span>23 圖核心跳數</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">發現</span><ul>
+      <li>做腦部比較時發現：程式第一步時所有神經元狀態都是 0，沒有訊號可傳，所以 <b>T 步只能傳 T−1 跳</b>，主設定 T=2 等於只有 1 跳。</li>
+      <li>結果只有「輸入點直接連到輸出點」的少數連線會被訓練（G0 只有 16 條）。</li>
+      <li>G0 的 32 個輸出點中有 <b>23 個永遠是 0</b>，Fly A 實際只輸出 9 維。</li>
+    </ul></div>
+    <div class="block what"><span class="tag">做了什麼</span><p>你選擇「T 步＝T 跳」；修正後新增測試，並用修正後的程式重跑所有實驗。舊結果保留作對照。</p></div>
+    <div class="block result"><span class="tag">結果（資料 v1、修正後、T=2）</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>組合</th><th class="num">G0</th><th class="num">G1</th><th class="num">G2</th><th class="num">G2-glu+</th></tr></thead>
+        <tbody>
+          <tr><td>Fly A（只保留距離）→ SVM</td><td class="num">0.865</td><td class="num">0.855</td><td class="num">0.879</td><td class="num">0.865</td></tr>
+          <tr><td>Fly A（距離＋類別分離）→ SVM</td><td class="num">0.879</td><td class="num">0.904</td><td class="num">0.903</td><td class="num">0.889</td></tr>
+          <tr><td>LDA → Fly B</td><td class="num">0.860</td><td class="num">0.904</td><td class="num">0.898</td><td class="num">0.898</td></tr>
+          <tr><td>Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.890</td><td class="num">0.918</td><td class="num">0.877</td><td class="num">0.886</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li>G0 與新圖的差距幾乎消失（例如 G0 的 Fly A → SVM 從 0.764 變成 0.865），所以上一階段的「換圖效果」<b>主要是這個錯誤造成的</b>。</li>
+      <li>修正後各組合大多落在 0.86–0.92，與 LDA → SVM（0.900）相近，可能已接近這份資料的上限。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 8 T=2 vs T=4 ============================== -->
+<section class="part" id="s7">
+  <div class="part-head"><span class="part-no">10</span><h2>T=2 對 T=4，以及腦部比較</h2><span class="gen g2">第二代</span></div>
+  <p class="date">2026-11-13 → 11-14</p>
+  <div class="tickets"><span>24 T=2 vs T=4</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><p>修正後，T=2 時只有 8–12% 的連線會影響輸出；改成 T=4，G0 可被訓練的連線從 12% 提高到 76%，想知道多傳幾跳有沒有幫助。</p></div>
+    <div class="block result"><span class="tag">結果（資料 v1）</span><ul>
+      <li>最高分：G2-glu+ 的 Fly A（距離＋類別分離）→ Fly B，<b>0.928</b>。</li>
+      <li>有抑制的圖（G2、G2-glu+）在「距離＋類別分離」組合上，T=4 一致變好；全部是增強的圖（G0、G1）持平或變差。</li>
+    </ul></div>
+    <h3>腦部比較：Fly A 和 Fly B 的「腦」差在哪</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>觀察</th><th>資料 v1</th><th>資料 v2</th></tr></thead>
+      <tbody>
+        <tr><td>Fly B 改連線的幅度（相對 Fly A）</td><td class="num">4–22 倍</td><td class="num">3–18 倍</td></tr>
+        <tr><td>Fly B 神經元的類別選擇性 η²（中位數）</td><td class="num">0.76–0.87</td><td class="num">0.70–0.79</td></tr>
+        <tr><td>Fly A（只保留距離）的類別選擇性 η²</td><td class="num">0.24–0.41</td><td class="num">0.18–0.65</td></tr>
+      </tbody>
+    </table></div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li>分類（Fly B）需要大幅改寫連線，而且大部分神經元變成在「分辨類別」；降維（Fly A）幾乎維持原本的連線。</li>
+      <li>詳細的 17 張圖見 <a href="FlyCall-1999_FlyA_FlyB_分析報告.html">FlyA_FlyB 分析報告</a>；訊號怎麼一跳一跳傳出去，見 <a href="FlyCall-1999_連接圖訊號傳遞.html">連接圖訊號傳遞</a>。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 9 資料 v2 ============================== -->
+<section class="part" id="s8">
+  <div class="part-head"><span class="part-no">11</span><h2>資料改版 v2.0.0，第一次打開 test</h2><span class="gen g2">第二代</span></div>
+  <p class="date">2026-11-14</p>
+  <div class="tickets"><span>25 正式資料 v2.0.0</span><span>10 test 閘門（實際使用）</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><p>v1 的資料評分約 65／100：</p><ul>
+      <li><b>模板化</b>：開場白只有 8 種，約七成的對話行重複出現。</li>
+      <li><b>捷徑詞</b>：公園類 200 筆中有 123 筆出現「一般公園」，幾乎就是類別名稱。</li>
+      <li><b>人工複核始終沒做完。</b></li>
+      <li>第 5 節 TF-IDF 拿到 0.98，也呼應這些問題。</li>
+    </ul></div>
+    <div class="block what"><span class="tag">做了什麼</span><ul>
+      <li>逐筆重寫全部 1,000 筆；類別、情境家族、切分與配額都不變，只換逐字稿內容。</li>
+      <li>加入真實感：口語、台語夾雜、打斷與重複，以及難分的邊界案例。</li>
+      <li>依你的決定，以<b>自動品質檢查取代人工複核</b>（規格 §7.3 的變更），結果標示「未經人工複核」。</li>
+    </ul>
+      <div class="tablewrap"><table>
+        <thead><tr><th>品質指標</th><th class="num">v1</th><th class="num">v2</th></tr></thead>
+        <tbody>
+          <tr><td>重複使用的對話行</td><td class="num">約 70%</td><td class="num">19.6%</td></tr>
+          <tr><td>開場白種類</td><td class="num">8</td><td class="num">1,000</td></tr>
+          <tr><td>兩筆間最高相似度</td><td class="num">0.48</td><td class="num">0.26</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block what" id="data-compare"><span class="tag">通話紀錄：v1 與 v2 的差別</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>項目</th><th>v1.0.0（舊版）</th><th>v2.0.0（新版）</th></tr></thead>
+        <tbody>
+          <tr><td>產生方式</td><td>「情境變化庫＋固定模板」組裝（OpenAI GPT-6 via Codex 產生素材，程式依模板拼接）</td><td>由 Claude 逐筆撰寫每一通電話，再用固定 seed 的程式替換重複的客服制式句</td></tr>
+          <tr><td>類別、情境家族、切分、配額</td><td colspan="2">完全相同：5 類 × 200 筆、66 個情境家族、train／validation／test＝700／150／150（只換逐字稿內容）</td></tr>
+          <tr><td>開場白種類</td><td class="num">8</td><td class="num">1,000</td></tr>
+          <tr><td>重複使用的對話行</td><td class="num">約 70%</td><td class="num">19.6%</td></tr>
+          <tr><td>每通行數</td><td>只有 9／11／13 行三種</td><td>9–16 行（13 行最多）</td></tr>
+          <tr><td>平均中文字數</td><td class="num">294</td><td class="num">240</td></tr>
+          <tr><td>「一般公園」出現次數（公園類 200 筆）</td><td class="num">123</td><td class="num">0</td></tr>
+          <tr><td>兩筆之間最高相似度</td><td class="num">0.48</td><td class="num">0.26</td></tr>
+          <tr><td>真實感</td><td>語氣制式、民眾常重複同一句描述</td><td>口語、台語夾雜、打斷與重複、地點與程度的具體描述、難分的邊界案例</td></tr>
+          <tr><td>複核狀態</td><td>待人工複核（未完成）</td><td>自動品質檢查通過，未經人工複核</td></tr>
+        </tbody>
+      </table></div>
+
+      <h4 class="ex-title">範例一：同一個情境家族「公園遊戲器材破損」</h4>
+      <div class="ex-pair">
+        <div class="ex">
+          <div class="ex-head"><b>v1</b><code>TPE1999-FORMAL-PK-0020</code></div>
+          <p class="r">您好，這裡是1999，您慢慢說明，我會先把狀況聽清楚。</p>
+          <p class="l">我先說明一下，攀爬架一個扶手接點鬆脫，拉一下就能感覺它左右移動，位置大概在大安區<mark>一般公園</mark>的活動空間附近。</p>
+          <p class="r">可以再說一點當時看到或感覺到的情形嗎？</p>
+          <p class="l">我回想一下，先注意到攀爬架一個扶手接點鬆脫，拉一下就能感覺它左右移動。</p>
+          <p class="r">嗯，我聽到了。你記得最早什麼時候發現，後來有沒有再遇到？</p>
+          <p class="l">最早大概最近幾個傍晚就有一點，只是當時沒停下來看，最近才確認不是偶然。</p>
+          <p class="r">謝謝你說明。你怎麼確認這個狀況一直在同一處？</p>
+          <p class="l">回頭再看時，我在旁邊看見固定螺栓附近有空隙，設備使用時會晃。</p>
+          <p class="r">謝謝你的說明，我會照你提供的觀察內容記錄，不另外替現場推測原因。</p>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><b>v2</b><code>TPE1999-V2-PK-0101</code></div>
+          <p class="r">您好，1999專線，請說明您的狀況。</p>
+          <p class="l">你好，我帶小孩去公園玩，那個盪鞦韆的鐵鍊有一邊快斷了，有一個環扣被磨得很細，小朋友盪的時候會發出喀喀的聲音，我很怕它突然斷掉，小孩會整個摔出去。</p>
+          <p class="r">嗯，方便說一下地點嗎？</p>
+          <p class="l">大安區，靠近捷運科技大樓站的一個社區公園，兒童遊戲區最裡面那組鞦韆。</p>
+          <p class="r">那組鞦韆有幾個座位？是哪一個座位有問題？</p>
+          <p class="l">有兩個座位，左邊那個的右側鐵鍊，靠近上面橫桿的地方，有一個環被磨到剩一半粗。</p>
+          <p class="r">座椅本身有沒有破損？</p>
+          <p class="l">座椅還好，就是那條鍊子。現在還有很多小朋友排隊在盪，家長都不知道。</p>
+          <p class="r">好，科技大樓站附近社區公園遊戲區內側鞦韆，左座右側鐵鍊近橫桿處一環磨損至約半粗，擺盪時有異音，座椅正常，仍有兒童使用，已經寫進紀錄。</p>
+          <p class="l">嗯，拜託了。</p>
+          <p class="r">不客氣，也麻煩您先提醒在場的家長。</p>
+        </div>
+      </div>
+      <ul class="ex-notes">
+        <li>v1 的地點寫成「大安區<b>一般公園</b>」，幾乎就是類別名稱「一般公園綠地管理及設施維護」，模型只要看到這四個字就能猜對。</li>
+        <li>v1 民眾把同一句描述講了兩次（「攀爬架一個扶手接點鬆脫……」），客服的問題也是固定的幾種句型。</li>
+        <li>v2 的地點改成「靠近捷運科技大樓站的一個社區公園」，客服會追問具體位置與程度，最後覆述重點，比較像真實的通話。</li>
+      </ul>
+
+      <h4 class="ex-title">範例二：同一個情境家族「車道輪跡凹槽」</h4>
+      <div class="ex-pair">
+        <div class="ex">
+          <div class="ex-head"><b>v1</b><code>TPE1999-FORMAL-RD-0021</code></div>
+          <p class="r">您好，我是客服，您先說明目前看到或遇到的情況。</p>
+          <p class="l">位置大約是內湖區<mark>一般道路路段</mark>，我想反映的是這個狀況：慢車道輪跡處比兩側低，表面像被壓出一條連續的凹帶。</p>
+          <p class="r">你實際通過或使用時，最明顯受到什麼影響？</p>
+          <p class="l">最明顯就是騎機車時車身會左右晃一下，載東西更難保持穩定。</p>
+          <p class="r">了解，我再順著剛才那點問。你最近幾次經過時看到的狀況都相同嗎？</p>
+          <p class="l">前幾次看到的都差不多，我從路邊看到低槽大致跟著車輪線走，不是橫向接縫造成的一下震動。</p>
+          <p class="r">謝謝你說明。你剛才說的變化，現場最明顯的是哪一點？</p>
+          <p class="l">我從路邊看到低槽大致跟著車輪線走，不是橫向接縫造成的一下震動。</p>
+          <p class="r">我知道了。你大概從什麼時候開始注意到，最近遇到幾次？</p>
+          <p class="l">我大約在上週後段第一次留意，後來隔幾天又遇到；今天再看仍是同一種情形。</p>
+          <p class="r">了解，前後經過我都記下了，今天先謝謝你來電說明。</p>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><b>v2</b><code>TPE1999-V2-RD-0157</code>（台語夾雜）</div>
+          <p class="r">1999市民熱線您好，請問發生什麼事了？</p>
+          <p class="l">欸你好，阮是駛計程車的，有一條路，輪仔硩的所在攏凹落去，兩條長長，駛過去方向盤會家己走。</p>
+          <p class="r">請問是哪一條路呢？</p>
+          <p class="l">萬華區，西園路二段、往華中橋彼个方向，內側車道。</p>
+          <p class="r">凹下去的那兩條大概多長？</p>
+          <p class="l">真長喔，差不多兩百公尺，攏仝一个位，就是輪仔硩的所在。</p>
+          <p class="r">好，深度呢？</p>
+          <p class="l">兩公分外，雨落的時陣攏是水，輪仔踏落去會滑。</p>
+          <p class="r">路面有沒有破洞？</p>
+          <p class="l">無破，干焦凹，柏油猶閣好好。</p>
+          <p class="r">了解，西園路二段、往華中橋內側車道，沿輪跡兩條約兩百公尺的縱向凹槽，深兩公分以上，雨天積水，行駛時方向盤會被帶。</p>
+          <p class="l">著，就是按呢，拜託喔。</p>
+          <p class="r">好，多謝您，這邊攏有記起來矣。</p>
+        </div>
+      </div>
+      <ul class="ex-notes">
+        <li>v1 的地點只有「內湖區一般道路路段」，民眾同一句話（「低槽大致跟著車輪線走……」）出現兩次。</li>
+        <li>v2 的民眾是計程車司機，用台語描述「輪仔硩的所在攏凹落去」，有具體路段、長度、深度與雨天狀況；客服用國語追問、最後也用一點台語回應。</li>
+        <li>真實 1999 通話中常有台語、口語和不完整的句子，v2 讓模型必須理解內容，而不是靠固定句型。</li>
+      </ul>
+    </div>
+    <div class="block why" id="known-issues"><span class="tag">抉擇：逐字稿已知問題不修正</span>
+      <p>v2.0.0 凍結、做完一次性 test 之後，閱讀時發現兩個組裝階段造成的小瑕疵。它們讓對話讀起來不夠順，但<b>沒有影響分類結果</b>，所以決定維持 v2.0.0、不重新訓練，也不重開 test。</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>問題</th><th class="num">筆數</th><th>train／val／test</th><th>類別分布</th></tr></thead>
+        <tbody>
+          <tr><td>① 替換客服開場白後，民眾第一句「可以，……」接不上新的問句</td><td class="num">77</td><td>52／14／11</td><td>五類都有（街道清潔 20、垃圾車 20、公園 16、道路 15、人行道 6）</td></tr>
+          <tr><td>② 補字數的問答接在客服總結、民眾道謝之後</td><td class="num">326</td><td>247／57／22</td><td>集中在街道清潔 134、垃圾車 107、公園 83（人行道 2、道路 0）</td></tr>
+        </tbody>
+      </table></div>
+      <p>問題 ① 的例子（<code>TPE1999-V2-PK-0038</code>）：</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th></th><th>客服開場</th><th>民眾第一句</th></tr></thead>
+        <tbody>
+          <tr><td>原稿</td><td>臺北市1999您好，請問方便說話嗎？</td><td>可以，我是打門球的，……</td></tr>
+          <tr class="hl"><td>v2.0.0</td><td>1999市民熱線您好，請問有什麼要我們知道的？</td><td>可以，我是打門球的，……</td></tr>
+        </tbody>
+      </table></div>
+      <p>問題 ② 的類別分布不平均，可能變成「看結構就知道類別」的線索，所以特別檢查。以下都只用 validation 150 筆，<b>test 沒有再讀取</b>。</p>
+
+      <p><b>驗證一：受影響的紀錄是不是比較好（或比較難）分？</b>（凍結模型的正確率）</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>模型</th><th class="num">① 受影響 (14)</th><th class="num">其他 (136)</th><th class="num">② 受影響 (57)</th><th class="num">其他 (93)</th></tr></thead>
+        <tbody>
+          <tr><td>E5 → LR</td><td class="num">1.000</td><td class="num">0.949</td><td class="num">0.982</td><td class="num">0.935</td></tr>
+          <tr><td>E5 → MLP</td><td class="num">0.929</td><td class="num">0.949</td><td class="num">0.982</td><td class="num">0.925</td></tr>
+          <tr><td>E5 → LDA → LR</td><td class="num">0.929</td><td class="num">0.904</td><td class="num">0.895</td><td class="num">0.914</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>① 受影響只有 14 筆，差一筆就差 0.07；三個模型有高有低，沒有一致方向。</li>
+        <li>② 受影響組看起來較高，是因為它們集中在本來就好分的三類。<b>同一類別內比較</b>就沒有優勢（受影響 vs 未受影響）：</li>
+      </ul>
+      <div class="tablewrap"><table>
+        <thead><tr><th>類別</th><th class="num">E5 → LR</th><th class="num">E5 → MLP</th><th class="num">E5 → LDA → LR</th></tr></thead>
+        <tbody>
+          <tr><td>街道清潔</td><td class="num">0.95 vs 1.00</td><td class="num">0.95 vs 0.90</td><td class="num">0.80 vs 1.00</td></tr>
+          <tr><td>垃圾車</td><td class="num">1.00 vs 1.00</td><td class="num">1.00 vs 1.00</td><td class="num">1.00 vs 1.00</td></tr>
+          <tr><td>公園</td><td class="num">1.00 vs 1.00</td><td class="num">1.00 vs 1.00</td><td class="num">0.833 vs 0.944</td></tr>
+        </tbody>
+      </table></div>
+
+      <p><b>驗證二：把文字改回來，預測會不會變？</b>（消融：改寫 validation 文字 → 重新以 E5 編碼 → 丟進凍結的分類器；凍結文字的預測與存檔 150/150 一致）</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>模型</th><th class="num">凍結 macro-F1</th><th class="num">移除總結後的補入問答<br>（46 筆）</th><th class="num">翻轉</th><th class="num">還原原始開場白<br>（14 筆）</th><th class="num">翻轉</th></tr></thead>
+        <tbody>
+          <tr><td>E5 → LR</td><td class="num">0.953</td><td class="num">0.947</td><td class="num">1</td><td class="num">0.953</td><td class="num">0</td></tr>
+          <tr><td>E5 → MLP</td><td class="num">0.946</td><td class="num">0.940</td><td class="num">1</td><td class="num">0.953</td><td class="num">1</td></tr>
+          <tr><td>E5 → LDA → LR</td><td class="num">0.907</td><td class="num">0.920</td><td class="num">3</td><td class="num">0.900</td><td class="num">1</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>150 筆中最多 1–3 筆的預測改變，macro-F1 有升有降，變化都在一兩筆的範圍內。</li>
+        <li>validation 中 ② 受影響 57 筆，其中 46 筆能精準定位並移除補入的問答（其餘 11 筆找不到逐字相符的補入原文，沒有納入）。</li>
+        <li>人行道 ↔ 街道清潔的互混（凍結 → 移除補入）：LR 0 → 0、MLP 2 → 2、LDA 4 → 3。</li>
+      </ul>
+      <div class="callout"><b>決策：</b>模型沒有靠「開場接不上」或「補入位置」來分類，v2.0.0 的訓練與 test 結果維持有效。這是閱讀自然度的問題，不是標籤或分類問題；日後若要把逐字稿拿來展示，再另外發布 v2.0.1 修正文字。
+        完整數據與 77 筆 ID 記錄在 <code>data/1999_synthetic/formal/v2.0.0/KNOWN_ISSUES.md</code>，驗證程式在 <code>.scratch/1999-connectome-demo/runs/v2-known-issues-ablation-20261114/</code>。</div>
+    </div>
+    <div class="block result"><span class="tag">結果：重新訓練（validation）</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>項目</th><th class="num">v1</th><th class="num">v2</th><th>變化</th></tr></thead>
+        <tbody>
+          <tr><td>E5 → LR</td><td class="num">0.868</td><td class="num">0.953</td><td class="up">上升</td></tr>
+          <tr><td>E5 → MLP</td><td class="num">0.918</td><td class="num">0.946</td><td class="up">上升</td></tr>
+          <tr><td>LDA → SVM</td><td class="num">0.900</td><td class="num">0.913</td><td>持平</td></tr>
+          <tr><td>Fly A（距離＋類別分離）→ SVM（T=2）</td><td class="num">0.88–0.90</td><td class="num">0.93–0.94</td><td class="up">四張圖都上升</td></tr>
+          <tr><td>LDA → Fly B（T=2）</td><td class="num">0.86–0.90</td><td class="num">0.81–0.89</td><td class="down">多數下降</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>T=4 的優勢在 v2 消失，大多持平或變差；v1 的「有正負號的圖適合 T=4」不再成立。</li>
+        <li>「人行道」與「路面清潔」互相認錯從 8 筆降到 2 筆；公園類拿掉捷徑詞後沒有變差。</li>
+      </ul>
+    </div>
+    <!--INCLUDE:sections/training_time.html--><div class="block result"><span class="tag">結果：一次性 test 評估</span>
+      <p>讀 test 前，先用 validation 鎖定 51 個候選與選模規則，並確認從存檔重新計算的 validation 完全一致；每個候選只評估一次。</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>模型</th><th class="num">test Macro-F1</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td><b>依規則選定</b>：T=2・G2・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.887 ± 0.018</td></tr>
+          <tr><td>LDA → SVM</td><td class="num">0.899</td></tr>
+          <tr><td>E5 → LDA → LR</td><td class="num">0.891</td></tr>
+          <tr><td>E5 → MLP</td><td class="num">0.845</td></tr>
+          <tr><td>E5 → LR（validation 為 0.953）</td><td class="num">0.791</td></tr>
+          <tr><td>全部候選最高（僅參考，不改變選擇）：T=4・G2-glu+・Fly A（距離＋類別分離）→ SVM</td><td class="num">0.950 ± 0.004</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li>去掉捷徑後，模型不能再靠背句型；validation 整體略升，但 test 顯示有些情境家族明顯比較難（E5 → LR 掉了 0.16）。</li>
+      <li>經過「距離＋類別分離」訓練的 Fly A 表徵，在 test 上比原始 E5 穩定。</li>
+      <li>依規則選定的果蠅模型與簡單的 LDA 方法大致同一水準，還沒有穩定勝出。</li>
+    </ul></div>
+  </div>
+</section>
+
+</div>

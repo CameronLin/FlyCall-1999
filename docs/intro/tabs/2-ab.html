@@ -1,0 +1,57 @@
+<div class="tabpanel" id="tab-ab" data-label="Fly A／B 差異">
+<!-- ============================== 3 Fly A／Fly B 差異 ============================== -->
+<section class="part" id="abdiff">
+  <div class="part-head"><span class="part-no">3</span><h2>Fly A 和 Fly B 的「腦」差在哪</h2></div>
+  <p class="date">同一張圖、同樣的正負號，只因為任務不同（降維 vs 分類），訓練完的兩個腦會長成什麼樣子？下面的表與圖都可以切換資料版本與步數 T，數字皆為三個 seed 平均（原檔：<a href="FlyCall-1999_FlyA_FlyB_分析報告_資料v1.html">分析報告_資料v1</a>、<a href="FlyCall-1999_FlyA_FlyB_分析報告.html">分析報告（v2）</a>）。</p>
+  <div class="ab-ver" role="group" aria-label="選擇資料版本與步數">
+    <span class="ab-ver-lab">顯示版本</span>
+    <div class="seg" data-abver="data"><button type="button" data-v="v1" aria-pressed="true">資料 v1</button><button type="button" data-v="v2" aria-pressed="false">資料 v2</button></div>
+    <div class="seg" data-abver="t"><button type="button" data-v="t2" aria-pressed="false">T=2</button><button type="button" data-v="t4" aria-pressed="true">T=4</button></div>
+    <span class="ab-ver-now" aria-live="polite">目前：資料 v1・T=4</span>
+  </div>
+
+  <div class="panel">
+    <h3 class="sub"><span class="subno">3.1</span>用四種方法比較兩個腦</h3>
+    <div class="grid2">
+      <div class="card"><h4>① 邊強度改變量</h4><p>訓練後每條連線的強度比起初始值改了多少？哪個腦改得多？</p></div>
+      <div class="card"><h4>② 同一條邊的 A／B 比較</h4><p>兩個腦是不是加強或減弱了<b>同一批</b>連線？用相關係數衡量，並和「同一隻果蠅換 seed」比較。</p></div>
+      <div class="card"><h4>③ 神經元類別選擇性 η²</h4><p>每個神經元的反應有多少是由「案件類別」決定的？0＝跟類別無關，1＝完全由類別決定。</p></div>
+      <div class="card"><h4>④ 損傷實驗</h4><p>一次關掉一個神經元，分數掉多少？兩個腦依賴的是不是同一批神經元？另外測試「拿掉所有抑制連線」的影響。</p></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3 class="sub"><span class="subno">3.2</span>差異總表 <span class="ab-cur">資料 v1・T=4</span></h3>
+<!--INCLUDE:sections/brain_table.html-->    <p class="tnote">「連線改變量」是 log(訓練後強度／初始強度) 的標準差；「同一條邊」是兩者改變量的 Spearman 相關；「幾乎沒反應」是平均活化 &lt; 0.01 的神經元數（共 500）。</p>
+    <div class="block meaning"><span class="tag">讀表重點（數字以資料 v1、T=4 為例；其他版本見表下的「這個版本」）</span>
+      <ul>
+        <li><b>Fly B 大幅改寫連線，Fly A 幾乎不動</b>：Fly B 的改變量是 Fly A 的 4–22 倍。分類需要重新打造連線，降維只需要微調。</li>
+        <li><b>兩個腦改的不是同一批連線</b>：A 與 B 的相關接近 0（−0.29～0.16），遠低於「同一隻果蠅換 seed」的相關，代表差異來自任務本身，而不是隨機性。</li>
+        <li><b>Fly B 的神經元幾乎都在分辨類別</b>（η² 0.80–1.00）。Fly A 只保留距離時，大部分神經元跟類別無關（η² 0.26–0.41），而且有 360–420 個神經元幾乎沒反應；加入「類別分離」後，Fly A 的 η² 也跳到 0.93–0.97。這說明了為什麼加入類別分離能讓分數大幅提升（第 8 節）。</li>
+        <li><b>抑制連線有用，但用法因腦而異</b>：在 G2（只保留距離），拿掉所有抑制連線後 Fly A 掉 0.10、Fly B 掉 0.15 Macro-F1；加入類別分離後影響變得很小。</li>
+        <li><b>單一神經元都不關鍵</b>：一次關掉一個神經元，分數幾乎不變；兩個腦「最重要的 20 個神經元」重疊很少（Jaccard 0.11–0.25）。</li>
+        <li><b>資料 v2 方向相同</b>：Fly B 改變量是 Fly A 的 3–18 倍，Fly B 的 η² 0.70–0.98，Fly A（只保留距離）仍有 270–440 個神經元幾乎沒反應。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel" id="ab-figs">
+    <h3 class="sub"><span class="subno">3.3</span>腦部比較圖（17 張） <span class="ab-cur">資料 v1・T=4</span></h3>
+    <p>4 種圖 × 2 張子圖（G0、G2）× 2 種 Fly A 目標＝16 張，再加 1 張總覽。版本跟著上方「顯示版本」切換；用下面的按鈕篩選；點圖片可放大，放大後可用 ← → 切換、Esc 關閉。</p>
+    <div class="fig-filters">
+      <div class="seg" role="group" aria-label="依圖篩選" data-filter="graph">
+        <button type="button" data-v="all" aria-pressed="true">全部</button><button type="button" data-v="G0" aria-pressed="false">G0 原圖</button><button type="button" data-v="G2" aria-pressed="false">G2 有正負</button><button type="button" data-v="summary" aria-pressed="false">總覽</button>
+      </div>
+      <div class="seg" role="group" aria-label="依 Fly A 目標篩選" data-filter="objective">
+        <button type="button" data-v="all" aria-pressed="true">兩種目標</button><button type="button" data-v="distance" aria-pressed="false">只保留距離</button><button type="button" data-v="distance_supcon" aria-pressed="false">距離＋類別分離</button>
+      </div>
+      <div class="seg" role="group" aria-label="依圖種篩選" data-filter="kind">
+        <button type="button" data-v="all" aria-pressed="true">四種圖</button><button type="button" data-v="hist_edge_change" aria-pressed="false">① 改變量</button><button type="button" data-v="scatter_edge_a_vs_b" aria-pressed="false">② 同一條邊</button><button type="button" data-v="hist_class_selectivity" aria-pressed="false">③ 選擇性</button><button type="button" data-v="scatter_lesion" aria-pressed="false">④ 損傷</button>
+      </div>
+    </div>
+    <div class="figs" id="figs">
+<!--INCLUDE:sections/brain_figs.html-->    </div>
+  </div>
+</section>
+
+</div>

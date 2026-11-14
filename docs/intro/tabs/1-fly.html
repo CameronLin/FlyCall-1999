@@ -1,0 +1,209 @@
+<div class="tabpanel" id="tab-fly" data-label="Fly 的圖">
+<!-- ============================== 2 Fly 的圖 ============================== -->
+<section class="part" id="flygraph">
+  <div class="part-head"><span class="part-no">2</span><h2>Fly 的圖：從選點、正負號到訓練</h2></div>
+  <p class="date">這是專案的核心。這一章說明果蠅連接圖怎麼選出來、增強與抑制怎麼決定、訊號怎麼在圖上傳遞，以及 Fly A／Fly B 怎麼在這張圖上訓練。</p>
+
+  <!-- 2.1 -->
+  <div class="panel" id="fg-what">
+    <h3 class="sub"><span class="subno">2.1</span>連接圖是什麼</h3>
+    <ul>
+      <li><b>資料來源：</b>雄果蠅神經系統（MaleCNS v1.0）官方的連線資料，約 1.5 億列。每一列是「來源 → 目標，有幾個突觸」。</li>
+      <li><b>點：</b>一個身體片段（body）。大部分是神經元，但也有很多重建時留下的小片段，這點後面很重要。</li>
+      <li><b>邊：</b>有方向的連線，代表來源的訊號可以送到目標；連線數（突觸數）越多，初始強度越大。</li>
+      <li>整張圖有 8,838 萬個點，太大無法訓練，所以要用固定規則選出 500 個點的小圖。</li>
+    </ul>
+  </div>
+
+  <!-- 2.2 -->
+  <div class="panel" id="fg-bfs">
+    <h3 class="sub"><span class="subno">2.2</span>什麼是 BFS：先挑一個點，再像漣漪一樣往外擴</h3>
+    <p><b>BFS（Breadth-First Search，廣度優先搜尋）</b>是一種「一層一層往外找」的方法：</p>
+    <ol>
+      <li>先挑一個起點（第 0 層）。</li>
+      <li>找出所有跟起點直接相連的點，這是第 1 層。</li>
+      <li>再找出跟第 1 層相連、還沒收過的點，這是第 2 層……一直往外，直到收滿 500 點。</li>
+    </ol>
+    <p>就像丟一顆石頭到水裡，漣漪一圈一圈往外擴。這樣選出來的點<b>彼此一定連得起來</b>，不會散成很多孤立的小群。</p>
+    <div class="grid2">
+      <div class="card"><h4>起點怎麼挑：固定的「雜湊優先值」</h4><p>每個點用固定公式（BLAKE2b 雜湊，固定 salt）算出一個亂數般的優先值，取最小的當起點。不是人為挑選，而且任何時候重算都會得到同一個點。</p></div>
+      <div class="card"><h4>同一層太多點怎麼辦</h4><p>同一層內也依優先值排序，名額不夠時只收優先值小的。所以整個選點過程完全可重現：同樣的資料一定選出同樣的 500 點。</p></div>
+      <div class="card"><h4>方向怎麼處理</h4><p>選點時不管連線方向（只要有連就算鄰居），這樣圖比較緊密；選完之後，500 點之間<b>所有原始有向邊都保留</b>，不新增、不刪除。</p></div>
+      <div class="card"><h4>G0 的結果</h4><p>起點 274013289 只有 3 個鄰居（第 1 層 3 點），第 2 層依優先值收 496 點就湊滿 500 點，共 2,216 條邊。</p></div>
+    </div>
+
+    <figure class="bfsfig">
+      <div class="bfs-tools">
+        <div class="seg" role="group" aria-label="選擇哪一張圖的 BFS">
+          <button type="button" data-g="G0" aria-pressed="true">G0：一般 BFS</button>
+          <button type="button" data-g="SIGNED" aria-pressed="false">新圖：名額 BFS（300＋200）</button>
+        </div>
+        <button type="button" class="pill" id="bfs-play">▶ 播放</button>
+        <label class="chk"><input type="checkbox" id="bfs-alledges"> 顯示全部連線</label>
+        <div class="seg glu-seg" role="group" aria-label="麩胺酸的判定" hidden>
+          <button type="button" data-glu="inh" aria-pressed="true">麩胺酸＝抑制（G2）</button>
+          <button type="button" data-glu="exc" aria-pressed="false">麩胺酸＝增強（G2-glu+）</button>
+        </div>
+      </div>
+      <div class="bfs-stage">
+        <canvas id="bfs-canvas" width="900" height="560" role="img" aria-label="BFS 從起點一層一層往外擴張的動畫"></canvas>
+        <div class="bfs-hud" id="bfs-hud" aria-live="polite"></div>
+      </div>
+      <div class="legend" id="bfs-legend"></div>
+      <figcaption>用真實的子圖資料繪製：每個點在第幾層、由哪個點擴展而來，都和實際選點過程相同；位置只是為了好看而排成同心圓。點越晚出現，代表優先值越大。</figcaption>
+    </figure>
+  </div>
+
+  <!-- 2.3 -->
+  <div class="panel" id="fg-signs">
+    <h3 class="sub"><span class="subno">2.3</span>為什麼要下載新資料：原本的點全都被當成「增強」</h3>
+    <div class="block why"><span class="tag">問題</span>
+      <p>原始連線檔只有「來源、目標、突觸數」三個欄位，<b>沒有任何正負號資訊</b>。模型裡每條連線的強度又一定是正數，等於整張圖都是增強、沒有抑制。真實大腦裡有大量抑制性神經元，你希望圖裡也要有。</p>
+    </div>
+    <div class="block what"><span class="tag">作法</span>
+      <ul>
+        <li>從官方另外下載 <code>body-neurotransmitters-male-cns-v1.0.feather</code>（約 43 MB），裡面有每個神經元預測釋放的<b>神經傳導物質</b>（欄位 <code>consensus_nt</code>）。官方已把信心不足（&lt; 0.5）的標成 unclear，並用實驗資料覆蓋有已知答案的神經元。</li>
+        <li>依神經傳導物質決定這個神經元所有出邊的正負號（Dale 原則：一個神經元的輸出要嘛全部增強、要嘛全部抑制）。</li>
+      </ul>
+      <div class="tablewrap"><table>
+        <thead><tr><th>神經傳導物質</th><th>判定</th><th>理由／決策</th></tr></thead>
+        <tbody>
+          <tr><td>乙醯膽鹼（ACh）</td><td><span class="sg exc">＋ 增強</span></td><td>果蠅中樞主要的興奮性物質</td></tr>
+          <tr><td>GABA</td><td><span class="sg inh">－ 抑制</span></td><td>主要的抑制性物質</td></tr>
+          <tr class="hl"><td><b>麩胺酸（Glu）</b></td><td><span class="sg inh">－ 抑制</span>（主要）<br><span class="sg exc">＋ 增強</span>（對照）</td><td>決策 D2，見 2.5</td></tr>
+          <tr><td>組織胺（histamine）</td><td><span class="sg inh">－ 抑制</span></td><td>資料中才發現有這一類；你決定算抑制（決策 D2c）</td></tr>
+          <tr><td>多巴胺、血清素、章魚胺</td><td>排除</td><td>調節型物質，作用不是單純的增強或抑制（決策 D2b）</td></tr>
+          <tr><td>unclear、不在表內</td><td>排除</td><td>沒有可靠的正負號</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block result"><span class="tag">發現</span>
+      <ul>
+        <li>全表 183 萬列中，主要版本有 104,193 個增強、59,663 個抑制，其餘 167 萬個被排除（大多是沒有判定的片段）。</li>
+        <li><b>G0 的 500 點中，有 360 點根本不在表內</b>（多半是重建留下的小片段，不是完整神經元），只有 130 點有正負號；32 個輸入點中有 21 個不在表內。</li>
+        <li>G0 的起點 274013289 也不在表內，所以<b>不能沿用原本的起點</b>。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2.4 -->
+  <div class="panel" id="fg-quota">
+    <h3 class="sub"><span class="subno">2.4</span>抑制點怎麼選：名額限制 BFS（300 增強＋200 抑制）</h3>
+    <div class="block why"><span class="tag">你的要求</span><p>子圖仍是 500 點，其中 300 個增強、200 個抑制。你一開始考慮「全腦排名取前 N 大」，但排名會讓點散佈在全腦、彼此幾乎沒有連線，所以改用名額限制的 BFS（決策 D1）。</p></div>
+    <div class="block what"><span class="tag">規則</span>
+      <ol>
+        <li><b>新起點（決策 D3b）：</b>用同一套雜湊優先值，但只在「有正負號的神經元」（163,856 個）裡取最小者，得到 <b>810979</b>：乙醯膽鹼（增強）、cell type <code>IN07B098</code>。</li>
+        <li>從起點做 BFS，逐一檢查每個候選點：
+          <ul>
+            <li>增強點、而且增強名額還沒滿 300 → 收入。</li>
+            <li>抑制點、而且抑制名額還沒滿 200 → 收入。</li>
+            <li>沒有正負號，或該類名額已滿 → <b>跳過</b>，也不從它往外擴展。</li>
+          </ul>
+        </li>
+        <li>只從已收入的點往外擴展，所以選出來的點一定連得起來；兩個名額都滿就停止。</li>
+        <li>正負號用主要版本（麩胺酸＝抑制）判斷。</li>
+      </ol>
+    </div>
+    <div class="block result"><span class="tag">結果</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>層</th><th class="num">候選點</th><th class="num">收入增強</th><th class="num">收入抑制</th><th class="num">跳過（沒有正負號）</th></tr></thead>
+        <tbody>
+          <tr><td>第 1 層（起點的鄰居）</td><td class="num">820</td><td class="num">122</td><td class="num">120</td><td class="num">578</td></tr>
+          <tr><td>第 2 層</td><td class="num">421,657</td><td class="num">177</td><td class="num">80</td><td class="num">6,325</td></tr>
+          <tr class="hl"><td>合計</td><td class="num">—</td><td class="num">300</td><td class="num">200</td><td class="num">—</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>只走 2 層就收滿 500 點；500 點之間共有 <b>6,691 條</b>有向邊，是 G0 的 3 倍，而且全部連成一塊。</li>
+        <li>組成：乙醯膽鹼 300、GABA 144、麩胺酸 56。cell type 以腹神經索（VNC）的中間神經元為主（IN 開頭 266 個），這是工程取樣，不代表特定腦區。</li>
+        <li>在上方動畫切到「新圖：名額 BFS」可以看到這個過程，包括被跳過的無符號點。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2.5 -->
+  <div class="panel" id="fg-glu">
+    <h3 class="sub"><span class="subno">2.5</span>麩胺酸該算增強還是抑制？G2 和 G2-glu+ 的差別</h3>
+    <div class="block why"><span class="tag">為什麼要問你</span>
+      <p>麩胺酸在不同地方作用不同：在<b>果蠅中樞</b>，它大多透過 GluClα 氯離子通道產生<b>抑制</b>；但在<b>肌肉接點</b>，它是<b>增強</b>。資料只告訴我們「這個神經元釋放麩胺酸」，沒有說接收端是哪種受體，所以這是一個需要判斷的選擇，而且會直接改變 56 個點的正負號。</p>
+    </div>
+    <div class="block what"><span class="tag">你的決定（D2）</span>
+      <ul>
+        <li><b>主要版本：麩胺酸＝抑制。</b>依據：果蠅中樞以抑制為主；Shiu 等人 2024 年發表在 Nature 的果蠅全腦模型，也預設把 GABA 和麩胺酸當抑制。</li>
+        <li><b>另做一個對照版本：麩胺酸＝增強</b>，用來檢查結論會不會因為這個選擇而改變。這就是 G2-glu+。</li>
+      </ul>
+    </div>
+    <div class="block result"><span class="tag">四張圖的差別</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>圖</th><th>點</th><th class="num">增強點</th><th class="num">抑制點</th><th class="num">增強邊</th><th class="num">抑制邊</th><th>用來回答</th></tr></thead>
+        <tbody>
+          <tr><td>G0 原圖</td><td>原 BFS 500 點</td><td class="num">500</td><td class="num">0</td><td class="num">2,216</td><td class="num">0</td><td>現況基準（大多是片段）</td></tr>
+          <tr><td>G1 全正</td><td>新選 500 點</td><td class="num">500</td><td class="num">0</td><td class="num">6,691</td><td class="num">0</td><td>換一組點的效果</td></tr>
+          <tr class="hl"><td>G2 有正負</td><td>同 G1</td><td class="num">300</td><td class="num">200</td><td class="num">3,740</td><td class="num">2,951</td><td>加入抑制的效果（G2 − G1）</td></tr>
+          <tr><td>G2-glu+</td><td>同 G1</td><td class="num">356</td><td class="num">144</td><td class="num">4,227</td><td class="num">2,464</td><td>麩胺酸判定的影響（G2 − G2-glu+）</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><b>G1、G2、G2-glu+ 的點和邊完全相同，只差正負號。</b>G2 與 G2-glu+ 之間唯一的差別，就是那 56 個麩胺酸點（以及它們的出邊）換了正負號；所以 G2-glu+ 不是 300／200 的組成。</li>
+        <li>上方動畫在「新圖」模式下可以切換麩胺酸的判定，紫色外框標出這 56 個點。</li>
+        <li>結果上，兩種判定的分數差異不大且方向不一致（見第 8、10 節），表示結論不太受這個選擇影響。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2.6 -->
+  <div class="panel" id="fg-io">
+    <h3 class="sub"><span class="subno">2.6</span>輸入點與輸出點</h3>
+    <ul>
+      <li>每張圖選 32 個<b>輸入點</b>（E5 向量從這裡送進來）和 32 個<b>輸出點</b>（結果從這裡讀出來），同樣用固定的雜湊優先值選，互不重複。</li>
+      <li><b>G0：</b>所有輸出點都能從某個輸入點沿著有向邊走到。</li>
+      <li><b>新圖（決策 D5）：</b>照原規則選時，有 3 個輸出點在 2 跳內走不到（其中一個根本沒有入邊）。你決定改成「輸出點只從 2 跳內走得到的點中選」，可達性由構造保證：1 跳 20 個、2 跳 12 個。</li>
+      <li>新圖的輸入點有 20 個增強、12 個抑制；輸出點有 23 個增強、9 個抑制。</li>
+      <li>這些點只是計算用的端點，不代表果蠅真正的感覺或運動神經元。</li>
+    </ul>
+  </div>
+
+  <!-- 2.7 -->
+  <div class="panel" id="fg-signal">
+    <h3 class="sub"><span class="subno">2.7</span>訊號怎麼在圖上傳遞：T 步＝T 跳</h3>
+    <pre class="flow">訊息 = 正負號[來源] × 強度[這條邊] × 狀態[來源]
+新狀態[點] = tanh( 入邊訊息總和 ÷ 入邊數量 + 外部輸入[點] )   ← 重複 T 次，最後讀出 32 個輸出點</pre>
+    <ul>
+      <li>每一步，每個點把自己的狀態沿著出邊送出去，收到的訊息平均後加上外部輸入，再經過 tanh 壓到 −1～1 之間。</li>
+      <li><b>修正前</b>（第 9 節）：第一步所有狀態都是 0，T 步只傳 T−1 跳；T=2 時只有輸入直接連到輸出的少數連線會被訓練。</li>
+      <li><b>修正後</b>：輸入在第 0 步就寫進狀態，T 步正好傳 T 跳。T=2 時 G0 有 12%、新圖有 8% 的連線會影響輸出；T=4 時提高到 76%、84%。</li>
+    </ul>
+    <p>下面是原本的「連接圖訊號傳遞」互動頁（完整內容，可調 T、切換修正前後與不同的圖）：</p>
+    <div class="embed">
+      <iframe id="signal-frame" title="連接圖訊號傳遞（互動）" loading="lazy"></iframe>
+      <p class="embed-note">若互動頁沒有顯示，請直接開啟 <a href="FlyCall-1999_連接圖訊號傳遞.html">FlyCall-1999_連接圖訊號傳遞.html</a>。</p>
+    </div>
+  </div>
+
+  <!-- 2.8 -->
+  <div class="panel" id="fg-train">
+    <h3 class="sub"><span class="subno">2.8</span>Fly A 和 Fly B 怎麼在這張圖上訓練</h3>
+    <div class="grid2">
+      <div class="card"><h4>會被訓練的是什麼</h4><p>每條既有連線一個「強度」參數（永遠是正數：ε＋softplus）。<b>正負號固定</b>、不新增也不刪除連線；沒有連線的地方沒有參數。初始強度依突觸數設定。</p></div>
+      <div class="card"><h4>兩隻果蠅各有一份</h4><p>Fly A 和 Fly B 使用同一張圖、同樣的正負號，但<b>各自有一份獨立的連線強度</b>，分開訓練。這也是後面能比較「兩個腦差在哪」的原因。</p></div>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th></th><th>Fly A（降維）</th><th>Fly B（分類）</th></tr></thead>
+      <tbody>
+        <tr><td>輸入</td><td>E5 的 384 維向量，經轉接層送到 32 個輸入點</td><td>Fly A 的 32 個輸出（或 LDA 的 4 維）</td></tr>
+        <tr><td>輸出</td><td>32 個輸出點的狀態（32 維）</td><td>32 個輸出點 → 線性讀出層 → 5 類分數</td></tr>
+        <tr><td>訓練目標</td><td><b>只保留距離</b>：壓縮前後，兩通電話的遠近關係要一樣（不看答案）<br><b>距離＋類別分離</b>（SupCon，λ=1、τ=0.1）：同時讓同類靠近、不同類分開</td><td>交叉熵：把正確類別的分數拉高</td></tr>
+        <tr><td>訓練順序</td><td>先訓練</td><td>Fly A 訓練完後凍結，再訓練 Fly B</td></tr>
+      </tbody>
+    </table></div>
+    <h3>第二代的調參規則（工作票 20，事先寫定）</h3>
+    <ol>
+      <li>train 700 筆依情境家族分組，做 5 折交叉驗證（同一家族不會同時出現在訓練與檢查的那一折）。</li>
+      <li>每個學習率（0.001、0.003、0.01）× 每個 seed（42、1337、2026）都跑一遍，最多 200 個 epoch，連續 25 個 epoch 沒進步就停。</li>
+      <li>Fly A 用「固定的 SVM 接在 Fly A 後面」的交叉驗證分數挑學習率；Fly B 用自己的交叉驗證分數挑。</li>
+      <li>最後用全部 train、以交叉驗證的中位 epoch 數重新訓練，validation 只讀一次。</li>
+    </ol>
+  </div>
+</section>
+
+</div>

@@ -1,0 +1,103 @@
+<div class="tabpanel" id="tab-gen1" data-label="第一代">
+<p class="tab-intro"><span class="gen g1">第一代</span>從基礎建設、基準模型到第一代果蠅模型，以及找出它分數低的原因（2026-10 → 11-13）。</p>
+<!-- ============================== 4 基礎建設 ============================== -->
+<section class="part" id="s1">
+  <div class="part-head"><span class="part-no">4</span><h2>基礎建設</h2><span class="gen g1">第一代</span></div>
+  <p class="date">2026-10 上旬</p>
+  <div class="tickets"><span>01 資料讀取器</span><span>02 MaleCNS 來源</span><span>03 有向圖匯入</span><span>04 子圖選取</span><span>05 輸入／輸出點</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><p>之後每個實驗都要能完全重現：資料不能被改到、連接圖每次選出來都要一樣。</p></div>
+    <div class="block what"><span class="tag">做了什麼</span><ul>
+      <li>資料讀取器每次載入都檢查筆數、類別數量和切分，而且只讀不改。</li>
+      <li>下載雄果蠅神經系統官方資料（約 1 GB、1.5 億條連線），轉成「點」與「有方向的邊」兩張表，並記錄校驗碼。</li>
+      <li>用固定規則從整個神經系統選出 <b>500 個神經元、2,216 條連線</b>（之後稱為 G0）。</li>
+      <li>在 500 點中選 32 個輸入點、32 個輸出點，確認訊號走得到。</li>
+    </ul></div>
+    <div class="block result"><span class="tag">結果</span><p>這一階段沒有分數；產出是可重現的資料、連接圖與輸入／輸出設定。</p></div>
+  </div>
+</section>
+
+<!-- ============================== 3 基準模型 ============================== -->
+<section class="part" id="s2">
+  <div class="part-head"><span class="part-no">5</span><h2>基準模型</h2><span class="gen g1">第一代</span></div>
+  <p class="date">2026-10 中旬</p>
+  <div class="tickets"><span>06 TF-IDF</span><span>09 E5 嵌入與分類器</span><span>10 評估器與 test 閘門</span><span>11 E5→LDA→LR</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><p>果蠅模型需要一個參考標準，才知道表現算好還是不好。</p></div>
+    <div class="block result"><span class="tag">結果（資料 v1）</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>工作票</th><th>模型</th><th class="num">validation Macro-F1</th></tr></thead>
+        <tbody>
+          <tr><td>06</td><td>字詞頻率 TF-IDF ＋ Linear SVM</td><td class="num">0.980</td></tr>
+          <tr><td>09</td><td>E5 → LR</td><td class="num">0.868</td></tr>
+          <tr><td>09</td><td>E5 → MLP</td><td class="num">0.902</td></tr>
+          <tr><td>11</td><td>E5 → LDA → LR</td><td class="num">0.900</td></tr>
+        </tbody>
+      </table></div>
+      <p>工作票 10 另外建立共用的評分工具，以及「test 只能用一次」的閘門。</p>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li>E5 系列的基準大約在 0.87–0.90。</li>
+      <li>最簡單的 TF-IDF 反而拿到 <b>0.98</b>：v1 資料裡有固定句型和關鍵字，靠「認字」就能答對。這是之後資料改版的伏筆（見<a href="#s8">第 11 節</a>）。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 4 第一代果蠅 ============================== -->
+<section class="part" id="s3">
+  <div class="part-head"><span class="part-no">6</span><h2>第一代果蠅模型</h2><span class="gen g1">第一代</span></div>
+  <p class="date">2026-10 下旬</p>
+  <div class="tickets"><span>07 資料流與訓練規則</span><span>08 小型模型核心</span><span>12 Fly A／B 訓練</span><span>13 多 seed 比較</span><span>14 鎖定模型與推論 API</span><span>15 Streamlit 展示（已移除）</span></div>
+  <div class="panel">
+    <div class="block what"><span class="tag">做了什麼</span><ul>
+      <li>訓練規則：Fly A 不看答案，只學「保留距離」；Fly B 才看答案學分類。</li>
+      <li>先在小型假圖上寫好訊號傳遞的核心，再到真實 G0 上用三個 seed 訓練。</li>
+    </ul></div>
+    <div class="block result"><span class="tag">結果</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>模型</th><th class="num">validation Macro-F1</th></tr></thead>
+        <tbody>
+          <tr><td>E5 → MLP（最佳）</td><td class="num">0.902</td></tr>
+          <tr><td>E5 → LDA → LR</td><td class="num">0.900</td></tr>
+          <tr class="hl"><td>Fly A → Fly B（三個 seed：0.65／0.59／0.74）</td><td class="num">0.660</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li>果蠅模型比基準低了將近 0.25，而且不同 seed 差很多，表現不穩定。</li>
+      <li>依你的指定，先鎖定 E5 → MLP 當展示用模型，做成推論 API 與命令列工具（工作票 14）；Streamlit 網頁展示（工作票 15）已於 2026-11-14 移除。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 5 找原因 ============================== -->
+<section class="part" id="s4">
+  <div class="part-head"><span class="part-no">7</span><h2>找出第一代分數低的原因</h2><span class="gen g1">第一代</span></div>
+  <p class="date">2026-10-26 → 11-13</p>
+  <div class="tickets"><span>16 表徵診斷</span><span>17 降維器 × 分類器交叉實驗</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><p>要知道分數低是 Fly A 壓縮的問題、Fly B 分類的問題，還是兩者都有。</p></div>
+    <div class="block what"><span class="tag">做了什麼</span><ul>
+      <li>工作票 16：把 Fly A 的輸出直接接 MLP，看資訊有沒有在壓縮時遺失。</li>
+      <li>工作票 17：依你的要求把降維與分類完全拆開，做成 {E5, LDA, Fly A} × {SVM, Fly B} 的交叉表。</li>
+    </ul></div>
+    <div class="block result"><span class="tag">結果</span>
+      <p>工作票 16：原始 E5 接 MLP 為 0.902，Fly A 壓縮後再接 MLP 只剩 0.776。</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>降維 ＼ 分類</th><th class="num">SVM</th><th class="num">Fly B（原訓練量）</th><th class="num">Fly B（訓練加長）</th></tr></thead>
+        <tbody>
+          <tr><td>E5（不降維）</td><td class="num">0.925</td><td class="num">0.811</td><td class="num">0.920</td></tr>
+          <tr><td>LDA 4 維</td><td class="num">0.900</td><td class="num">0.847</td><td class="num">0.865</td></tr>
+          <tr class="hl"><td>Fly A 32 維</td><td class="num">0.792</td><td class="num">0.660</td><td class="num">0.804</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li><b>Fly A 是主要瓶頸</b>：同樣接 SVM，Fly A 比 LDA 低 0.108，壓縮時丟掉了分類資訊。</li>
+      <li><b>Fly B 原本是訓練不夠</b>：訓練加長後，Fly B 與 SVM 差不多。</li>
+      <li>另外試了加「E5 旁路」的改良版，可到 0.905，但因為是在同一份 validation 上挑出來的，只當研究候選。</li>
+    </ul></div>
+  </div>
+</section>
+
+</div>

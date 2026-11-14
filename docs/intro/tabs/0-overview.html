@@ -1,0 +1,114 @@
+<div class="tabpanel" id="tab-overview" data-label="總覽">
+<header class="hero">
+  <span class="eyebrow">專案介紹 ｜ 2026-10 → 2026-11-14</span>
+  <h1>用果蠅的大腦連線，分類 1999 市民專線的通話</h1>
+  <p class="lead">把真實果蠅神經系統的連接圖當作模型的「腦」：Fly A 負責把通話壓縮成重點，Fly B 負責判斷屬於哪一類。這份介紹依時間順序，說明每一版為什麼要改、改了什麼，以及每一版的結果代表什麼。</p>
+  <div class="meta">
+    <span>合成資料 1,000 筆、五類各 200 筆</span><span>train 700／validation 150／test 150</span>
+    <span>三個 seed：42、1337、2026</span><span>資料 v2.0.0：自動品質檢查通過，未經人工複核</span>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><span class="kpi-k">第一代果蠅模型</span><span class="kpi-v">0.660</span><span class="kpi-n">validation，2026-10</span></div>
+    <div class="kpi"><span class="kpi-k">資料 v2 的最佳果蠅組合</span><span class="kpi-v">0.938</span><span class="kpi-n">validation，T=2・G1・Fly A→SVM</span></div>
+    <div class="kpi"><span class="kpi-k">一次性 test（依規則選定）</span><span class="kpi-v">0.887</span><span class="kpi-n">T=2・G2・Fly A→Fly B，± 0.018</span></div>
+    <div class="kpi"><span class="kpi-k">對照：LDA → SVM 的 test</span><span class="kpi-v">0.899</span><span class="kpi-n">傳統方法</span></div>
+  </div>
+</header>
+
+<!-- ============================== 0 總覽 ============================== -->
+<section class="part" id="overview">
+  <div class="part-head"><span class="part-no">0</span><h2>總覽：分數怎麼一路變化</h2></div>
+  <p class="date">validation Macro-F1（0～1，越高越好）。藍色是果蠅模型在該階段的最佳結果，灰色是同階段的對照方法。最後一列是 test。</p>
+  <div class="panel">
+    <div class="chart" role="img" aria-label="各階段果蠅模型與對照方法的 Macro-F1，數字見下方表格">
+      <div class="row"><div class="lab">第一代果蠅<small>第 6 節 ｜ G0、T=2</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.660"><i></i><em>0.660</em></div><div class="b base" style="--v:0.902"><i></i><em>0.902 E5→MLP</em></div></div></div>
+      <div class="row"><div class="lab">拆開測：Fly A → SVM<small>第 7 節 ｜ 工作票 17</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.792"><i></i><em>0.792</em></div><div class="b base" style="--v:0.900"><i></i><em>0.900 LDA→SVM</em></div></div></div>
+      <div class="row"><div class="lab">第二代：類別分離＋有正負號的圖<small>第 8 節 ｜ 修正前程式</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.922"><i></i><em>0.922</em></div><div class="b base" style="--v:0.900"><i></i><em>0.900 LDA→SVM</em></div></div></div>
+      <div class="row"><div class="lab">第二代：修正跳數錯誤後<small>第 9 節 ｜ T=2</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.918"><i></i><em>0.918</em></div><div class="b base" style="--v:0.900"><i></i><em>0.900 LDA→SVM</em></div></div></div>
+      <div class="row"><div class="lab">第二代：T=4<small>第 10 節 ｜ 資料 v1</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.928"><i></i><em>0.928</em></div><div class="b base" style="--v:0.900"><i></i><em>0.900 LDA→SVM</em></div></div></div>
+      <div class="row"><div class="lab">第二代：資料 v2<small>第 11 節 ｜ validation</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.938"><i></i><em>0.938</em></div><div class="b base" style="--v:0.913"><i></i><em>0.913 LDA→SVM</em></div></div></div>
+      <div class="row"><div class="lab"><b>資料 v2：test（只評估一次）</b><small>依規則選定的果蠅模型</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.887"><i></i><em>0.887</em></div><div class="b base" style="--v:0.899"><i></i><em>0.899 LDA→SVM</em></div></div></div>
+    </div>
+    <div class="axis" aria-hidden="true"><span>0.50</span><span>0.75</span><span>1.00</span></div>
+    <div class="legend"><span style="--c: var(--fly)">果蠅模型（該階段最佳）</span><span style="--c: var(--base)">對照方法</span></div>
+    <details><summary>以表格檢視</summary>
+      <div class="tablewrap"><table>
+        <thead><tr><th>階段</th><th>果蠅模型</th><th class="num">分數</th><th>對照</th><th class="num">分數</th></tr></thead>
+        <tbody>
+          <tr><td>6 第一代果蠅</td><td>Fly A → Fly B（G0、T=2）</td><td class="num">0.660</td><td>E5 → MLP</td><td class="num">0.902</td></tr>
+          <tr><td>7 拆開測（第一代）</td><td>Fly A → SVM</td><td class="num">0.792</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+          <tr><td>8 第二代：有正負號的圖</td><td>G2-glu+・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.922</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+          <tr><td>9 第二代：修正跳數</td><td>G1・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.918</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+          <tr><td>10 第二代：T=4（資料 v1）</td><td>G2-glu+・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.928</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+          <tr><td>11 第二代：資料 v2（validation）</td><td>G1・Fly A（距離＋類別分離）→ SVM（T=2）</td><td class="num">0.938</td><td>LDA → SVM</td><td class="num">0.913</td></tr>
+          <tr class="hl"><td>11 第二代：資料 v2（test）</td><td>G2・Fly A（距離＋類別分離）→ Fly B（T=2）</td><td class="num">0.887</td><td>LDA → SVM</td><td class="num">0.899</td></tr>
+        </tbody>
+      </table></div>
+      <p>各階段的資料、程式與圖不同，這張圖用來看趨勢；同一階段內的比較才是嚴格的比較。</p>
+    </details>
+  </div>
+
+  <h3>第一代與第二代果蠅模型</h3>
+  <div class="panel">
+    <div class="tablewrap"><table>
+      <thead><tr><th>項目</th><th><span class="gen g1">第一代</span>（2026-10）</th><th><span class="gen g2">第二代</span>（2026-11-13 起）</th></tr></thead>
+      <tbody>
+        <tr><td>連接圖</td><td>G0：500 點、2,216 邊，沒有正負號（全部當增強）</td><td>G0 加上新選的 500 點、6,691 邊：G1 全正、G2 有正負、G2-glu+（見第 2 節）</td></tr>
+        <tr><td>連線參數</td><td>只訓練強弱（正值）</td><td>只訓練強弱，正負號依神經傳導物質固定</td></tr>
+        <tr><td>Fly A 的目標</td><td>只保留距離</td><td>只保留距離，或「距離＋類別分離」（SupCon）</td></tr>
+        <tr><td>訓練方式</td><td>固定訓練量，validation 選 epoch</td><td>Fly A、Fly B 各自調參：5 折交叉驗證、3 種學習率、交叉驗證決定 epoch</td></tr>
+        <tr><td>訊號傳遞</td><td>T=2，但實際只傳 1 跳（程式錯誤）</td><td>第二代一開始仍有這個錯誤；修正為 T 步＝T 跳後全部重跑，並比較 T=2、T=4</td></tr>
+        <tr><td>資料</td><td>v1.0.0</td><td>v1.0.0，最後換成 v2.0.0</td></tr>
+        <tr><td>最佳 validation Macro-F1</td><td class="num">0.660</td><td class="num">0.918–0.938</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <h3>時間軸</h3>
+  <ol class="timeline">
+    <li><span class="when">10 上旬</span><span><a href="#s1">基礎建設</a>：資料讀取器、果蠅連接圖、500 點子圖</span></li>
+    <li><span class="when">10 中旬</span><span><a href="#s2">基準模型</a>：TF-IDF、E5 → LR／MLP、LDA</span></li>
+    <li><span class="when">10 下旬</span><span><span class="gen g1">第一代</span><a href="#s3">第一代果蠅模型</a>：0.660，明顯落後</span></li>
+    <li><span class="when">10/26–11/13</span><span><a href="#s4">找原因</a>：Fly A 是瓶頸，Fly B 訓練不夠</span></li>
+    <li><span class="when">11/13</span><span><span class="gen g2">第二代</span><a href="#s5">有正負號的圖與各自調參</a>：加入「類別分離」後大幅提升</span></li>
+    <li><span class="when">11/13</span><span><a href="#s6">發現程式錯誤</a>：T=2 只傳 1 跳，修正後重跑</span></li>
+    <li><span class="when">11/13–14</span><span><a href="#s7">T=2 vs T=4 與腦部比較</a></span></li>
+    <li><span class="when">11/14</span><span><a href="#s8">資料改版 v2.0.0</a>：重寫 1,000 筆，第一次打開 test</span></li>
+  </ol>
+</section>
+
+<!-- ============================== 1 研究問題 ============================== -->
+<section class="part" id="idea">
+  <div class="part-head"><span class="part-no">1</span><h2>這個專案在研究什麼</h2></div>
+  <div class="panel">
+    <h3 style="margin-top:0">問題</h3>
+    <p>把臺北市 1999 市民專線的通話逐字稿分成五類：<b>人行道維護</b>、<b>道路坑洞與不平</b>、<b>公園綠地與設施</b>、<b>垃圾車服務</b>、<b>路面清潔</b>。</p>
+    <h3>核心想法</h3>
+    <p>不用一般設計的類神經網路，而是用<b>真實果蠅神經系統的連接圖</b>（MaleCNS）當模型的結構，只訓練連線的強弱，看它能不能完成分類。</p>
+    <pre class="flow">通話文字
+  → E5 語言模型：轉成 384 維向量（固定，不訓練）
+  → Fly A：在 500 個神經元的連接圖上傳遞訊號，把 384 維壓成 32 維（降維）
+  → Fly B：另一份同樣結構的連接圖，把 32 維分成 5 類（分類）</pre>
+    <div class="grid2">
+      <div class="card"><h4>Fly A（降維）</h4><p>把通話壓縮成 32 個數字，希望相近的通話壓縮後仍然相近。</p></div>
+      <div class="card"><h4>Fly B（分類）</h4><p>讀 Fly A 的 32 個數字，輸出五類的分數。</p></div>
+      <div class="card"><h4>T（步數）</h4><p>訊號在連接圖上傳幾步；修正後，T 步就是傳 T 跳。</p></div>
+      <div class="card"><h4>對照方法</h4><p>E5 直接接 LR／MLP，或先用 LDA 壓成 4 維再接分類器。</p></div>
+    </div>
+    <h3>資料與評估規則</h3>
+    <ul>
+      <li>1,000 筆合成通話，每類 200 筆；切成 train 700、validation 150、test 150。</li>
+      <li>切分以「情境家族」（66 個）為單位，同一種情境不會同時出現在 train 和 test，避免模型背題目。</li>
+      <li>調參與選模只看 validation；test 在設定鎖定前不打開，而且每個候選只能評估一次。</li>
+    </ul>
+  </div>
+</section>
+
+</div>
