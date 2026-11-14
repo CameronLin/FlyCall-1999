@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FlyCall-1999 專案介紹</title>
+<!--
+  編輯說明
+  - 這是純 HTML／CSS 的單一檔案，沒有任何程式產生的內容，可以直接用文字編輯器修改。
+  - 每個章節都是一個 <section class="part" id="...">；新增章節時複製一個 section，並在上方 <nav> 加一個連結。
+  - 每個階段的「為什麼改／做了什麼／結果／解釋」放在 <div class="block why|what|result|meaning"> 裡。
+  - 第 0 節的長條圖：改 style="--v:0.660" 的數字即可改變長度，同時記得改旁邊顯示的數字與下方的對照表。
+  - 數字來源：.scratch/1999-connectome-demo/issues/01–25 工作票與 runs/ 內的結果；除特別標示的 test，分數都是 validation Macro-F1。
+  - 最後更新：2026-11-14
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg: #f3f4f1; --paper: #ffffff; --ink: #16191c; --ink-2: #4f565c; --ink-3: #7b8288; --rule: #dadcd7; --tint: #f7f8f5;
+  --accent: #2a6fb0; --accent-soft: #e6eff8; --fly: #2a6fb0; --base: #9aa1a7;
+  --up: #23794a; --down: #b5452f; --warn: #9a6a12; --warn-soft: #fbf3e2;
+  --f: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+  --f-head: "Noto Serif TC", "Noto Sans TC", serif; --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101214; --paper: #181b1e; --ink: #eceef0; --ink-2: #aab1b7; --ink-3: #7f878e; --rule: #2d3237; --tint: #1d2124;
+    --accent: #6aa6e0; --accent-soft: #1b2a38; --fly: #6aa6e0; --base: #69717a;
+    --up: #5cbd85; --down: #e27b62; --warn: #d9a64a; --warn-soft: #2c2416; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101214; --paper: #181b1e; --ink: #eceef0; --ink-2: #aab1b7; --ink-3: #7f878e; --rule: #2d3237; --tint: #1d2124;
+  --accent: #6aa6e0; --accent-soft: #1b2a38; --fly: #6aa6e0; --base: #69717a;
+  --up: #5cbd85; --down: #e27b62; --warn: #d9a64a; --warn-soft: #2c2416; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f); line-height: 1.75; font-size: 16px; }
+a { color: var(--accent); }
+.bar { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule); padding: 8px 16px; display: flex; gap: 6px 14px; flex-wrap: wrap; align-items: center; font-size: .86rem; }
+.bar b { font-family: var(--f-head); font-size: .95rem; margin-right: 6px; }
+.bar a { color: var(--ink-2); text-decoration: none; white-space: nowrap; }
+.bar a:hover { color: var(--accent); }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px 64px; }
+header.hero { padding: 40px 0 24px; }
+.eyebrow { font-size: .8rem; color: var(--ink-3); letter-spacing: .04em; }
+h1 { font-family: var(--f-head); font-size: clamp(1.7rem, 4vw, 2.4rem); line-height: 1.3; margin: 6px 0 12px; }
+h2 { font-family: var(--f-head); font-size: 1.45rem; line-height: 1.4; margin: 0; }
+h3 { font-size: 1.05rem; margin: 18px 0 8px; }
+.lead { font-size: 1.05rem; color: var(--ink-2); max-width: 46em; margin: 0; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 14px; }
+.meta span { font-size: .78rem; border: 1px solid var(--rule); border-radius: 999px; padding: 2px 10px; color: var(--ink-2); background: var(--paper); }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+  border-radius: var(--radius); overflow: hidden; margin-top: 20px; }
+.kpi { background: var(--paper); padding: 14px 16px; display: grid; gap: 2px; align-content: start; }
+.kpi-k { font-size: .78rem; color: var(--ink-2); }
+.kpi-v { font-family: var(--f-mono); font-size: 1.7rem; font-weight: 500; }
+.kpi-n { font-size: .78rem; color: var(--ink-3); }
+section.part { margin-top: 44px; }
+.part-head { display: flex; gap: 12px; align-items: baseline; margin-bottom: 4px; }
+.part-no { font-family: var(--f-mono); font-size: .85rem; color: var(--accent); border: 1px solid var(--accent); border-radius: 6px; padding: 0 7px; flex: none; }
+.date { font-size: .8rem; color: var(--ink-3); margin: 2px 0 12px; }
+.panel { background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px 20px; margin-top: 12px; }
+.tickets { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 6px; }
+.tickets span { font-family: var(--f-mono); font-size: .74rem; background: var(--tint); border: 1px solid var(--rule); border-radius: 6px; padding: 0 7px; color: var(--ink-2); }
+.block { border-left: 3px solid var(--rule); padding: 2px 0 2px 14px; margin: 14px 0; }
+.block > .tag { font-size: .76rem; font-weight: 700; letter-spacing: .04em; display: block; margin-bottom: 2px; }
+.block p, .block ul { margin: 4px 0; }
+.block ul { padding-left: 1.2em; }
+.block.why { border-color: var(--warn); } .block.why > .tag { color: var(--warn); }
+.block.what { border-color: var(--ink-3); } .block.what > .tag { color: var(--ink-2); }
+.block.result { border-color: var(--accent); } .block.result > .tag { color: var(--accent); }
+.block.meaning { border-color: var(--up); } .block.meaning > .tag { color: var(--up); }
+.tablewrap { overflow-x: auto; margin: 8px 0; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { border-bottom: 1px solid var(--rule); padding: 7px 10px; text-align: left; vertical-align: top; }
+thead th { font-size: .8rem; color: var(--ink-2); font-weight: 500; background: var(--tint); white-space: nowrap; }
+td.num, th.num { text-align: right; font-family: var(--f-mono); white-space: nowrap; }
+tr.hl td { background: var(--accent-soft); }
+.up { color: var(--up); } .down { color: var(--down); }
+.callout { background: var(--warn-soft); border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent); border-radius: var(--radius); padding: 12px 16px; margin: 12px 0; font-size: .95rem; }
+pre.flow { font-family: var(--f-mono); font-size: .85rem; background: var(--tint); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; overflow-x: auto; line-height: 1.6; margin: 10px 0; }
+/* timeline */
+.timeline { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.timeline li { display: grid; grid-template-columns: 74px 1fr; gap: 12px; align-items: baseline; }
+.timeline .when { font-family: var(--f-mono); font-size: .8rem; color: var(--ink-3); }
+.timeline a { font-weight: 500; text-decoration: none; }
+/* bar chart */
+.chart { display: grid; gap: 10px; margin-top: 8px; }
+.row { display: grid; grid-template-columns: minmax(130px, 210px) 1fr; gap: 12px; align-items: center; }
+.row .lab { font-size: .85rem; line-height: 1.4; }
+.row .lab small { display: block; color: var(--ink-3); font-size: .75rem; }
+.bars { display: grid; gap: 4px; }
+.b { position: relative; height: 18px; margin-right: 118px; }
+.b i { display: block; height: 100%; width: calc((var(--v) - 0.5) / 0.5 * 100%); border-radius: 0 4px 4px 0; }
+.b.fly i { background: var(--fly); } .b.base i { background: var(--base); }
+.b em { position: absolute; top: 0; font-style: normal; font-family: var(--f-mono); font-size: .76rem; line-height: 18px; left: calc((var(--v) - 0.5) / 0.5 * 100% + 6px); color: var(--ink); }
+.legend { display: flex; gap: 16px; font-size: .8rem; color: var(--ink-2); margin-top: 6px; flex-wrap: wrap; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+.axis { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: .72rem; color: var(--ink-3); margin-left: calc(min(210px, 40%) + 12px); margin-right: 118px; }
+details { margin-top: 10px; }
+summary { cursor: pointer; color: var(--ink-2); font-size: .88rem; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.card { background: var(--tint); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; }
+.card h4 { margin: 0 0 4px; font-size: .95rem; }
+.card p { margin: 0; font-size: .9rem; color: var(--ink-2); }
+footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--ink-3); }
+@media (max-width: 720px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid2 { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 1fr; gap: 4px; }
+  .axis { margin-left: 0; margin-right: 118px; }
+  .timeline li { grid-template-columns: 1fr; gap: 0; }
+  .panel { padding: 14px; }
+}
+@media print { .bar { display: none; } body { background: #fff; } .panel { break-inside: avoid; } }
+</style>
+</head>
+<body>
+
+<nav class="bar" aria-label="章節">
+  <b>FlyCall-1999</b>
+  <a href="#overview">0 總覽</a>
+  <a href="#idea">1 研究問題</a>
+  <a href="#s1">2 基礎建設</a>
+  <a href="#s2">3 基準模型</a>
+  <a href="#s3">4 第一代果蠅</a>
+  <a href="#s4">5 找原因</a>
+  <a href="#s5">6 有正負號的圖</a>
+  <a href="#s6">7 程式錯誤</a>
+  <a href="#s7">8 T=2 vs T=4</a>
+  <a href="#s8">9 資料 v2</a>
+  <a href="#conclusion">10 結論</a>
+  <a href="#tickets">附錄：工作票</a>
+</nav>
+
+<main class="wrap">
+
+<header class="hero">
+  <span class="eyebrow">專案介紹 ｜ 2026-10 → 2026-11-14</span>
+  <h1>用果蠅的大腦連線，分類 1999 市民專線的通話</h1>
+  <p class="lead">把真實果蠅神經系統的連接圖當作模型的「腦」：Fly A 負責把通話壓縮成重點，Fly B 負責判斷屬於哪一類。這份介紹依時間順序，說明每一版為什麼要改、改了什麼，以及每一版的結果代表什麼。</p>
+  <div class="meta">
+    <span>合成資料 1,000 筆、五類各 200 筆</span><span>train 700／validation 150／test 150</span>
+    <span>三個 seed：42、1337、2026</span><span>資料 v2.0.0：自動品質檢查通過，未經人工複核</span>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><span class="kpi-k">第一代果蠅模型</span><span class="kpi-v">0.660</span><span class="kpi-n">validation，2026-10</span></div>
+    <div class="kpi"><span class="kpi-k">資料 v2 的最佳果蠅組合</span><span class="kpi-v">0.938</span><span class="kpi-n">validation，T=2・G1・Fly A→SVM</span></div>
+    <div class="kpi"><span class="kpi-k">一次性 test（依規則選定）</span><span class="kpi-v">0.887</span><span class="kpi-n">T=2・G2・Fly A→Fly B，± 0.018</span></div>
+    <div class="kpi"><span class="kpi-k">對照：LDA → SVM 的 test</span><span class="kpi-v">0.899</span><span class="kpi-n">傳統方法</span></div>
+  </div>
+</header>
+
+<!-- ============================== 0 總覽 ============================== -->
+<section class="part" id="overview">
+  <div class="part-head"><span class="part-no">0</span><h2>總覽：分數怎麼一路變化</h2></div>
+  <p class="date">validation Macro-F1（0～1，越高越好）。藍色是果蠅模型在該階段的最佳結果，灰色是同階段的對照方法。最後一列是 test。</p>
+  <div class="panel">
+    <div class="chart" role="img" aria-label="各階段果蠅模型與對照方法的 Macro-F1，數字見下方表格">
+      <div class="row"><div class="lab">第一代果蠅<small>階段 4 ｜ G0、T=2</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.660"><i></i><em>0.660</em></div><div class="b base" style="--v:0.902"><i></i><em>0.902 E5→MLP</em></div></div></div>
+      <div class="row"><div class="lab">拆開測：Fly A → SVM<small>階段 5 ｜ 工作票 17</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.792"><i></i><em>0.792</em></div><div class="b base" style="--v:0.900"><i></i><em>0.900 LDA→SVM</em></div></div></div>
+      <div class="row"><div class="lab">加入類別分離＋有正負號的圖<small>階段 6 ｜ 修正前程式</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.922"><i></i><em>0.922</em></div><div class="b base" style="--v:0.900"><i></i><em>0.900 LDA→SVM</em></div></div></div>
+      <div class="row"><div class="lab">修正跳數錯誤後<small>階段 7 ｜ T=2</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.918"><i></i><em>0.918</em></div><div class="b base" style="--v:0.900"><i></i><em>0.900 LDA→SVM</em></div></div></div>
+      <div class="row"><div class="lab">T=4<small>階段 8 ｜ 資料 v1</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.928"><i></i><em>0.928</em></div><div class="b base" style="--v:0.900"><i></i><em>0.900 LDA→SVM</em></div></div></div>
+      <div class="row"><div class="lab">資料 v2<small>階段 9 ｜ validation</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.938"><i></i><em>0.938</em></div><div class="b base" style="--v:0.913"><i></i><em>0.913 LDA→SVM</em></div></div></div>
+      <div class="row"><div class="lab"><b>資料 v2：test（只評估一次）</b><small>依規則選定的果蠅模型</small></div>
+        <div class="bars"><div class="b fly" style="--v:0.887"><i></i><em>0.887</em></div><div class="b base" style="--v:0.899"><i></i><em>0.899 LDA→SVM</em></div></div></div>
+    </div>
+    <div class="axis" aria-hidden="true"><span>0.50</span><span>0.75</span><span>1.00</span></div>
+    <div class="legend"><span style="--c: var(--fly)">果蠅模型（該階段最佳）</span><span style="--c: var(--base)">對照方法</span></div>
+    <details><summary>以表格檢視</summary>
+      <div class="tablewrap"><table>
+        <thead><tr><th>階段</th><th>果蠅模型</th><th class="num">分數</th><th>對照</th><th class="num">分數</th></tr></thead>
+        <tbody>
+          <tr><td>4 第一代果蠅</td><td>Fly A → Fly B（G0、T=2）</td><td class="num">0.660</td><td>E5 → MLP</td><td class="num">0.902</td></tr>
+          <tr><td>5 拆開測</td><td>Fly A → SVM</td><td class="num">0.792</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+          <tr><td>6 有正負號的圖</td><td>G2-glu+・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.922</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+          <tr><td>7 修正跳數</td><td>G1・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.918</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+          <tr><td>8 T=4（資料 v1）</td><td>G2-glu+・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.928</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+          <tr><td>9 資料 v2（validation）</td><td>G1・Fly A（距離＋類別分離）→ SVM（T=2）</td><td class="num">0.938</td><td>LDA → SVM</td><td class="num">0.913</td></tr>
+          <tr class="hl"><td>9 資料 v2（test）</td><td>G2・Fly A（距離＋類別分離）→ Fly B（T=2）</td><td class="num">0.887</td><td>LDA → SVM</td><td class="num">0.899</td></tr>
+        </tbody>
+      </table></div>
+      <p>各階段的資料、程式與圖不同，這張圖用來看趨勢；同一階段內的比較才是嚴格的比較。</p>
+    </details>
+  </div>
+
+  <h3>時間軸</h3>
+  <ol class="timeline">
+    <li><span class="when">10 上旬</span><span><a href="#s1">基礎建設</a>：資料讀取器、果蠅連接圖、500 點子圖</span></li>
+    <li><span class="when">10 中旬</span><span><a href="#s2">基準模型</a>：TF-IDF、E5 → LR／MLP、LDA</span></li>
+    <li><span class="when">10 下旬</span><span><a href="#s3">第一代果蠅模型</a>：0.660，明顯落後</span></li>
+    <li><span class="when">10/26–11/13</span><span><a href="#s4">找原因</a>：Fly A 是瓶頸，Fly B 訓練不夠</span></li>
+    <li><span class="when">11/13</span><span><a href="#s5">有正負號的圖與各自調參</a>：加入「類別分離」後大幅提升</span></li>
+    <li><span class="when">11/13</span><span><a href="#s6">發現程式錯誤</a>：T=2 只傳 1 跳，修正後重跑</span></li>
+    <li><span class="when">11/13–14</span><span><a href="#s7">T=2 vs T=4 與腦部比較</a></span></li>
+    <li><span class="when">11/14</span><span><a href="#s8">資料改版 v2.0.0</a>：重寫 1,000 筆，第一次打開 test</span></li>
+  </ol>
+</section>
+
+<!-- ============================== 1 研究問題 ============================== -->
+<section class="part" id="idea">
+  <div class="part-head"><span class="part-no">1</span><h2>這個專案在研究什麼</h2></div>
+  <div class="panel">
+    <h3 style="margin-top:0">問題</h3>
+    <p>把臺北市 1999 市民專線的通話逐字稿分成五類：<b>人行道維護</b>、<b>道路坑洞與不平</b>、<b>公園綠地與設施</b>、<b>垃圾車服務</b>、<b>路面清潔</b>。</p>
+    <h3>核心想法</h3>
+    <p>不用一般設計的類神經網路，而是用<b>真實果蠅神經系統的連接圖</b>（MaleCNS）當模型的結構，只訓練連線的強弱，看它能不能完成分類。</p>
+    <pre class="flow">通話文字
+  → E5 語言模型：轉成 384 維向量（固定，不訓練）
+  → Fly A：在 500 個神經元的連接圖上傳遞訊號，把 384 維壓成 32 維（降維）
+  → Fly B：另一份同樣結構的連接圖，把 32 維分成 5 類（分類）</pre>
+    <div class="grid2">
+      <div class="card"><h4>Fly A（降維）</h4><p>把通話壓縮成 32 個數字，希望相近的通話壓縮後仍然相近。</p></div>
+      <div class="card"><h4>Fly B（分類）</h4><p>讀 Fly A 的 32 個數字，輸出五類的分數。</p></div>
+      <div class="card"><h4>T（步數）</h4><p>訊號在連接圖上傳幾步；修正後，T 步就是傳 T 跳。</p></div>
+      <div class="card"><h4>對照方法</h4><p>E5 直接接 LR／MLP，或先用 LDA 壓成 4 維再接分類器。</p></div>
+    </div>
+    <h3>資料與評估規則</h3>
+    <ul>
+      <li>1,000 筆合成通話，每類 200 筆；切成 train 700、validation 150、test 150。</li>
+      <li>切分以「情境家族」（66 個）為單位，同一種情境不會同時出現在 train 和 test，避免模型背題目。</li>
+      <li>調參與選模只看 validation；test 在設定鎖定前不打開，而且每個候選只能評估一次。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================== 2 基礎建設 ============================== -->
+<section class="part" id="s1">
+  <div class="part-head"><span class="part-no">2</span><h2>第一階段：基礎建設</h2></div>
+  <p class="date">2026-10 上旬</p>
+  <div class="tickets"><span>01 資料讀取器</span><span>02 MaleCNS 來源</span><span>03 有向圖匯入</span><span>04 子圖選取</span><span>05 輸入／輸出點</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><p>之後每個實驗都要能完全重現：資料不能被改到、連接圖每次選出來都要一樣。</p></div>
+    <div class="block what"><span class="tag">做了什麼</span><ul>
+      <li>資料讀取器每次載入都檢查筆數、類別數量和切分，而且只讀不改。</li>
+      <li>下載雄果蠅神經系統官方資料（約 1 GB、1.5 億條連線），轉成「點」與「有方向的邊」兩張表，並記錄校驗碼。</li>
+      <li>用固定規則從整個神經系統選出 <b>500 個神經元、2,216 條連線</b>（之後稱為 G0）。</li>
+      <li>在 500 點中選 32 個輸入點、32 個輸出點，確認訊號走得到。</li>
+    </ul></div>
+    <div class="block result"><span class="tag">結果</span><p>這一階段沒有分數；產出是可重現的資料、連接圖與輸入／輸出設定。</p></div>
+  </div>
+</section>
+
+<!-- ============================== 3 基準模型 ============================== -->
+<section class="part" id="s2">
+  <div class="part-head"><span class="part-no">3</span><h2>第二階段：基準模型</h2></div>
+  <p class="date">2026-10 中旬</p>
+  <div class="tickets"><span>06 TF-IDF</span><span>09 E5 嵌入與分類器</span><span>10 評估器與 test 閘門</span><span>11 E5→LDA→LR</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><p>果蠅模型需要一個參考標準，才知道表現算好還是不好。</p></div>
+    <div class="block result"><span class="tag">結果（資料 v1）</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>工作票</th><th>模型</th><th class="num">validation Macro-F1</th></tr></thead>
+        <tbody>
+          <tr><td>06</td><td>字詞頻率 TF-IDF ＋ Linear SVM</td><td class="num">0.980</td></tr>
+          <tr><td>09</td><td>E5 → LR</td><td class="num">0.868</td></tr>
+          <tr><td>09</td><td>E5 → MLP</td><td class="num">0.902</td></tr>
+          <tr><td>11</td><td>E5 → LDA → LR</td><td class="num">0.900</td></tr>
+        </tbody>
+      </table></div>
+      <p>工作票 10 另外建立共用的評分工具，以及「test 只能用一次」的閘門。</p>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li>E5 系列的基準大約在 0.87–0.90。</li>
+      <li>最簡單的 TF-IDF 反而拿到 <b>0.98</b>：v1 資料裡有固定句型和關鍵字，靠「認字」就能答對。這是之後資料改版的伏筆（見<a href="#s8">第 9 節</a>）。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 4 第一代果蠅 ============================== -->
+<section class="part" id="s3">
+  <div class="part-head"><span class="part-no">4</span><h2>第三階段：第一代果蠅模型</h2></div>
+  <p class="date">2026-10 下旬</p>
+  <div class="tickets"><span>07 資料流與訓練規則</span><span>08 小型模型核心</span><span>12 Fly A／B 訓練</span><span>13 多 seed 比較</span><span>14 鎖定模型與推論 API</span><span>15 Streamlit 展示（已移除）</span></div>
+  <div class="panel">
+    <div class="block what"><span class="tag">做了什麼</span><ul>
+      <li>訓練規則：Fly A 不看答案，只學「保留距離」；Fly B 才看答案學分類。</li>
+      <li>先在小型假圖上寫好訊號傳遞的核心，再到真實 G0 上用三個 seed 訓練。</li>
+    </ul></div>
+    <div class="block result"><span class="tag">結果</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>模型</th><th class="num">validation Macro-F1</th></tr></thead>
+        <tbody>
+          <tr><td>E5 → MLP（最佳）</td><td class="num">0.902</td></tr>
+          <tr><td>E5 → LDA → LR</td><td class="num">0.900</td></tr>
+          <tr class="hl"><td>Fly A → Fly B（三個 seed：0.65／0.59／0.74）</td><td class="num">0.660</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li>果蠅模型比基準低了將近 0.25，而且不同 seed 差很多，表現不穩定。</li>
+      <li>依你的指定，先鎖定 E5 → MLP 當展示用模型，做成推論 API 與命令列工具（工作票 14）；Streamlit 網頁展示（工作票 15）已於 2026-11-14 移除。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 5 找原因 ============================== -->
+<section class="part" id="s4">
+  <div class="part-head"><span class="part-no">5</span><h2>第四階段：找出分數低的原因</h2></div>
+  <p class="date">2026-10-26 → 11-13</p>
+  <div class="tickets"><span>16 表徵診斷</span><span>17 降維器 × 分類器交叉實驗</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><p>要知道分數低是 Fly A 壓縮的問題、Fly B 分類的問題，還是兩者都有。</p></div>
+    <div class="block what"><span class="tag">做了什麼</span><ul>
+      <li>工作票 16：把 Fly A 的輸出直接接 MLP，看資訊有沒有在壓縮時遺失。</li>
+      <li>工作票 17：依你的要求把降維與分類完全拆開，做成 {E5, LDA, Fly A} × {SVM, Fly B} 的交叉表。</li>
+    </ul></div>
+    <div class="block result"><span class="tag">結果</span>
+      <p>工作票 16：原始 E5 接 MLP 為 0.902，Fly A 壓縮後再接 MLP 只剩 0.776。</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>降維 ＼ 分類</th><th class="num">SVM</th><th class="num">Fly B（原訓練量）</th><th class="num">Fly B（訓練加長）</th></tr></thead>
+        <tbody>
+          <tr><td>E5（不降維）</td><td class="num">0.925</td><td class="num">0.811</td><td class="num">0.920</td></tr>
+          <tr><td>LDA 4 維</td><td class="num">0.900</td><td class="num">0.847</td><td class="num">0.865</td></tr>
+          <tr class="hl"><td>Fly A 32 維</td><td class="num">0.792</td><td class="num">0.660</td><td class="num">0.804</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li><b>Fly A 是主要瓶頸</b>：同樣接 SVM，Fly A 比 LDA 低 0.108，壓縮時丟掉了分類資訊。</li>
+      <li><b>Fly B 原本是訓練不夠</b>：訓練加長後，Fly B 與 SVM 差不多。</li>
+      <li>另外試了加「E5 旁路」的改良版，可到 0.905，但因為是在同一份 validation 上挑出來的，只當研究候選。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 6 有正負號的圖 ============================== -->
+<section class="part" id="s5">
+  <div class="part-head"><span class="part-no">6</span><h2>第五階段：有正負號的圖，Fly A／Fly B 各自調參</h2></div>
+  <p class="date">2026-11-13</p>
+  <div class="tickets"><span>18 神經傳導物質</span><span>19 固定正負號的圖核心</span><span>20 各自調參</span><span>21 300 增強＋200 抑制</span><span>22 四張圖比較</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><ul>
+      <li>原本的圖所有連線都是「增強」，但真實大腦有抑制神經元。希望改成 300 個增強點加 200 個抑制點，<b>只訓練連線強弱、不改正負號</b>。</li>
+      <li>依上一階段的結論，Fly A 和 Fly B 要分開調到最好，而且規則事先寫定。</li>
+    </ul></div>
+    <div class="block what"><span class="tag">做了什麼</span><ul>
+      <li>找到神經傳導物質資料，判斷每個神經元是增強或抑制（麩胺酸、組織胺算抑制）。</li>
+      <li>選出 300 增強＋200 抑制，共 500 點、<b>6,691 條連線</b>。</li>
+      <li>調參規則：依情境家族分組的 5 折交叉驗證、3 個 seed、3 種學習率，由交叉驗證決定訓練幾個 epoch。</li>
+      <li>Fly A 多一個訓練目標「<b>距離＋類別分離</b>」（SupCon）：壓縮時同時保留距離與類別差異。</li>
+      <li>比較四張圖：G0 原圖、G1 新選點全正、G2 新選點有正負、G2-glu+（麩胺酸改當增強，用來檢查結論會不會因此改變）。</li>
+    </ul></div>
+    <div class="block result"><span class="tag">結果（資料 v1、修正前程式）</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>組合</th><th class="num">G0</th><th class="num">G1</th><th class="num">G2</th><th class="num">G2-glu+</th></tr></thead>
+        <tbody>
+          <tr><td>Fly A（只保留距離）→ SVM</td><td class="num">0.764</td><td class="num">0.866</td><td class="num">0.888</td><td class="num">0.870</td></tr>
+          <tr><td>Fly A（距離＋類別分離）→ SVM</td><td class="num">0.881</td><td class="num">0.902</td><td class="num">0.919</td><td class="num">0.910</td></tr>
+          <tr><td>LDA → Fly B</td><td class="num">0.858</td><td class="num">0.900</td><td class="num">0.896</td><td class="num">0.907</td></tr>
+          <tr><td>Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.860</td><td class="num">0.904</td><td class="num">0.902</td><td class="num">0.922</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li><b>「距離＋類別分離」是最有效的改進</b>：Fly A → SVM 從 0.792 提升到 0.88–0.92。</li>
+      <li>Fly B 已練到位：LDA → Fly B 大約等於 LDA → SVM（0.900）。</li>
+      <li>G0 明顯比新圖差，看起來像「換圖有效」；下一階段發現這其實主要是程式錯誤造成的。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 7 程式錯誤 ============================== -->
+<section class="part" id="s6">
+  <div class="part-head"><span class="part-no">7</span><h2>第六階段：發現程式錯誤，T=2 只傳了 1 跳</h2></div>
+  <p class="date">2026-11-13</p>
+  <div class="tickets"><span>23 圖核心跳數</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">發現</span><ul>
+      <li>做腦部比較時發現：程式第一步時所有神經元狀態都是 0，沒有訊號可傳，所以 <b>T 步只能傳 T−1 跳</b>，主設定 T=2 等於只有 1 跳。</li>
+      <li>結果只有「輸入點直接連到輸出點」的少數連線會被訓練（G0 只有 16 條）。</li>
+      <li>G0 的 32 個輸出點中有 <b>23 個永遠是 0</b>，Fly A 實際只輸出 9 維。</li>
+    </ul></div>
+    <div class="block what"><span class="tag">做了什麼</span><p>你選擇「T 步＝T 跳」；修正後新增測試，並用修正後的程式重跑所有實驗。舊結果保留作對照。</p></div>
+    <div class="block result"><span class="tag">結果（資料 v1、修正後、T=2）</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>組合</th><th class="num">G0</th><th class="num">G1</th><th class="num">G2</th><th class="num">G2-glu+</th></tr></thead>
+        <tbody>
+          <tr><td>Fly A（只保留距離）→ SVM</td><td class="num">0.865</td><td class="num">0.855</td><td class="num">0.879</td><td class="num">0.865</td></tr>
+          <tr><td>Fly A（距離＋類別分離）→ SVM</td><td class="num">0.879</td><td class="num">0.904</td><td class="num">0.903</td><td class="num">0.889</td></tr>
+          <tr><td>LDA → Fly B</td><td class="num">0.860</td><td class="num">0.904</td><td class="num">0.898</td><td class="num">0.898</td></tr>
+          <tr><td>Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.890</td><td class="num">0.918</td><td class="num">0.877</td><td class="num">0.886</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li>G0 與新圖的差距幾乎消失（例如 G0 的 Fly A → SVM 從 0.764 變成 0.865），所以上一階段的「換圖效果」<b>主要是這個錯誤造成的</b>。</li>
+      <li>修正後各組合大多落在 0.86–0.92，與 LDA → SVM（0.900）相近，可能已接近這份資料的上限。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 8 T=2 vs T=4 ============================== -->
+<section class="part" id="s7">
+  <div class="part-head"><span class="part-no">8</span><h2>第七階段：T=2 對 T=4，以及腦部比較</h2></div>
+  <p class="date">2026-11-13 → 11-14</p>
+  <div class="tickets"><span>24 T=2 vs T=4</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><p>修正後，T=2 時只有 8–12% 的連線會影響輸出；改成 T=4，G0 可被訓練的連線從 12% 提高到 76%，想知道多傳幾跳有沒有幫助。</p></div>
+    <div class="block result"><span class="tag">結果（資料 v1）</span><ul>
+      <li>最高分：G2-glu+ 的 Fly A（距離＋類別分離）→ Fly B，<b>0.928</b>。</li>
+      <li>有抑制的圖（G2、G2-glu+）在「距離＋類別分離」組合上，T=4 一致變好；全部是增強的圖（G0、G1）持平或變差。</li>
+    </ul></div>
+    <h3>腦部比較：Fly A 和 Fly B 的「腦」差在哪</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th>觀察</th><th>資料 v1</th><th>資料 v2</th></tr></thead>
+      <tbody>
+        <tr><td>Fly B 改連線的幅度（相對 Fly A）</td><td class="num">4–22 倍</td><td class="num">3–18 倍</td></tr>
+        <tr><td>Fly B 神經元的類別選擇性 η²（中位數）</td><td class="num">0.76–0.87</td><td class="num">0.70–0.79</td></tr>
+        <tr><td>Fly A（只保留距離）的類別選擇性 η²</td><td class="num">0.24–0.41</td><td class="num">0.18–0.65</td></tr>
+      </tbody>
+    </table></div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li>分類（Fly B）需要大幅改寫連線，而且大部分神經元變成在「分辨類別」；降維（Fly A）幾乎維持原本的連線。</li>
+      <li>詳細的 17 張圖見 <a href="FlyCall-1999_FlyA_FlyB_分析報告.html">FlyA_FlyB 分析報告</a>；訊號怎麼一跳一跳傳出去，見 <a href="FlyCall-1999_連接圖訊號傳遞.html">連接圖訊號傳遞</a>。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 9 資料 v2 ============================== -->
+<section class="part" id="s8">
+  <div class="part-head"><span class="part-no">9</span><h2>第八階段：資料改版 v2.0.0，第一次打開 test</h2></div>
+  <p class="date">2026-11-14</p>
+  <div class="tickets"><span>25 正式資料 v2.0.0</span><span>10 test 閘門（實際使用）</span></div>
+  <div class="panel">
+    <div class="block why"><span class="tag">為什麼</span><p>v1 的資料評分約 65／100：</p><ul>
+      <li><b>模板化</b>：開場白只有 8 種，約七成的對話行重複出現。</li>
+      <li><b>捷徑詞</b>：公園類 200 筆中有 123 筆出現「一般公園」，幾乎就是類別名稱。</li>
+      <li><b>人工複核始終沒做完。</b></li>
+      <li>第 3 節 TF-IDF 拿到 0.98，也呼應這些問題。</li>
+    </ul></div>
+    <div class="block what"><span class="tag">做了什麼</span><ul>
+      <li>逐筆重寫全部 1,000 筆；類別、情境家族、切分與配額都不變，只換逐字稿內容。</li>
+      <li>加入真實感：口語、台語夾雜、打斷與重複，以及難分的邊界案例。</li>
+      <li>依你的決定，以<b>自動品質檢查取代人工複核</b>（規格 §7.3 的變更），結果標示「未經人工複核」。</li>
+    </ul>
+      <div class="tablewrap"><table>
+        <thead><tr><th>品質指標</th><th class="num">v1</th><th class="num">v2</th></tr></thead>
+        <tbody>
+          <tr><td>重複使用的對話行</td><td class="num">約 70%</td><td class="num">19.6%</td></tr>
+          <tr><td>開場白種類</td><td class="num">8</td><td class="num">1,000</td></tr>
+          <tr><td>兩筆間最高相似度</td><td class="num">0.48</td><td class="num">0.26</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block result"><span class="tag">結果：重新訓練（validation）</span>
+      <div class="tablewrap"><table>
+        <thead><tr><th>項目</th><th class="num">v1</th><th class="num">v2</th><th>變化</th></tr></thead>
+        <tbody>
+          <tr><td>E5 → LR</td><td class="num">0.868</td><td class="num">0.953</td><td class="up">上升</td></tr>
+          <tr><td>E5 → MLP</td><td class="num">0.918</td><td class="num">0.946</td><td class="up">上升</td></tr>
+          <tr><td>LDA → SVM</td><td class="num">0.900</td><td class="num">0.913</td><td>持平</td></tr>
+          <tr><td>Fly A（距離＋類別分離）→ SVM（T=2）</td><td class="num">0.88–0.90</td><td class="num">0.93–0.94</td><td class="up">四張圖都上升</td></tr>
+          <tr><td>LDA → Fly B（T=2）</td><td class="num">0.86–0.90</td><td class="num">0.81–0.89</td><td class="down">多數下降</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>T=4 的優勢在 v2 消失，大多持平或變差；v1 的「有正負號的圖適合 T=4」不再成立。</li>
+        <li>「人行道」與「路面清潔」互相認錯從 8 筆降到 2 筆；公園類拿掉捷徑詞後沒有變差。</li>
+      </ul>
+    </div>
+    <div class="block result"><span class="tag">結果：一次性 test 評估</span>
+      <p>讀 test 前，先用 validation 鎖定 51 個候選與選模規則，並確認從存檔重新計算的 validation 完全一致；每個候選只評估一次。</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>模型</th><th class="num">test Macro-F1</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td><b>依規則選定</b>：T=2・G2・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.887 ± 0.018</td></tr>
+          <tr><td>LDA → SVM</td><td class="num">0.899</td></tr>
+          <tr><td>E5 → LDA → LR</td><td class="num">0.891</td></tr>
+          <tr><td>E5 → MLP</td><td class="num">0.845</td></tr>
+          <tr><td>E5 → LR（validation 為 0.953）</td><td class="num">0.791</td></tr>
+          <tr><td>全部候選最高（僅參考，不改變選擇）：T=4・G2-glu+・Fly A（距離＋類別分離）→ SVM</td><td class="num">0.950 ± 0.004</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="block meaning"><span class="tag">解釋</span><ul>
+      <li>去掉捷徑後，模型不能再靠背句型；validation 整體略升，但 test 顯示有些情境家族明顯比較難（E5 → LR 掉了 0.16）。</li>
+      <li>經過「距離＋類別分離」訓練的 Fly A 表徵，在 test 上比原始 E5 穩定。</li>
+      <li>依規則選定的果蠅模型與簡單的 LDA 方法大致同一水準，還沒有穩定勝出。</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============================== 10 結論 ============================== -->
+<section class="part" id="conclusion">
+  <div class="part-head"><span class="part-no">10</span><h2>目前的結論</h2></div>
+  <div class="panel">
+    <ol>
+      <li><b>果蠅連接圖可以完成分類，表現大致與傳統方法同一水準</b>：test 約 0.89，最高 0.95，但還沒有穩定勝過 LDA → SVM。</li>
+      <li><b>最大的改進來自訓練目標，而不是圖本身</b>：讓 Fly A 同時保留距離與類別（SupCon），是從 0.66 提升到 0.9 左右的關鍵。</li>
+      <li><b>Fly A 與 Fly B 的「腦」很不一樣</b>：分類的 Fly B 大幅改寫連線、神經元高度分辨類別；降維的 Fly A 幾乎維持原樣。</li>
+      <li><b>換圖、加抑制、加步數的效果都不大，而且會隨資料改變</b>：v1 看到的「加抑制有效」「T=4 較好」，部分來自程式錯誤或資料特性，換到 v2 就不明顯。</li>
+      <li><b>資料品質會改變結論</b>：v1 有捷徑，模型可以靠背句型；v2 去掉捷徑後才看得出哪些情境真正比較難。</li>
+    </ol>
+    <div class="callout"><b>限制：</b>資料是合成的，而且沒有人工複核；validation 與 test 各只有 150 筆（每類 30 筆），單一數字的波動較大。結果是研究性質，不代表真實 1999 業務的表現。</div>
+  </div>
+
+  <h3>可能的下一步</h3>
+  <!-- 依後續規劃自行增刪 -->
+  <ul>
+    <li>以 v2 結果決定要保留哪個果蠅組合，並考慮更新展示用的鎖定模型（目前仍是 v1 的 E5 → MLP）。</li>
+    <li>若要正式報告，可以安排少量人工抽查 v2 資料，補強「未經人工複核」的限制。</li>
+    <li>研究 LDA → Fly B 在 v2 變差的原因（目前只是推測：壓成 4 維後類別分得不夠開）。</li>
+  </ul>
+</section>
+
+<!-- ============================== 附錄 ============================== -->
+<section class="part" id="tickets">
+  <div class="part-head"><span class="part-no">附</span><h2>工作票一覽</h2></div>
+  <p class="date">位置：<code>.scratch/1999-connectome-demo/issues/</code></p>
+  <div class="panel">
+    <div class="tablewrap"><table>
+      <thead><tr><th>#</th><th>工作票</th><th>階段</th><th>狀態</th></tr></thead>
+      <tbody>
+        <tr><td class="num">01</td><td>M2.1 資料契約與唯讀讀取器</td><td>基礎建設</td><td>完成</td></tr>
+        <tr><td class="num">02</td><td>M0.1 MaleCNS 資料來源</td><td>基礎建設</td><td>完成</td></tr>
+        <tr><td class="num">03</td><td>M1.1 有向圖匯入器</td><td>基礎建設</td><td>完成</td></tr>
+        <tr><td class="num">04</td><td>M1.2 子圖選取（500 點、2,216 邊）</td><td>基礎建設</td><td>完成</td></tr>
+        <tr><td class="num">05</td><td>M1.3 輸入／輸出點與可達性</td><td>基礎建設</td><td>完成</td></tr>
+        <tr><td class="num">06</td><td>M2.2a TF-IDF 輕量基準</td><td>基準模型</td><td>完成</td></tr>
+        <tr><td class="num">07</td><td>M3.0 資料流與訓練規則</td><td>第一代果蠅</td><td>完成</td></tr>
+        <tr><td class="num">08</td><td>M3.1 小型模型核心</td><td>第一代果蠅</td><td>完成</td></tr>
+        <tr><td class="num">09</td><td>M2.2b E5 嵌入與分類器</td><td>基準模型</td><td>完成</td></tr>
+        <tr><td class="num">10</td><td>M2.4 評估器與 test 一次性閘門</td><td>基準模型／資料 v2</td><td>完成</td></tr>
+        <tr><td class="num">11</td><td>M2.3 E5 → LDA → LR</td><td>基準模型</td><td>完成</td></tr>
+        <tr><td class="num">12</td><td>M3.2 Fly A／B 第一次訓練</td><td>第一代果蠅</td><td>完成</td></tr>
+        <tr><td class="num">13</td><td>M3.4 多 seed 比較</td><td>第一代果蠅</td><td>完成</td></tr>
+        <tr><td class="num">14</td><td>M4.1 鎖定模型與推論 API</td><td>第一代果蠅</td><td>完成</td></tr>
+        <tr><td class="num">15</td><td>M4.2 Streamlit 展示</td><td>第一代果蠅</td><td>已停用（2026-11-14 移除）</td></tr>
+        <tr><td class="num">16</td><td>Fly A→B 表徵診斷</td><td>找原因</td><td>完成</td></tr>
+        <tr><td class="num">17</td><td>降維器 × 分類器交叉實驗</td><td>找原因</td><td>完成</td></tr>
+        <tr><td class="num">18</td><td>M0.2 神經傳導物質符號</td><td>有正負號的圖</td><td>完成</td></tr>
+        <tr><td class="num">19</td><td>M3.6 固定正負號的圖核心</td><td>有正負號的圖</td><td>完成</td></tr>
+        <tr><td class="num">20</td><td>M3.7 Fly A／B 各自調參</td><td>有正負號的圖</td><td>完成</td></tr>
+        <tr><td class="num">21</td><td>M1.4 300 增強＋200 抑制子圖</td><td>有正負號的圖</td><td>完成</td></tr>
+        <tr><td class="num">22</td><td>四張圖比較</td><td>有正負號的圖</td><td>完成</td></tr>
+        <tr><td class="num">23</td><td>圖核心跳數錯誤與修正</td><td>程式錯誤</td><td>完成</td></tr>
+        <tr><td class="num">24</td><td>T=2 vs T=4</td><td>T=2 vs T=4</td><td>完成</td></tr>
+        <tr><td class="num">25</td><td>正式資料 v2.0.0</td><td>資料 v2</td><td>完成</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<footer>
+  FlyCall-1999 專案介紹 ｜ 最後更新 2026-11-14 ｜ 數字來源：工作票 01–25 與 <code>.scratch/1999-connectome-demo/runs/</code> 的實驗結果。
+  相關頁面：<a href="FlyCall-1999_FlyA_FlyB_分析報告.html">FlyA_FlyB 分析報告</a>、<a href="FlyCall-1999_連接圖訊號傳遞.html">連接圖訊號傳遞</a>。
+</footer>
+
+</main>
+</body>
+</html>
