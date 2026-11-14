@@ -116,3 +116,14 @@ v1.0.0 的 1,000 筆是「情境變化庫＋確定性模板」組裝，結構與
   - **新工具：** `scripts/make_tuning_aux.py`（產生 timings.json 與 t4_vs_t2.json）、`scripts/run_v2_test_evaluation.py`。
   - **測試：** 188／190 通過，兩個失敗為已知的 Streamlit app 問題。
   - **Status：** done（尚未 commit）。
+- 2026-11-14（凍結與 test 之後）：**逐字稿已知問題與決策。**
+  - **問題：**
+    - 77 筆開場白替換後，民眾第一句「可以，……」接不上客服的問句。
+    - 326 筆補字數的問答接在客服總結之後。
+  - **驗證（只用 validation）：**
+    - 受影響組與其他組的正確率沒有一致差距。
+    - 把文字改回來重新預測，150 筆中最多 1–3 筆翻轉，macro-F1 有升有降。
+  - **決策：** 維持 v2.0.0，不重訓、不重開 test；日後若要展示逐字稿，再發布 v2.0.1。
+  - **紀錄：**
+    - 數據與 ID：`data/1999_synthetic/formal/v2.0.0/KNOWN_ISSUES.md`。
+    - 程式與結果：`runs/v2-known-issues-ablation-20261114/`。

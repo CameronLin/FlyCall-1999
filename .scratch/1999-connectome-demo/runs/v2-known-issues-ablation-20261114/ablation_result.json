@@ -1,0 +1,78 @@
+{
+ "changed_texts": {
+  "frozen": 0,
+  "no_after_recap_insert": 46,
+  "original_opener": 14
+ },
+ "models": {
+  "E5 → LR": {
+   "reproduces_saved_predictions": "150/150",
+   "frozen": {
+    "macro_f1": 0.9529,
+    "accuracy": 0.9533,
+    "flips_vs_frozen": 0
+   },
+   "no_after_recap_insert": {
+    "macro_f1": 0.9468,
+    "accuracy": 0.9467,
+    "flips_vs_frozen": 1
+   },
+   "original_opener": {
+    "macro_f1": 0.9529,
+    "accuracy": 0.9533,
+    "flips_vs_frozen": 0
+   },
+   "sidewalk_cleaning_confusions": {
+    "frozen": 0,
+    "no_after_recap_insert": 0,
+    "original_opener": 0
+   }
+  },
+  "E5 → MLP": {
+   "reproduces_saved_predictions": "150/150",
+   "frozen": {
+    "macro_f1": 0.9461,
+    "accuracy": 0.9467,
+    "flips_vs_frozen": 0
+   },
+   "no_after_recap_insert": {
+    "macro_f1": 0.9399,
+    "accuracy": 0.94,
+    "flips_vs_frozen": 1
+   },
+   "original_opener": {
+    "macro_f1": 0.953,
+    "accuracy": 0.9533,
+    "flips_vs_frozen": 1
+   },
+   "sidewalk_cleaning_confusions": {
+    "frozen": 2,
+    "no_after_recap_insert": 2,
+    "original_opener": 2
+   }
+  },
+  "E5 → LDA → LR": {
+   "reproduces_saved_predictions": "150/150",
+   "frozen": {
+    "macro_f1": 0.9068,
+    "accuracy": 0.9067,
+    "flips_vs_frozen": 0
+   },
+   "no_after_recap_insert": {
+    "macro_f1": 0.9198,
+    "accuracy": 0.92,
+    "flips_vs_frozen": 3
+   },
+   "original_opener": {
+    "macro_f1": 0.9003,
+    "accuracy": 0.9,
+    "flips_vs_frozen": 1
+   },
+   "sidewalk_cleaning_confusions": {
+    "frozen": 4,
+    "no_after_recap_insert": 3,
+    "original_opener": 4
+   }
+  }
+ }
+}

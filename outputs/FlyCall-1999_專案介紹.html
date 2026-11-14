@@ -1019,14 +1019,64 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
         <li>v2 的民眾是計程車司機，用台語描述「輪仔硩的所在攏凹落去」，有具體路段、長度、深度與雨天狀況；客服用國語追問、最後也用一點台語回應。</li>
         <li>真實 1999 通話中常有台語、口語和不完整的句子，v2 讓模型必須理解內容，而不是靠固定句型。</li>
       </ul>
+    </div>
+    <div class="block why" id="known-issues"><span class="tag">抉擇：逐字稿已知問題不修正</span>
+      <p>v2.0.0 凍結、做完一次性 test 之後，閱讀時發現兩個組裝階段造成的小瑕疵。它們讓對話讀起來不夠順，但<b>沒有影響分類結果</b>，所以決定維持 v2.0.0、不重新訓練，也不重開 test。</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>問題</th><th class="num">筆數</th><th>train／val／test</th><th>類別分布</th></tr></thead>
+        <tbody>
+          <tr><td>① 替換客服開場白後，民眾第一句「可以，……」接不上新的問句</td><td class="num">77</td><td>52／14／11</td><td>五類都有（街道清潔 20、垃圾車 20、公園 16、道路 15、人行道 6）</td></tr>
+          <tr><td>② 補字數的問答接在客服總結、民眾道謝之後</td><td class="num">326</td><td>247／57／22</td><td>集中在街道清潔 134、垃圾車 107、公園 83（人行道 2、道路 0）</td></tr>
+        </tbody>
+      </table></div>
+      <p>問題 ① 的例子（<code>TPE1999-V2-PK-0038</code>）：</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th></th><th>客服開場</th><th>民眾第一句</th></tr></thead>
+        <tbody>
+          <tr><td>原稿</td><td>臺北市1999您好，請問方便說話嗎？</td><td>可以，我是打門球的，……</td></tr>
+          <tr class="hl"><td>v2.0.0</td><td>1999市民熱線您好，請問有什麼要我們知道的？</td><td>可以，我是打門球的，……</td></tr>
+        </tbody>
+      </table></div>
+      <p>問題 ② 的類別分布不平均，可能變成「看結構就知道類別」的線索，所以特別檢查。以下都只用 validation 150 筆，<b>test 沒有再讀取</b>。</p>
 
-      <div class="callout"><b>已知問題（2026-11-14 檢查發現，尚未修正）：</b>
-        <ul>
-          <li>組裝時替換客服開場白，有 77 筆原本問「請問方便說明一下狀況嗎？」的開場被換成別的問句，但民眾的第一句仍是「可以，……」，讀起來不連貫。</li>
-          <li>補足字數時加入的問答，有些接在客服的總結與民眾道謝之後，順序略顯不自然。</li>
-          <li>這兩個問題不影響類別標籤；v2.0.0 已凍結並用於訓練與一次性 test，是否修正（例如發布 v2.0.1）待決定。</li>
-        </ul>
-      </div>
+      <p><b>驗證一：受影響的紀錄是不是比較好（或比較難）分？</b>（凍結模型的正確率）</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>模型</th><th class="num">① 受影響 (14)</th><th class="num">其他 (136)</th><th class="num">② 受影響 (57)</th><th class="num">其他 (93)</th></tr></thead>
+        <tbody>
+          <tr><td>E5 → LR</td><td class="num">1.000</td><td class="num">0.949</td><td class="num">0.982</td><td class="num">0.935</td></tr>
+          <tr><td>E5 → MLP</td><td class="num">0.929</td><td class="num">0.949</td><td class="num">0.982</td><td class="num">0.925</td></tr>
+          <tr><td>E5 → LDA → LR</td><td class="num">0.929</td><td class="num">0.904</td><td class="num">0.895</td><td class="num">0.914</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>① 受影響只有 14 筆，差一筆就差 0.07；三個模型有高有低，沒有一致方向。</li>
+        <li>② 受影響組看起來較高，是因為它們集中在本來就好分的三類。<b>同一類別內比較</b>就沒有優勢（受影響 vs 未受影響）：</li>
+      </ul>
+      <div class="tablewrap"><table>
+        <thead><tr><th>類別</th><th class="num">E5 → LR</th><th class="num">E5 → MLP</th><th class="num">E5 → LDA → LR</th></tr></thead>
+        <tbody>
+          <tr><td>街道清潔</td><td class="num">0.95 vs 1.00</td><td class="num">0.95 vs 0.90</td><td class="num">0.80 vs 1.00</td></tr>
+          <tr><td>垃圾車</td><td class="num">1.00 vs 1.00</td><td class="num">1.00 vs 1.00</td><td class="num">1.00 vs 1.00</td></tr>
+          <tr><td>公園</td><td class="num">1.00 vs 1.00</td><td class="num">1.00 vs 1.00</td><td class="num">0.833 vs 0.944</td></tr>
+        </tbody>
+      </table></div>
+
+      <p><b>驗證二：把文字改回來，預測會不會變？</b>（消融：改寫 validation 文字 → 重新以 E5 編碼 → 丟進凍結的分類器；凍結文字的預測與存檔 150/150 一致）</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>模型</th><th class="num">凍結 macro-F1</th><th class="num">移除總結後的補入問答<br>（46 筆）</th><th class="num">翻轉</th><th class="num">還原原始開場白<br>（14 筆）</th><th class="num">翻轉</th></tr></thead>
+        <tbody>
+          <tr><td>E5 → LR</td><td class="num">0.953</td><td class="num">0.947</td><td class="num">1</td><td class="num">0.953</td><td class="num">0</td></tr>
+          <tr><td>E5 → MLP</td><td class="num">0.946</td><td class="num">0.940</td><td class="num">1</td><td class="num">0.953</td><td class="num">1</td></tr>
+          <tr><td>E5 → LDA → LR</td><td class="num">0.907</td><td class="num">0.920</td><td class="num">3</td><td class="num">0.900</td><td class="num">1</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li>150 筆中最多 1–3 筆的預測改變，macro-F1 有升有降，變化都在一兩筆的範圍內。</li>
+        <li>validation 中 ② 受影響 57 筆，其中 46 筆能精準定位並移除補入的問答（其餘 11 筆找不到逐字相符的補入原文，沒有納入）。</li>
+        <li>人行道 ↔ 街道清潔的互混（凍結 → 移除補入）：LR 0 → 0、MLP 2 → 2、LDA 4 → 3。</li>
+      </ul>
+      <div class="callout"><b>決策：</b>模型沒有靠「開場接不上」或「補入位置」來分類，v2.0.0 的訓練與 test 結果維持有效。這是閱讀自然度的問題，不是標籤或分類問題；日後若要把逐字稿拿來展示，再另外發布 v2.0.1 修正文字。
+        完整數據與 77 筆 ID 記錄在 <code>data/1999_synthetic/formal/v2.0.0/KNOWN_ISSUES.md</code>，驗證程式在 <code>.scratch/1999-connectome-demo/runs/v2-known-issues-ablation-20261114/</code>。</div>
     </div>
     <div class="block result"><span class="tag">結果：重新訓練（validation）</span>
       <div class="tablewrap"><table>
