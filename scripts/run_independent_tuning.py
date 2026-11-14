@@ -319,7 +319,7 @@ def markdown(results: dict[str, Any]) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output-dir", default=".scratch/1999-connectome-demo/runs/independent-tuning-20261113")
+    parser.add_argument("--output-dir", required=True, help="new run directory, e.g. .scratch/1999-connectome-demo/runs/independent-tuning-<name>")
     parser.add_argument("--graphs", default=",".join(GRAPH_ORDER))
     parser.add_argument("--smoke", action="store_true", help="2 epochs only, for pipeline checks; not a result")
     parser.add_argument("--input-at-step-zero", action="store_true",

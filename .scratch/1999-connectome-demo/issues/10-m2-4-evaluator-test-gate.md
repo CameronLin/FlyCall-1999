@@ -4,7 +4,7 @@
 
 **Blocked by:** None for provisional train/validation reporting. Durable test unlock and test evaluation remain blocked by the manual-review gate and candidate/config approval.
 
-**Status:** in-progress (provisional reporting and durable one-use ledger are implemented and regression-tested; formal test evaluation remains gated by manual review and explicit candidate/config approval)
+**Status:** completed (2026-11-14; the one-use ledger was used for the dataset v2.0.0 test evaluation; dataset v1.0.0 test remains unopened pending manual review)
 
 ## 範圍
 
@@ -56,3 +56,4 @@
 
 
 - 2026-10-26 regression closeout: the selected M2 suite passed 58/58 tests. Evaluator/ledger tests covered failed gate conditions, cross-process duplicate reservation, record checksum tampering, consuming a slot before metrics, successful/failed finalization, and preventing reuse. Test ledgers were created only in temporary directories; no formal reservation or test rows were used. The formal one-time test evaluation remains unrun until manual review passes and candidate/configuration approval is recorded.
+- 2026-11-14：閘門已實際使用。資料 v2.0.0 依規格 §7.3 的變更（ticket 25 D-V2-4／D-V2-5），由自動品質檢查取代人工複核門檻；先以 validation 鎖定 51 個候選與選模規則，再經 `PersistentTestRunLedger` 對每個候選只評估一次（`runs/test-evaluation-dataset-v2-20261114/`）。資料 v1.0.0 的 test 仍未打開。

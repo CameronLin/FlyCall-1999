@@ -4,7 +4,7 @@
 
 **Formal test gate:** Manual review and final approval remain pending before any one-time test evaluation. The optional runtime, development/demo lock and selected model bundle are ready for technical acceptance.
 
-**Status:** M4.2 technical acceptance passed through Streamlit 1.66.0 `AppTest` with the actual locked MLP checkpoint and E5 snapshot. Its displayed five logits/probabilities and predicted label exactly match the direct API and CLI. Formal manual review remains pending.
+**Status:** retired (2026-11-14; Streamlit demo removed by user decision — `app.py`, `pages/`, `.streamlit/`, `tests/test_streamlit_app.py` and `requirements-demo.txt` deleted). Previously: M4.2 technical acceptance passed through Streamlit 1.66.0 `AppTest` with the actual locked MLP checkpoint and E5 snapshot. Its displayed five logits/probabilities and predicted label exactly match the direct API and CLI. Formal manual review remains pending.
 
 ## Implemented
 
@@ -46,3 +46,4 @@
 - 2026-10-27: Follow-up spacing fix for the “本次實際執行” and “研究候選” role cards. Replaced their half-width side-by-side layout with full-width stacked cards; each card places its role/name beside the explanatory copy on wider screens and stacks all content on phones.
 - 2026-10-27: Local launch diagnosis: global CPython 3.14 installations have none of the project packages, while `%TEMP%\flycall-m22b\venv` contains Streamlit 1.66.0, PyTorch 2.14.1 CPU, Transformers 5.20.2, and Sentence Transformers 6.0.0. That venv has no torchvision, but imports for the text E5 runtime succeed. The pinned E5 snapshot is present under `%TEMP%\flycall-m22b\hf-home`; launch the app with that venv's `streamlit.exe` and explicit manifest/snapshot paths. This was an import check only; no AppTest or browser render was performed.
 - 2026-10-27: User screenshot exposed the cause of the crowded network panel: `_network_status_html()` left the outer `.fc-network-header` unclosed, so all following sections became flex children of the header. Added the missing closing `</div>`. Generated HTML from the project `app.py` now has balanced tags and renders both role cards after, rather than inside, the header. Browser visual retest remains pending.
+- 2026-11-14：依使用者決定停用 Streamlit 展示並移除相關程式與測試。推論改用共同 predict API 與 CLI（`scripts/predict_flycall.py`），`tests/test_m4_prediction.py` 改為驗證 CLI 與 API 輸出一致。

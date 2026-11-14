@@ -2,7 +2,7 @@
 
 **Blocked by:** None（發現已驗證；修正方式需使用者決定，決策 D6）
 
-**Status:** needs-decision
+**Status:** completed (2026-11-13; user chose D6(a) T steps = T hops; implemented as `input_at_step_zero`)
 
 ## 發現（2026-11-13，Fly A／Fly B 腦部比較分析時發現）
 
@@ -62,3 +62,4 @@
     - G1／G2／G2-glu+：1 跳 20 個、2 跳 12 個。
   - 預註冊已加增補；工作票 20／22 的流程以新語意重跑，輸出到 `runs/independent-tuning-t-hops-20261113/`，舊語意結果保留作為對照。
 - 2026-11-13：修正後語意重跑完成（工作票 22）。G0 與新圖的差距大幅縮小，證實舊結果中的「換圖效果」主要來自 G0 收不到訊號的輸出點。即使修正後，T=2 也只有 8–12% 的連線會影響輸出；T=4 的正式比較見工作票 24。
+- 2026-11-14：狀態更新為 completed。決策與實作見上方 2026-11-13 註記；後續各 run 都使用 T 步＝T 跳語意。

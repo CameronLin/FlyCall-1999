@@ -19,8 +19,6 @@
 | `README.md` | 專案摘要、目前資料與模型狀態、執行方式、Connectome 來源及完整測試方式。快速了解現況先看這份。 |
 | `1999-connectome-demo-spec.md` | 專案唯一規格正本：問題定義、資料契約、防止 test 洩漏、模型流程、驗收與工作項目。 |
 | `AGENTS.md` | 專案工作規則入口，指向 `.scratch` issue tracker 與 domain 文件。 |
-| `app.py` | Streamlit 本機研究展示的應用程式入口。 |
-| `requirements-demo.txt` | 本機模型推論／demo 的 Python 套件需求。 |
 | `requirements-connectome.txt` | Connectome 匯入與圖資料處理所需套件。 |
 | `.gitignore` | 排除 Python bytecode、E5 cache、檢視工具輸出等非來源產物。 |
 
@@ -144,7 +142,7 @@
 | `test_lda_baseline.py`、`test_text_baseline.py` | LDA 與文字 baseline。 |
 | `test_m2_checkpoint.py`、`test_m2_seed_preregistration.py` | checkpoint 與 seed 預先登記。 |
 | `test_m32_inputs.py`、`test_m32_runner.py` | M3.2 輸入契約與 runner。 |
-| `test_m4_prediction.py`、`test_streamlit_app.py` | M4 推論與 Streamlit UI。 |
+| `test_m4_prediction.py` | M4 鎖定模型推論 API 與 CLI。 |
 | `test_runtime_resources.py` | 執行資源監測。 |
 
 ## `.scratch/1999-connectome-demo/`：工程工作記錄
@@ -169,7 +167,7 @@
 | `12-m3-2-fly-ab-provisional-training.md` | Fly A/B 暫定訓練。 |
 | `13-m3-4-validation-comparison.md` | 多 seed validation 比較與人工審查門檻。 |
 | `14-m4-1-locked-predictor.md` | 鎖定模型 predictor。 |
-| `15-m4-2-streamlit-research-demo.md` | Streamlit 研究 demo。 |
+| `15-m4-2-streamlit-research-demo.md` | Streamlit 研究 demo（已停用，程式於 2026-11-14 移除）。 |
 | `16-fly-ab-representation-diagnosis.md` | Fly A/B 表示診斷。 |
 
 ### `research/`：設計、預檢與研究報告
@@ -187,12 +185,9 @@
 | 子資料夾 | 內容 |
 |---|---|
 | `fly-ab-diagnosis-20261026/` | Fly A/B 表示診斷、E5 residual 多設定結果與 checkpoint。 |
-| `m2-2a-smoke-20261015T170818Z/` | M2.2a 初次 smoke 執行結果。 |
-| `m2-2a-smoke-final-20261015T170949Z/` | M2.2a 最終 smoke 執行結果。 |
 | `m2-2a-smoke-final-loader-audit-20261015T171135Z/` | 加上 loader audit 的 smoke 結果。 |
-| `m2-2b-e5-provisional-20261025T184727Z/`、`m2-2b-e5-provisional-20261025T184820Z/`、`m2-2b-e5-provisional-20261025T185218Z/`、`m2-2b-e5-provisional-20261026T015843Z/` | 不同階段的 E5 暫定候選執行；保留失敗、改進與報告歷程。 |
+| `m2-2b-e5-provisional-20261025T185218Z/`、`m2-2b-e5-provisional-20261026T015843Z/` | E5 暫定候選執行；`20261026T015843Z` 是 M3.2 與資料 v1 流程釘選的版本。 |
 | `m2-2b-e5-seed-42-current-runner-20261026/`、`m2-2b-e5-seed-1337-current-runner-20261026/`、`m2-2b-e5-seed-2026-current-runner-20261026/` | 三個 seed 的 E5 候選結果；seed 42 另含開發用 `locked_model_manifest.json`。 |
-| `m3-2-crlf-normalization-gate-20261026/` | M3.2 manifest 換行正規化閘門檢查及 checkpoint。 |
 | `m3-2-fly-ab-provisional-20261026T-gate-check/` | M3.2 訓練前 gate 記錄。 |
 | `m3-2-fly-ab-seed-42-crlf-fix-20261026/`、`m3-2-fly-ab-seed-1337-20261026/`、`m3-2-fly-ab-seed-2026-20261026/` | Fly A/B 三個 seed 的暫定訓練及 validation 結果。 |
 | `m3-4-validation-comparison-seeds-42-1337-2026-20261026/` | M3.4 多候選、多 seed validation-only 比較報告。 |

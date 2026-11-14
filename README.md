@@ -35,28 +35,21 @@ M3.4 已使用 M2.2b 與 M3.2／M3.3 的 seed 42、1337、2026 run 完成五個�
 
 A frozen three-seed probe measured raw E5 MLP validation Macro-F1 at 0.9022 versus 0.7758 for Fly A 32-D output. The best of four separately trained gated E5 residual settings reached 0.9048 Macro-F1 and 0.9089 accuracy across three seeds. This candidate was selected on the same validation set, remains exploratory, does not replace the M3.4 provisional MLP winner, and did not use test data. See the [diagnosis report](.scratch/1999-connectome-demo/runs/fly-ab-diagnosis-20261026/report.md).
 
-## M4 本機推論與展示
+## M4 本機推論（CLI）
 
-M2.2b runner 現在會保存並驗證四個 E5 baseline checkpoints，prediction CSV 含固定類別順序 logits；M3.2 成功 run 會保存 graph definition。共同推論 API 與 CLI 會核對模型 lock、run manifest、candidate registration 和 checkpoint hashes，僅接受 manifest 鎖定設定的本機模型。Streamlit UI 共用同一 API，顯示五類分數及「待人工確認／模擬派送」，不連接真實派工。
+M2.2b runner 現在會保存並驗證四個 E5 baseline checkpoints，prediction CSV 含固定類別順序 logits；M3.2 成功 run 會保存 graph definition。共同推論 API 與 CLI 會核對模型 lock、run manifest、candidate registration 和 checkpoint hashes，僅接受 manifest 鎖定設定的本機模型，輸出五類分數並標示「模擬派送」，不連接真實派工。
 
-M4 技術開發已完成：依照使用者指定，保留 M3.4 預註冊 MLP 為開發／展示模型，鎖定 seed 42（hidden size 16、80 epochs、learning rate 0.02）；gated E5 residual 留作研究候選。相同訓練預算的 validation-only 比較中，MLP 平均 Macro-F1 為 0.9104（SD 0.0302）、accuracy 0.9133；residual 為 0.9048（SD 0.0084）、0.9089。已建立 [開發用鎖定 manifest](.scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/locked_model_manifest.json)，並使用實際 checkpoint 與固定 E5 snapshot 驗證 CLI、API 和 Streamlit AppTest：預測標籤、五類 logits 與分數完全一致，最大差異 0.0。資料仍是合成資料，人工複核與正式核准待完成；test split 未讀取，正式一次性評估保持 `not_run`。完整比較和驗收數據見 [M4 驗收紀錄](.scratch/1999-connectome-demo/runs/m4-matched-budget-validation-20261026/m4_live_acceptance_report.md)。其他虛擬環境可執行以下安裝命令，再設定實際檔案路徑：
+Streamlit 展示介面（M4.2）已於 2026-11-14 依使用者決定移除；推論改用下方 CLI。
+
+M4 技術開發已完成：依照使用者指定，保留 M3.4 預註冊 MLP 為開發／展示模型，鎖定 seed 42（hidden size 16、80 epochs、learning rate 0.02）；gated E5 residual 留作研究候選。相同訓練預算的 validation-only 比較中，MLP 平均 Macro-F1 為 0.9104（SD 0.0302）、accuracy 0.9133；residual 為 0.9048（SD 0.0084）、0.9089。已建立 [開發用鎖定 manifest](.scratch/1999-connectome-demo/runs/m2-2b-e5-seed-42-current-runner-20261026/locked_model_manifest.json)，並使用實際 checkpoint 與固定 E5 snapshot 驗證 CLI 與 API：預測標籤、五類 logits 與分數完全一致，最大差異 0.0。這個鎖定模型以資料 v1.0.0 訓練；資料 v2.0.0 的訓練與一次性 test 評估見 [工作票 25](.scratch/1999-connectome-demo/issues/25-dataset-v2-rewrite.md)。完整比較和驗收數據見 [M4 驗收紀錄](.scratch/1999-connectome-demo/runs/m4-matched-budget-validation-20261026/m4_live_acceptance_report.md)。設定實際檔案路徑後即可推論：
 
 ```powershell
-$env:FLYCALL_PYTHON = 'path\to\model-venv\Scripts\python.exe'
-uv pip install --python $env:FLYCALL_PYTHON -r requirements-demo.txt
-$env:FLYCALL_SCRIPTS = (Split-Path $env:FLYCALL_PYTHON)
 $env:FLYCALL_MODEL_MANIFEST = (Resolve-Path 'path\to\locked_model_manifest.json').Path
 $env:E5_SNAPSHOT = (Resolve-Path 'path\to\pinned-e5-snapshot').Path
-& "$env:FLYCALL_SCRIPTS\streamlit.exe" run app.py
-```
-
-CLI 可使用相同兩個檔案路徑：
-
-```powershell
 python scripts\predict_flycall.py --model-manifest $env:FLYCALL_MODEL_MANIFEST --e5-snapshot $env:E5_SNAPSHOT --text '在此放入一筆逐字稿'
 ```
 
-詳見 [M4.1 工作票](.scratch/1999-connectome-demo/issues/14-m4-1-locked-predictor.md) 與 [M4.2 工作票](.scratch/1999-connectome-demo/issues/15-m4-2-streamlit-research-demo.md)。
+詳見 [M4.1 工作票](.scratch/1999-connectome-demo/issues/14-m4-1-locked-predictor.md)。
 
 ## 執行完整測試
 
@@ -70,7 +63,7 @@ $env:PYTHONPATH = "$PWD\src;$PWD\tests;$PWD\scripts"
 & $env:FLYCALL_PYTHON -m unittest discover -s tests
 ```
 
-在 E5 隔離環境安裝 DuckDB 1.5.6 與 Streamlit 1.66.0 後，完整測試套件 141 項全數通過，包含 Streamlit 的錯誤與合成 fixture 成功畫面測試。M1.3/M1.2 的 peak-RSS 工具使用 Windows 可用的 process memory API；M1.2 也會先拒絕不允許的輸出路徑，再檢查來源檔案是否存在。
+在 E5 隔離環境安裝 DuckDB 1.5.6 後即可執行完整測試套件（不需要 Streamlit）。M1.3/M1.2 的 peak-RSS 工具使用 Windows 可用的 process memory API；M1.2 也會先拒絕不允許的輸出路徑，再檢查來源檔案是否存在。
 
 ## 檔案索引
 

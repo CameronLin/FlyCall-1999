@@ -46,7 +46,7 @@ from flycall_data.evaluation import LABEL_ORDER, classification_metrics  # noqa:
 from flycall_data.reducer_classifier_factorial import run_svm  # noqa: E402
 from run_independent_tuning import GRAPH_ORDER, load_graphs  # noqa: E402
 
-RUN = ".scratch/1999-connectome-demo/runs/independent-tuning-20261113"
+RUN = ".scratch/1999-connectome-demo/runs/independent-tuning-v2-t2-20261114"
 OUTPUT = ".scratch/1999-connectome-demo/runs/fly-ab-brain-comparison-20261113"
 OBJECTIVES = ("distance", "distance_supcon")
 SEEDS = (42, 1337, 2026)

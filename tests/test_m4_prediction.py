@@ -7,7 +7,6 @@ import io
 import json
 import sys
 import tempfile
-import types
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -18,7 +17,6 @@ SCRIPTS_ROOT = PROJECT_ROOT / "scripts"
 if str(SCRIPTS_ROOT) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_ROOT))
 
-import app  # noqa: E402
 import predict_flycall  # noqa: E402
 import run_m2_2b_e5_provisional as m2_runner  # noqa: E402
 import flycall_data.predictor as prediction_module  # noqa: E402
@@ -46,21 +44,6 @@ def _write_json(path: Path, value: dict) -> None:
 
 def _hash_record(path: Path) -> dict:
     return {"bytes": path.stat().st_size, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
-
-
-class FakeStreamlit(types.ModuleType):
-    def __init__(self):
-        super().__init__("streamlit")
-        self.events = []
-
-    def __getattr__(self, name):
-        if name == "cache_resource":
-            return lambda **_kwargs: (lambda function: function)
-        if name == "text_area":
-            return lambda *_args, **_kwargs: "請協助處理路面坑洞"
-        if name == "button":
-            return lambda *_args, **_kwargs: True
-        return lambda *args, **kwargs: self.events.append((name, args, kwargs))
 
 
 class M4PredictionTests(unittest.TestCase):
@@ -203,7 +186,7 @@ class M4PredictionTests(unittest.TestCase):
                 self.assertEqual(len(result.logits), len(LABEL_ORDER))
                 self.assertAlmostEqual(sum(result.probabilities), 1.0)
 
-    def test_cli_and_streamlit_use_the_same_predictor_output(self) -> None:
+    def test_cli_returns_the_locked_predictor_output(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             manifest_path, _run_dir = self._approved_baseline_bundle(root)
@@ -213,6 +196,7 @@ class M4PredictionTests(unittest.TestCase):
                     e5_snapshot=root / "unused-e5-snapshot",
                     encoder=FakeEncoder(),
                 )
+                direct = predictor.predict("測試逐字稿").as_dict()
                 cli_output = io.StringIO()
                 with (
                     patch.object(predict_flycall.FlyCallPredictor, "from_locked_manifest", return_value=predictor),
@@ -226,23 +210,7 @@ class M4PredictionTests(unittest.TestCase):
                     )
                 cli_result = json.loads(cli_output.getvalue())
 
-                fake_st = FakeStreamlit()
-                with (
-                    patch.dict(sys.modules, {"streamlit": fake_st}),
-                    patch.dict(
-                        "os.environ",
-                        {"FLYCALL_MODEL_MANIFEST": str(manifest_path), "E5_SNAPSHOT": str(root)},
-                        clear=False,
-                    ),
-                    patch.object(app.FlyCallPredictor, "from_locked_manifest", return_value=predictor),
-                ):
-                    app.main()
-
-            self.assertTrue(any(event[0] == "warning" and "合成資料" in event[1][0] for event in fake_st.events))
-            self.assertTrue(any(event[0] == "info" and "未執行真實派工" in event[1][0] for event in fake_st.events))
-            table_event = next(event for event in fake_st.events if event[0] == "dataframe")
-            ui_scores = [row["分數"] for row in table_event[1][0]]
-            self.assertEqual(ui_scores, list(cli_result["probabilities"].values()))
+            self.assertEqual(cli_result["probabilities"], direct["probabilities"])
             self.assertEqual(cli_result["dispatch_status"], "simulated_only")
 
     def test_unlocked_or_unapproved_manifest_fails_closed(self) -> None:

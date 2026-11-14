@@ -71,7 +71,7 @@ M0.1 仍須決定並記錄專案實際使用的資料檔／API、連線欄位解
 
 ### 2. 技術與模組邊界
 
-使用 Python、uv、PyTorch、NumPy/SciPy、scikit-learn、sentence-transformers 與 Streamlit；版本在首次可運行後鎖定。CPU 為必要支援，CUDA/MPS 為可選加速，稀疏算子不相容時明確回退 CPU。
+使用 Python、uv、PyTorch、NumPy/SciPy、scikit-learn、sentence-transformers；（Streamlit 展示已於 2026-11-14 停用）版本在首次可運行後鎖定。CPU 為必要支援，CUDA/MPS 為可選加速，稀疏算子不相容時明確回退 CPU。
 
 模組責任：來源匯入、子圖建構、案件資料驗證與切分、嵌入與快取、connectome 計算核心、訓練編排、baseline、評估、checkpoint 與推論、展示。展示呼叫共同推論介面，不重複實作前處理或模型邏輯。
 
@@ -205,6 +205,8 @@ checkpoint 包含拓樸、I/O 節點、方向約定、模型配置、類別順�
 
 本機 Streamlit 顯示：民眾文字 → 果蠅 A 接電話與 d→k → 果蠅 B 送公文與五類分數 → 模擬分類結果。可提供幾個示例。僅顯示已查核的類別；若派送單位未查核，顯示「待人工確認」而非猜測機關。
 
+**規格變更（2026-11-14，使用者決策）：** Streamlit 展示（M4.2）停用，程式已移除。本機推論改用共同 predict API 與 CLI（`scripts/predict_flycall.py`）；分析結果以 `outputs/` 的 HTML 報告呈現。
+
 標記「合成資料訓練／研究 Demo／模擬派送」。如顯示活化圖，限定抽樣規模與選取規則，稱為人工模型節點活化，不稱為真實果蠅神經活動。UI 最後開發，模型可先從 CLI 執行。
 
 ## Testing Decisions
@@ -251,7 +253,7 @@ checkpoint 包含拓樸、I/O 節點、方向約定、模型配置、類別順�
 | M3.3 Fly B 訓練 | 凍結 Fly A，訓練 k→5 logits 分類器。 | M3.2、M2.1 | cross-entropy 訓練；validation Macro-F1 選 checkpoint；不聯合微調 A/B；分類順序與 taxonomy 一致。 |
 | M3.4 預先聲明的模型比較 | 比較 baseline、Fly A→B 與必要對照，產生比較報告與候選選定紀錄。 | M2.4、M3.3 | 先用 validation 完成選模；鎖定候選與設定、並滿足 7.3 人工複核門檻後，對預先聲明流程一次性評估 test；正式比較至少三個 training seeds，報告平均與標準差；不得用 test 反覆調參。 |
 | M4.1 Checkpoint 與共同 predict API | 以選定 checkpoint 載入模型，提供 CLI/API 推論及版本檢查。 | M3.4 | 重載 logits 符合容差；驗證 checksum、d/k/C、類別順序；空白或不相容輸入明確報錯；含測試與簡短使用說明。 |
-| M4.2 Streamlit 展示 | 串接共同 predict，顯示輸入、A/B 流程、五類分數及模擬派送。 | M4.1 | UI 與 CLI 同一筆輸入結果一致；標示「合成資料訓練／研究 Demo／模擬派送」；錯誤狀態與待人工確認資訊可見。 |
+| M4.2 Streamlit 展示（2026-11-14 停用並移除） | 串接共同 predict，顯示輸入、A/B 流程、五類分數及模擬派送。 | M4.1 | UI 與 CLI 同一筆輸入結果一致；標示「合成資料訓練／研究 Demo／模擬派送」；錯誤狀態與待人工確認資訊可見。 |
 
 依賴圖：M2.1→M2.2→M2.3→M2.4；M0.1→M1.1→M1.2→M1.3→M3.1；M2.2 與 M3.1 完成後進入 M3.2→M3.3；M2.4 與 M3.3 完成後進入 M3.4→M4.1→M4.2。M2 與 M0/M1 可平行。M2.4 可先輸出 train/validation provisional 報告；正式 test 報告需完成模型與設定鎖定並滿足 7.3。
 
