@@ -1,0 +1,671 @@
+{
+ "labels": {
+  "sidewalk_maintenance": "人行道維護",
+  "road_surface_defect": "道路凹陷、不平、有高低差",
+  "park_general_maintenance": "一般公園綠地管理及設施維護（含車輛違規進入）",
+  "waste_truck_service": "垃圾車清運及服務事項",
+  "street_cleaning": "路面清潔（含行人果皮箱、菸蒂、狗便）"
+ },
+ "families": [
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-CURB-RAMP-LANDING",
+   "split": "test",
+   "n": 7,
+   "name": "無障礙坡道頂端或平台的平面幾何、坡向或轉向空間設計缺陷，使停留或轉向不穩",
+   "core": "無障礙坡道頂端或平台的平面幾何、坡向或轉向空間設計缺陷，使停留或轉向不穩。",
+   "axes": "平台坡向、轉彎空間、輪椅停留及接回人行面方式。",
+   "boundary": "限坡道頂端或平台的平面幾何、坡向或轉向空間缺陷；排除坡面材料破損及一般鋪面沉陷。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-FLAT-SURFACE-SLIPPERY",
+   "split": "test",
+   "n": 7,
+   "name": "平坦公共人行鋪面長期磨光，乾濕轉換時摩擦不足",
+   "core": "平坦公共人行鋪面長期磨光，乾濕轉換時摩擦不足。",
+   "axes": "乾燥與潮濕差異、磨光範圍、行人是否放慢。",
+   "boundary": "限固定平面鋪面長期磨光造成的乾濕摩擦差；排除液體／泥污，並明確與 FAM-SW-RAMP-SURFACE 區分。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-RAMP-SURFACE",
+   "split": "test",
+   "n": 8,
+   "name": "人行坡道表面裂損或止滑磨耗",
+   "core": "人行坡道表面裂損或止滑磨耗。",
+   "axes": "坡上／坡下、輪子卡滯、濕滑與止滑紋狀況。",
+   "boundary": "限人行坡道表面；一般平面磨耗可列平面鋪面候選家族。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-SLAB-JOINT-GAP",
+   "split": "test",
+   "n": 8,
+   "name": "相鄰固定板塊接縫張開，形成窄縫而非大面積沉陷",
+   "core": "相鄰固定板塊接縫張開，形成窄縫而非大面積沉陷。",
+   "axes": "縫寬、手杖／鞋跟／小輪卡入、接縫是否延長。",
+   "boundary": "整片晃動歸鋪面磚家族；明顯垂直高差歸沉陷家族。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-LEVEL-SETTLEMENT",
+   "split": "train",
+   "n": 20,
+   "name": "人行通行面沉陷或相鄰鋪面形成落差",
+   "core": "人行通行面沉陷或相鄰鋪面形成落差。",
+   "axes": "凹陷範圍、雨後積水、不同方向通行感受。",
+   "boundary": "若是車行表面列道路；若是坡道落地平台幾何問題，考慮坡道平台家族。 納入變化：原 FAM-SW-DRIVEWAY-CROSSING 的出入口銜接高低差仍須是公共人行通行面沉陷／落差。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-MISSING-PAVERS",
+   "split": "train",
+   "n": 20,
+   "name": "一片或一段鋪面磚完全缺失，留下空穴",
+   "core": "一片或一段鋪面磚完全缺失，留下空穴。",
+   "axes": "空穴深度、邊緣、是否有磚塊留在旁邊及避讓方式。",
+   "boundary": "磚仍在但鬆動／破裂歸既有鋪面磚家族；孔蓋或管線孔洞排除。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-PEDESTRIAN-DECK",
+   "split": "train",
+   "n": 20,
+   "name": "公共人行橋或架高通道的踏板／面板鬆動、翹起或有縫",
+   "core": "公共人行橋或架高通道的踏板／面板鬆動、翹起或有縫。",
+   "axes": "踏板是否彈動、縫隙位置、步行與輪椅受影響方式。",
+   "boundary": "限定公共人行橋或架高通道的行走面板缺陷；明確排除園內一般步道及橋體結構安全問題。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-TACTILE-ALIGNMENT",
+   "split": "train",
+   "n": 20,
+   "name": "導盲磚完整但排列方向或連續路徑在交界處錯接",
+   "core": "導盲磚完整但排列方向或連續路徑在交界處錯接。",
+   "axes": "使用者由哪方向接近、直行／轉向選擇、斷續位置。",
+   "boundary": "有裂損或缺磚歸導盲磚破損；被外物遮擋不歸此類。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-TACTILE-PAVING",
+   "split": "train",
+   "n": 20,
+   "name": "導盲磚缺段、破裂或翹起",
+   "core": "導盲磚缺段、破裂或翹起。",
+   "axes": "中斷長度、導引或提醒功能、雨天辨識與行走影響。",
+   "boundary": "磚體本身受損才屬本家族；被物品遮住屬占用／清除問題。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-TILE-MOVEMENT",
+   "split": "train",
+   "n": 20,
+   "name": "鋪面磚踩踏晃動、裂開或翹角",
+   "core": "鋪面磚踩踏晃動、裂開或翹角。",
+   "axes": "一片或連片、踩踏是否移動、碎屑與輪子卡滯。",
+   "boundary": "只談人行鋪面；車行道列道路不平，外物阻路不列鋪面維護。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-UTILITY-RESTORATION",
+   "split": "train",
+   "n": 20,
+   "name": "公共人行道管線開挖回填後，回復面下陷或接合不良",
+   "core": "公共人行道管線開挖回填後，回復面下陷或接合不良。",
+   "axes": "回填區輪廓、沉陷是否只在回填帶、輪子通過反應。",
+   "boundary": "保留須有可觀察的開挖回填帶及其表面沉陷／接合缺陷；只描述一般沉陷時歸 FAM-SW-LEVEL-SETTLEMENT。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-CONCRETE-SPALLING",
+   "split": "validation",
+   "n": 10,
+   "name": "整體混凝土人行面表層剝落、露出骨材，但不是單片磚鬆動",
+   "core": "整體混凝土人行面表層剝落、露出骨材，但不是單片磚鬆動。",
+   "axes": "剝落層是否仍附著、粗糙範圍、是否有尖銳碎屑及輪椅通行影響。",
+   "boundary": "與磚體移動／破裂區分；若是車道或施工中剝除面，排除本類。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-CURB-EDGE",
+   "split": "validation",
+   "n": 10,
+   "name": "人行道緣石本體裂損、鬆動或突出",
+   "core": "人行道緣石本體裂損、鬆動或突出。",
+   "axes": "石塊是否移位、尖角、行人或輪胎接觸。",
+   "boundary": "緣石本體為主訴；相鄰車行鋪面破損列道路。"
+  },
+  {
+   "label_id": "sidewalk_maintenance",
+   "family": "FAM-SW-EDGE-CRUMBLING",
+   "split": "validation",
+   "n": 10,
+   "name": "人行鋪面靠外側邊界自身崩碎，與緣石本體故障不同",
+   "core": "人行鋪面靠外側邊界自身崩碎，與緣石本體故障不同。",
+   "axes": "崩落長度、碎塊是否鬆脫、外側是否仍可安全通行。",
+   "boundary": "界定為人行鋪面外緣本體碎裂；排除緣石本體破損與平面表層剝落，避免與 FAM-SW-CONCRETE-SPALLING 混用。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-LONGITUDINAL-TRANSITION",
+   "split": "test",
+   "n": 8,
+   "name": "車行道上可辨識的單一線狀接合／轉換帶形成高低差",
+   "core": "車行道上可辨識的單一線狀接合／轉換帶形成高低差。",
+   "axes": "接合帶方向與範圍、車輛通過時是否出現一次明確震動。",
+   "boundary": "目前「長條或斜向高低轉換」與廣泛波狀起伏、局部隆起界線重疊；收斂為可辨識的單一線狀接合／轉換帶，並排除廣域波動與片狀隆起。與 FAM-ROAD-WIDESPREAD-UNDULATION 同 split，避免相近情境跨資料集。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-PAVEMENT-HEAVE",
+   "split": "test",
+   "n": 8,
+   "name": "局部或片狀車行鋪面隆起，使車輛越過凸起時震動",
+   "core": "局部或片狀車行鋪面隆起，使車輛越過凸起時震動。",
+   "axes": "隆起寬度、是否伴隨裂縫、車輛底盤或方向反應。",
+   "boundary": "限局部或片狀車行鋪面隆起；排除線狀接縫高差及孔蓋凸起，並與 FAM-ROAD-LONGITUDINAL-TRANSITION 明確分界。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-SHOULDER-EDGE-DROP",
+   "split": "test",
+   "n": 7,
+   "name": "車行路面外緣與相鄰路肩形成落差或邊緣流失",
+   "core": "車行路面外緣與相鄰路肩形成落差或邊緣流失。",
+   "axes": "落差沿道路延伸、車輪偏出時反應、邊緣是否持續崩落。",
+   "boundary": "人行緣石或人行鋪面歸人行道；道路設施邊坡崩塌需另分類。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-WIDESPREAD-UNDULATION",
+   "split": "test",
+   "n": 7,
+   "name": "較大範圍連續波狀起伏，沒有單一輪跡槽或單道接縫",
+   "core": "較大範圍連續波狀起伏，沒有單一輪跡槽或單道接縫。",
+   "axes": "起伏週期、不同車道感受、不同車種的連續晃動。",
+   "boundary": "只納入跨一段路面的連續波狀起伏，不以路段長度作判準；排除單一輪跡槽、接縫及局部隆起。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-BINDER-BLEEDING",
+   "split": "train",
+   "n": 20,
+   "name": "瀝青黏結料上浮使車行表面局部發亮、摩擦下降，非外來液體污染",
+   "core": "瀝青黏結料上浮使車行表面局部發亮、摩擦下降，非外來液體污染。",
+   "axes": "表面乾濕、輪胎滑移感、黏料是否黏附輪胎及範圍變化。",
+   "boundary": "只納入有路面材料本體特徵的瀝青黏結料上浮；不得僅憑發亮／濕滑推定，排除外來液體或油污。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-DEEP-POTHOLE",
+   "split": "train",
+   "n": 20,
+   "name": "具明顯深度、邊緣破碎的單一坑洞，車輪會撞擊或急閃",
+   "core": "具明顯深度、邊緣破碎的單一坑洞，車輪會撞擊或急閃。",
+   "axes": "坑口形狀、深淺可見度、輪胎衝擊及散落碎石。",
+   "boundary": "與淺小局部凹陷區分以坑洞形態／風險而非只看地點；孔蓋故障排除。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-FATIGUE-CRACKING",
+   "split": "train",
+   "n": 20,
+   "name": "多條互連裂紋形成網狀疲勞破損",
+   "core": "多條互連裂紋形成網狀疲勞破損。",
+   "axes": "網狀範圍、是否進一步鬆碎、車輪震動與雨後可見度。",
+   "boundary": "不等同單一接縫；若碎料成為路面散落物，仍以破損本體為主訴。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-INTERSECTION-DENT",
+   "split": "train",
+   "n": 20,
+   "name": "路口或轉彎區局部下陷",
+   "core": "路口或轉彎區局部下陷。",
+   "axes": "凹處相對停止線／轉彎車道、雨水遮蔽、車輛避讓。",
+   "boundary": "確認是車行道；孔蓋或排水設施本體故障不歸此類。 納入變化：原 FAM-ROAD-CROSSING-APPROACH 的停靠／穿越位置前局部凹陷，以相對位置描述，不另立家族。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-PATCH-BREAKUP",
+   "split": "train",
+   "n": 20,
+   "name": "舊補面本體網裂、剝落或碎裂，問題不在補面邊界高差",
+   "core": "舊補面本體網裂、剝落或碎裂，問題不在補面邊界高差。",
+   "axes": "補面內裂網、碎塊是否鬆脫、周邊原路面狀況。",
+   "boundary": "只有接邊未接平歸既有修補接縫；人行道補面則歸人行道維護。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-SURFACE-CRACKING",
+   "split": "train",
+   "n": 20,
+   "name": "車行鋪面有非接縫型裂縫，但尚未形成坑洞或垂直高差",
+   "core": "車行鋪面有非接縫型裂縫，但尚未形成坑洞或垂直高差。",
+   "axes": "裂縫呈縱向、橫向或網狀前期；是否延長、是否滲水及是否開始碎裂。",
+   "boundary": "互連網狀疲勞裂紋歸疲勞家族；補面交界或已成高差歸接縫／坑洞家族。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-WHEEL-TRACK",
+   "split": "train",
+   "n": 20,
+   "name": "車輪常行位置形成縱向輪跡槽",
+   "core": "車輪常行位置形成縱向輪跡槽。",
+   "axes": "慢車道或主車道、槽深變化、車輛方向修正。",
+   "boundary": "不以位置替換創建新家族；單一道接縫落差歸接縫家族。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-REPAIR-JOINT",
+   "split": "validation",
+   "n": 10,
+   "name": "補面或施工接縫未與原路面接平",
+   "core": "補面或施工接縫未與原路面接平。",
+   "axes": "橫向／斜向接縫、先上後下震動、補面中段是否平整。",
+   "boundary": "補面整片碎裂歸補面破損候選；管線孔蓋本體故障排除。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-SURFACE-RAVELING",
+   "split": "validation",
+   "n": 10,
+   "name": "車道表面顆粒逐漸脫落，露出粗糙底層",
+   "core": "車道表面顆粒逐漸脫落，露出粗糙底層。",
+   "axes": "顆粒脫落範圍、輪胎帶起碎料、乾濕天差異。",
+   "boundary": "不是單純坑洞或落在道路上的外來物；清掃散落物才列清潔。"
+  },
+  {
+   "label_id": "road_surface_defect",
+   "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+   "split": "validation",
+   "n": 10,
+   "name": "車道管線開挖回填區中央沉陷，形成補土帶內低槽",
+   "core": "車道管線開挖回填區中央沉陷，形成補土帶內低槽。",
+   "axes": "回填區範圍、沉陷是否集中中央、車輪反覆通過的反應。",
+   "boundary": "要求可辨認管線開挖回填範圍且低槽位於回填帶內；若問題只在補面接邊，歸 FAM-ROAD-REPAIR-JOINT。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-FENCE-GATE",
+   "split": "test",
+   "n": 8,
+   "name": "公園固定圍籬或出入口門扇破損、無法關合",
+   "core": "公園固定圍籬或出入口門扇破損、無法關合。",
+   "axes": "欄杆脫落、尖端、門扇卡住及行人安全。",
+   "boundary": "不與車輛進入情境拼成一筆；交通管制門或私人圍籬需另判。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-INFORMATION-SIGN",
+   "split": "test",
+   "n": 7,
+   "name": "園內導覽牌、設施說明牌或固定資訊板損壞／無法閱讀",
+   "core": "園內導覽牌、設施說明牌或固定資訊板損壞／無法閱讀。",
+   "axes": "牌面脫落、字跡褪色、支架不穩及資訊缺失範圍。",
+   "boundary": "不含道路交通標誌、廣告或內容政策爭議；只處理公園設施維護。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-LIGHTING-EQUIPMENT",
+   "split": "test",
+   "n": 7,
+   "name": "公園範圍內固定照明設備故障，造成園內區段偏暗",
+   "core": "公園範圍內固定照明設備故障，造成園內區段偏暗。",
+   "axes": "單盞／一段燈具、故障時段、園內步行安全。",
+   "boundary": "要求可確認照明設備位於一般公園範圍內；明確排除道路路燈及其他不屬公園設施的照明。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-SHELTER-ROOF",
+   "split": "test",
+   "n": 8,
+   "name": "涼亭、遮棚等公園休憩構造的屋面或固定件損壞",
+   "core": "涼亭、遮棚等公園休憩構造的屋面或固定件損壞。",
+   "axes": "漏水、板材翹起、風雨後變化及使用區域。",
+   "boundary": "不延伸成噪音或私人建物維修；結構重大危險需人工判斷權責。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-COURT-SURFACE",
+   "split": "train",
+   "n": 17,
+   "name": "球場或運動場地表面剝落、起伏或標示面破損，非器材故障",
+   "core": "球場或運動場地表面剝落、起伏或標示面破損，非器材故障。",
+   "axes": "球場活動區域、表層材質、球員踩踏或球路影響。",
+   "boundary": "固定器材／圍網故障歸運動設備；場外道路缺陷不歸公園。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-DRINKING-FOUNTAIN",
+   "split": "train",
+   "n": 17,
+   "name": "公園飲水設備本體破損、按鍵或出水部件失效",
+   "core": "公園飲水設備本體破損、按鍵或出水部件失效。",
+   "axes": "是否出水、按鍵／龍頭部件、使用者能否安全取水。",
+   "boundary": "設備本體是主訴才列公園設施；自來水管線或水質案件另分類。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-GREENERY",
+   "split": "train",
+   "n": 18,
+   "name": "公園草木、綠籬或植栽生長影響管理",
+   "core": "公園草木、綠籬或植栽生長影響管理。",
+   "axes": "高度、枝葉伸入通行面、視線或維護頻率。",
+   "boundary": "僅公園綠地；路旁行道樹、路燈或私人植栽不因位置相近而併入。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-PLANTING-BED",
+   "split": "train",
+   "n": 17,
+   "name": "草地／花圃土壤裸露、流失或進入園內步道",
+   "core": "草地／花圃土壤裸露、流失或進入園內步道。",
+   "axes": "雨後沖刷、裸土範圍、泥土是否帶到步道。",
+   "boundary": "若主訴是排水設施堵塞，排除；公園外人行鋪面清理不歸本類。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-PLAY-EQUIPMENT",
+   "split": "train",
+   "n": 18,
+   "name": "兒童遊戲設備本體或連接部件破損",
+   "core": "兒童遊戲設備本體或連接部件破損。",
+   "axes": "破損部位、晃動／尖角、孩子是否仍會使用。",
+   "boundary": "遊戲區地坪獨立缺陷歸公園步道／場地面候選，不混設備故障。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-SEATING",
+   "split": "train",
+   "n": 18,
+   "name": "公園座椅、桌面或休憩家具損壞",
+   "core": "公園座椅、桌面或休憩家具損壞。",
+   "axes": "材料、鬆動部位、使用者接觸風險與可否使用。",
+   "boundary": "必須在一般公園範圍；私人座椅或店家家具不歸本類。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-SPORTS-EQUIPMENT",
+   "split": "train",
+   "n": 18,
+   "name": "體健器材或球場固定設備鬆動、破損",
+   "core": "體健器材或球場固定設備鬆動、破損。",
+   "axes": "固定座、器材運作、圍網或使用安全。",
+   "boundary": "球場鋪面本體缺陷列球場表面候選；區外道路設備排除。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-VEHICLE-ENTRY",
+   "split": "train",
+   "n": 17,
+   "name": "車輛進入一般公園步行或綠地範圍",
+   "core": "車輛進入一般公園步行或綠地範圍。",
+   "axes": "車種、進入路徑、停留位置、行人避讓與觀察時段。",
+   "boundary": "只記錄公園範圍內車輛進入；停車場正常通行、道路違停不混入。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+   "split": "validation",
+   "n": 10,
+   "name": "公園公廁門、隔間或固定五金故障，影響正常使用",
+   "core": "公園公廁門、隔間或固定五金故障，影響正常使用。",
+   "axes": "門鎖、門扇、隔板穩定與可用隔間數。",
+   "boundary": "不處理供水、污水或排水管線主訴；室內私人廁所排除。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-STAIR-HANDRAIL",
+   "split": "validation",
+   "n": 10,
+   "name": "公園階梯或平台旁的扶手／固定支撐件鬆脫、晃動或損壞",
+   "core": "公園階梯或平台旁的扶手／固定支撐件鬆脫、晃動或損壞。",
+   "axes": "扶手或固定支撐件的穩定度、鬆脫方式、使用者需要借力時的影響；不把階梯踏面破損作為本家族變化。",
+   "boundary": "家族核心限定扶手或固定支撐件鬆脫／損壞；階梯踏面破損需另列公園鋪面／設施情境，不納入本家族。"
+  },
+  {
+   "label_id": "park_general_maintenance",
+   "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+   "split": "validation",
+   "n": 10,
+   "name": "公園內非鋪裝步道被雨水沖出溝槽、鬆土或車轍，影響徒步路線",
+   "core": "公園內非鋪裝步道被雨水沖出溝槽、鬆土或車轍，影響徒步路線。",
+   "axes": "土徑乾濕、侵蝕深度、坡段上下行及行人如何避開。",
+   "boundary": "鋪裝步道磚面破損依人行道／公園鋪面規則判斷；花圃土流到路面歸植栽區家族。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+   "split": "test",
+   "n": 10,
+   "name": "車輛仍停靠或經過，但慣用的音樂／提醒訊號未播放或難以辨識，影響居民到場",
+   "core": "車輛仍停靠或經過，但慣用的音樂／提醒訊號未播放或難以辨識，影響居民到場。",
+   "axes": "是否看見車、訊號缺失頻率、周邊噪音與抵達距離。",
+   "boundary": "若主訴是音量擾民列噪音；須以收運服務可達性為主訴。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+   "split": "test",
+   "n": 10,
+   "name": "國定假日或連假期間的垃圾車服務是否停收、調整或補收",
+   "core": "國定假日或連假期間的垃圾車服務是否停收、調整或補收。",
+   "axes": "假日類型、前後服務日、民眾想確認的安排。",
+   "boundary": "保留為國定假日／連假期間停收、調整或補收的詢問；排除一般週末例行時段，且不得生成未經查證的官方班表答案。與 FAM-WASTE-WEEKEND-SCHEDULE 放在同一 split。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+   "split": "test",
+   "n": 10,
+   "name": "詢問週六／週日收運服務與時段",
+   "core": "詢問週六／週日收運服務與時段。",
+   "axes": "週末可等候時間、既往觀察、平日安排差異。",
+   "boundary": "國定假日／連假安排由 FAM-WASTE-HOLIDAY-SCHEDULE 涵蓋，兩者服務日類別不同但放在同一 split；非垃圾車政策不混入。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-ARRIVAL-TIME",
+   "split": "train",
+   "n": 20,
+   "name": "固定服務點到達時間提早或跨日波動",
+   "core": "固定服務點到達時間提早或跨日波動。",
+   "axes": "多日觀察、與平常時段差距、住戶等候安排。",
+   "boundary": "若整個路段停靠先後改變，優先評估路線順序家族。 合併分流：原 FAM-WASTE-RECYCLABLE-STREAM-SERVICE 若唯一主要訴求是到達時段不明，歸本家族；不處理回收分類或政策諮詢。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-MISSED-STOP",
+   "split": "train",
+   "n": 20,
+   "name": "民眾在固定等候點等候，未見垃圾車停靠",
+   "core": "民眾在固定等候點等候，未見垃圾車停靠。",
+   "axes": "等候時間、平常停靠習慣、是否聽見車輛經過。",
+   "boundary": "單一固定點未停屬本家族；路面殘留垃圾的清理列路面清潔。 合併分流：原 FAM-WASTE-SCHEDULED-DAY-OMISSION 若為單一停靠點／住戶未服務，歸本家族。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-PARTIAL-COLLECTION",
+   "split": "train",
+   "n": 20,
+   "name": "車輛已停靠並收取部分垃圾，但留下其他原本等候清運的部分",
+   "core": "車輛已停靠並收取部分垃圾，但留下其他原本等候清運的部分。",
+   "axes": "哪類／哪一側未收、車輛是否完整停靠、是否有可見限制。",
+   "boundary": "留在地面的垃圾清掃列路面清潔；回收規則諮詢不列此家族。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+   "split": "train",
+   "n": 20,
+   "name": "車輛在至少兩個停靠點的服務先後次序改變",
+   "core": "車輛在至少兩個停靠點的服務先後次序改變。",
+   "axes": "以往順序、最近觀察到的次序、受影響的社區段。",
+   "boundary": "必須有至少兩個停靠點的先後次序改變證據；只有到達時間早晚不同時歸 FAM-WASTE-ARRIVAL-TIME。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+   "split": "train",
+   "n": 20,
+   "name": "一整段街廓／社區未見車輛服務，而非單一戶或停靠點漏停",
+   "core": "一整段街廓／社區未見車輛服務，而非單一戶或停靠點漏停。",
+   "axes": "受影響的連續範圍、鄰近段是否仍有服務、觀察日期。",
+   "boundary": "若只有一個固定停靠點未停，歸漏停家族；不推定司機原因。 合併分流：原 FAM-WASTE-SCHEDULED-DAY-OMISSION 若為整段街廓／連續路段未服務，歸本家族。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-SHORT-DWELL",
+   "split": "train",
+   "n": 20,
+   "name": "車輛在正常停靠點停留過短，民眾到達時車已離開",
+   "core": "車輛在正常停靠點停留過短，民眾到達時車已離開。",
+   "axes": "從聽見訊號到抵達所需時間、是否看到車、重複頻率。",
+   "boundary": "必須有車輛曾在正常停靠點停靠但停留不足的觀察；若車未到，歸 FAM-WASTE-MISSED-STOP。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-STOP-LOCATION",
+   "split": "train",
+   "n": 20,
+   "name": "不清楚目前應在哪個位置等車或看到停靠點變動",
+   "core": "不清楚目前應在哪個位置等車或看到停靠點變動。",
+   "axes": "新住戶、不同出口、原位置與新位置的相對關係。",
+   "boundary": "只問垃圾分類／一般規則不屬本類；不得編造正式停靠點。 納入變化：包含原 FAM-WASTE-TEMP-STOP-RELOCATION 的臨時停靠點移動；主訴仍須是位置資訊不清或改變。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+   "split": "validation",
+   "n": 15,
+   "name": "臨時道路封閉或通行限制使原服務路段當次無法進入",
+   "core": "臨時道路封閉或通行限制使原服務路段當次無法進入。",
+   "axes": "封閉持續時間、是否有替代停靠、居民如何收到服務。",
+   "boundary": "主訴須是臨時通行限制造成當次收運服務受影響；不把道路封閉或施工管理本身分類成垃圾車案件。"
+  },
+  {
+   "label_id": "waste_truck_service",
+   "family": "FAM-WASTE-ALLEY-ACCESS",
+   "split": "validation",
+   "n": 15,
+   "name": "車輛未進入原有巷內收運路段",
+   "core": "車輛未進入原有巷內收運路段。",
+   "axes": "進到哪一段、是否折返、內側住戶如何得知。",
+   "boundary": "若主要訴求是路障／違停本身，另分類；只描述收運服務影響。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-LOOSE-GRIT",
+   "split": "test",
+   "n": 7,
+   "name": "外來的鬆散沙粒、碎石或顆粒散在公共道路表面，可由清掃移除且影響通行",
+   "core": "外來的鬆散沙粒、碎石或顆粒散在公共道路表面，可由清掃移除且影響通行。",
+   "axes": "顆粒密度、覆蓋路徑、是否呈線狀散落及持續時間。",
+   "boundary": "限定外來、鬆散且可清掃的沙粒／碎石；排除由鋪面自身剝落形成的碎屑及大型物料外洩。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-MUD-SILT-FILM",
+   "split": "test",
+   "n": 8,
+   "name": "雨後泥土或細砂沉積成薄層，乾濕轉換造成滑動或鞋底帶泥",
+   "core": "雨後泥土或細砂沉積成薄層，乾濕轉換造成滑動或鞋底帶泥。",
+   "axes": "沉積深淺、雨後多久、範圍是否延伸、排水是否正常。",
+   "boundary": "排水溝／下水道故障為主訴時排除；人行鋪面沉陷另列維護。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-SHARP-GLASS",
+   "split": "test",
+   "n": 8,
+   "name": "公共通行面有破玻璃或尖銳碎片，需要特別避讓清理",
+   "core": "公共通行面有破玻璃或尖銳碎片，需要特別避讓清理。",
+   "axes": "碎片數量、範圍、是否在輪椅／自行車路徑、是否有大件容器。",
+   "boundary": "若是交通事故或刑案本身為主訴，另分類；不推定碎片來源。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-STORM-BRANCH-DEBRIS",
+   "split": "test",
+   "n": 7,
+   "name": "風雨後已脫落的枝葉或小段枝條留在公共通行面",
+   "core": "風雨後已脫落的枝葉或小段枝條留在公共通行面。",
+   "axes": "枝葉大小、是否仍有可通行空間、是否還有懸掛危險。",
+   "boundary": "仍連在樹上的危險枝條列樹木維護；倒樹或道路阻斷需另分類。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-BIN-DAMAGE",
+   "split": "train",
+   "n": 35,
+   "name": "公共果皮箱本體故障導致周圍散落垃圾",
+   "core": "公共果皮箱本體故障導致周圍散落垃圾。",
+   "axes": "內桶、箱蓋、箱身固定狀況及垃圾漏出的方向。",
+   "boundary": "單純容量滿溢歸果皮箱滿溢；私人垃圾桶不列公共清潔。 合併分流：原 FAM-CLEAN-WIND-DISPERSED-LITTER 只有在能確認由果皮箱損壞造成時才歸本家族。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-BIN-OVERFLOW",
+   "split": "train",
+   "n": 35,
+   "name": "公共果皮箱容量滿溢，垃圾堆到箱外或箱口",
+   "core": "公共果皮箱容量滿溢，垃圾堆到箱外或箱口。",
+   "axes": "外溢量、持續多久、行人是否需要繞行。",
+   "boundary": "箱體部件損壞造成漏出歸果皮箱損壞；家用垃圾收運問題列垃圾車服務。 合併分流：原 FAM-CLEAN-WIND-DISPERSED-LITTER 只有在能確認由果皮箱滿溢造成時才歸本家族。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-CIGARETTE",
+   "split": "train",
+   "n": 35,
+   "name": "公共路面反覆累積菸蒂",
+   "core": "公共路面反覆累積菸蒂。",
+   "axes": "固定角落或通行帶、清掃後再出現的時間、集中或散落。",
+   "boundary": "其他一般垃圾歸路面髒污家族；私人場所排除。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-SURFACE-DEBRIS",
+   "split": "train",
+   "n": 35,
+   "name": "公共路面一般髒污、飲料／食物殘留、落葉泥土或散落物",
+   "core": "公共路面一般髒污、飲料／食物殘留、落葉泥土或散落物。",
+   "axes": "是否黏滑、濕乾變化、來源是否可見、清掃後是否再現。",
+   "boundary": "垃圾車漏收不歸本類；私人室內、危險物質外洩需另分類。 納入變化：原 FAM-CLEAN-EVENT-PACKAGING、FAM-CLEAN-GUM-ADHERED-RESIDUE 併為散落物／黏著污物型態；原 FAM-CLEAN-WIND-DISPERSED-LITTER 在來源未確認時亦歸本家族。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-DOG-WASTE",
+   "split": "validation",
+   "n": 10,
+   "name": "公共人行面有未清理狗便，造成行人避讓或衛生疑慮",
+   "core": "公共人行面有未清理狗便，造成行人避讓或衛生疑慮。",
+   "axes": "新鮮／乾掉、單點／多點、是否反覆出現及通行影響。",
+   "boundary": "若主訴是飼主違規稽查而非清潔，需另分類；僅描述公共路面清理。 合併分流：原 FAM-CLEAN-DOG-WASTE-PERSISTENT-RESIDUE 若為新出現或不同點位的狗便，歸本家族。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+   "split": "validation",
+   "n": 10,
+   "name": "已有清掃但同一區域仍留有一段髒污，主訴是清潔未完成或殘留",
+   "core": "已有清掃但同一區域仍留有一段髒污，主訴是清潔未完成或殘留。",
+   "axes": "清掃前後觀察、殘留位置是否固定、剩餘髒污的範圍。",
+   "boundary": "若清掃後又出現新垃圾，需區分新來源與未清乾淨；不推定清潔人員失職。 合併分流：原 FAM-CLEAN-DOG-WASTE-PERSISTENT-RESIDUE 只有在確認同一舊痕清掃後仍留存時才歸本家族。"
+  },
+  {
+   "label_id": "street_cleaning",
+   "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+   "split": "validation",
+   "n": 10,
+   "name": "公共路面清掃後短時間內因持續來源重新堆積，主訴是反覆回流而非單次髒污",
+   "core": "公共路面清掃後短時間內因持續來源重新堆積，主訴是反覆回流而非單次髒污。",
+   "axes": "清掃與再出現間隔、來源是否可見、累積是否集中同一路段。",
+   "boundary": "要求觀察到清掃後有新垃圾再次累積；排除同一舊污未清及果皮箱來源，後兩者分別歸清掃殘留或果皮箱家族。"
+  }
+ ]
+}

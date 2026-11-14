@@ -1,0 +1,6045 @@
+{
+ "batch_size": 50,
+ "batches": [
+  [
+   {
+    "id": "TPE1999-V2-SW-0001",
+    "family": "FAM-SW-CURB-RAMP-LANDING",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0002",
+    "family": "FAM-SW-CURB-RAMP-LANDING",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0003",
+    "family": "FAM-SW-CURB-RAMP-LANDING",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0004",
+    "family": "FAM-SW-CURB-RAMP-LANDING",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0005",
+    "family": "FAM-SW-CURB-RAMP-LANDING",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0006",
+    "family": "FAM-SW-CURB-RAMP-LANDING",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0007",
+    "family": "FAM-SW-CURB-RAMP-LANDING",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0008",
+    "family": "FAM-SW-FLAT-SURFACE-SLIPPERY",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0009",
+    "family": "FAM-SW-FLAT-SURFACE-SLIPPERY",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0010",
+    "family": "FAM-SW-FLAT-SURFACE-SLIPPERY",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0011",
+    "family": "FAM-SW-FLAT-SURFACE-SLIPPERY",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0012",
+    "family": "FAM-SW-FLAT-SURFACE-SLIPPERY",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0013",
+    "family": "FAM-SW-FLAT-SURFACE-SLIPPERY",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0014",
+    "family": "FAM-SW-FLAT-SURFACE-SLIPPERY",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0015",
+    "family": "FAM-SW-RAMP-SURFACE",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0016",
+    "family": "FAM-SW-RAMP-SURFACE",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0017",
+    "family": "FAM-SW-RAMP-SURFACE",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0018",
+    "family": "FAM-SW-RAMP-SURFACE",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0019",
+    "family": "FAM-SW-RAMP-SURFACE",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0020",
+    "family": "FAM-SW-RAMP-SURFACE",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0021",
+    "family": "FAM-SW-RAMP-SURFACE",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0022",
+    "family": "FAM-SW-RAMP-SURFACE",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0023",
+    "family": "FAM-SW-SLAB-JOINT-GAP",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0024",
+    "family": "FAM-SW-SLAB-JOINT-GAP",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0025",
+    "family": "FAM-SW-SLAB-JOINT-GAP",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0026",
+    "family": "FAM-SW-SLAB-JOINT-GAP",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0027",
+    "family": "FAM-SW-SLAB-JOINT-GAP",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0028",
+    "family": "FAM-SW-SLAB-JOINT-GAP",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0029",
+    "family": "FAM-SW-SLAB-JOINT-GAP",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0030",
+    "family": "FAM-SW-SLAB-JOINT-GAP",
+    "label_id": "sidewalk_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SW-0031",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0032",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0033",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0034",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0035",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0036",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0037",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0038",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0039",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0040",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0041",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0042",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0043",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0044",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0045",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0046",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0047",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0048",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0049",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0050",
+    "family": "FAM-SW-LEVEL-SETTLEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-SW-0051",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0052",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0053",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0054",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0055",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0056",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0057",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0058",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0059",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0060",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0061",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0062",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0063",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0064",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0065",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0066",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0067",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0068",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0069",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0070",
+    "family": "FAM-SW-MISSING-PAVERS",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0071",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0072",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0073",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0074",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0075",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0076",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0077",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0078",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0079",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0080",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0081",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0082",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0083",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0084",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0085",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0086",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0087",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0088",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0089",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0090",
+    "family": "FAM-SW-PEDESTRIAN-DECK",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0091",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0092",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0093",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0094",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0095",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0096",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0097",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0098",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0099",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0100",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-SW-0101",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0102",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0103",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0104",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0105",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0106",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0107",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0108",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0109",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0110",
+    "family": "FAM-SW-TACTILE-ALIGNMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0111",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0112",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0113",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0114",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0115",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0116",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0117",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0118",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0119",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0120",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0121",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0122",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0123",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0124",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0125",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0126",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0127",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0128",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0129",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0130",
+    "family": "FAM-SW-TACTILE-PAVING",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0131",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0132",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0133",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0134",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0135",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0136",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0137",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0138",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0139",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0140",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0141",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0142",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0143",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0144",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0145",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0146",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0147",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0148",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0149",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0150",
+    "family": "FAM-SW-TILE-MOVEMENT",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-SW-0151",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0152",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0153",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0154",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0155",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0156",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0157",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0158",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0159",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0160",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0161",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0162",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0163",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0164",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0165",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0166",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0167",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0168",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0169",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0170",
+    "family": "FAM-SW-UTILITY-RESTORATION",
+    "label_id": "sidewalk_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SW-0171",
+    "family": "FAM-SW-CONCRETE-SPALLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0172",
+    "family": "FAM-SW-CONCRETE-SPALLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0173",
+    "family": "FAM-SW-CONCRETE-SPALLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0174",
+    "family": "FAM-SW-CONCRETE-SPALLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0175",
+    "family": "FAM-SW-CONCRETE-SPALLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0176",
+    "family": "FAM-SW-CONCRETE-SPALLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0177",
+    "family": "FAM-SW-CONCRETE-SPALLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0178",
+    "family": "FAM-SW-CONCRETE-SPALLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0179",
+    "family": "FAM-SW-CONCRETE-SPALLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0180",
+    "family": "FAM-SW-CONCRETE-SPALLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0181",
+    "family": "FAM-SW-CURB-EDGE",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0182",
+    "family": "FAM-SW-CURB-EDGE",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0183",
+    "family": "FAM-SW-CURB-EDGE",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0184",
+    "family": "FAM-SW-CURB-EDGE",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0185",
+    "family": "FAM-SW-CURB-EDGE",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0186",
+    "family": "FAM-SW-CURB-EDGE",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0187",
+    "family": "FAM-SW-CURB-EDGE",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0188",
+    "family": "FAM-SW-CURB-EDGE",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0189",
+    "family": "FAM-SW-CURB-EDGE",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0190",
+    "family": "FAM-SW-CURB-EDGE",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0191",
+    "family": "FAM-SW-EDGE-CRUMBLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0192",
+    "family": "FAM-SW-EDGE-CRUMBLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0193",
+    "family": "FAM-SW-EDGE-CRUMBLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0194",
+    "family": "FAM-SW-EDGE-CRUMBLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0195",
+    "family": "FAM-SW-EDGE-CRUMBLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0196",
+    "family": "FAM-SW-EDGE-CRUMBLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0197",
+    "family": "FAM-SW-EDGE-CRUMBLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0198",
+    "family": "FAM-SW-EDGE-CRUMBLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0199",
+    "family": "FAM-SW-EDGE-CRUMBLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SW-0200",
+    "family": "FAM-SW-EDGE-CRUMBLING",
+    "label_id": "sidewalk_maintenance",
+    "split": "validation"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-RD-0001",
+    "family": "FAM-ROAD-LONGITUDINAL-TRANSITION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0002",
+    "family": "FAM-ROAD-LONGITUDINAL-TRANSITION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0003",
+    "family": "FAM-ROAD-LONGITUDINAL-TRANSITION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0004",
+    "family": "FAM-ROAD-LONGITUDINAL-TRANSITION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0005",
+    "family": "FAM-ROAD-LONGITUDINAL-TRANSITION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0006",
+    "family": "FAM-ROAD-LONGITUDINAL-TRANSITION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0007",
+    "family": "FAM-ROAD-LONGITUDINAL-TRANSITION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0008",
+    "family": "FAM-ROAD-LONGITUDINAL-TRANSITION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0009",
+    "family": "FAM-ROAD-PAVEMENT-HEAVE",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0010",
+    "family": "FAM-ROAD-PAVEMENT-HEAVE",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0011",
+    "family": "FAM-ROAD-PAVEMENT-HEAVE",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0012",
+    "family": "FAM-ROAD-PAVEMENT-HEAVE",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0013",
+    "family": "FAM-ROAD-PAVEMENT-HEAVE",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0014",
+    "family": "FAM-ROAD-PAVEMENT-HEAVE",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0015",
+    "family": "FAM-ROAD-PAVEMENT-HEAVE",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0016",
+    "family": "FAM-ROAD-PAVEMENT-HEAVE",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0017",
+    "family": "FAM-ROAD-SHOULDER-EDGE-DROP",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0018",
+    "family": "FAM-ROAD-SHOULDER-EDGE-DROP",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0019",
+    "family": "FAM-ROAD-SHOULDER-EDGE-DROP",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0020",
+    "family": "FAM-ROAD-SHOULDER-EDGE-DROP",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0021",
+    "family": "FAM-ROAD-SHOULDER-EDGE-DROP",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0022",
+    "family": "FAM-ROAD-SHOULDER-EDGE-DROP",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0023",
+    "family": "FAM-ROAD-SHOULDER-EDGE-DROP",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0024",
+    "family": "FAM-ROAD-WIDESPREAD-UNDULATION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0025",
+    "family": "FAM-ROAD-WIDESPREAD-UNDULATION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0026",
+    "family": "FAM-ROAD-WIDESPREAD-UNDULATION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0027",
+    "family": "FAM-ROAD-WIDESPREAD-UNDULATION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0028",
+    "family": "FAM-ROAD-WIDESPREAD-UNDULATION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0029",
+    "family": "FAM-ROAD-WIDESPREAD-UNDULATION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0030",
+    "family": "FAM-ROAD-WIDESPREAD-UNDULATION",
+    "label_id": "road_surface_defect",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-RD-0031",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0032",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0033",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0034",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0035",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0036",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0037",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0038",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0039",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0040",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0041",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0042",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0043",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0044",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0045",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0046",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0047",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0048",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0049",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0050",
+    "family": "FAM-ROAD-BINDER-BLEEDING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-RD-0051",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0052",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0053",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0054",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0055",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0056",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0057",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0058",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0059",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0060",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0061",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0062",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0063",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0064",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0065",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0066",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0067",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0068",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0069",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0070",
+    "family": "FAM-ROAD-DEEP-POTHOLE",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0071",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0072",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0073",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0074",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0075",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0076",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0077",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0078",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0079",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0080",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0081",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0082",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0083",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0084",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0085",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0086",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0087",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0088",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0089",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0090",
+    "family": "FAM-ROAD-FATIGUE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0091",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0092",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0093",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0094",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0095",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0096",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0097",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0098",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0099",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0100",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-RD-0101",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0102",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0103",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0104",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0105",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0106",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0107",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0108",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0109",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0110",
+    "family": "FAM-ROAD-INTERSECTION-DENT",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0111",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0112",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0113",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0114",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0115",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0116",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0117",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0118",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0119",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0120",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0121",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0122",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0123",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0124",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0125",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0126",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0127",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0128",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0129",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0130",
+    "family": "FAM-ROAD-PATCH-BREAKUP",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0131",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0132",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0133",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0134",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0135",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0136",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0137",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0138",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0139",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0140",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0141",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0142",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0143",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0144",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0145",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0146",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0147",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0148",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0149",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0150",
+    "family": "FAM-ROAD-SURFACE-CRACKING",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-RD-0151",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0152",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0153",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0154",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0155",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0156",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0157",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0158",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0159",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0160",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0161",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0162",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0163",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0164",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0165",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0166",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0167",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0168",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0169",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0170",
+    "family": "FAM-ROAD-WHEEL-TRACK",
+    "label_id": "road_surface_defect",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-RD-0171",
+    "family": "FAM-ROAD-REPAIR-JOINT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0172",
+    "family": "FAM-ROAD-REPAIR-JOINT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0173",
+    "family": "FAM-ROAD-REPAIR-JOINT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0174",
+    "family": "FAM-ROAD-REPAIR-JOINT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0175",
+    "family": "FAM-ROAD-REPAIR-JOINT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0176",
+    "family": "FAM-ROAD-REPAIR-JOINT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0177",
+    "family": "FAM-ROAD-REPAIR-JOINT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0178",
+    "family": "FAM-ROAD-REPAIR-JOINT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0179",
+    "family": "FAM-ROAD-REPAIR-JOINT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0180",
+    "family": "FAM-ROAD-REPAIR-JOINT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0181",
+    "family": "FAM-ROAD-SURFACE-RAVELING",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0182",
+    "family": "FAM-ROAD-SURFACE-RAVELING",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0183",
+    "family": "FAM-ROAD-SURFACE-RAVELING",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0184",
+    "family": "FAM-ROAD-SURFACE-RAVELING",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0185",
+    "family": "FAM-ROAD-SURFACE-RAVELING",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0186",
+    "family": "FAM-ROAD-SURFACE-RAVELING",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0187",
+    "family": "FAM-ROAD-SURFACE-RAVELING",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0188",
+    "family": "FAM-ROAD-SURFACE-RAVELING",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0189",
+    "family": "FAM-ROAD-SURFACE-RAVELING",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0190",
+    "family": "FAM-ROAD-SURFACE-RAVELING",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0191",
+    "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0192",
+    "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0193",
+    "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0194",
+    "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0195",
+    "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0196",
+    "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0197",
+    "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0198",
+    "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0199",
+    "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-RD-0200",
+    "family": "FAM-ROAD-UTILITY-CUT-SETTLEMENT",
+    "label_id": "road_surface_defect",
+    "split": "validation"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-PK-0001",
+    "family": "FAM-PARK-FENCE-GATE",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0002",
+    "family": "FAM-PARK-FENCE-GATE",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0003",
+    "family": "FAM-PARK-FENCE-GATE",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0004",
+    "family": "FAM-PARK-FENCE-GATE",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0005",
+    "family": "FAM-PARK-FENCE-GATE",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0006",
+    "family": "FAM-PARK-FENCE-GATE",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0007",
+    "family": "FAM-PARK-FENCE-GATE",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0008",
+    "family": "FAM-PARK-FENCE-GATE",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0009",
+    "family": "FAM-PARK-INFORMATION-SIGN",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0010",
+    "family": "FAM-PARK-INFORMATION-SIGN",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0011",
+    "family": "FAM-PARK-INFORMATION-SIGN",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0012",
+    "family": "FAM-PARK-INFORMATION-SIGN",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0013",
+    "family": "FAM-PARK-INFORMATION-SIGN",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0014",
+    "family": "FAM-PARK-INFORMATION-SIGN",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0015",
+    "family": "FAM-PARK-INFORMATION-SIGN",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0016",
+    "family": "FAM-PARK-LIGHTING-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0017",
+    "family": "FAM-PARK-LIGHTING-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0018",
+    "family": "FAM-PARK-LIGHTING-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0019",
+    "family": "FAM-PARK-LIGHTING-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0020",
+    "family": "FAM-PARK-LIGHTING-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0021",
+    "family": "FAM-PARK-LIGHTING-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0022",
+    "family": "FAM-PARK-LIGHTING-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0023",
+    "family": "FAM-PARK-SHELTER-ROOF",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0024",
+    "family": "FAM-PARK-SHELTER-ROOF",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0025",
+    "family": "FAM-PARK-SHELTER-ROOF",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0026",
+    "family": "FAM-PARK-SHELTER-ROOF",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0027",
+    "family": "FAM-PARK-SHELTER-ROOF",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0028",
+    "family": "FAM-PARK-SHELTER-ROOF",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0029",
+    "family": "FAM-PARK-SHELTER-ROOF",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0030",
+    "family": "FAM-PARK-SHELTER-ROOF",
+    "label_id": "park_general_maintenance",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-PK-0031",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0032",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0033",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0034",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0035",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0036",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0037",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0038",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0039",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0040",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0041",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0042",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0043",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0044",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0045",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0046",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0047",
+    "family": "FAM-PARK-COURT-SURFACE",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0048",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0049",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0050",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-PK-0051",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0052",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0053",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0054",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0055",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0056",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0057",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0058",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0059",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0060",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0061",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0062",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0063",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0064",
+    "family": "FAM-PARK-DRINKING-FOUNTAIN",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0065",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0066",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0067",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0068",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0069",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0070",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0071",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0072",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0073",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0074",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0075",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0076",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0077",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0078",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0079",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0080",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0081",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0082",
+    "family": "FAM-PARK-GREENERY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0083",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0084",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0085",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0086",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0087",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0088",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0089",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0090",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0091",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0092",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0093",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0094",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0095",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0096",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0097",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0098",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0099",
+    "family": "FAM-PARK-PLANTING-BED",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0100",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-PK-0101",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0102",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0103",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0104",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0105",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0106",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0107",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0108",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0109",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0110",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0111",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0112",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0113",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0114",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0115",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0116",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0117",
+    "family": "FAM-PARK-PLAY-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0118",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0119",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0120",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0121",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0122",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0123",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0124",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0125",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0126",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0127",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0128",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0129",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0130",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0131",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0132",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0133",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0134",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0135",
+    "family": "FAM-PARK-SEATING",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0136",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0137",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0138",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0139",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0140",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0141",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0142",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0143",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0144",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0145",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0146",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0147",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0148",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0149",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0150",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-PK-0151",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0152",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0153",
+    "family": "FAM-PARK-SPORTS-EQUIPMENT",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0154",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0155",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0156",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0157",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0158",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0159",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0160",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0161",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0162",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0163",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0164",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0165",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0166",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0167",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0168",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0169",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0170",
+    "family": "FAM-PARK-VEHICLE-ENTRY",
+    "label_id": "park_general_maintenance",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-PK-0171",
+    "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0172",
+    "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0173",
+    "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0174",
+    "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0175",
+    "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0176",
+    "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0177",
+    "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0178",
+    "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0179",
+    "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0180",
+    "family": "FAM-PARK-RESTROOM-DOOR-PARTITION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0181",
+    "family": "FAM-PARK-STAIR-HANDRAIL",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0182",
+    "family": "FAM-PARK-STAIR-HANDRAIL",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0183",
+    "family": "FAM-PARK-STAIR-HANDRAIL",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0184",
+    "family": "FAM-PARK-STAIR-HANDRAIL",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0185",
+    "family": "FAM-PARK-STAIR-HANDRAIL",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0186",
+    "family": "FAM-PARK-STAIR-HANDRAIL",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0187",
+    "family": "FAM-PARK-STAIR-HANDRAIL",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0188",
+    "family": "FAM-PARK-STAIR-HANDRAIL",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0189",
+    "family": "FAM-PARK-STAIR-HANDRAIL",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0190",
+    "family": "FAM-PARK-STAIR-HANDRAIL",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0191",
+    "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0192",
+    "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0193",
+    "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0194",
+    "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0195",
+    "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0196",
+    "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0197",
+    "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0198",
+    "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0199",
+    "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-PK-0200",
+    "family": "FAM-PARK-TRAIL-SURFACE-EROSION",
+    "label_id": "park_general_maintenance",
+    "split": "validation"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-WT-0001",
+    "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0002",
+    "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0003",
+    "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0004",
+    "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0005",
+    "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0006",
+    "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0007",
+    "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0008",
+    "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0009",
+    "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0010",
+    "family": "FAM-WASTE-COLLECTION-CUE-FAILURE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0011",
+    "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0012",
+    "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0013",
+    "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0014",
+    "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0015",
+    "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0016",
+    "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0017",
+    "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0018",
+    "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0019",
+    "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0020",
+    "family": "FAM-WASTE-HOLIDAY-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0021",
+    "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0022",
+    "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0023",
+    "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0024",
+    "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0025",
+    "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0026",
+    "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0027",
+    "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0028",
+    "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0029",
+    "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0030",
+    "family": "FAM-WASTE-WEEKEND-SCHEDULE",
+    "label_id": "waste_truck_service",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-WT-0031",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0032",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0033",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0034",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0035",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0036",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0037",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0038",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0039",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0040",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0041",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0042",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0043",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0044",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0045",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0046",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0047",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0048",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0049",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0050",
+    "family": "FAM-WASTE-ARRIVAL-TIME",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-WT-0051",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0052",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0053",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0054",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0055",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0056",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0057",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0058",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0059",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0060",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0061",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0062",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0063",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0064",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0065",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0066",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0067",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0068",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0069",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0070",
+    "family": "FAM-WASTE-MISSED-STOP",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0071",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0072",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0073",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0074",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0075",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0076",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0077",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0078",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0079",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0080",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0081",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0082",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0083",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0084",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0085",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0086",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0087",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0088",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0089",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0090",
+    "family": "FAM-WASTE-PARTIAL-COLLECTION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0091",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0092",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0093",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0094",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0095",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0096",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0097",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0098",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0099",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0100",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-WT-0101",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0102",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0103",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0104",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0105",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0106",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0107",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0108",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0109",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0110",
+    "family": "FAM-WASTE-ROUTE-ORDER-CHANGE",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0111",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0112",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0113",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0114",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0115",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0116",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0117",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0118",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0119",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0120",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0121",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0122",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0123",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0124",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0125",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0126",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0127",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0128",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0129",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0130",
+    "family": "FAM-WASTE-ROUTE-SEGMENT-OMISSION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0131",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0132",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0133",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0134",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0135",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0136",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0137",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0138",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0139",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0140",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0141",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0142",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0143",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0144",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0145",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0146",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0147",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0148",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0149",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0150",
+    "family": "FAM-WASTE-SHORT-DWELL",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-WT-0151",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0152",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0153",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0154",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0155",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0156",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0157",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0158",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0159",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0160",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0161",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0162",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0163",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0164",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0165",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0166",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0167",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0168",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0169",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0170",
+    "family": "FAM-WASTE-STOP-LOCATION",
+    "label_id": "waste_truck_service",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-WT-0171",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0172",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0173",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0174",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0175",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0176",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0177",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0178",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0179",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0180",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0181",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0182",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0183",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0184",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0185",
+    "family": "FAM-WASTE-ACCESS-INTERRUPTION",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0186",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0187",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0188",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0189",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0190",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0191",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0192",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0193",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0194",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0195",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0196",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0197",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0198",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0199",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-WT-0200",
+    "family": "FAM-WASTE-ALLEY-ACCESS",
+    "label_id": "waste_truck_service",
+    "split": "validation"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-SC-0001",
+    "family": "FAM-CLEAN-LOOSE-GRIT",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0002",
+    "family": "FAM-CLEAN-LOOSE-GRIT",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0003",
+    "family": "FAM-CLEAN-LOOSE-GRIT",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0004",
+    "family": "FAM-CLEAN-LOOSE-GRIT",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0005",
+    "family": "FAM-CLEAN-LOOSE-GRIT",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0006",
+    "family": "FAM-CLEAN-LOOSE-GRIT",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0007",
+    "family": "FAM-CLEAN-LOOSE-GRIT",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0008",
+    "family": "FAM-CLEAN-MUD-SILT-FILM",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0009",
+    "family": "FAM-CLEAN-MUD-SILT-FILM",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0010",
+    "family": "FAM-CLEAN-MUD-SILT-FILM",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0011",
+    "family": "FAM-CLEAN-MUD-SILT-FILM",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0012",
+    "family": "FAM-CLEAN-MUD-SILT-FILM",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0013",
+    "family": "FAM-CLEAN-MUD-SILT-FILM",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0014",
+    "family": "FAM-CLEAN-MUD-SILT-FILM",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0015",
+    "family": "FAM-CLEAN-MUD-SILT-FILM",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0016",
+    "family": "FAM-CLEAN-SHARP-GLASS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0017",
+    "family": "FAM-CLEAN-SHARP-GLASS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0018",
+    "family": "FAM-CLEAN-SHARP-GLASS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0019",
+    "family": "FAM-CLEAN-SHARP-GLASS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0020",
+    "family": "FAM-CLEAN-SHARP-GLASS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0021",
+    "family": "FAM-CLEAN-SHARP-GLASS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0022",
+    "family": "FAM-CLEAN-SHARP-GLASS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0023",
+    "family": "FAM-CLEAN-SHARP-GLASS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0024",
+    "family": "FAM-CLEAN-STORM-BRANCH-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0025",
+    "family": "FAM-CLEAN-STORM-BRANCH-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0026",
+    "family": "FAM-CLEAN-STORM-BRANCH-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0027",
+    "family": "FAM-CLEAN-STORM-BRANCH-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0028",
+    "family": "FAM-CLEAN-STORM-BRANCH-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0029",
+    "family": "FAM-CLEAN-STORM-BRANCH-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0030",
+    "family": "FAM-CLEAN-STORM-BRANCH-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "test"
+   },
+   {
+    "id": "TPE1999-V2-SC-0031",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0032",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0033",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0034",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0035",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0036",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0037",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0038",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0039",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0040",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0041",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0042",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0043",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0044",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0045",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0046",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0047",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0048",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0049",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0050",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-SC-0051",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0052",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0053",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0054",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0055",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0056",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0057",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0058",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0059",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0060",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0061",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0062",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0063",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0064",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0065",
+    "family": "FAM-CLEAN-BIN-DAMAGE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0066",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0067",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0068",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0069",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0070",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0071",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0072",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0073",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0074",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0075",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0076",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0077",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0078",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0079",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0080",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0081",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0082",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0083",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0084",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0085",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0086",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0087",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0088",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0089",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0090",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0091",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0092",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0093",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0094",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0095",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0096",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0097",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0098",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0099",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0100",
+    "family": "FAM-CLEAN-BIN-OVERFLOW",
+    "label_id": "street_cleaning",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-SC-0101",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0102",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0103",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0104",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0105",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0106",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0107",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0108",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0109",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0110",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0111",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0112",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0113",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0114",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0115",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0116",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0117",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0118",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0119",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0120",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0121",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0122",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0123",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0124",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0125",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0126",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0127",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0128",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0129",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0130",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0131",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0132",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0133",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0134",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0135",
+    "family": "FAM-CLEAN-CIGARETTE",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0136",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0137",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0138",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0139",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0140",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0141",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0142",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0143",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0144",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0145",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0146",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0147",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0148",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0149",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0150",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   }
+  ],
+  [
+   {
+    "id": "TPE1999-V2-SC-0151",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0152",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0153",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0154",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0155",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0156",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0157",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0158",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0159",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0160",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0161",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0162",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0163",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0164",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0165",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0166",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0167",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0168",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0169",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0170",
+    "family": "FAM-CLEAN-SURFACE-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "train"
+   },
+   {
+    "id": "TPE1999-V2-SC-0171",
+    "family": "FAM-CLEAN-DOG-WASTE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0172",
+    "family": "FAM-CLEAN-DOG-WASTE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0173",
+    "family": "FAM-CLEAN-DOG-WASTE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0174",
+    "family": "FAM-CLEAN-DOG-WASTE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0175",
+    "family": "FAM-CLEAN-DOG-WASTE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0176",
+    "family": "FAM-CLEAN-DOG-WASTE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0177",
+    "family": "FAM-CLEAN-DOG-WASTE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0178",
+    "family": "FAM-CLEAN-DOG-WASTE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0179",
+    "family": "FAM-CLEAN-DOG-WASTE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0180",
+    "family": "FAM-CLEAN-DOG-WASTE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0181",
+    "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0182",
+    "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0183",
+    "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0184",
+    "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0185",
+    "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0186",
+    "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0187",
+    "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0188",
+    "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0189",
+    "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0190",
+    "family": "FAM-CLEAN-POST-SWEEP-RESIDUE",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0191",
+    "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0192",
+    "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0193",
+    "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0194",
+    "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0195",
+    "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0196",
+    "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0197",
+    "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0198",
+    "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0199",
+    "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   },
+   {
+    "id": "TPE1999-V2-SC-0200",
+    "family": "FAM-CLEAN-REACCUMULATING-DEBRIS",
+    "label_id": "street_cleaning",
+    "split": "validation"
+   }
+  ]
+ ]
+}

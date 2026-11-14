@@ -1,0 +1,4 @@
+2217855d7d874b794063027b53abf79399dff184117f2ae8942bf52e6489c470  data/1999_synthetic/formal/v2.0.0/formal_dataset_v2.0.0.jsonl
+10c8826b49f115a9a82995e96f91eff46652a7c89eadf7c854c147f99cca16ec  data/1999_synthetic/formal/v2.0.0/formal_dataset_v2.0.0.csv
+fbbbb7a945ecd0bebe23f7bfddc0e16f8b4c70fdfe21edb4acdf6772531db96c  data/1999_synthetic/taxonomy/current/taxonomy_v1.3_dataset_v2.yaml
+d60f97f9948da568fbdf9ff00953f088ddbc117ce99ed64ebc10a00b4cad87fb  data/1999_synthetic/taxonomy/current/formal_split_manifest_frozen_v1.0.yaml

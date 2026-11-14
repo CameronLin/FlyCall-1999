@@ -1,0 +1,196 @@
+{
+ "records": 1000,
+ "expected": 1000,
+ "missing_ids": [],
+ "rule_flags": {},
+ "near_duplicates": [],
+ "max_jaccard": {
+  "value": 0.2613,
+  "pair": [
+   "TPE1999-V2-RD-0100",
+   "TPE1999-V2-RD-0109"
+  ]
+ },
+ "diversity": {
+  "total_lines": 11949,
+  "distinct_lines": 10387,
+  "share_of_lines_reused": 0.1964,
+  "distinct_openings": 1000,
+  "distinct_closings": 755,
+  "line_count_hist": {
+   "9": 111,
+   "10": 58,
+   "11": 204,
+   "12": 198,
+   "13": 335,
+   "14": 18,
+   "15": 73,
+   "16": 3
+  },
+  "mean_cjk_chars": 240.5
+ },
+ "shortcut_ngrams": [
+  {
+   "label": "waste_truck_service",
+   "ngram": "垃圾車",
+   "coverage": 0.915,
+   "precision": 1.0
+  },
+  {
+   "label": "waste_truck_service",
+   "ngram": "圾車",
+   "coverage": 0.915,
+   "precision": 1.0
+  },
+  {
+   "label": "waste_truck_service",
+   "ngram": "停靠",
+   "coverage": 0.75,
+   "precision": 0.92
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "的公園",
+   "coverage": 0.625,
+   "precision": 1.0
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "公園。R",
+   "coverage": 0.55,
+   "precision": 1.0
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "園。R:",
+   "coverage": 0.55,
+   "precision": 1.0
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "園。R",
+   "coverage": 0.55,
+   "precision": 1.0
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "公園。",
+   "coverage": 0.55,
+   "precision": 1.0
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "園。",
+   "coverage": 0.55,
+   "precision": 1.0
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "公園，",
+   "coverage": 0.51,
+   "precision": 0.971
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "園，",
+   "coverage": 0.51,
+   "precision": 0.953
+  },
+  {
+   "label": "waste_truck_service",
+   "ngram": "垃圾的",
+   "coverage": 0.47,
+   "precision": 0.969
+  },
+  {
+   "label": "waste_truck_service",
+   "ngram": "圾的",
+   "coverage": 0.47,
+   "precision": 0.969
+  },
+  {
+   "label": "waste_truck_service",
+   "ngram": "停靠點",
+   "coverage": 0.465,
+   "precision": 1.0
+  },
+  {
+   "label": "waste_truck_service",
+   "ngram": "靠點",
+   "coverage": 0.465,
+   "precision": 1.0
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "園的",
+   "coverage": 0.375,
+   "precision": 0.926
+  },
+  {
+   "label": "street_cleaning",
+   "ngram": "垃圾桶",
+   "coverage": 0.37,
+   "precision": 1.0
+  },
+  {
+   "label": "street_cleaning",
+   "ngram": "圾桶",
+   "coverage": 0.37,
+   "precision": 1.0
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "公園的",
+   "coverage": 0.365,
+   "precision": 0.936
+  },
+  {
+   "label": "waste_truck_service",
+   "ngram": "丟垃圾",
+   "coverage": 0.35,
+   "precision": 0.986
+  },
+  {
+   "label": "waste_truck_service",
+   "ngram": "丟垃",
+   "coverage": 0.35,
+   "precision": 0.986
+  },
+  {
+   "label": "street_cleaning",
+   "ngram": "桶，",
+   "coverage": 0.335,
+   "precision": 0.985
+  },
+  {
+   "label": "street_cleaning",
+   "ngram": "垃圾桶，",
+   "coverage": 0.33,
+   "precision": 1.0
+  },
+  {
+   "label": "street_cleaning",
+   "ngram": "圾桶，",
+   "coverage": 0.33,
+   "precision": 1.0
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "邊的公園",
+   "coverage": 0.32,
+   "precision": 1.0
+  },
+  {
+   "label": "park_general_maintenance",
+   "ngram": "邊的公",
+   "coverage": 0.32,
+   "precision": 0.914
+  },
+  {
+   "label": "waste_truck_service",
+   "ngram": "個停靠",
+   "coverage": 0.31,
+   "precision": 0.984
+  }
+ ]
+}

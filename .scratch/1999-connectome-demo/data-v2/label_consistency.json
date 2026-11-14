@@ -1,0 +1,26 @@
+{
+ "accuracy": 0.982,
+ "flags": [
+  {
+   "id": "TPE1999-V2-SC-0001",
+   "family": "FAM-CLEAN-LOOSE-GRIT",
+   "label": "street_cleaning",
+   "pred": "road_surface_defect",
+   "p": 0.631
+  },
+  {
+   "id": "TPE1999-V2-SW-0154",
+   "family": "FAM-SW-UTILITY-RESTORATION",
+   "label": "sidewalk_maintenance",
+   "pred": "road_surface_defect",
+   "p": 0.607
+  },
+  {
+   "id": "TPE1999-V2-SW-0170",
+   "family": "FAM-SW-UTILITY-RESTORATION",
+   "label": "sidewalk_maintenance",
+   "pred": "road_surface_defect",
+   "p": 0.669
+  }
+ ]
+}
