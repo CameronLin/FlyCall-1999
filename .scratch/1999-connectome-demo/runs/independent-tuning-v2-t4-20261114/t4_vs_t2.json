@@ -1,0 +1,302 @@
+{
+  "rule": "three seeds same sign and |mean delta| >= 0.02",
+  "t2_run": ".scratch/1999-connectome-demo/runs/independent-tuning-v2-t2-20261114",
+  "deltas": {
+    "G0": {
+      "lda_to_svm": {
+        "t2_mean": 0.913222578993904,
+        "t4_mean": 0.913222578993904,
+        "per_seed": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean": 0.0,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_to_svm": {
+        "t2_mean": 0.8638552174154622,
+        "t4_mean": 0.8269125252285283,
+        "per_seed": [
+          0.022327397298915974,
+          -0.1319216534610531,
+          -0.001233820398664598
+        ],
+        "mean": -0.03694269218693391,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_supcon_to_svm": {
+        "t2_mean": 0.926063788125472,
+        "t4_mean": 0.9085645690836737,
+        "per_seed": [
+          -0.041929741220640415,
+          0.0011353821476624004,
+          -0.011703298052416655
+        ],
+        "mean": -0.017499219041798224,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "lda_to_fly_b": {
+        "t2_mean": 0.8142533307744232,
+        "t4_mean": 0.7361955412831191,
+        "per_seed": [
+          -0.02277556835823913,
+          -0.07048608200970785,
+          -0.14091171810596526
+        ],
+        "mean": -0.07805778949130408,
+        "consistent": true,
+        "verdict": "consistent"
+      },
+      "fly_a_distance_to_fly_b": {
+        "t2_mean": 0.8568585238588953,
+        "t4_mean": 0.8306248256286216,
+        "per_seed": [
+          0.02255674870791058,
+          -0.04934050808264545,
+          -0.051917335316086444
+        ],
+        "mean": -0.026233698230273772,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_supcon_to_fly_b": {
+        "t2_mean": 0.8788812000571431,
+        "t4_mean": 0.8649422891899313,
+        "per_seed": [
+          -0.05335717033225207,
+          0.009952800167861708,
+          0.0015876375627550399
+        ],
+        "mean": -0.013938910867211773,
+        "consistent": false,
+        "verdict": "unclear"
+      }
+    },
+    "G1": {
+      "lda_to_svm": {
+        "t2_mean": 0.913222578993904,
+        "t4_mean": 0.913222578993904,
+        "per_seed": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean": 0.0,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_to_svm": {
+        "t2_mean": 0.8951800558130335,
+        "t4_mean": 0.8957966068506688,
+        "per_seed": [
+          -0.051654081916380434,
+          0.006247135554380501,
+          0.04725659947490557
+        ],
+        "mean": 0.000616551037635212,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_supcon_to_svm": {
+        "t2_mean": 0.938059885292286,
+        "t4_mean": 0.9142460404841125,
+        "per_seed": [
+          -0.013433361118829201,
+          -0.04458194825468542,
+          -0.01342622505100588
+        ],
+        "mean": -0.0238138448081735,
+        "consistent": true,
+        "verdict": "consistent"
+      },
+      "lda_to_fly_b": {
+        "t2_mean": 0.8793412626254348,
+        "t4_mean": 0.8233129093123286,
+        "per_seed": [
+          -0.056430806506639564,
+          -0.06362476188799548,
+          -0.0480294915446835
+        ],
+        "mean": -0.05602835331310618,
+        "consistent": true,
+        "verdict": "consistent"
+      },
+      "fly_a_distance_to_fly_b": {
+        "t2_mean": 0.885467320336482,
+        "t4_mean": 0.8827355326881222,
+        "per_seed": [
+          -0.04550622712938046,
+          -0.00013659421220024726,
+          0.03744745839650088
+        ],
+        "mean": -0.0027317876483599437,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_supcon_to_fly_b": {
+        "t2_mean": 0.9140568567838815,
+        "t4_mean": 0.8826552227858486,
+        "per_seed": [
+          0.028014040052274702,
+          -0.03893956247682606,
+          -0.08327937956954701
+        ],
+        "mean": -0.03140163399803279,
+        "consistent": false,
+        "verdict": "unclear"
+      }
+    },
+    "G2": {
+      "lda_to_svm": {
+        "t2_mean": 0.913222578993904,
+        "t4_mean": 0.913222578993904,
+        "per_seed": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean": 0.0,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_to_svm": {
+        "t2_mean": 0.9222863330291564,
+        "t4_mean": 0.9042486915577848,
+        "per_seed": [
+          -0.019731046851223843,
+          -0.014235603939118824,
+          -0.020146273623772193
+        ],
+        "mean": -0.01803764147137162,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_supcon_to_svm": {
+        "t2_mean": 0.9357020723613028,
+        "t4_mean": 0.904788049046199,
+        "per_seed": [
+          -0.01921850821238591,
+          -0.03543263549259368,
+          -0.038090926240331946
+        ],
+        "mean": -0.030914023315103845,
+        "consistent": true,
+        "verdict": "consistent"
+      },
+      "lda_to_fly_b": {
+        "t2_mean": 0.8756127035400119,
+        "t4_mean": 0.886003707112588,
+        "per_seed": [
+          0.03197631250655619,
+          0.00019272577707252214,
+          -0.000996027565900559
+        ],
+        "mean": 0.010391003572576052,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_to_fly_b": {
+        "t2_mean": 0.9006449020010705,
+        "t4_mean": 0.8985391572046696,
+        "per_seed": [
+          0.02663990355842094,
+          -0.03609910814731365,
+          0.0031419701996896476
+        ],
+        "mean": -0.002105744796401021,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_supcon_to_fly_b": {
+        "t2_mean": 0.9186867514137697,
+        "t4_mean": 0.8954018243625269,
+        "per_seed": [
+          -0.006814944186436467,
+          0.0035893751456503864,
+          -0.06662921211294182
+        ],
+        "mean": -0.023284927051242632,
+        "consistent": false,
+        "verdict": "unclear"
+      }
+    },
+    "G2_glu_plus": {
+      "lda_to_svm": {
+        "t2_mean": 0.913222578993904,
+        "t4_mean": 0.913222578993904,
+        "per_seed": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean": 0.0,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_to_svm": {
+        "t2_mean": 0.9132242235091871,
+        "t4_mean": 0.8776771521943272,
+        "per_seed": [
+          -0.03263973344592974,
+          -0.03303586142642556,
+          -0.04096561907222396
+        ],
+        "mean": -0.035547071314859756,
+        "consistent": true,
+        "verdict": "consistent"
+      },
+      "fly_a_distance_supcon_to_svm": {
+        "t2_mean": 0.9272849400881565,
+        "t4_mean": 0.9311656990605753,
+        "per_seed": [
+          -0.020511506564207416,
+          -0.0006577279645962886,
+          0.03281151144605998
+        ],
+        "mean": 0.0038807589724187594,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "lda_to_fly_b": {
+        "t2_mean": 0.8876437695681573,
+        "t4_mean": 0.9001879460006718,
+        "per_seed": [
+          0.03770605437128294,
+          -0.006054689136826941,
+          0.005981164063087463
+        ],
+        "mean": 0.012544176432514487,
+        "consistent": false,
+        "verdict": "unclear"
+      },
+      "fly_a_distance_to_fly_b": {
+        "t2_mean": 0.8897231905663526,
+        "t4_mean": 0.8667102022892316,
+        "per_seed": [
+          -0.0008100751799888783,
+          -0.029428403409495707,
+          -0.038800486241878596
+        ],
+        "mean": -0.02301298827712106,
+        "consistent": true,
+        "verdict": "consistent"
+      },
+      "fly_a_distance_supcon_to_fly_b": {
+        "t2_mean": 0.8756959967457584,
+        "t4_mean": 0.9019761709017217,
+        "per_seed": [
+          0.034952341302968315,
+          0.011452200469358687,
+          0.03243598069556297
+        ],
+        "mean": 0.026280174155963325,
+        "consistent": true,
+        "verdict": "consistent"
+      }
+    }
+  }
+}

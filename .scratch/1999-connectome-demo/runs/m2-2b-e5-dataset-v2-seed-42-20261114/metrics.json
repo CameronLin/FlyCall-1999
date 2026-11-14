@@ -1,0 +1,1251 @@
+{
+  "candidate_settings_fingerprint": "a55d37b58ed1dcf303f9a28dca686586fe194ac8977bbdd3df42e08f6d191d67",
+  "candidates": {
+    "lda_logistic_regression": {
+      "checkpoint": {
+        "bytes": 47814,
+        "format": "joblib",
+        "joblib_version": "1.6.0",
+        "numpy_version": "2.5.4",
+        "path": ".scratch/1999-connectome-demo/runs/m2-2b-e5-dataset-v2-seed-42-20261114/m2-3-lda-logistic-checkpoint.joblib",
+        "reload_prediction_match": true,
+        "reload_score_array_exact_match": true,
+        "scikit_learn_version": "1.9.1",
+        "sha256": "54b2fde612efe844f8e8beace7bafc3e3d33424d114d301e568a18166cecda4f"
+      },
+      "parameters": {
+        "classifier": "sklearn.linear_model.LogisticRegression",
+        "classifier_C": 1.0,
+        "classifier_max_iter": 1000,
+        "classifier_solver": "lbfgs",
+        "embedding_dimension": 384,
+        "embedding_model": "intfloat/multilingual-e5-small",
+        "embedding_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+        "evaluation_splits": [
+          "train",
+          "validation"
+        ],
+        "fit_splits": [
+          "train"
+        ],
+        "lda_components": 4,
+        "lda_solver": "svd",
+        "seed": 42,
+        "test": "not_run"
+      },
+      "report": {
+        "candidate_name": "lda_logistic_regression",
+        "data_status": "synthetic",
+        "evaluation_status": "smoke_test/provisional",
+        "label_order": [
+          "sidewalk_maintenance",
+          "road_surface_defect",
+          "park_general_maintenance",
+          "waste_truck_service",
+          "street_cleaning"
+        ],
+        "review_status": "pending_manual_review",
+        "splits": {
+          "test": {
+            "status": "not_run"
+          },
+          "train": {
+            "error_cases": [],
+            "fit_record_count": 700,
+            "metrics": {
+              "accuracy": 1.0,
+              "confusion_matrix": [
+                [
+                  140,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  140,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  140,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  140,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  0,
+                  140
+                ]
+              ],
+              "labels": [
+                "sidewalk_maintenance",
+                "road_surface_defect",
+                "park_general_maintenance",
+                "waste_truck_service",
+                "street_cleaning"
+              ],
+              "macro_f1": 1.0,
+              "per_class": {
+                "park_general_maintenance": {
+                  "f1": 1.0,
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "support": 140
+                },
+                "road_surface_defect": {
+                  "f1": 1.0,
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "support": 140
+                },
+                "sidewalk_maintenance": {
+                  "f1": 1.0,
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "support": 140
+                },
+                "street_cleaning": {
+                  "f1": 1.0,
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "support": 140
+                },
+                "waste_truck_service": {
+                  "f1": 1.0,
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "support": 140
+                }
+              }
+            },
+            "n_records": 700,
+            "status": "evaluated"
+          },
+          "validation": {
+            "error_cases": [
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0172"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0173"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0176"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "street_cleaning",
+                "record_id": "TPE1999-V2-SW-0177"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0183"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0200"
+              },
+              {
+                "expected": "road_surface_defect",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-RD-0197"
+              },
+              {
+                "expected": "park_general_maintenance",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-PK-0172"
+              },
+              {
+                "expected": "park_general_maintenance",
+                "predicted": "street_cleaning",
+                "record_id": "TPE1999-V2-PK-0183"
+              },
+              {
+                "expected": "park_general_maintenance",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-PK-0186"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SC-0175"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-SC-0177"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-SC-0178"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-SC-0199"
+              }
+            ],
+            "metrics": {
+              "accuracy": 0.9066666666666666,
+              "confusion_matrix": [
+                [
+                  24,
+                  5,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  29,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  2,
+                  0,
+                  27,
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  30,
+                  0
+                ],
+                [
+                  3,
+                  0,
+                  1,
+                  0,
+                  26
+                ]
+              ],
+              "labels": [
+                "sidewalk_maintenance",
+                "road_surface_defect",
+                "park_general_maintenance",
+                "waste_truck_service",
+                "street_cleaning"
+              ],
+              "macro_f1": 0.9067672413793104,
+              "per_class": {
+                "park_general_maintenance": {
+                  "f1": 0.9310344827586207,
+                  "precision": 0.9642857142857143,
+                  "recall": 0.9,
+                  "support": 30
+                },
+                "road_surface_defect": {
+                  "f1": 0.90625,
+                  "precision": 0.8529411764705882,
+                  "recall": 0.9666666666666667,
+                  "support": 30
+                },
+                "sidewalk_maintenance": {
+                  "f1": 0.8000000000000002,
+                  "precision": 0.8,
+                  "recall": 0.8,
+                  "support": 30
+                },
+                "street_cleaning": {
+                  "f1": 0.896551724137931,
+                  "precision": 0.9285714285714286,
+                  "recall": 0.8666666666666667,
+                  "support": 30
+                },
+                "waste_truck_service": {
+                  "f1": 1.0,
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "support": 30
+                }
+              }
+            },
+            "n_records": 150,
+            "status": "evaluated",
+            "transform_record_count": 150
+          }
+        }
+      },
+      "timings_seconds": {
+        "classifier_fit": 0.00421820001793094,
+        "lda_fit_and_train_transform": 0.17717519999132492,
+        "lda_validation_transform": 0.0003107000084128231,
+        "prediction_and_scores": 0.0008542999858036637
+      },
+      "wall_seconds": 0.1929181999876164
+    },
+    "logistic_regression": {
+      "checkpoint": {
+        "bytes": 17326,
+        "format": "joblib",
+        "joblib_version": "1.6.0",
+        "numpy_version": "2.5.4",
+        "path": ".scratch/1999-connectome-demo/runs/m2-2b-e5-dataset-v2-seed-42-20261114/m2-logistic_regression-checkpoint.joblib",
+        "reload_prediction_match": true,
+        "reload_score_array_exact_match": true,
+        "scikit_learn_version": "1.9.1",
+        "sha256": "2a60b087d1ebbfecdfca75bce3a7e7a05b165e5c53b2e7f604dbdc1b1cd5a084"
+      },
+      "fit_transform_predict_wall_seconds": 0.058130199991865084,
+      "parameters": {
+        "C": 1.0,
+        "max_iter": 1000,
+        "random_state": 42,
+        "solver": "lbfgs"
+      },
+      "report": {
+        "candidate_name": "logistic_regression",
+        "data_status": "synthetic",
+        "evaluation_status": "smoke_test/provisional",
+        "label_order": [
+          "sidewalk_maintenance",
+          "road_surface_defect",
+          "park_general_maintenance",
+          "waste_truck_service",
+          "street_cleaning"
+        ],
+        "review_status": "pending_manual_review",
+        "splits": {
+          "test": {
+            "status": "not_run"
+          },
+          "train": {
+            "error_cases": [
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SW-0037"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0045"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0162"
+              },
+              {
+                "expected": "park_general_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-PK-0163"
+              },
+              {
+                "expected": "waste_truck_service",
+                "predicted": "street_cleaning",
+                "record_id": "TPE1999-V2-WT-0090"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SC-0125"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SC-0126"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SC-0137"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SC-0142"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SC-0147"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-SC-0153"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SC-0166"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SC-0170"
+              }
+            ],
+            "fit_record_count": 700,
+            "metrics": {
+              "accuracy": 0.9814285714285714,
+              "confusion_matrix": [
+                [
+                  137,
+                  2,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  140,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1,
+                  139,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  139,
+                  1
+                ],
+                [
+                  1,
+                  4,
+                  3,
+                  0,
+                  132
+                ]
+              ],
+              "labels": [
+                "sidewalk_maintenance",
+                "road_surface_defect",
+                "park_general_maintenance",
+                "waste_truck_service",
+                "street_cleaning"
+              ],
+              "macro_f1": 0.9814004320016491,
+              "per_class": {
+                "park_general_maintenance": {
+                  "f1": 0.9823321554770317,
+                  "precision": 0.972027972027972,
+                  "recall": 0.9928571428571429,
+                  "support": 140
+                },
+                "road_surface_defect": {
+                  "f1": 0.975609756097561,
+                  "precision": 0.9523809523809523,
+                  "recall": 1.0,
+                  "support": 140
+                },
+                "sidewalk_maintenance": {
+                  "f1": 0.9856115107913668,
+                  "precision": 0.9927536231884058,
+                  "recall": 0.9785714285714285,
+                  "support": 140
+                },
+                "street_cleaning": {
+                  "f1": 0.967032967032967,
+                  "precision": 0.9924812030075187,
+                  "recall": 0.9428571428571428,
+                  "support": 140
+                },
+                "waste_truck_service": {
+                  "f1": 0.996415770609319,
+                  "precision": 1.0,
+                  "recall": 0.9928571428571429,
+                  "support": 140
+                }
+              }
+            },
+            "n_records": 700,
+            "status": "evaluated"
+          },
+          "validation": {
+            "error_cases": [
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0176"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0178"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0186"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0194"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0195"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0200"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SC-0185"
+              }
+            ],
+            "metrics": {
+              "accuracy": 0.9533333333333334,
+              "confusion_matrix": [
+                [
+                  24,
+                  6,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  30,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  30,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  30,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  1,
+                  0,
+                  29
+                ]
+              ],
+              "labels": [
+                "sidewalk_maintenance",
+                "road_surface_defect",
+                "park_general_maintenance",
+                "waste_truck_service",
+                "street_cleaning"
+              ],
+              "macro_f1": 0.9529274405628948,
+              "per_class": {
+                "park_general_maintenance": {
+                  "f1": 0.9836065573770492,
+                  "precision": 0.967741935483871,
+                  "recall": 1.0,
+                  "support": 30
+                },
+                "road_surface_defect": {
+                  "f1": 0.9090909090909091,
+                  "precision": 0.8333333333333334,
+                  "recall": 1.0,
+                  "support": 30
+                },
+                "sidewalk_maintenance": {
+                  "f1": 0.888888888888889,
+                  "precision": 1.0,
+                  "recall": 0.8,
+                  "support": 30
+                },
+                "street_cleaning": {
+                  "f1": 0.983050847457627,
+                  "precision": 1.0,
+                  "recall": 0.9666666666666667,
+                  "support": 30
+                },
+                "waste_truck_service": {
+                  "f1": 1.0,
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "support": 30
+                }
+              }
+            },
+            "n_records": 150,
+            "status": "evaluated",
+            "transform_record_count": 150
+          }
+        }
+      }
+    },
+    "mlp": {
+      "checkpoint": {
+        "bytes": 26222,
+        "format": "joblib",
+        "joblib_version": "1.6.0",
+        "numpy_version": "2.5.4",
+        "path": ".scratch/1999-connectome-demo/runs/m2-2b-e5-dataset-v2-seed-42-20261114/m2-mlp-checkpoint.joblib",
+        "reload_prediction_match": true,
+        "reload_score_array_exact_match": true,
+        "scikit_learn_version": "1.9.1",
+        "sha256": "f205aff41470fd4184637b2133ed3b5b31d76e2f2ad0eb37a20772377bb31d50"
+      },
+      "fit_transform_predict_wall_seconds": 0.17681009997613728,
+      "parameters": {
+        "epochs": 80,
+        "hidden_size": 16,
+        "learning_rate": 0.02,
+        "pca_components": null,
+        "seed": 42
+      },
+      "report": {
+        "candidate_name": "mlp",
+        "data_status": "synthetic",
+        "evaluation_status": "smoke_test/provisional",
+        "label_order": [
+          "sidewalk_maintenance",
+          "road_surface_defect",
+          "park_general_maintenance",
+          "waste_truck_service",
+          "street_cleaning"
+        ],
+        "review_status": "pending_manual_review",
+        "splits": {
+          "test": {
+            "status": "not_run"
+          },
+          "train": {
+            "error_cases": [
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SW-0037"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0045"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SC-0125"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SC-0137"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SC-0142"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SC-0170"
+              }
+            ],
+            "fit_record_count": 700,
+            "metrics": {
+              "accuracy": 0.9914285714285714,
+              "confusion_matrix": [
+                [
+                  138,
+                  1,
+                  1,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  140,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  140,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  140,
+                  0
+                ],
+                [
+                  0,
+                  3,
+                  1,
+                  0,
+                  136
+                ]
+              ],
+              "labels": [
+                "sidewalk_maintenance",
+                "road_surface_defect",
+                "park_general_maintenance",
+                "waste_truck_service",
+                "street_cleaning"
+              ],
+              "macro_f1": 0.9914272592297362,
+              "per_class": {
+                "park_general_maintenance": {
+                  "f1": 0.9929078014184397,
+                  "precision": 0.9859154929577465,
+                  "recall": 1.0,
+                  "support": 140
+                },
+                "road_surface_defect": {
+                  "f1": 0.9859154929577464,
+                  "precision": 0.9722222222222222,
+                  "recall": 1.0,
+                  "support": 140
+                },
+                "sidewalk_maintenance": {
+                  "f1": 0.9928057553956835,
+                  "precision": 1.0,
+                  "recall": 0.9857142857142858,
+                  "support": 140
+                },
+                "street_cleaning": {
+                  "f1": 0.9855072463768115,
+                  "precision": 1.0,
+                  "recall": 0.9714285714285714,
+                  "support": 140
+                },
+                "waste_truck_service": {
+                  "f1": 1.0,
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "support": 140
+                }
+              }
+            },
+            "n_records": 700,
+            "status": "evaluated"
+          },
+          "validation": {
+            "error_cases": [
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0173"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0176"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "street_cleaning",
+                "record_id": "TPE1999-V2-SW-0178"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0187"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0195"
+              },
+              {
+                "expected": "road_surface_defect",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-RD-0194"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-SC-0181"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SC-0185"
+              }
+            ],
+            "metrics": {
+              "accuracy": 0.9466666666666667,
+              "confusion_matrix": [
+                [
+                  25,
+                  4,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  29,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  30,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  30,
+                  0
+                ],
+                [
+                  1,
+                  0,
+                  1,
+                  0,
+                  28
+                ]
+              ],
+              "labels": [
+                "sidewalk_maintenance",
+                "road_surface_defect",
+                "park_general_maintenance",
+                "waste_truck_service",
+                "street_cleaning"
+              ],
+              "macro_f1": 0.9461174005681983,
+              "per_class": {
+                "park_general_maintenance": {
+                  "f1": 0.9836065573770492,
+                  "precision": 0.967741935483871,
+                  "recall": 1.0,
+                  "support": 30
+                },
+                "road_surface_defect": {
+                  "f1": 0.9206349206349207,
+                  "precision": 0.8787878787878788,
+                  "recall": 0.9666666666666667,
+                  "support": 30
+                },
+                "sidewalk_maintenance": {
+                  "f1": 0.8771929824561403,
+                  "precision": 0.9259259259259259,
+                  "recall": 0.8333333333333334,
+                  "support": 30
+                },
+                "street_cleaning": {
+                  "f1": 0.9491525423728815,
+                  "precision": 0.9655172413793104,
+                  "recall": 0.9333333333333333,
+                  "support": 30
+                },
+                "waste_truck_service": {
+                  "f1": 1.0,
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "support": 30
+                }
+              }
+            },
+            "n_records": 150,
+            "status": "evaluated",
+            "transform_record_count": 150
+          }
+        }
+      }
+    },
+    "pca_mlp": {
+      "checkpoint": {
+        "bytes": 111105,
+        "format": "joblib",
+        "joblib_version": "1.6.0",
+        "numpy_version": "2.5.4",
+        "path": ".scratch/1999-connectome-demo/runs/m2-2b-e5-dataset-v2-seed-42-20261114/m2-pca_mlp-checkpoint.joblib",
+        "reload_prediction_match": true,
+        "reload_score_array_exact_match": true,
+        "scikit_learn_version": "1.9.1",
+        "sha256": "3b96bc9e70152b7c3683911f0306521ef5932c44729c36774649ec1447919468"
+      },
+      "fit_transform_predict_wall_seconds": 0.16681110000354238,
+      "parameters": {
+        "epochs": 80,
+        "hidden_size": 16,
+        "learning_rate": 0.02,
+        "pca_components": 32,
+        "seed": 42
+      },
+      "report": {
+        "candidate_name": "pca_mlp",
+        "data_status": "synthetic",
+        "evaluation_status": "smoke_test/provisional",
+        "label_order": [
+          "sidewalk_maintenance",
+          "road_surface_defect",
+          "park_general_maintenance",
+          "waste_truck_service",
+          "street_cleaning"
+        ],
+        "review_status": "pending_manual_review",
+        "splits": {
+          "test": {
+            "status": "not_run"
+          },
+          "train": {
+            "error_cases": [
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SW-0037"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0045"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SW-0117"
+              },
+              {
+                "expected": "road_surface_defect",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-RD-0036"
+              },
+              {
+                "expected": "park_general_maintenance",
+                "predicted": "street_cleaning",
+                "record_id": "TPE1999-V2-PK-0072"
+              },
+              {
+                "expected": "waste_truck_service",
+                "predicted": "street_cleaning",
+                "record_id": "TPE1999-V2-WT-0090"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SC-0137"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SC-0142"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-SC-0159"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "waste_truck_service",
+                "record_id": "TPE1999-V2-SC-0160"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-SC-0165"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SC-0170"
+              }
+            ],
+            "fit_record_count": 700,
+            "metrics": {
+              "accuracy": 0.9828571428571429,
+              "confusion_matrix": [
+                [
+                  137,
+                  1,
+                  2,
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  139,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  139,
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  139,
+                  1
+                ],
+                [
+                  2,
+                  3,
+                  0,
+                  1,
+                  134
+                ]
+              ],
+              "labels": [
+                "sidewalk_maintenance",
+                "road_surface_defect",
+                "park_general_maintenance",
+                "waste_truck_service",
+                "street_cleaning"
+              ],
+              "macro_f1": 0.9828198126151193,
+              "per_class": {
+                "park_general_maintenance": {
+                  "f1": 0.9893238434163701,
+                  "precision": 0.9858156028368794,
+                  "recall": 0.9928571428571429,
+                  "support": 140
+                },
+                "road_surface_defect": {
+                  "f1": 0.9823321554770317,
+                  "precision": 0.972027972027972,
+                  "recall": 0.9928571428571429,
+                  "support": 140
+                },
+                "sidewalk_maintenance": {
+                  "f1": 0.9785714285714285,
+                  "precision": 0.9785714285714285,
+                  "recall": 0.9785714285714285,
+                  "support": 140
+                },
+                "street_cleaning": {
+                  "f1": 0.9710144927536232,
+                  "precision": 0.9852941176470589,
+                  "recall": 0.9571428571428572,
+                  "support": 140
+                },
+                "waste_truck_service": {
+                  "f1": 0.9928571428571429,
+                  "precision": 0.9928571428571429,
+                  "recall": 0.9928571428571429,
+                  "support": 140
+                }
+              }
+            },
+            "n_records": 700,
+            "status": "evaluated"
+          },
+          "validation": {
+            "error_cases": [
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "street_cleaning",
+                "record_id": "TPE1999-V2-SW-0178"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0179"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0187"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0194"
+              },
+              {
+                "expected": "sidewalk_maintenance",
+                "predicted": "road_surface_defect",
+                "record_id": "TPE1999-V2-SW-0195"
+              },
+              {
+                "expected": "park_general_maintenance",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-PK-0172"
+              },
+              {
+                "expected": "park_general_maintenance",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-PK-0180"
+              },
+              {
+                "expected": "park_general_maintenance",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-PK-0183"
+              },
+              {
+                "expected": "park_general_maintenance",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-PK-0186"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-SC-0181"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "sidewalk_maintenance",
+                "record_id": "TPE1999-V2-SC-0182"
+              },
+              {
+                "expected": "street_cleaning",
+                "predicted": "park_general_maintenance",
+                "record_id": "TPE1999-V2-SC-0185"
+              }
+            ],
+            "metrics": {
+              "accuracy": 0.92,
+              "confusion_matrix": [
+                [
+                  25,
+                  4,
+                  0,
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  30,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  4,
+                  0,
+                  26,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  30,
+                  0
+                ],
+                [
+                  2,
+                  0,
+                  1,
+                  0,
+                  27
+                ]
+              ],
+              "labels": [
+                "sidewalk_maintenance",
+                "road_surface_defect",
+                "park_general_maintenance",
+                "waste_truck_service",
+                "street_cleaning"
+              ],
+              "macro_f1": 0.9200974631321095,
+              "per_class": {
+                "park_general_maintenance": {
+                  "f1": 0.912280701754386,
+                  "precision": 0.9629629629629629,
+                  "recall": 0.8666666666666667,
+                  "support": 30
+                },
+                "road_surface_defect": {
+                  "f1": 0.9375,
+                  "precision": 0.8823529411764706,
+                  "recall": 1.0,
+                  "support": 30
+                },
+                "sidewalk_maintenance": {
+                  "f1": 0.819672131147541,
+                  "precision": 0.8064516129032258,
+                  "recall": 0.8333333333333334,
+                  "support": 30
+                },
+                "street_cleaning": {
+                  "f1": 0.9310344827586207,
+                  "precision": 0.9642857142857143,
+                  "recall": 0.9,
+                  "support": 30
+                },
+                "waste_truck_service": {
+                  "f1": 1.0,
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "support": 30
+                }
+              }
+            },
+            "n_records": 150,
+            "status": "evaluated",
+            "transform_record_count": 150
+          }
+        }
+      }
+    }
+  },
+  "data_status": "synthetic",
+  "evaluation_status": "smoke_test/provisional",
+  "label_order": [
+    "sidewalk_maintenance",
+    "road_surface_defect",
+    "park_general_maintenance",
+    "waste_truck_service",
+    "street_cleaning"
+  ],
+  "review_status": "automated_qa_passed_no_manual_review",
+  "schema_version": 1,
+  "test": {
+    "input_count": 0,
+    "metrics": null,
+    "prediction_count": 0,
+    "status": "not_run"
+  }
+}

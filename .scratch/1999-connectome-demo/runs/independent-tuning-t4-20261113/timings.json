@@ -1,0 +1,30 @@
+{
+  "source": "progress.log timestamps",
+  "by_graph": {
+    "G0": {
+      "fly_a_cv_seconds": 568.9,
+      "fly_b_cv_seconds": 691.2,
+      "final_training_seconds": 44.4,
+      "total_seconds": 1304.5
+    },
+    "G1": {
+      "fly_a_cv_seconds": 738.4,
+      "fly_b_cv_seconds": 1247.0,
+      "final_training_seconds": 115.2,
+      "total_seconds": 2100.6
+    },
+    "G2": {
+      "fly_a_cv_seconds": 787.8,
+      "fly_b_cv_seconds": 1394.2,
+      "final_training_seconds": 87.3,
+      "total_seconds": 2269.3
+    },
+    "G2_glu_plus": {
+      "fly_a_cv_seconds": 645.5,
+      "fly_b_cv_seconds": 1284.7,
+      "final_training_seconds": 66.2,
+      "total_seconds": 1996.4
+    }
+  },
+  "run_total_seconds": 7670.9
+}

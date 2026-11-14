@@ -1,0 +1,65 @@
+[   61.7s] G0 A distance lr=0.001: OOF SVM F1 0.9178
+[  128.2s] G0 A distance lr=0.003: OOF SVM F1 0.9194
+[  165.3s] G0 A distance lr=0.01: OOF SVM F1 0.9086
+[  213.4s] G0 A distance_supcon lr=0.001: OOF SVM F1 0.9838
+[  251.0s] G0 A distance_supcon lr=0.003: OOF SVM F1 0.9804
+[  287.3s] G0 A distance_supcon lr=0.01: OOF SVM F1 0.9717
+[  321.2s] G0 B lda lr=0.001: OOF Fly B F1 0.8636 (SVM 0.8950)
+[  340.4s] G0 B lda lr=0.003: OOF Fly B F1 0.8629 (SVM 0.8950)
+[  356.8s] G0 B lda lr=0.01: OOF Fly B F1 0.8618 (SVM 0.8950)
+[  428.3s] G0 B fly_a_distance lr=0.001: OOF Fly B F1 0.9088 (SVM 0.9194)
+[  480.8s] G0 B fly_a_distance lr=0.003: OOF Fly B F1 0.9335 (SVM 0.9194)
+[  510.1s] G0 B fly_a_distance lr=0.01: OOF Fly B F1 0.9436 (SVM 0.9194)
+[  575.1s] G0 B fly_a_distance_supcon lr=0.001: OOF Fly B F1 0.9785 (SVM 0.9838)
+[  637.3s] G0 B fly_a_distance_supcon lr=0.003: OOF Fly B F1 0.9795 (SVM 0.9838)
+[  687.3s] G0 B fly_a_distance_supcon lr=0.01: OOF Fly B F1 0.9786 (SVM 0.9838)
+[  733.5s] G0 final: lda_to_svm 0.8998, fly_a_distance_to_svm 0.8654, fly_a_distance_supcon_to_svm 0.8787, lda_to_fly_b 0.8603, fly_a_distance_to_fly_b 0.8569, fly_a_distance_supcon_to_fly_b 0.8897
+[  823.8s] G1 A distance lr=0.001: OOF SVM F1 0.9610
+[  905.6s] G1 A distance lr=0.003: OOF SVM F1 0.9571
+[  999.4s] G1 A distance lr=0.01: OOF SVM F1 0.9580
+[ 1063.4s] G1 A distance_supcon lr=0.001: OOF SVM F1 0.9819
+[ 1108.1s] G1 A distance_supcon lr=0.003: OOF SVM F1 0.9876
+[ 1151.5s] G1 A distance_supcon lr=0.01: OOF SVM F1 0.9780
+[ 1202.6s] G1 B lda lr=0.001: OOF Fly B F1 0.9054 (SVM 0.8950)
+[ 1240.3s] G1 B lda lr=0.003: OOF Fly B F1 0.9063 (SVM 0.8950)
+[ 1283.7s] G1 B lda lr=0.01: OOF Fly B F1 0.9029 (SVM 0.8950)
+[ 1411.7s] G1 B fly_a_distance lr=0.001: OOF Fly B F1 0.9585 (SVM 0.9610)
+[ 1493.2s] G1 B fly_a_distance lr=0.003: OOF Fly B F1 0.9647 (SVM 0.9610)
+[ 1545.5s] G1 B fly_a_distance lr=0.01: OOF Fly B F1 0.9712 (SVM 0.9610)
+[ 1686.3s] G1 B fly_a_distance_supcon lr=0.001: OOF Fly B F1 0.9876 (SVM 0.9876)
+[ 1835.8s] G1 B fly_a_distance_supcon lr=0.003: OOF Fly B F1 0.9885 (SVM 0.9876)
+[ 1952.7s] G1 B fly_a_distance_supcon lr=0.01: OOF Fly B F1 0.9856 (SVM 0.9876)
+[ 2029.4s] G1 final: lda_to_svm 0.8998, fly_a_distance_to_svm 0.8549, fly_a_distance_supcon_to_svm 0.9043, lda_to_fly_b 0.9037, fly_a_distance_to_fly_b 0.8728, fly_a_distance_supcon_to_fly_b 0.9177
+[ 2135.5s] G2 A distance lr=0.001: OOF SVM F1 0.9604
+[ 2218.7s] G2 A distance lr=0.003: OOF SVM F1 0.9686
+[ 2320.6s] G2 A distance lr=0.01: OOF SVM F1 0.9676
+[ 2386.8s] G2 A distance_supcon lr=0.001: OOF SVM F1 0.9809
+[ 2439.8s] G2 A distance_supcon lr=0.003: OOF SVM F1 0.9786
+[ 2481.9s] G2 A distance_supcon lr=0.01: OOF SVM F1 0.9785
+[ 2562.5s] G2 B lda lr=0.001: OOF Fly B F1 0.8942 (SVM 0.8950)
+[ 2610.1s] G2 B lda lr=0.003: OOF Fly B F1 0.8916 (SVM 0.8950)
+[ 2654.8s] G2 B lda lr=0.01: OOF Fly B F1 0.8887 (SVM 0.8950)
+[ 2805.2s] G2 B fly_a_distance lr=0.001: OOF Fly B F1 0.9695 (SVM 0.9686)
+[ 2897.5s] G2 B fly_a_distance lr=0.003: OOF Fly B F1 0.9723 (SVM 0.9686)
+[ 2952.2s] G2 B fly_a_distance lr=0.01: OOF Fly B F1 0.9776 (SVM 0.9686)
+[ 3092.4s] G2 B fly_a_distance_supcon lr=0.001: OOF Fly B F1 0.9914 (SVM 0.9809)
+[ 3250.2s] G2 B fly_a_distance_supcon lr=0.003: OOF Fly B F1 0.9909 (SVM 0.9809)
+[ 3362.1s] G2 B fly_a_distance_supcon lr=0.01: OOF Fly B F1 0.9905 (SVM 0.9809)
+[ 3432.4s] G2 final: lda_to_svm 0.8998, fly_a_distance_to_svm 0.8786, fly_a_distance_supcon_to_svm 0.9028, lda_to_fly_b 0.8977, fly_a_distance_to_fly_b 0.8680, fly_a_distance_supcon_to_fly_b 0.8770
+[ 3531.9s] G2_glu_plus A distance lr=0.001: OOF SVM F1 0.9599
+[ 3612.5s] G2_glu_plus A distance lr=0.003: OOF SVM F1 0.9605
+[ 3710.1s] G2_glu_plus A distance lr=0.01: OOF SVM F1 0.9582
+[ 3781.1s] G2_glu_plus A distance_supcon lr=0.001: OOF SVM F1 0.9790
+[ 3835.0s] G2_glu_plus A distance_supcon lr=0.003: OOF SVM F1 0.9761
+[ 3882.5s] G2_glu_plus A distance_supcon lr=0.01: OOF SVM F1 0.9787
+[ 3953.0s] G2_glu_plus B lda lr=0.001: OOF Fly B F1 0.8975 (SVM 0.8950)
+[ 4000.7s] G2_glu_plus B lda lr=0.003: OOF Fly B F1 0.8978 (SVM 0.8950)
+[ 4037.2s] G2_glu_plus B lda lr=0.01: OOF Fly B F1 0.8941 (SVM 0.8950)
+[ 4163.7s] G2_glu_plus B fly_a_distance lr=0.001: OOF Fly B F1 0.9689 (SVM 0.9605)
+[ 4244.9s] G2_glu_plus B fly_a_distance lr=0.003: OOF Fly B F1 0.9723 (SVM 0.9605)
+[ 4292.2s] G2_glu_plus B fly_a_distance lr=0.01: OOF Fly B F1 0.9780 (SVM 0.9605)
+[ 4423.8s] G2_glu_plus B fly_a_distance_supcon lr=0.001: OOF Fly B F1 0.9847 (SVM 0.9790)
+[ 4551.4s] G2_glu_plus B fly_a_distance_supcon lr=0.003: OOF Fly B F1 0.9871 (SVM 0.9790)
+[ 4689.3s] G2_glu_plus B fly_a_distance_supcon lr=0.01: OOF Fly B F1 0.9871 (SVM 0.9790)
+[ 4761.3s] G2_glu_plus final: lda_to_svm 0.8998, fly_a_distance_to_svm 0.8654, fly_a_distance_supcon_to_svm 0.8886, lda_to_fly_b 0.8980, fly_a_distance_to_fly_b 0.8525, fly_a_distance_supcon_to_fly_b 0.8863
+[ 4761.4s] done; wrote C:/dev/FlyCall-1999/.scratch/1999-connectome-demo/runs/independent-tuning-t-hops-20261113
