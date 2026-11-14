@@ -29,9 +29,9 @@ data/1999_synthetic/
 └── archive/
 ```
 
-`data/1999_synthetic/` 根目錄另保留舊檔名相容 symlink，供歷史文件及 YAML 來源欄位解析；這些不是副本。曾造成遞迴的 `data/data -> .` 已移除；`data/outputs -> ../outputs` 是非循環連結，依本次限制保留。正式生成與驗證程式的專案根目錄計算已改為從目前檔案位置正確回到專案根。新文件請使用上方新路徑，不要再新增舊路徑引用。
+原本 `data/1999_synthetic/` 根目錄與 `planning/`、`pilot/v1.2.2/` 內保留的 33 個舊檔名相容 symlink（含 `data/outputs -> ../outputs`），已於 2026-11-14 依使用者決定移除；依賴它們的 Markdown 連結已改指正式位置。taxonomy 等 YAML 的來源欄位仍記錄舊路徑（這些檔案已被實驗紀錄的校驗碼鎖定，不修改），請用下方「舊路徑對照」查正式位置。曾造成遞迴的 `data/data -> .` 先前已移除。正式生成與驗證程式的專案根目錄計算已改為從目前檔案位置正確回到專案根。新文件請使用上方新路徑，不要再新增舊路徑引用。
 
-索引檔本身：[`data/1999_synthetic/README.md`](README.md) — 目前目錄配置、逐檔搬移來源／目的地／SHA-256、檔案用途、相容連結與驗證結果；狀態為目前索引，不作分類實驗資料。
+索引檔本身：[`data/1999_synthetic/README.md`](README.md) — 目前目錄配置、逐檔搬移來源／目的地／SHA-256、檔案用途、舊路徑對照與驗證結果；狀態為目前索引，不作分類實驗資料。
 
 ## 逐檔搬移紀錄
 
@@ -133,8 +133,6 @@ data/1999_synthetic/
 | `data/1999_synthetic/formal_v1.0.0/raw_generated/batch_020_attempt_001.jsonl` | [data/1999_synthetic/formal/v1.0.0/raw_generated/batch_020_attempt_001.jsonl](formal/v1.0.0/raw_generated/batch_020_attempt_001.jsonl) | 正式資料原始生成候選；attempt 檔記錄單次嘗試，彙整檔收錄全部嘗試。 | 原始生成資料 | 否（未篩選候選） | `7fde35f5eb1e2358afa32083e7105cde4dd07c17aa1cdffb6e392cd352599b6f` |
 | `data/1999_synthetic/formal_v1.0.0/raw_generated/batch_020_attempt_002.jsonl` | [data/1999_synthetic/formal/v1.0.0/raw_generated/batch_020_attempt_002.jsonl](formal/v1.0.0/raw_generated/batch_020_attempt_002.jsonl) | 正式資料原始生成候選；attempt 檔記錄單次嘗試，彙整檔收錄全部嘗試。 | 原始生成資料 | 否（未篩選候選） | `0c9c45854d6a96b16df5ad483d9c61acf4e80675c22dd8297e6a56f67253aca1` |
 | `data/1999_synthetic/formal_v1.0.0/raw_generated/formal_raw_all_attempts_v1.0.0.jsonl` | [data/1999_synthetic/formal/v1.0.0/raw_generated/formal_raw_all_attempts_v1.0.0.jsonl](formal/v1.0.0/raw_generated/formal_raw_all_attempts_v1.0.0.jsonl) | 正式資料原始生成候選；attempt 檔記錄單次嘗試，彙整檔收錄全部嘗試。 | 原始生成資料 | 否（未篩選候選） | `95053dcb2195550b528463c5974fe0ab684f87e5face31021ea4f9ea1d08ecb9` |
-| `data/1999_synthetic/formal_v1.0.0/scripts/__pycache__/generate_formal_dataset.cpython-314.pyc` | [data/1999_synthetic/formal/v1.0.0/scripts/__pycache__/generate_formal_dataset.cpython-314.pyc](formal/v1.0.0/scripts/__pycache__/generate_formal_dataset.cpython-314.pyc) | Python 自動產生的編譯 bytecode 快取；來源程式保留於同一 scripts 目錄。 | 程式快取；保留 | 否 | `f411cf03e9df1a326890e9111c94a7e5fcc2f34e1c514a58989e0b9b97bf7483` |
-| `data/1999_synthetic/formal_v1.0.0/scripts/__pycache__/validate_formal_dataset.cpython-314.pyc` | [data/1999_synthetic/formal/v1.0.0/scripts/__pycache__/validate_formal_dataset.cpython-314.pyc](formal/v1.0.0/scripts/__pycache__/validate_formal_dataset.cpython-314.pyc) | Python 自動產生的編譯 bytecode 快取；來源程式保留於同一 scripts 目錄。 | 程式快取；保留 | 否 | `f82632d6698e87aeaf56eaec15cec586a422411b3d4a12533a7edd7c364e141c` |
 | `data/1999_synthetic/formal_v1.0.0/scripts/finalize_assets.rb` | [data/1999_synthetic/formal/v1.0.0/scripts/finalize_assets.rb](formal/v1.0.0/scripts/finalize_assets.rb) | 建立正式 taxonomy、merge map、凍結 manifest 與生成計畫的資產整理程式。 | 資產整理程式 | 否（建置工具） | `5d81c52c2f2c04401be010afab56a0ee0c455a081b36fc0c4652b8f91080fd91` |
 | `data/1999_synthetic/formal_v1.0.0/scripts/generate_formal_dataset.py` | [data/1999_synthetic/formal/v1.0.0/scripts/generate_formal_dataset.py](formal/v1.0.0/scripts/generate_formal_dataset.py) | 正式資料批次生成程式。 | 生成程式 | 否（生成工具） | `b93b71f722622c5878105f79ede3a7fb72d118fd0adac4f89a4d7a19cb10f41b` |
 | `data/1999_synthetic/formal_v1.0.0/scripts/validate_formal_dataset.py` | [data/1999_synthetic/formal/v1.0.0/scripts/validate_formal_dataset.py](formal/v1.0.0/scripts/validate_formal_dataset.py) | 檢查正式資料欄位、配額、重複與逐字稿規格的驗證程式。 | 驗證程式 | 否（驗證工具） | `899f662c02320f7b2d06da624a4483d39d70560f5b53336342f4e7123bcfd7e1` |
@@ -206,7 +204,6 @@ data/1999_synthetic/
 
 | 路徑 | 內容／用途 | 狀態 | 正式分類實驗使用 |
 |---|---|---|---|
-| [`outputs/.DS_Store`](../../outputs/.DS_Store) | 用途與狀態未能從檔名確認。 | 待確認 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx`](../../outputs/flycall-1999-formal-review-pack-v1.0/FlyCall_1999_正式資料人工複核資料包_v1.0.xlsx) | 正式資料複核工作簿：validation/test 全數及 train 家族抽樣；摘要記錄 399 筆人工決定皆 pending。 | 複核包／待人工決定 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-formal-review-pack-v1.0/review_summary_v1.0.md`](../../outputs/flycall-1999-formal-review-pack-v1.0/review_summary_v1.0.md) | 正式資料複核抽樣、風險與自動檢查摘要。 | 複核摘要／報告 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-review-decisions-v1/FlyCall_1999_助理獨立複核決定_v1.0.xlsx`](../../outputs/flycall-1999-review-decisions-v1/FlyCall_1999_助理獨立複核決定_v1.0.xlsx) | Pilot 與家族的助理獨立複核決定活頁簿。 | 助理複核／非人工核准 | 否（複核材料，非分類樣本） |
@@ -218,51 +215,51 @@ data/1999_synthetic/
 | [`outputs/flycall-1999-review-pack-second-review-v1/FlyCall_1999_第二次複核資料包_v1.1.xlsx`](../../outputs/flycall-1999-review-pack-second-review-v1/FlyCall_1999_第二次複核資料包_v1.1.xlsx) | Pilot 與情境家族第二次複核資料包。 | 複核包／人工狀態待確認 | 否（複核材料，非分類樣本） |
 | [`outputs/flycall-1999-review-pack-v1/FlyCall_1999_人工複核資料包_v1.0.xlsx`](../../outputs/flycall-1999-review-pack-v1/FlyCall_1999_人工複核資料包_v1.0.xlsx) | Pilot 50 筆及情境家族 75 項人工複核資料包；使用者曾表示已完成，本次未逐格核對決定值。 | 人工複核來源／細項未核對 | 否（複核材料，非分類樣本） |
 
-## 舊路徑與文件連結相容 symlink
+## 舊路徑對照
 
-下列連結只提供舊檔名或舊相對連結的解析入口，實際內容只有新路徑的一份；它們不算副本。生成／驗證程式碼與 YAML 未修改。
+下列舊路徑原本是相容 symlink，已於 2026-11-14 移除；實際內容一直只有右欄的正式位置一份。YAML 來源欄位或舊文件提到左欄路徑時，請改看右欄。
 
-| 相容路徑 | 指向 | 用途 |
+| 舊路徑（已移除） | 正式位置 | 說明 |
 |---|---|---|
-| `data/1999_synthetic/family_merge_map_draft_v1.0.yaml` | `data/1999_synthetic/taxonomy/drafts/family_merge_map_draft_v1.0.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/family_merge_map_draft_v1.1.yaml` | `data/1999_synthetic/taxonomy/drafts/family_merge_map_draft_v1.1.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/family_merge_map_v1.0.yaml` | `data/1999_synthetic/taxonomy/current/family_merge_map_v1.0.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/family_review_decisions_v1.0.md` | `data/1999_synthetic/review/family_review_decisions_v1.0.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/formal_generation_plan_v1.3.md` | `data/1999_synthetic/planning/formal_generation_plan_v1.3.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/formal_generation_todo_v1.2.md` | `data/1999_synthetic/planning/formal_generation_todo_v1.2.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/formal_split_manifest_draft_v1.0.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.0.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/formal_split_manifest_draft_v1.1.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.1.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/formal_split_manifest_draft_v1.2.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.2.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/formal_split_manifest_frozen_v1.0.yaml` | `data/1999_synthetic/taxonomy/current/formal_split_manifest_frozen_v1.0.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/formal_v1.0.0` | `data/1999_synthetic/formal/v1.0.0` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/manual_review_v1.2.1.md` | `data/1999_synthetic/pilot/v1.2.1/manual_review_v1.2.1.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/manual_review_v1.2.2.md` | `data/1999_synthetic/pilot/v1.2.2/manual_review_v1.2.2.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/pilot/v1.2.2/formal_generation_todo_v1.2.md` | `data/1999_synthetic/planning/formal_generation_todo_v1.2.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/pilot/v1.2.2/formal_split_manifest_draft_v1.1.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.1.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/pilot_v1.2.1.jsonl` | `data/1999_synthetic/pilot/v1.2.1/pilot_v1.2.1.jsonl` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/pilot_v1.2.2.jsonl` | `data/1999_synthetic/pilot/v1.2.2/pilot_v1.2.2.jsonl` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/pilot_v1.2.3.jsonl` | `data/1999_synthetic/pilot/v1.2.3/pilot_v1.2.3.jsonl` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/planning/formal_split_manifest_draft_v1.0.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.0.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/planning/formal_split_manifest_draft_v1.1.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.1.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/planning/formal_split_manifest_frozen_v1.0.yaml` | `data/1999_synthetic/taxonomy/current/formal_split_manifest_frozen_v1.0.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/planning/formal_v1.0.0/formal_dataset_v1.0.0.csv` | `data/1999_synthetic/formal/v1.0.0/formal_dataset_v1.0.0.csv` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/planning/formal_v1.0.0/formal_dataset_v1.0.0.jsonl` | `data/1999_synthetic/formal/v1.0.0/formal_dataset_v1.0.0.jsonl` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/planning/formal_v1.0.0/scripts/validate_formal_dataset.py` | `data/1999_synthetic/formal/v1.0.0/scripts/validate_formal_dataset.py` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/planning/formal_v1.0.0/validation_report_v1.0.md` | `data/1999_synthetic/formal/v1.0.0/validation_report_v1.0.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/planning/manual_review_v1.2.2.md` | `data/1999_synthetic/pilot/v1.2.2/manual_review_v1.2.2.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/taxonomy_expansion_draft_v1.1.md` | `data/1999_synthetic/planning/taxonomy_expansion_draft_v1.1.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/taxonomy_expansion_draft_v1.2.md` | `data/1999_synthetic/planning/taxonomy_expansion_draft_v1.2.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/taxonomy_expansion_draft_v1.3.md` | `data/1999_synthetic/planning/taxonomy_expansion_draft_v1.3.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/taxonomy_v1.2.1.yaml` | `data/1999_synthetic/taxonomy/drafts/taxonomy_v1.2.1.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/taxonomy_v1.3.yaml` | `data/1999_synthetic/taxonomy/current/taxonomy_v1.3.yaml` | 程式／設定／舊文件引用的相容 symlink |
-| `data/1999_synthetic/validation_report_v1.2.3.md` | `data/1999_synthetic/pilot/v1.2.3/validation_report_v1.2.3.md` | 程式／設定／舊文件引用的相容 symlink |
-| `data/outputs` | `outputs` | 程式／設定／舊文件引用的相容 symlink |
+| `data/1999_synthetic/family_merge_map_draft_v1.0.yaml` | `data/1999_synthetic/taxonomy/drafts/family_merge_map_draft_v1.0.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/family_merge_map_draft_v1.1.yaml` | `data/1999_synthetic/taxonomy/drafts/family_merge_map_draft_v1.1.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/family_merge_map_v1.0.yaml` | `data/1999_synthetic/taxonomy/current/family_merge_map_v1.0.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/family_review_decisions_v1.0.md` | `data/1999_synthetic/review/family_review_decisions_v1.0.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/formal_generation_plan_v1.3.md` | `data/1999_synthetic/planning/formal_generation_plan_v1.3.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/formal_generation_todo_v1.2.md` | `data/1999_synthetic/planning/formal_generation_todo_v1.2.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/formal_split_manifest_draft_v1.0.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.0.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/formal_split_manifest_draft_v1.1.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.1.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/formal_split_manifest_draft_v1.2.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.2.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/formal_split_manifest_frozen_v1.0.yaml` | `data/1999_synthetic/taxonomy/current/formal_split_manifest_frozen_v1.0.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/formal_v1.0.0` | `data/1999_synthetic/formal/v1.0.0` | 已移除，請用正式位置 |
+| `data/1999_synthetic/manual_review_v1.2.1.md` | `data/1999_synthetic/pilot/v1.2.1/manual_review_v1.2.1.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/manual_review_v1.2.2.md` | `data/1999_synthetic/pilot/v1.2.2/manual_review_v1.2.2.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/pilot/v1.2.2/formal_generation_todo_v1.2.md` | `data/1999_synthetic/planning/formal_generation_todo_v1.2.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/pilot/v1.2.2/formal_split_manifest_draft_v1.1.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.1.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/pilot_v1.2.1.jsonl` | `data/1999_synthetic/pilot/v1.2.1/pilot_v1.2.1.jsonl` | 已移除，請用正式位置 |
+| `data/1999_synthetic/pilot_v1.2.2.jsonl` | `data/1999_synthetic/pilot/v1.2.2/pilot_v1.2.2.jsonl` | 已移除，請用正式位置 |
+| `data/1999_synthetic/pilot_v1.2.3.jsonl` | `data/1999_synthetic/pilot/v1.2.3/pilot_v1.2.3.jsonl` | 已移除，請用正式位置 |
+| `data/1999_synthetic/planning/formal_split_manifest_draft_v1.0.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.0.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/planning/formal_split_manifest_draft_v1.1.yaml` | `data/1999_synthetic/taxonomy/drafts/formal_split_manifest_draft_v1.1.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/planning/formal_split_manifest_frozen_v1.0.yaml` | `data/1999_synthetic/taxonomy/current/formal_split_manifest_frozen_v1.0.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/planning/formal_v1.0.0/formal_dataset_v1.0.0.csv` | `data/1999_synthetic/formal/v1.0.0/formal_dataset_v1.0.0.csv` | 已移除，請用正式位置 |
+| `data/1999_synthetic/planning/formal_v1.0.0/formal_dataset_v1.0.0.jsonl` | `data/1999_synthetic/formal/v1.0.0/formal_dataset_v1.0.0.jsonl` | 已移除，請用正式位置 |
+| `data/1999_synthetic/planning/formal_v1.0.0/scripts/validate_formal_dataset.py` | `data/1999_synthetic/formal/v1.0.0/scripts/validate_formal_dataset.py` | 已移除，請用正式位置 |
+| `data/1999_synthetic/planning/formal_v1.0.0/validation_report_v1.0.md` | `data/1999_synthetic/formal/v1.0.0/validation_report_v1.0.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/planning/manual_review_v1.2.2.md` | `data/1999_synthetic/pilot/v1.2.2/manual_review_v1.2.2.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/taxonomy_expansion_draft_v1.1.md` | `data/1999_synthetic/planning/taxonomy_expansion_draft_v1.1.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/taxonomy_expansion_draft_v1.2.md` | `data/1999_synthetic/planning/taxonomy_expansion_draft_v1.2.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/taxonomy_expansion_draft_v1.3.md` | `data/1999_synthetic/planning/taxonomy_expansion_draft_v1.3.md` | 已移除，請用正式位置 |
+| `data/1999_synthetic/taxonomy_v1.2.1.yaml` | `data/1999_synthetic/taxonomy/drafts/taxonomy_v1.2.1.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/taxonomy_v1.3.yaml` | `data/1999_synthetic/taxonomy/current/taxonomy_v1.3.yaml` | 已移除，請用正式位置 |
+| `data/1999_synthetic/validation_report_v1.2.3.md` | `data/1999_synthetic/pilot/v1.2.3/validation_report_v1.2.3.md` | 已移除，請用正式位置 |
+| `data/outputs` | `outputs` | 已移除，請用正式位置 |
 
 ## 完成後核對
 
 - 搬移檔案逐筆 SHA-256 與來源清單一致；正式 JSONL 為 1,000 筆，Pilot v1.2.1、v1.2.2、v1.2.3 各為 50 筆。
 - 正式 JSONL/CSV、Pilot JSONL、taxonomy/merge map/manifest YAML、活頁簿與生成／驗證程式內容未修改；原始複核活頁簿均保留原位。2026-10-26 另移除兩份可由原始活頁簿重建的 `*.inspect.ndjson` 檢視輸出，並加入 Git 忽略規則。
-- 所有搬移前已有效的 Markdown 相對連結均以新連結或相容 symlink 維持有效；程式常數路徑透過相容 symlink 仍指向正確檔案。完整檢查結果以本次完成檢查為準。
+- 所有搬移前已有效的 Markdown 相對連結均以新連結維持有效（2026-11-14 移除相容 symlink 時，另將 6 份規劃文件中依賴 symlink 的 11 個連結改指正式位置）；程式不使用舊路徑。
 - 原有 `archive/` 內容保留；所有待確認檔案保留原內容，未判定為可刪除或過期。
 - 專案目錄不是 Git repository，沒有 `git status --short`。
 

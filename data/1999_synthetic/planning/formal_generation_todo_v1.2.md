@@ -4,12 +4,12 @@
 
 ## 必要阻塞項目
 
-- [ ] 完成 [`manual_review_v1.2.2.md`](manual_review_v1.2.2.md) 的 50 筆逐筆複核，明確記錄人工決定；pending 不視為 pass。
+- [ ] 完成 [`manual_review_v1.2.2.md`](../pilot/v1.2.2/manual_review_v1.2.2.md) 的 50 筆逐筆複核，明確記錄人工決定；pending 不視為 pass。
 - [ ] 依人工意見修正 Pilot 草案並保存新版本；未核准前維持 pending 狀態。
 - [ ] 人工核准 taxonomy 的 15 個待修訂家族界線及 10 個合併規則，確認類別權責與納入／排除規則。
 - [ ] 按最終家族清單重算 split manifest；每類 140/30/30、全體 700/150/150，family 不跨 split。
 - [ ] 審閱 11 家族類別的訓練量（每家族 28 筆）及每類 validation/test 各只有 3 個家族的限制。
-- [ ] 人工審閱並凍結正式 manifest；現行 [`formal_split_manifest_draft_v1.1.yaml`](formal_split_manifest_draft_v1.1.yaml) 為 `draft_unfrozen`。
+- [ ] 人工審閱並凍結正式 manifest；現行 [`formal_split_manifest_draft_v1.1.yaml`](../taxonomy/drafts/formal_split_manifest_draft_v1.1.yaml) 為 `draft_unfrozen`。
 - [ ] 定案 prompt、模型、正式 ID／scenario_id、批次大小、PII 規則及驗證門檻。
 
 ## 可先準備、不會啟動生成

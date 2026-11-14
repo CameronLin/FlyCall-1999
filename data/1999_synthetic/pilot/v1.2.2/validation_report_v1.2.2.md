@@ -50,4 +50,4 @@ Taxonomy 基準：`taxonomy_v1.2.1.yaml`；家族規劃來源：`taxonomy_expans
 - 語意分類、客服行為、位置描述、口語自然度及近似內容仍須人工判斷。
 - 本次未開始正式 1,000 筆生成。
 
-逐筆清單見 [`manual_review_v1.2.2.md`](manual_review_v1.2.2.md)，阻塞事項見 [`formal_generation_todo_v1.2.md`](formal_generation_todo_v1.2.md)。
+逐筆清單見 [`manual_review_v1.2.2.md`](manual_review_v1.2.2.md)，阻塞事項見 [`formal_generation_todo_v1.2.md`](../../planning/formal_generation_todo_v1.2.md)。

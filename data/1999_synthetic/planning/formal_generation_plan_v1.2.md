@@ -3,7 +3,7 @@
 狀態：草案，未核准、未凍結、未開始生成。  
 正式資料目標：**另外新增 1,000 筆**，五類各 200 筆。  
 Pilot：v1.2.1 與 v1.2.2 是同一組 50 筆資料的基準／修訂草案版本；不重複計數、不計入正式配額，也不自動合併至正式資料。  
-逐家族配置草案：[`formal_split_manifest_draft_v1.1.yaml`](formal_split_manifest_draft_v1.1.yaml)。
+逐家族配置草案：[`formal_split_manifest_draft_v1.1.yaml`](../taxonomy/drafts/formal_split_manifest_draft_v1.1.yaml)。
 
 ## 生成前必要條件
 

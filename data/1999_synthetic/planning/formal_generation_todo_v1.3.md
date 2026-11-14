@@ -8,7 +8,7 @@
 - [x] 建立正式 `taxonomy_v1.3.yaml`、`family_merge_map_v1.0.yaml` 與 `formal_split_manifest_frozen_v1.0.yaml`；有效家族 66 個，9 個合併目標有效，未解條件路由為 0。
 - [x] 每個家族取得唯一 split 與正整數配額；每類 140/30/30、全體 700/150/150。
 - [x] 完成 20 批、每批 50 筆，生成正式 JSONL/CSV、原始候選、篩選資料、批次清單、checkpoint 及 log。
-- [x] 驗證欄位、ID、label/family/split、角色、中文字數、發言行數、個資格式、類別名稱洩漏、客服承諾及完全／近似重複；結果見 [`formal_v1.0.0/validation_report_v1.0.md`](formal_v1.0.0/validation_report_v1.0.md)。
+- [x] 驗證欄位、ID、label/family/split、角色、中文字數、發言行數、個資格式、類別名稱洩漏、客服承諾及完全／近似重複；結果見 [`formal_v1.0.0/validation_report_v1.0.md`](../formal/v1.0.0/validation_report_v1.0.md)。
 - [x] Pilot v1.2.3 保持 50 筆、`split=pilot`、`pending_manual_review`；正式資料不包含 Pilot。
 
 ## 尚待人工處理
@@ -24,6 +24,6 @@
 
 ## 主要輸出
 
-- 正式資料：[`formal_v1.0.0/formal_dataset_v1.0.0.jsonl`](formal_v1.0.0/formal_dataset_v1.0.0.jsonl)、[`formal_v1.0.0/formal_dataset_v1.0.0.csv`](formal_v1.0.0/formal_dataset_v1.0.0.csv)
-- 凍結 manifest：[`formal_split_manifest_frozen_v1.0.yaml`](formal_split_manifest_frozen_v1.0.yaml)
-- 驗證程式：[`formal_v1.0.0/scripts/validate_formal_dataset.py`](formal_v1.0.0/scripts/validate_formal_dataset.py)
+- 正式資料：[`formal_v1.0.0/formal_dataset_v1.0.0.jsonl`](../formal/v1.0.0/formal_dataset_v1.0.0.jsonl)、[`formal_v1.0.0/formal_dataset_v1.0.0.csv`](../formal/v1.0.0/formal_dataset_v1.0.0.csv)
+- 凍結 manifest：[`formal_split_manifest_frozen_v1.0.yaml`](../taxonomy/current/formal_split_manifest_frozen_v1.0.yaml)
+- 驗證程式：[`formal_v1.0.0/scripts/validate_formal_dataset.py`](../formal/v1.0.0/scripts/validate_formal_dataset.py)

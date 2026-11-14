@@ -41,7 +41,7 @@ data/1999_synthetic/formal/
 
 ## 家族分組與切分稽核
 
-taxonomy 擴充草案規劃每類 15 個家族，共 75 個；目前家族邊界未核准。以下比較固定每類 9 個 train、3 個 validation、3 個 test 家族的三種比例。逐一分配的 `scenario_family_id`、split 及筆數列在 [`formal_split_manifest_draft_v1.0.yaml`](formal_split_manifest_draft_v1.0.yaml)。manifest 目前為 `draft_unfrozen`，生成前須待 taxonomy 核准、pilot 複核通過後另行凍結。
+taxonomy 擴充草案規劃每類 15 個家族，共 75 個；目前家族邊界未核准。以下比較固定每類 9 個 train、3 個 validation、3 個 test 家族的三種比例。逐一分配的 `scenario_family_id`、split 及筆數列在 [`formal_split_manifest_draft_v1.0.yaml`](../taxonomy/drafts/formal_split_manifest_draft_v1.0.yaml)。manifest 目前為 `draft_unfrozen`，生成前須待 taxonomy 核准、pilot 複核通過後另行凍結。
 
 | 方案 | 每類 train／validation／test 筆數 | 全體 train／validation／test 筆數 | 每類各 split 家族數 | 每家族預計筆數範圍（train／validation／test） | 訓練量與評估取捨 |
 |---|---:|---:|---:|---|---|

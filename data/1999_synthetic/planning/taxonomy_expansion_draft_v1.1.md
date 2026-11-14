@@ -114,7 +114,7 @@
 
 ## 家族分組切分評估（規劃草案）
 
-正式目標為另外新增 1,000 筆、五類各 200 筆；v1.2.1 的 50 筆 pilot 維持獨立，不列入正式配額。以下三種比例均使用每類 15 個家族、9/3/3 家族分配，因此同一 `scenario_family_id` 不跨 train、validation、test；具體逐家族分配與筆數見 [`formal_split_manifest_draft_v1.0.yaml`](formal_split_manifest_draft_v1.0.yaml)。
+正式目標為另外新增 1,000 筆、五類各 200 筆；v1.2.1 的 50 筆 pilot 維持獨立，不列入正式配額。以下三種比例均使用每類 15 個家族、9/3/3 家族分配，因此同一 `scenario_family_id` 不跨 train、validation、test；具體逐家族分配與筆數見 [`formal_split_manifest_draft_v1.0.yaml`](../taxonomy/drafts/formal_split_manifest_draft_v1.0.yaml)。
 
 | 方案 | 每類 train／validation／test | 全體 train／validation／test | 每類家族數 | 每家族預計筆數 | 取捨 |
 |---|---:|---:|---:|---|---|
