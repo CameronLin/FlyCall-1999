@@ -228,6 +228,70 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
 @media print { .bar { display: none; } body { background: #fff; } .panel { break-inside: avoid; } }
 </style>
 <script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("flycall-intro-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;}catch(e){}</script>
+<style id="tt-css">
+.tt { --tt-a: #2a78d6; --tt-b: #eb6834; --tt-c: #1baf7a; --tt-v1: #82898f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tt { --tt-a: #3987e5; --tt-b: #d95926; --tt-c: #199e70; --tt-v1: #7d858c; } }
+:root[data-theme="dark"] .tt { --tt-a: #3987e5; --tt-b: #d95926; --tt-c: #199e70; --tt-v1: #7d858c; }
+.tt { display: grid; gap: 14px; }
+.tt h5 { margin: 0; font-size: .95rem; font-weight: 700; }
+.tt-h { margin: 10px 0 0; font-size: 1rem; font-weight: 700; color: var(--ink); }
+.tt-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.tt-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; }
+.tt-kpi { background: var(--paper); padding: 14px 16px; display: grid; gap: 2px; align-content: start; min-width: 0; }
+.tt-k { font-size: .8rem; color: var(--ink-2); }
+.tt-v { font-family: var(--f-mono); font-size: 1.9rem; line-height: 1.2; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); }
+.tt-v small { font-size: .9rem; color: var(--ink-3); font-weight: 400; }
+.tt-n { font-size: .78rem; color: var(--ink-3); line-height: 1.5; }
+.tt-n b { color: var(--ink); font-weight: 600; }
+.tt-flow { display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr) 24px minmax(0, 1fr); align-items: stretch; }
+.tt-arrow { display: grid; place-items: center; color: var(--ink-3); }
+.tt-stage { background: var(--paper); border: 1px solid var(--rule); border-top: 4px solid var(--sc); border-radius: var(--radius); padding: 14px; display: grid; gap: 8px; align-content: start; }
+.tt-s1 { --sc: var(--tt-a); } .tt-s2 { --sc: var(--tt-b); } .tt-s3 { --sc: var(--tt-c); }
+.tt-sn { font-family: var(--f-mono); font-size: .74rem; color: var(--ink-3); letter-spacing: .08em; }
+.tt-stage ul, .tt-points { margin: 0; padding-left: 1.1em; display: grid; gap: 5px; color: var(--ink-2); font-size: .88rem; line-height: 1.65; }
+.tt-formula { font-family: var(--f-mono); font-size: .8rem; background: var(--tint); border-radius: 8px; padding: 7px 10px; color: var(--ink); }
+.tt-panel { background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.tt-seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; }
+.tt-tb { font: inherit; font-size: .84rem; border: 0; background: transparent; color: var(--ink-2); padding: 4px 14px; cursor: pointer; }
+.tt-tb[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.tt-pane[hidden] { display: none !important; }
+.tt-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .82rem; color: var(--ink-2); }
+.tt-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.tt-sa { background: var(--tt-a); } .tt-sb { background: var(--tt-b); } .tt-sc { background: var(--tt-c); }
+.tt-bars { display: grid; gap: 4px; }
+.tt-glab { font-family: var(--f-mono); font-size: .84rem; color: var(--ink); margin-top: 8px; }
+.tt-brow { display: grid; grid-template-columns: 30px minmax(0, 1fr) 128px; gap: 10px; align-items: center; }
+.tt-ver { font-family: var(--f-mono); font-size: .74rem; border-radius: 5px; padding: 0 5px; text-align: center; border: 1px solid var(--rule); color: var(--ink-3); }
+.tt-ver.tt-v2 { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.tt-track { display: flex; gap: 2px; height: 18px; }
+.tt-track span { display: block; height: 100%; min-width: 2px; }
+.tt-track span:first-child { border-radius: 4px 0 0 4px; } .tt-track span:last-child { border-radius: 0 4px 4px 0; }
+.tt-sa, .tt-track .tt-sa { background: var(--tt-a); } .tt-track .tt-sb { background: var(--tt-b); } .tt-track .tt-sc { background: var(--tt-c); }
+.tt-bval { font-family: var(--f-mono); font-size: .8rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+.tt-bval em { font-style: normal; font-size: .74rem; margin-left: 4px; }
+.tt-dn { color: var(--up); } .tt-up { color: var(--down); } .tt-flat { color: var(--ink-3); }
+.tt-more summary { cursor: pointer; font-size: .86rem; color: var(--ink-2); }
+.tt-more[open] summary { margin-bottom: 8px; }
+.tt tr.tt-v2row td { border-bottom: 1px solid var(--rule); }
+.tt tr.tt-sum td { background: var(--tint); }
+.tt-note { font-size: .82rem; color: var(--ink-3); margin: 0; }
+.tt-grid2 { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 12px; }
+.tt-ebars { display: grid; gap: 10px; }
+.tt-erow { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 10px; align-items: center; }
+.tt-elab { font-size: .82rem; color: var(--ink-2); }
+.tt-etracks { display: grid; gap: 3px; }
+.tt-etrack { display: grid; grid-template-columns: 30px minmax(0, 1fr) 40px; gap: 8px; align-items: center; }
+.tt-etrack { position: relative; }
+.tt-etrack .tt-ebar { height: 12px; border-radius: 0 4px 4px 0; display: block; grid-column: 2; }
+.tt-etrack b { font-family: var(--f-mono); font-size: .78rem; font-weight: 500; text-align: right; color: var(--ink); }
+.tt-ebar1 { background: var(--tt-v1); opacity: .55; } .tt-ebar2 { background: var(--tt-b); }
+.tt-set td small { display: block; font-size: .72rem; color: var(--ink-3); }
+.tt-set .tt-old { color: var(--ink-3); }
+.tt-set td.tt-big { background: var(--accent-soft); }
+.tt-flag { font-style: normal; color: var(--down); margin-left: 2px; }
+@media (max-width: 980px) { .tt-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tt-flow { grid-template-columns: minmax(0, 1fr); gap: 6px; } .tt-arrow { transform: rotate(90deg); height: 18px; } .tt-grid2 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) { .tt-kpis { grid-template-columns: minmax(0, 1fr); } .tt-brow { grid-template-columns: 30px minmax(0, 1fr); } .tt-bval { grid-column: 2; text-align: left; } }
+</style>
 </head>
 <body>
 
@@ -1094,38 +1158,61 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
         <li>「人行道」與「路面清潔」互相認錯從 8 筆降到 2 筆；公園類拿掉捷徑詞後沒有變差。</li>
       </ul>
     </div>
-    <div class="block what" id="training-time"><span class="tag">紀錄：訓練時間（v1 vs v2）</span>
-      <p>一次「獨立調參」要跑完四張圖（G0／G1／G2／G2-glu+）的所有組合，再用選出的設定做最後訓練：</p>
-      <ul>
-        <li><b>Fly A 交叉驗證</b>：2 種訓練目標 × 3 個學習率 × 3 個 seed × 5 折，每張圖 90 次，四張圖共 360 次。</li>
-        <li><b>Fly B 交叉驗證</b>：3 種輸入（LDA、距離版 Fly A、距離＋類別分離版 Fly A）× 3 個學習率 × 3 個 seed × 5 折，四張圖共 540 次。</li>
-        <li><b>最後訓練</b>：用選出的學習率與訓練長度，在全部 700 筆 train 上重新訓練。</li>
-      </ul>
-      <div class="tablewrap"><table>
-        <thead><tr><th>階段（四張圖合計，分鐘）</th><th class="num">v1 T=2</th><th class="num">v2 T=2</th><th class="num">v1 T=4</th><th class="num">v2 T=4</th></tr></thead>
-        <tbody>
-          <tr><td>Fly A 交叉驗證</td><td class="num">26.8</td><td class="num">29.0</td><td class="num">45.7</td><td class="num">43.5</td></tr>
-          <tr><td>Fly B 交叉驗證</td><td class="num">48.2</td><td class="num">38.8</td><td class="num">76.9</td><td class="num">53.8</td></tr>
-          <tr><td>最後訓練</td><td class="num">4.5</td><td class="num">2.4</td><td class="num">5.2</td><td class="num">2.9</td></tr>
-          <tr class="hl"><td><b>獨立調參總計</b></td><td class="num">79.4</td><td class="num">70.3</td><td class="num">127.8</td><td class="num">100.3</td></tr>
-          <tr><td>訓練後的腦部分析（活動、重要連線、移除測試；不訓練）</td><td class="num">8.9</td><td class="num">14.7</td><td class="num">11.3</td><td class="num">17.2</td></tr>
-        </tbody>
-      </table></div>
-      <p>為什麼 v2 的調參比較快？兩版的筆數（700／150）、E5 向量維度（384）、圖與模型大小都相同，所以<b>每個 epoch 的計算量一樣</b>，差別在訓練跑了幾個 epoch。調參使用 early stopping（validation 連續 25 個 epoch 沒進步就停），各折停下時的平均 epoch 數：</p>
-      <div class="tablewrap"><table>
-        <thead><tr><th>平均停止 epoch</th><th class="num">v1 T=2</th><th class="num">v2 T=2</th><th class="num">v1 T=4</th><th class="num">v2 T=4</th></tr></thead>
-        <tbody>
-          <tr><td>Fly A（360 次）</td><td class="num">47.9</td><td class="num">43.8</td><td class="num">46.3</td><td class="num">46.6</td></tr>
-          <tr class="hl"><td>Fly B（540 次）</td><td class="num">86.8</td><td class="num">52.0</td><td class="num">79.3</td><td class="num">43.5</td></tr>
-        </tbody>
-      </table></div>
-      <ul>
-        <li>Fly A 兩版差不多，所以 Fly A 的時間也差不多。</li>
-        <li>Fly B 在 v2 大約提早 35 個 epoch 就停（推測是 v2 的類別在 Fly A／LDA 表徵上分得比較開，較快達到最佳點，這點沒有另外驗證）；所以 Fly B 的交叉驗證和最後訓練都變短。例如 G2、T=2、輸入為「距離＋類別分離」版 Fly A 時，最後訓練長度從 v1 的 200 個 epoch（碰到上限）降到 v2 的 31 個。</li>
-        <li>總時間只少 1–2 成：每次都要多跑 25 個 epoch 才能確認「沒有再進步」，而且 Fly A 部分沒有變快。</li>
-        <li>腦部分析不訓練，兩版計算內容相同，但 v2 多花約 6 分鐘，原因沒有查明（可能是當時電腦負載）。</li>
-      </ul>
-      <p style="font-size:.9em;color:var(--neutral)">以上為 Windows x64 CPU 上的實際經過時間，由 <code>progress.log</code> 時間戳記算出（各 run 資料夾的 <code>timings.json</code>），會受當時電腦負載影響，不是精確的效能測量。其他步驟都很短：v2 的 1,000 筆 E5 編碼約 1.8 分鐘（另載入模型約 0.5 分鐘）；E5 基準分類器每個不到 1 秒；第一代固定預算的 Fly A／B（G0）每個 seed 約 6–9 秒。</p>
+    <div class="block what tt" id="training-time"><span class="tag">紀錄：訓練時間（v1 vs v2）</span>
+      <p>換成 v2 資料後，同一套調參流程<b>整體快了 1–2 成</b>，省下的時間幾乎都在 Fly B：v2 上 Fly B 比較早達到最佳點、提早停止。下面依序是摘要、流程、每張圖的時間，以及原因。</p>
+      <div class="tt-kpis"><div class="tt-kpi"><div class="tt-k">獨立調參總時間・T=2</div><div class="tt-v">70<small> 分</small></div><div class="tt-n">v1 為 79 分 21 秒；v2 70 分 20 秒，<b>-11%</b></div></div><div class="tt-kpi"><div class="tt-k">獨立調參總時間・T=4</div><div class="tt-v">100<small> 分</small></div><div class="tt-n">v1 為 127 分 51 秒；v2 100 分 19 秒，<b>-22%</b></div></div><div class="tt-kpi"><div class="tt-k">Fly B 平均停止 epoch・T=2</div><div class="tt-v">87<small> → </small>52</div><div class="tt-n">T=4：79 → 44；Fly A 兩版都約 44–48</div></div><div class="tt-kpi"><div class="tt-k">最終訓練長度（最明顯的一格）</div><div class="tt-v">200<small> → </small>31<small> epoch</small></div><div class="tt-n">G2・T=2・Fly B 接 Fly A（距離＋類別）；v1 碰到 200 上限</div></div></div>
+
+      <h4 class="tt-h">① 一次「獨立調參」做了什麼（每張圖都相同）</h4>
+      <div class="tt-flow">
+        <div class="tt-stage tt-s1"><div class="tt-sn">階段 ①</div><h5>Fly A 交叉驗證：選 Fly A 的學習率</h5>
+          <ul><li>700 筆 train 依情境家族分成 5 份，每次 4 份訓練、1 份驗證。</li><li>兩種目標（只保留距離／距離＋類別分離）各試 3 個學習率。</li><li>每次訓練用 early stopping：連續 25 個 epoch 沒進步就停。</li></ul>
+          <div class="tt-formula">2 目標 × 3 學習率 × 3 seed × 5 份 = 90 次</div></div>
+        <div class="tt-arrow" aria-hidden="true">→</div>
+        <div class="tt-stage tt-s2"><div class="tt-sn">階段 ②</div><h5>Fly B 交叉驗證：選 Fly B 的學習率</h5>
+          <ul><li>三種輸入：LDA 4 維、兩種 Fly A 的 32 維輸出。</li><li>多了 5 類輸出層、每份資料都要重新產生輸入，是最花時間的階段。</li><li><b>v1 與 v2 的差距主要在這裡。</b></li></ul>
+          <div class="tt-formula">3 輸入 × 3 學習率 × 3 seed × 5 份 = 135 次</div></div>
+        <div class="tt-arrow" aria-hidden="true">→</div>
+        <div class="tt-stage tt-s3"><div class="tt-sn">階段 ③</div><h5>最終訓練：在全部 train 上重訓</h5>
+          <ul><li>用選定的學習率，固定訓練「交叉驗證選出的 epoch 中位數」。</li><li>Fly A 先訓練好並凍結，再訓練 Fly B。</li></ul>
+          <div class="tt-formula">2 Fly A × 3 seed ＋ 3 Fly B × 3 seed = 15 次</div></div>
+      </div>
+
+      <div class="tt-head"><h4 class="tt-h">② 每張圖的訓練時間</h4><div class="tt-seg" role="group" aria-label="選擇圖核心步數 T"><button type="button" class="tt-tb" data-tt="2" aria-pressed="true">T = 2</button><button type="button" class="tt-tb" data-tt="4" aria-pressed="false">T = 4</button></div></div>
+      <div class="tt-panel">
+        <div class="tt-legend"><span><i class="tt-sa"></i>① Fly A 交叉驗證</span><span><i class="tt-sb"></i>② Fly B 交叉驗證</span><span><i class="tt-sc"></i>③ 最終訓練</span></div>
+        <div class="tt-pane" data-tt="2"><div class="tt-bars"><div class="tt-glab">G0 原圖</div><div class="tt-brow"><span class="tt-ver tt-v1">v1</span><div class="tt-track"><span class="tt-sa" style="width:20.48%" title="G0 原圖・v1・① Fly A 交叉驗證：4 分 47 秒"></span><span class="tt-sb" style="width:28.51%" title="G0 原圖・v1・② Fly B 交叉驗證：6 分 40 秒"></span><span class="tt-sc" style="width:3.29%" title="G0 原圖・v1・③ 最終訓練：0 分 46 秒"></span></div><span class="tt-bval">12 分 14 秒</span></div><div class="tt-brow"><span class="tt-ver tt-v2">v2</span><div class="tt-track"><span class="tt-sa" style="width:21.40%" title="G0 原圖・v2・① Fly A 交叉驗證：5 分 00 秒"></span><span class="tt-sb" style="width:28.95%" title="G0 原圖・v2・② Fly B 交叉驗證：6 分 46 秒"></span><span class="tt-sc" style="width:1.77%" title="G0 原圖・v2・③ 最終訓練：0 分 25 秒"></span></div><span class="tt-bval">12 分 11 秒 <em class="tt-flat">+0%</em></span></div><div class="tt-glab">G1 全正</div><div class="tt-brow"><span class="tt-ver tt-v1">v1</span><div class="tt-track"><span class="tt-sa" style="width:29.79%" title="G1 全正・v1・① Fly A 交叉驗證：6 分 58 秒"></span><span class="tt-sb" style="width:57.11%" title="G1 全正・v1・② Fly B 交叉驗證：13 分 21 秒"></span><span class="tt-sc" style="width:5.47%" title="G1 全正・v1・③ 最終訓練：1 分 17 秒"></span></div><span class="tt-bval">21 分 36 秒</span></div><div class="tt-brow"><span class="tt-ver tt-v2">v2</span><div class="tt-track"><span class="tt-sa" style="width:33.12%" title="G1 全正・v2・① Fly A 交叉驗證：7 分 45 秒"></span><span class="tt-sb" style="width:44.41%" title="G1 全正・v2・② Fly B 交叉驗證：10 分 23 秒"></span><span class="tt-sc" style="width:2.67%" title="G1 全正・v2・③ 最終訓練：0 分 38 秒"></span></div><span class="tt-bval">18 分 45 秒 <em class="tt-dn">-13%</em></span></div><div class="tt-glab">G2 有正負</div><div class="tt-brow"><span class="tt-ver tt-v1">v1</span><div class="tt-track"><span class="tt-sa" style="width:32.25%" title="G2 有正負・v1・① Fly A 交叉驗證：7 分 32 秒"></span><span class="tt-sb" style="width:62.74%" title="G2 有正負・v1・② Fly B 交叉驗證：14 分 40 秒"></span><span class="tt-sc" style="width:5.01%" title="G2 有正負・v1・③ 最終訓練：1 分 10 秒"></span></div><span class="tt-bval">23 分 23 秒</span></div><div class="tt-brow"><span class="tt-ver tt-v2">v2</span><div class="tt-track"><span class="tt-sa" style="width:34.35%" title="G2 有正負・v2・① Fly A 交叉驗證：8 分 02 秒"></span><span class="tt-sb" style="width:45.85%" title="G2 有正負・v2・② Fly B 交叉驗證：10 分 43 秒"></span><span class="tt-sc" style="width:2.25%" title="G2 有正負・v2・③ 最終訓練：0 分 32 秒"></span></div><span class="tt-bval">19 分 17 秒 <em class="tt-dn">-18%</em></span></div><div class="tt-glab">G2-glu+</div><div class="tt-brow"><span class="tt-ver tt-v1">v1</span><div class="tt-track"><span class="tt-sa" style="width:32.08%" title="G2-glu+・v1・① Fly A 交叉驗證：7 分 30 秒"></span><span class="tt-sb" style="width:57.51%" title="G2-glu+・v1・② Fly B 交叉驗證：13 分 27 秒"></span><span class="tt-sc" style="width:5.13%" title="G2-glu+・v1・③ 最終訓練：1 分 12 秒"></span></div><span class="tt-bval">22 分 09 秒</span></div><div class="tt-brow"><span class="tt-ver tt-v2">v2</span><div class="tt-track"><span class="tt-sa" style="width:35.32%" title="G2-glu+・v2・① Fly A 交叉驗證：8 分 16 秒"></span><span class="tt-sb" style="width:46.83%" title="G2-glu+・v2・② Fly B 交叉驗證：10 分 57 秒"></span><span class="tt-sc" style="width:3.83%" title="G2-glu+・v2・③ 最終訓練：0 分 54 秒"></span></div><span class="tt-bval">20 分 06 秒 <em class="tt-dn">-9%</em></span></div></div><details class="tt-more"><summary>看詳細數字</summary><div class="tablewrap"><table><thead><tr><th>圖</th><th>資料</th><th>① Fly A 交叉驗證</th><th>② Fly B 交叉驗證</th><th>③ 最終訓練</th><th>合計</th></tr></thead><tbody><tr><td>G0 原圖</td><td>v1</td><td class="num">4 分 47 秒</td><td class="num">6 分 40 秒</td><td class="num">0 分 46 秒</td><td class="num"><b>12 分 14 秒</b></td></tr><tr class=tt-v2row><td></td><td>v2</td><td class="num">5 分 00 秒</td><td class="num">6 分 46 秒</td><td class="num">0 分 25 秒</td><td class="num"><b>12 分 11 秒</b></td></tr><tr><td>G1 全正</td><td>v1</td><td class="num">6 分 58 秒</td><td class="num">13 分 21 秒</td><td class="num">1 分 17 秒</td><td class="num"><b>21 分 36 秒</b></td></tr><tr class=tt-v2row><td></td><td>v2</td><td class="num">7 分 45 秒</td><td class="num">10 分 23 秒</td><td class="num">0 分 38 秒</td><td class="num"><b>18 分 45 秒</b></td></tr><tr><td>G2 有正負</td><td>v1</td><td class="num">7 分 32 秒</td><td class="num">14 分 40 秒</td><td class="num">1 分 10 秒</td><td class="num"><b>23 分 23 秒</b></td></tr><tr class=tt-v2row><td></td><td>v2</td><td class="num">8 分 02 秒</td><td class="num">10 分 43 秒</td><td class="num">0 分 32 秒</td><td class="num"><b>19 分 17 秒</b></td></tr><tr><td>G2-glu+</td><td>v1</td><td class="num">7 分 30 秒</td><td class="num">13 分 27 秒</td><td class="num">1 分 12 秒</td><td class="num"><b>22 分 09 秒</b></td></tr><tr class=tt-v2row><td></td><td>v2</td><td class="num">8 分 16 秒</td><td class="num">10 分 57 秒</td><td class="num">0 分 54 秒</td><td class="num"><b>20 分 06 秒</b></td></tr><tr class="tt-sum"><td>全部</td><td>v1</td><td></td><td></td><td></td><td class="num"><b>79 分 21 秒</b></td></tr><tr class="tt-sum"><td>全部</td><td>v2</td><td></td><td></td><td></td><td class="num"><b>70 分 20 秒</b></td></tr></tbody></table></div></details></div><div class="tt-pane" data-tt="4" hidden><div class="tt-bars"><div class="tt-glab">G0 原圖</div><div class="tt-brow"><span class="tt-ver tt-v1">v1</span><div class="tt-track"><span class="tt-sa" style="width:25.07%" title="G0 原圖・v1・① Fly A 交叉驗證：9 分 29 秒"></span><span class="tt-sb" style="width:30.46%" title="G0 原圖・v1・② Fly B 交叉驗證：11 分 31 秒"></span><span class="tt-sc" style="width:1.96%" title="G0 原圖・v1・③ 最終訓練：0 分 44 秒"></span></div><span class="tt-bval">21 分 44 秒</span></div><div class="tt-brow"><span class="tt-ver tt-v2">v2</span><div class="tt-track"><span class="tt-sa" style="width:20.20%" title="G0 原圖・v2・① Fly A 交叉驗證：7 分 38 秒"></span><span class="tt-sb" style="width:21.88%" title="G0 原圖・v2・② Fly B 交叉驗證：8 分 16 秒"></span><span class="tt-sc" style="width:1.41%" title="G0 原圖・v2・③ 最終訓練：0 分 32 秒"></span></div><span class="tt-bval">16 分 27 秒 <em class="tt-dn">-24%</em></span></div><div class="tt-glab">G1 全正</div><div class="tt-brow"><span class="tt-ver tt-v1">v1</span><div class="tt-track"><span class="tt-sa" style="width:32.54%" title="G1 全正・v1・① Fly A 交叉驗證：12 分 18 秒"></span><span class="tt-sb" style="width:54.95%" title="G1 全正・v1・② Fly B 交叉驗證：20 分 47 秒"></span><span class="tt-sc" style="width:5.08%" title="G1 全正・v1・③ 最終訓練：1 分 55 秒"></span></div><span class="tt-bval">35 分 01 秒</span></div><div class="tt-brow"><span class="tt-ver tt-v2">v2</span><div class="tt-track"><span class="tt-sa" style="width:33.05%" title="G1 全正・v2・① Fly A 交叉驗證：12 分 30 秒"></span><span class="tt-sb" style="width:42.10%" title="G1 全正・v2・② Fly B 交叉驗證：15 分 55 秒"></span><span class="tt-sc" style="width:2.19%" title="G1 全正・v2・③ 最終訓練：0 分 50 秒"></span></div><span class="tt-bval">29 分 15 秒 <em class="tt-dn">-16%</em></span></div><div class="tt-glab">G2 有正負</div><div class="tt-brow"><span class="tt-ver tt-v1">v1</span><div class="tt-track"><span class="tt-sa" style="width:34.72%" title="G2 有正負・v1・① Fly A 交叉驗證：13 分 08 秒"></span><span class="tt-sb" style="width:61.44%" title="G2 有正負・v1・② Fly B 交叉驗證：23 分 14 秒"></span><span class="tt-sc" style="width:3.85%" title="G2 有正負・v1・③ 最終訓練：1 分 27 秒"></span></div><span class="tt-bval">37 分 49 秒</span></div><div class="tt-brow"><span class="tt-ver tt-v2">v2</span><div class="tt-track"><span class="tt-sa" style="width:33.64%" title="G2 有正負・v2・① Fly A 交叉驗證：12 分 43 秒"></span><span class="tt-sb" style="width:41.60%" title="G2 有正負・v2・② Fly B 交叉驗證：15 分 44 秒"></span><span class="tt-sc" style="width:1.78%" title="G2 有正負・v2・③ 最終訓練：0 分 40 秒"></span></div><span class="tt-bval">29 分 08 秒 <em class="tt-dn">-23%</em></span></div><div class="tt-glab">G2-glu+</div><div class="tt-brow"><span class="tt-ver tt-v1">v1</span><div class="tt-track"><span class="tt-sa" style="width:28.44%" title="G2-glu+・v1・① Fly A 交叉驗證：10 分 46 秒"></span><span class="tt-sb" style="width:56.61%" title="G2-glu+・v1・② Fly B 交叉驗證：21 分 25 秒"></span><span class="tt-sc" style="width:2.92%" title="G2-glu+・v1・③ 最終訓練：1 分 06 秒"></span></div><span class="tt-bval">33 分 16 秒</span></div><div class="tt-brow"><span class="tt-ver tt-v2">v2</span><div class="tt-track"><span class="tt-sa" style="width:28.30%" title="G2-glu+・v2・① Fly A 交叉驗證：10 分 42 秒"></span><span class="tt-sb" style="width:36.84%" title="G2-glu+・v2・② Fly B 交叉驗證：13 分 56 秒"></span><span class="tt-sc" style="width:2.27%" title="G2-glu+・v2・③ 最終訓練：0 分 52 秒"></span></div><span class="tt-bval">25 分 30 秒 <em class="tt-dn">-23%</em></span></div></div><details class="tt-more"><summary>看詳細數字</summary><div class="tablewrap"><table><thead><tr><th>圖</th><th>資料</th><th>① Fly A 交叉驗證</th><th>② Fly B 交叉驗證</th><th>③ 最終訓練</th><th>合計</th></tr></thead><tbody><tr><td>G0 原圖</td><td>v1</td><td class="num">9 分 29 秒</td><td class="num">11 分 31 秒</td><td class="num">0 分 44 秒</td><td class="num"><b>21 分 44 秒</b></td></tr><tr class=tt-v2row><td></td><td>v2</td><td class="num">7 分 38 秒</td><td class="num">8 分 16 秒</td><td class="num">0 分 32 秒</td><td class="num"><b>16 分 27 秒</b></td></tr><tr><td>G1 全正</td><td>v1</td><td class="num">12 分 18 秒</td><td class="num">20 分 47 秒</td><td class="num">1 分 55 秒</td><td class="num"><b>35 分 01 秒</b></td></tr><tr class=tt-v2row><td></td><td>v2</td><td class="num">12 分 30 秒</td><td class="num">15 分 55 秒</td><td class="num">0 分 50 秒</td><td class="num"><b>29 分 15 秒</b></td></tr><tr><td>G2 有正負</td><td>v1</td><td class="num">13 分 08 秒</td><td class="num">23 分 14 秒</td><td class="num">1 分 27 秒</td><td class="num"><b>37 分 49 秒</b></td></tr><tr class=tt-v2row><td></td><td>v2</td><td class="num">12 分 43 秒</td><td class="num">15 分 44 秒</td><td class="num">0 分 40 秒</td><td class="num"><b>29 分 08 秒</b></td></tr><tr><td>G2-glu+</td><td>v1</td><td class="num">10 分 46 秒</td><td class="num">21 分 25 秒</td><td class="num">1 分 06 秒</td><td class="num"><b>33 分 16 秒</b></td></tr><tr class=tt-v2row><td></td><td>v2</td><td class="num">10 分 42 秒</td><td class="num">13 分 56 秒</td><td class="num">0 分 52 秒</td><td class="num"><b>25 分 30 秒</b></td></tr><tr class="tt-sum"><td>全部</td><td>v1</td><td></td><td></td><td></td><td class="num"><b>127 分 51 秒</b></td></tr><tr class="tt-sum"><td>全部</td><td>v2</td><td></td><td></td><td></td><td class="num"><b>100 分 19 秒</b></td></tr></tbody></table></div></details></div>
+        <p class="tt-note">同一個 T 之下，所有長條用同一個比例尺。G0 只有 2,216 條邊所以最快；另外三張有 6,691 條邊。</p>
+      </div>
+
+      <div class="tt-head"><h4 class="tt-h">③ 為什麼 v2 比較快：Fly B 提早停止</h4></div>
+      <div class="tt-grid2">
+        <div class="tt-panel"><h5>交叉驗證中每次訓練的平均停止 epoch</h5>
+          <div class="tt-ebars"><div class="tt-erow"><span class="tt-elab">Fly A・T=2</span><div class="tt-etracks"><div class="tt-etrack"><span class="tt-ver tt-v1">v1</span><span class="tt-ebar tt-ebar1" style="width:55.2%"></span><b>47.9</b></div><div class="tt-etrack"><span class="tt-ver tt-v2">v2</span><span class="tt-ebar tt-ebar2" style="width:50.5%"></span><b>43.8</b></div></div></div><div class="tt-erow"><span class="tt-elab">Fly A・T=4</span><div class="tt-etracks"><div class="tt-etrack"><span class="tt-ver tt-v1">v1</span><span class="tt-ebar tt-ebar1" style="width:53.4%"></span><b>46.3</b></div><div class="tt-etrack"><span class="tt-ver tt-v2">v2</span><span class="tt-ebar tt-ebar2" style="width:53.7%"></span><b>46.6</b></div></div></div><div class="tt-erow"><span class="tt-elab">Fly B・T=2</span><div class="tt-etracks"><div class="tt-etrack"><span class="tt-ver tt-v1">v1</span><span class="tt-ebar tt-ebar1" style="width:100.0%"></span><b>86.8</b></div><div class="tt-etrack"><span class="tt-ver tt-v2">v2</span><span class="tt-ebar tt-ebar2" style="width:59.9%"></span><b>52.0</b></div></div></div><div class="tt-erow"><span class="tt-elab">Fly B・T=4</span><div class="tt-etracks"><div class="tt-etrack"><span class="tt-ver tt-v1">v1</span><span class="tt-ebar tt-ebar1" style="width:91.4%"></span><b>79.3</b></div><div class="tt-etrack"><span class="tt-ver tt-v2">v2</span><span class="tt-ebar tt-ebar2" style="width:50.1%"></span><b>43.5</b></div></div></div></div>
+          <p class="tt-note">Fly A 每版 360 次、Fly B 每版 540 次訓練的平均。兩版每個 epoch 的計算量相同（筆數、E5 維度、圖與模型大小都一樣），所以跑幾個 epoch 就決定了時間。</p></div>
+        <div class="tt-panel"><h5>重點</h5>
+          <ul class="tt-points">
+            <li><b>Fly A 沒有變</b>：平均都停在約 44–48 個 epoch，所以階段 ① 的時間兩版差不多。</li>
+            <li><b>Fly B 少了約 35 個 epoch</b>：推測是 v2 的類別在 Fly A／LDA 表徵上分得比較開，較快達到最佳點（這點沒有另外驗證）。</li>
+            <li><b>總時間只少 1–2 成</b>：每次訓練都要多跑 25 個 epoch 才能確認沒有再進步，而且 Fly A 沒有變快。</li>
+            <li><b>最終訓練也跟著變短</b>：v1 有幾格碰到 200 上限（⚑），v2 沒有任何一格碰到上限。</li>
+          </ul></div>
+      </div>
+
+      <div class="tt-head"><h4 class="tt-h">④ 交叉驗證選出的最終訓練長度（epoch，v1 → v2）</h4></div>
+      <div class="tt-panel">
+        <div class="tt-pane" data-tt="2"><div class="tablewrap"><table class="tt-set"><thead><tr><th>圖</th><th>Fly A 距離</th><th>Fly A 距離＋類別</th><th>Fly B 接 LDA</th><th>Fly B 接 A（距離）</th><th>Fly B 接 A（距離＋類別）</th></tr></thead><tbody><tr><td>G0 原圖</td><td class="num" title="學習率 v1 0.003／v2 0.003"><span class="tt-old">85</span> → <b>60</b><small>lr 0.003→0.003</small></td><td class="num" title="學習率 v1 0.001／v2 0.003"><span class="tt-old">33</span> → <b>15</b><small>lr 0.001→0.003</small></td><td class="num" title="學習率 v1 0.001／v2 0.01"><span class="tt-old">38</span> → <b>11</b><small>lr 0.001→0.01</small></td><td class="num" title="學習率 v1 0.01／v2 0.01"><span class="tt-old">32</span> → <b>30</b><small>lr 0.01→0.01</small></td><td class="num tt-big" title="學習率 v1 0.003／v2 0.003"><span class="tt-old">199<i class="tt-flag" title="碰到 200 epoch 上限">⚑</i></span> → <b>52</b><small>lr 0.003→0.003</small></td></tr><tr><td>G1 全正</td><td class="num" title="學習率 v1 0.001／v2 0.001"><span class="tt-old">67</span> → <b>84</b><small>lr 0.001→0.001</small></td><td class="num" title="學習率 v1 0.003／v2 0.003"><span class="tt-old">14</span> → <b>8</b><small>lr 0.003→0.003</small></td><td class="num" title="學習率 v1 0.003／v2 0.01"><span class="tt-old">8</span> → <b>6</b><small>lr 0.003→0.01</small></td><td class="num" title="學習率 v1 0.01／v2 0.01"><span class="tt-old">32</span> → <b>21</b><small>lr 0.01→0.01</small></td><td class="num tt-big" title="學習率 v1 0.003／v2 0.003"><span class="tt-old">200<i class="tt-flag" title="碰到 200 epoch 上限">⚑</i></span> → <b>31</b><small>lr 0.003→0.003</small></td></tr><tr><td>G2 有正負</td><td class="num" title="學習率 v1 0.003／v2 0.01"><span class="tt-old">48</span> → <b>58</b><small>lr 0.003→0.01</small></td><td class="num" title="學習率 v1 0.001／v2 0.01"><span class="tt-old">37</span> → <b>7</b><small>lr 0.001→0.01</small></td><td class="num" title="學習率 v1 0.001／v2 0.01"><span class="tt-old">28</span> → <b>7</b><small>lr 0.001→0.01</small></td><td class="num" title="學習率 v1 0.01／v2 0.01"><span class="tt-old">32</span> → <b>23</b><small>lr 0.01→0.01</small></td><td class="num tt-big" title="學習率 v1 0.001／v2 0.003"><span class="tt-old">200<i class="tt-flag" title="碰到 200 epoch 上限">⚑</i></span> → <b>31</b><small>lr 0.001→0.003</small></td></tr><tr><td>G2-glu+</td><td class="num" title="學習率 v1 0.003／v2 0.003"><span class="tt-old">59</span> → <b>81</b><small>lr 0.003→0.003</small></td><td class="num" title="學習率 v1 0.001／v2 0.003"><span class="tt-old">34</span> → <b>8</b><small>lr 0.001→0.003</small></td><td class="num" title="學習率 v1 0.003／v2 0.001"><span class="tt-old">10</span> → <b>38</b><small>lr 0.003→0.001</small></td><td class="num" title="學習率 v1 0.01／v2 0.01"><span class="tt-old">29</span> → <b>20</b><small>lr 0.01→0.01</small></td><td class="num tt-big" title="學習率 v1 0.01／v2 0.001"><span class="tt-old">200<i class="tt-flag" title="碰到 200 epoch 上限">⚑</i></span> → <b>81</b><small>lr 0.01→0.001</small></td></tr></tbody></table></div></div><div class="tt-pane" data-tt="4" hidden><div class="tablewrap"><table class="tt-set"><thead><tr><th>圖</th><th>Fly A 距離</th><th>Fly A 距離＋類別</th><th>Fly B 接 LDA</th><th>Fly B 接 A（距離）</th><th>Fly B 接 A（距離＋類別）</th></tr></thead><tbody><tr><td>G0 原圖</td><td class="num" title="學習率 v1 0.001／v2 0.01"><span class="tt-old">62</span> → <b>26</b><small>lr 0.001→0.01</small></td><td class="num" title="學習率 v1 0.003／v2 0.003"><span class="tt-old">46</span> → <b>26</b><small>lr 0.003→0.003</small></td><td class="num" title="學習率 v1 0.003／v2 0.001"><span class="tt-old">20</span> → <b>51</b><small>lr 0.003→0.001</small></td><td class="num" title="學習率 v1 0.01／v2 0.01"><span class="tt-old">53</span> → <b>22</b><small>lr 0.01→0.01</small></td><td class="num" title="學習率 v1 0.003／v2 0.003"><span class="tt-old">59</span> → <b>31</b><small>lr 0.003→0.003</small></td></tr><tr><td>G1 全正</td><td class="num" title="學習率 v1 0.003／v2 0.001"><span class="tt-old">85</span> → <b>74</b><small>lr 0.003→0.001</small></td><td class="num" title="學習率 v1 0.003／v2 0.01"><span class="tt-old">21</span> → <b>8</b><small>lr 0.003→0.01</small></td><td class="num" title="學習率 v1 0.01／v2 0.01"><span class="tt-old">5</span> → <b>6</b><small>lr 0.01→0.01</small></td><td class="num" title="學習率 v1 0.01／v2 0.01"><span class="tt-old">26</span> → <b>26</b><small>lr 0.01→0.01</small></td><td class="num tt-big" title="學習率 v1 0.01／v2 0.01"><span class="tt-old">199<i class="tt-flag" title="碰到 200 epoch 上限">⚑</i></span> → <b>10</b><small>lr 0.01→0.01</small></td></tr><tr><td>G2 有正負</td><td class="num" title="學習率 v1 0.001／v2 0.003"><span class="tt-old">70</span> → <b>56</b><small>lr 0.001→0.003</small></td><td class="num" title="學習率 v1 0.001／v2 0.003"><span class="tt-old">33</span> → <b>15</b><small>lr 0.001→0.003</small></td><td class="num" title="學習率 v1 0.003／v2 0.01"><span class="tt-old">16</span> → <b>6</b><small>lr 0.003→0.01</small></td><td class="num" title="學習率 v1 0.01／v2 0.01"><span class="tt-old">30</span> → <b>20</b><small>lr 0.01→0.01</small></td><td class="num tt-big" title="學習率 v1 0.01／v2 0.003"><span class="tt-old">118</span> → <b>21</b><small>lr 0.01→0.003</small></td></tr><tr><td>G2-glu+</td><td class="num" title="學習率 v1 0.003／v2 0.001"><span class="tt-old">46</span> → <b>82</b><small>lr 0.003→0.001</small></td><td class="num" title="學習率 v1 0.01／v2 0.003"><span class="tt-old">9</span> → <b>7</b><small>lr 0.01→0.003</small></td><td class="num" title="學習率 v1 0.003／v2 0.01"><span class="tt-old">14</span> → <b>14</b><small>lr 0.003→0.01</small></td><td class="num" title="學習率 v1 0.01／v2 0.01"><span class="tt-old">19</span> → <b>23</b><small>lr 0.01→0.01</small></td><td class="num tt-big" title="學習率 v1 0.01／v2 0.003"><span class="tt-old">114</span> → <b>27</b><small>lr 0.01→0.003</small></td></tr></tbody></table></div></div>
+        <p class="tt-note">⚑ 表示碰到 200 epoch 上限，可能還沒完全收斂；深色底的格子少了 50 個 epoch 以上。每格下方小字是選出的學習率（v1 → v2）。</p>
+      </div>
+
+      <details class="tt-more"><summary>其他步驟的時間</summary>
+        <div class="tablewrap"><table><thead><tr><th>步驟</th><th class="num">v1 T=2</th><th class="num">v2 T=2</th><th class="num">v1 T=4</th><th class="num">v2 T=4</th></tr></thead>
+        <tbody><tr><td>訓練後的腦部分析（活動、重要連線、移除測試；不訓練）</td><td class="num">8 分 52 秒</td><td class="num">14 分 43 秒</td><td class="num">11 分 16 秒</td><td class="num">17 分 11 秒</td></tr></tbody></table></div>
+        <ul>
+          <li>腦部分析兩版計算內容相同，但 v2 多花約 6 分鐘，原因沒有查明（可能是當時電腦負載）。</li>
+          <li>v2 的 1,000 筆 E5 編碼約 1.8 分鐘（另載入模型約 0.5 分鐘）；E5 基準分類器每個不到 1 秒；第一代固定預算的 Fly A／B（G0）每個 seed 約 6–9 秒。</li>
+        </ul>
+      </details>
+      <p class="tt-note">以上為 Windows x64 CPU、單一程序的實際經過時間，由 <code>progress.log</code> 時間戳記算出（各 run 資料夾的 <code>timings.json</code>），會受當時電腦負載影響，不是精確的效能測量。</p>
     </div>
     <div class="block result"><span class="tag">結果：一次性 test 評估</span>
       <p>讀 test 前，先用 validation 鎖定 51 個候選與選模規則，並確認從存檔重新計算的 validation 完全一致；每個候選只評估一次。</p>
@@ -1788,6 +1875,19 @@ document.querySelectorAll(".tk-tools button").forEach(b => b.addEventListener("c
   route();
 })();
 
+</script>
+<script id="tt-js">
+(function () {
+  var root = document.getElementById("training-time");
+  if (!root) return;
+  root.querySelectorAll(".tt-tb").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var t = b.getAttribute("data-tt");
+      root.querySelectorAll(".tt-tb").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      root.querySelectorAll(".tt-pane").forEach(function (p) { p.hidden = p.getAttribute("data-tt") !== t; });
+    });
+  });
+})();
 </script>
 </body>
 </html>
