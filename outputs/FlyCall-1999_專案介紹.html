@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>FlyCall-1999 專案介紹</title>
+<meta name="description" content="用果蠅（MaleCNS）連接圖分類臺北 1999 市民專線合成通話的研究專案：Fly A 降維、Fly B 分類，從第一代到資料 v2 的改版理由與結果。">
 <!--
   這個檔案由 scripts/build_intro_html.py 產生，請勿直接修改。
   原始檔在 docs/intro/（分頁內容 tabs/、樣式 css/、程式 js/），修改方式見 docs/intro/README.md。
@@ -297,13 +298,14 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
 <nav class="bar" aria-label="分頁">
   <b>FlyCall-1999</b>
   <div class="tabs" role="tablist">
-    <a href="#tab-overview" data-tab="tab-overview">總覽</a>
-    <a href="#tab-fly" data-tab="tab-fly">Fly 的圖</a>
-    <a href="#tab-ab" data-tab="tab-ab">Fly A／B 差異</a>
-    <a href="#tab-gen1" data-tab="tab-gen1">第一代</a>
-    <a href="#tab-gen2" data-tab="tab-gen2">第二代</a>
-    <a href="#tab-end" data-tab="tab-end">結論</a>
-    <a href="#tab-tickets" data-tab="tab-tickets">工作票</a>
+    <a href="#tab-overview" data-tab="tab-overview" role="tab" id="tablink-overview" aria-controls="tab-overview">總覽</a>
+    <a href="#tab-fly" data-tab="tab-fly" role="tab" id="tablink-fly" aria-controls="tab-fly">Fly 的圖</a>
+    <a href="#tab-ab" data-tab="tab-ab" role="tab" id="tablink-ab" aria-controls="tab-ab">Fly A／B 差異</a>
+    <a href="#tab-gen1" data-tab="tab-gen1" role="tab" id="tablink-gen1" aria-controls="tab-gen1">第一代</a>
+    <a href="#tab-gen2" data-tab="tab-gen2" role="tab" id="tablink-gen2" aria-controls="tab-gen2">第二代</a>
+    <a href="#tab-v2" data-tab="tab-v2" role="tab" id="tablink-v2" aria-controls="tab-v2">資料 v2</a>
+    <a href="#tab-end" data-tab="tab-end" role="tab" id="tablink-end" aria-controls="tab-end">結論</a>
+    <a href="#tab-tickets" data-tab="tab-tickets" role="tab" id="tablink-tickets" aria-controls="tab-tickets">工作票</a>
   </div>
   <button type="button" class="theme-btn" id="theme-btn" aria-label="切換深淺色">◐ 自動</button>
 </nav>
@@ -372,7 +374,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
     <div class="tablewrap"><table>
       <thead><tr><th>項目</th><th><span class="gen g1">第一代</span>（2026-10）</th><th><span class="gen g2">第二代</span>（2026-11-13 起）</th></tr></thead>
       <tbody>
-        <tr><td>連接圖</td><td>G0：500 點、2,216 邊，沒有正負號（全部當增強）</td><td>G0 加上新選的 500 點、6,691 邊：G1 全正、G2 有正負、G2-glu+（見第 2 節）</td></tr>
+        <tr><td>連接圖</td><td>G0：500 點、2,216 邊，沒有正負號（全部當增強）</td><td>四張圖一起比較：G0，加上另一張新選的子圖（500 點、6,691 邊，起點不同）的三個版本 G1 全正、G2 有正負、G2-glu+（見第 2 節）</td></tr>
         <tr><td>連線參數</td><td>只訓練強弱（正值）</td><td>只訓練強弱，正負號依神經傳導物質固定</td></tr>
         <tr><td>Fly A 的目標</td><td>只保留距離</td><td>只保留距離，或「距離＋類別分離」（SupCon）</td></tr>
         <tr><td>訓練方式</td><td>固定訓練量，validation 選 epoch</td><td>Fly A、Fly B 各自調參：5 折交叉驗證、3 種學習率、交叉驗證決定 epoch</td></tr>
@@ -674,7 +676,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
         <tr class="hl"><td>G2-glu+</td><td>距離＋類別分離</td><td class="num">0.01</td><td class="num">0.27</td><td class="num">20×</td><td class="num">0.24</td><td class="num">0.21</td><td class="num">0.91</td><td class="num">0.99</td><td class="num">440</td><td class="num">74</td></tr>
       </tbody>
     </table></div>
-    <p class="ab-facts">這個版本：Fly B 的連線改變量是 Fly A 的 <b>7–20 倍</b>；A 對 B 的相關 −0.08–0.24（A 換 seed 0.11–0.62）；Fly B 的 η² 0.76–0.99；Fly A（只保留距離）的 η² 0.24–0.38，幾乎沒反應的神經元 348–403 個。</p>
+    <p class="ab-facts">這個版本：Fly B 的連線改變量是 Fly A 的 <b>7–20 倍</b>；A 對 B 的相關 −0.08 ～ 0.24（A 換 seed 0.11–0.62）；Fly B 的 η² 0.76–0.99；Fly A（只保留距離）的 η² 0.24–0.38，幾乎沒反應的神經元 348–403 個。</p>
     </div>
     <div class="ab-pane" data-set="v1-t4">
     <div class="tablewrap"><table class="abt">
@@ -693,7 +695,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
         <tr><td>G2-glu+</td><td>距離＋類別分離</td><td class="num">0.10</td><td class="num">0.74</td><td class="num">8×</td><td class="num">0.16</td><td class="num">−0.04</td><td class="num">0.95</td><td class="num">0.99</td><td class="num">276</td><td class="num">40</td></tr>
       </tbody>
     </table></div>
-    <p class="ab-facts">這個版本：Fly B 的連線改變量是 Fly A 的 <b>4–22 倍</b>；A 對 B 的相關 −0.29–0.16（A 換 seed −0.04–0.84）；Fly B 的 η² 0.80–1.00；Fly A（只保留距離）的 η² 0.26–0.41，幾乎沒反應的神經元 364–424 個。</p>
+    <p class="ab-facts">這個版本：Fly B 的連線改變量是 Fly A 的 <b>4–22 倍</b>；A 對 B 的相關 −0.29 ～ 0.16（A 換 seed −0.04 ～ 0.84）；Fly B 的 η² 0.80–1.00；Fly A（只保留距離）的 η² 0.26–0.41，幾乎沒反應的神經元 364–424 個。</p>
     </div>
     <div class="ab-pane" data-set="v2-t2" hidden>
     <div class="tablewrap"><table class="abt">
@@ -712,7 +714,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
         <tr><td>G2-glu+</td><td>距離＋類別分離</td><td class="num">0.01</td><td class="num">0.20</td><td class="num">13×</td><td class="num">0.18</td><td class="num">0.03</td><td class="num">0.85</td><td class="num">0.95</td><td class="num">401</td><td class="num">88</td></tr>
       </tbody>
     </table></div>
-    <p class="ab-facts">這個版本：Fly B 的連線改變量是 Fly A 的 <b>4–18 倍</b>；A 對 B 的相關 −0.11–0.28（A 換 seed 0.03–0.70）；Fly B 的 η² 0.70–0.97；Fly A（只保留距離）的 η² 0.18–0.32，幾乎沒反應的神經元 279–406 個。</p>
+    <p class="ab-facts">這個版本：Fly B 的連線改變量是 Fly A 的 <b>4–18 倍</b>；A 對 B 的相關 −0.11 ～ 0.28（A 換 seed 0.03–0.70）；Fly B 的 η² 0.70–0.97；Fly A（只保留距離）的 η² 0.18–0.32，幾乎沒反應的神經元 279–406 個。</p>
     </div>
     <div class="ab-pane" data-set="v2-t4" hidden>
     <div class="tablewrap"><table class="abt">
@@ -731,7 +733,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
         <tr><td>G2-glu+</td><td>距離＋類別分離</td><td class="num">0.05</td><td class="num">0.58</td><td class="num">13×</td><td class="num">0.14</td><td class="num">−0.08</td><td class="num">0.86</td><td class="num">0.95</td><td class="num">392</td><td class="num">43</td></tr>
       </tbody>
     </table></div>
-    <p class="ab-facts">這個版本：Fly B 的連線改變量是 Fly A 的 <b>3–15 倍</b>；A 對 B 的相關 −0.21–0.14（A 換 seed −0.08–0.81）；Fly B 的 η² 0.76–0.98；Fly A（只保留距離）的 η² 0.19–0.65，幾乎沒反應的神經元 107–392 個。</p>
+    <p class="ab-facts">這個版本：Fly B 的連線改變量是 Fly A 的 <b>3–15 倍</b>；A 對 B 的相關 −0.21 ～ 0.14（A 換 seed −0.08 ～ 0.81）；Fly B 的 η² 0.76–0.98；Fly A（只保留距離）的 η² 0.19–0.65，幾乎沒反應的神經元 107–392 個。</p>
     </div>
     <p class="tnote">「連線改變量」是 log(訓練後強度／初始強度) 的標準差；「同一條邊」是兩者改變量的 Spearman 相關；「幾乎沒反應」是平均活化 &lt; 0.01 的神經元數（共 500）。</p>
     <div class="block meaning"><span class="tag">讀表重點（數字以資料 v1、T=4 為例；其他版本見表下的「這個版本」）</span>
@@ -1142,7 +1144,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
 
 </div>
 <div class="tabpanel" id="tab-gen2" data-label="第二代">
-<p class="tab-intro"><span class="gen g2">第二代</span>有正負號的圖、Fly A／Fly B 各自調參、修正程式錯誤、比較 T=2 與 T=4，以及資料改版 v2.0.0（2026-11-13 → 11-14）。</p>
+<p class="tab-intro"><span class="gen g2">第二代</span>有正負號的圖、Fly A／Fly B 各自調參、修正程式錯誤、以及比較 T=2 與 T=4（2026-11-13 → 11-14）。資料改版 v2.0.0 與一次性 test 見「資料 v2」分頁。</p>
 <!-- ============================== 6 有正負號的圖 ============================== -->
 <section class="part" id="s5">
   <div class="part-head"><span class="part-no">8</span><h2>有正負號的圖，Fly A／Fly B 各自調參</h2><span class="gen g2">第二代</span></div>
@@ -1220,23 +1222,17 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
       <li>最高分：G2-glu+ 的 Fly A（距離＋類別分離）→ Fly B，<b>0.928</b>。</li>
       <li>有抑制的圖（G2、G2-glu+）在「距離＋類別分離」組合上，T=4 一致變好；全部是增強的圖（G0、G1）持平或變差。</li>
     </ul></div>
-    <h3>腦部比較：Fly A 和 Fly B 的「腦」差在哪</h3>
-    <div class="tablewrap"><table>
-      <thead><tr><th>觀察</th><th>資料 v1</th><th>資料 v2</th></tr></thead>
-      <tbody>
-        <tr><td>Fly B 改連線的幅度（相對 Fly A）</td><td class="num">4–22 倍</td><td class="num">3–18 倍</td></tr>
-        <tr><td>Fly B 神經元的類別選擇性 η²（中位數）</td><td class="num">0.76–0.87</td><td class="num">0.70–0.79</td></tr>
-        <tr><td>Fly A（只保留距離）的類別選擇性 η²</td><td class="num">0.24–0.41</td><td class="num">0.18–0.65</td></tr>
-      </tbody>
-    </table></div>
-    <div class="block meaning"><span class="tag">解釋</span><ul>
-      <li>分類（Fly B）需要大幅改寫連線，而且大部分神經元變成在「分辨類別」；降維（Fly A）幾乎維持原本的連線。</li>
-      <li>詳細的 17 張圖見 <a href="FlyCall-1999_FlyA_FlyB_分析報告.html">FlyA_FlyB 分析報告</a>；訊號怎麼一跳一跳傳出去，見 <a href="FlyCall-1999_連接圖訊號傳遞.html">連接圖訊號傳遞</a>。</li>
+    <div class="block meaning"><span class="tag">腦部比較（摘要）</span><ul>
+      <li>同一張圖，分類的 Fly B 大幅改寫連線、大部分神經元變成在「分辨類別」；降維的 Fly A 幾乎維持原本的連線。資料 v1 與 v2、T=2 與 T=4 的方向都相同。</li>
+      <li>完整的差異總表與 17 張圖（可切換資料 v1／v2 與 T=2／T=4）見<a href="#abdiff">第 3 節「Fly A 和 Fly B 的腦差在哪」</a>；訊號怎麼一跳一跳傳出去，見<a href="#fg-signal">第 2.7 節</a>的訊號傳遞互動頁。</li>
     </ul></div>
   </div>
 </section>
 
-<!-- ============================== 9 資料 v2 ============================== -->
+</div>
+<div class="tabpanel" id="tab-v2" data-label="資料 v2">
+<p class="tab-intro"><span class="gen g2">第二代</span>重寫全部 1,000 筆通話紀錄（v2.0.0），用新資料重跑所有模型，並第一次打開 test（2026-11-14）。本頁依序是：資料差在哪、已知問題的抉擇、重新訓練結果、訓練時間、一次性 test。</p>
+<!-- ============================== 11 資料 v2 ============================== -->
 <section class="part" id="s8">
   <div class="part-head"><span class="part-no">11</span><h2>資料改版 v2.0.0，第一次打開 test</h2><span class="gen g2">第二代</span></div>
   <p class="date">2026-11-14</p>
@@ -1510,13 +1506,40 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
 <!-- ============================== 12 結論 ============================== -->
 <section class="part" id="conclusion">
   <div class="part-head"><span class="part-no">12</span><h2>目前的結論</h2></div>
+  <div class="tt">
+    <div class="tt-kpis">
+      <div class="tt-kpi"><div class="tt-k">第一代果蠅（validation）</div><div class="tt-v">0.660</div><div class="tt-n">G0、T=2・Fly A → Fly B；對照 E5 → MLP 0.902</div></div>
+      <div class="tt-kpi"><div class="tt-k">第二代最佳（資料 v2，validation）</div><div class="tt-v">0.938</div><div class="tt-n">T=2・G1・Fly A（距離＋類別分離）→ SVM；對照 LDA → SVM 0.913</div></div>
+      <div class="tt-kpi"><div class="tt-k">一次性 test（依規則選定）</div><div class="tt-v">0.887<small> ±0.018</small></div><div class="tt-n">T=2・G2・Fly A（距離＋類別分離）→ Fly B；對照 LDA → SVM 0.899</div></div>
+      <div class="tt-kpi"><div class="tt-k">Fly B 改連線的幅度</div><div class="tt-v">3–22<small> 倍</small></div><div class="tt-n">相對 Fly A；四個版本（資料 v1／v2 × T=2／T=4）方向都相同</div></div>
+    </div>
+  </div>
+
+  <h3>關鍵數字速查</h3>
+  <div class="panel">
+    <div class="tablewrap"><table>
+      <thead><tr><th>節</th><th>階段</th><th>果蠅模型</th><th class="num">分數</th><th>對照</th><th class="num">分數</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#s3">6</a></td><td>第一代果蠅</td><td>Fly A → Fly B（G0、T=2）</td><td class="num">0.660</td><td>E5 → MLP</td><td class="num">0.902</td></tr>
+        <tr><td><a href="#s4">7</a></td><td>拆開測（第一代）</td><td>Fly A → SVM</td><td class="num">0.792</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+        <tr><td><a href="#s5">8</a></td><td>加入類別分離＋有正負號的圖</td><td>G2-glu+・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.922</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+        <tr><td><a href="#s6">9</a></td><td>修正跳數錯誤後（T=2）</td><td>G1・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.918</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+        <tr><td><a href="#s7">10</a></td><td>T=4（資料 v1）</td><td>G2-glu+・Fly A（距離＋類別分離）→ Fly B</td><td class="num">0.928</td><td>LDA → SVM</td><td class="num">0.900</td></tr>
+        <tr><td><a href="#s8">11</a></td><td>資料 v2（validation）</td><td>G1・Fly A（距離＋類別分離）→ SVM（T=2）</td><td class="num">0.938</td><td>LDA → SVM</td><td class="num">0.913</td></tr>
+        <tr class="hl"><td><a href="#s8">11</a></td><td>資料 v2（test，只評估一次）</td><td>G2・Fly A（距離＋類別分離）→ Fly B（T=2）</td><td class="num">0.887</td><td>LDA → SVM</td><td class="num">0.899</td></tr>
+      </tbody>
+    </table></div>
+    <p class="tnote">除了最後一列是 test，其餘都是 validation Macro-F1。各階段的資料、程式與圖不同，跨列只看趨勢；同一列內的比較才是嚴格的比較。點節號可跳到該節。</p>
+  </div>
+
+  <h3>結論</h3>
   <div class="panel">
     <ol>
-      <li><b>果蠅連接圖可以完成分類，表現大致與傳統方法同一水準</b>：test 約 0.89，最高 0.95，但還沒有穩定勝過 LDA → SVM。</li>
-      <li><b>最大的改進來自訓練目標，而不是圖本身</b>：讓 Fly A 同時保留距離與類別（SupCon），是從 0.66 提升到 0.9 左右的關鍵。</li>
-      <li><b>Fly A 與 Fly B 的「腦」很不一樣</b>：分類的 Fly B 大幅改寫連線、神經元高度分辨類別；降維的 Fly A 幾乎維持原樣。</li>
-      <li><b>換圖、加抑制、加步數的效果都不大，而且會隨資料改變</b>：v1 看到的「加抑制有效」「T=4 較好」，部分來自程式錯誤或資料特性，換到 v2 就不明顯。</li>
-      <li><b>資料品質會改變結論</b>：v1 有捷徑，模型可以靠背句型；v2 去掉捷徑後才看得出哪些情境真正比較難。</li>
+      <li><b>果蠅連接圖可以完成分類，表現大致與傳統方法同一水準</b>：test 約 0.89，最高 0.95，但還沒有穩定勝過 LDA → SVM。（<a href="#s8">第 11 節</a>）</li>
+      <li><b>最大的改進來自訓練目標，而不是圖本身</b>：讓 Fly A 同時保留距離與類別（SupCon），是從 0.66 提升到 0.9 左右的關鍵。（<a href="#s4">第 7 節</a>、<a href="#s5">第 8 節</a>）</li>
+      <li><b>Fly A 與 Fly B 的「腦」很不一樣</b>：分類的 Fly B 大幅改寫連線、神經元高度分辨類別；降維的 Fly A 幾乎維持原樣。（<a href="#abdiff">第 3 節</a>）</li>
+      <li><b>換圖、加抑制、加步數的效果都不大，而且會隨資料改變</b>：v1 看到的「加抑制有效」「T=4 較好」，部分來自程式錯誤或資料特性，換到 v2 就不明顯。（<a href="#s6">第 9 節</a>、<a href="#s7">第 10 節</a>）</li>
+      <li><b>資料品質會改變結論</b>：v1 有捷徑，模型可以靠背句型；v2 去掉捷徑後才看得出哪些情境真正比較難。（<a href="#data-compare">第 11 節的資料對照</a>）</li>
     </ol>
     <div class="callout"><b>限制：</b>資料是合成的，而且沒有人工複核；validation 與 test 各只有 150 筆（每類 30 筆），單一數字的波動較大。結果是研究性質，不代表真實 1999 業務的表現。</div>
   </div>
@@ -1827,6 +1850,7 @@ document.querySelectorAll(".tk-tools button").forEach(b => b.addEventListener("c
 <footer>
   FlyCall-1999 專案介紹 ｜ 最後更新 2026-11-14 ｜ 數字來源：工作票 01–25 與 <code>.scratch/1999-connectome-demo/runs/</code> 的實驗結果。
   相關頁面：<a href="FlyCall-1999_FlyA_FlyB_分析報告.html">FlyA_FlyB 分析報告</a>、<a href="FlyCall-1999_連接圖訊號傳遞.html">連接圖訊號傳遞</a>。
+  <br>連到其他 html 檔的連結（標有 ↗），需要這份檔案和那些檔案放在同一個 <code>outputs</code> 資料夾才能開啟；單獨寄出這份檔案時會失效。
 </footer>
 
 </main>
@@ -1866,10 +1890,36 @@ document.querySelectorAll(".tk-tools button").forEach(b => b.addEventListener("c
   /* ---------------- tabs ---------------- */
   const panels = Array.from(document.querySelectorAll(".tabpanel"));
   const tabLinks = Array.from(document.querySelectorAll(".tabs a"));
+  // ARIA tab pattern: panels labelled by their tab; only the selected tab is in the Tab order; ←/→/Home/End move between tabs
+  panels.forEach((p) => {
+    p.setAttribute("role", "tabpanel");
+    const link = tabLinks.find((a) => a.dataset.tab === p.id);
+    if (link) p.setAttribute("aria-labelledby", link.id);
+  });
+  tabLinks.forEach((a, i) => a.addEventListener("keydown", (e) => {
+    const moves = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabLinks.length - 1 };
+    if (!(e.key in moves)) return;
+    e.preventDefault();
+    const next = tabLinks[(moves[e.key] + tabLinks.length) % tabLinks.length];
+    // pushState (not location.hash) so the browser does not move focus to the panel
+    history.pushState(null, "", next.getAttribute("href"));
+    route();
+    next.focus();
+  }));
+  // links to the sibling html files only work next to them in outputs/
+  document.querySelectorAll('a[href$=".html"]').forEach((a) => {
+    if (/^[a-z]+:/i.test(a.getAttribute("href"))) return;
+    a.title = "另開同資料夾的 html 檔（需和本檔放在同一個 outputs 資料夾）";
+    if (!a.textContent.includes("↗")) a.append(" ↗");
+  });
   function activate(id, target) {
     const panel = panels.find((p) => p.id === id) || panels[0];
     panels.forEach((p) => p.classList.toggle("active", p === panel));
-    tabLinks.forEach((a) => a.setAttribute("aria-selected", String(a.dataset.tab === panel.id)));
+    tabLinks.forEach((a) => {
+      const on = a.dataset.tab === panel.id;
+      a.setAttribute("aria-selected", String(on));
+      a.tabIndex = on ? 0 : -1;
+    });
     store.set("flycall-intro-tab", panel.id);
     if (target && target !== panel) target.scrollIntoView({ behavior: "auto", block: "start" });
     else window.scrollTo(0, 0);

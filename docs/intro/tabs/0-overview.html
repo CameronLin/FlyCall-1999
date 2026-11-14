@@ -60,7 +60,7 @@
     <div class="tablewrap"><table>
       <thead><tr><th>項目</th><th><span class="gen g1">第一代</span>（2026-10）</th><th><span class="gen g2">第二代</span>（2026-11-13 起）</th></tr></thead>
       <tbody>
-        <tr><td>連接圖</td><td>G0：500 點、2,216 邊，沒有正負號（全部當增強）</td><td>G0 加上新選的 500 點、6,691 邊：G1 全正、G2 有正負、G2-glu+（見第 2 節）</td></tr>
+        <tr><td>連接圖</td><td>G0：500 點、2,216 邊，沒有正負號（全部當增強）</td><td>四張圖一起比較：G0，加上另一張新選的子圖（500 點、6,691 邊，起點不同）的三個版本 G1 全正、G2 有正負、G2-glu+（見第 2 節）</td></tr>
         <tr><td>連線參數</td><td>只訓練強弱（正值）</td><td>只訓練強弱，正負號依神經傳導物質固定</td></tr>
         <tr><td>Fly A 的目標</td><td>只保留距離</td><td>只保留距離，或「距離＋類別分離」（SupCon）</td></tr>
         <tr><td>訓練方式</td><td>固定訓練量，validation 選 epoch</td><td>Fly A、Fly B 各自調參：5 折交叉驗證、3 種學習率、交叉驗證決定 epoch</td></tr>

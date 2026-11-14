@@ -47,7 +47,8 @@ def n2(x):
 
 def rng(values, fmt="{:.2f}"):
     lo, hi = min(values), max(values)
-    return (fmt.format(lo) + "–" + fmt.format(hi)).replace("-0", "−0") if lo != hi else fmt.format(lo)
+    sep = " ～ " if lo < 0 else "–"
+    return (fmt.format(lo) + sep + fmt.format(hi)).replace("-", "−") if lo != hi else fmt.format(lo)
 
 
 def summaries(folder):

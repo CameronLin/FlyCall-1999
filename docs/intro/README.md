@@ -6,7 +6,7 @@
 
 | 想改的地方 | 檔案 |
 |---|---|
-| 某個分頁的文字、表格 | `tabs/0-overview.html` … `tabs/6-tickets.html`（一個分頁一個檔） |
+| 某個分頁的文字、表格 | `tabs/0-overview.html` … `tabs/7-tickets.html`（一個分頁一個檔；新增分頁時也要在 `page.html` 加上 include 與分頁按鈕） |
 | 外框（標題列、分頁按鈕、頁尾） | `page.html` |
 | 樣式 | `css/main.css`；訓練時間區塊另在 `css/training_time.css` |
 | 互動（分頁、主題、動畫、圖庫） | `js/main.js`；訓練時間的 T 切換在 `js/training_time.js` |

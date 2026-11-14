@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>FlyCall-1999 專案介紹</title>
+<meta name="description" content="用果蠅（MaleCNS）連接圖分類臺北 1999 市民專線合成通話的研究專案：Fly A 降維、Fly B 分類，從第一代到資料 v2 的改版理由與結果。">
 <!--
   這個檔案由 scripts/build_intro_html.py 產生，請勿直接修改。
   原始檔在 docs/intro/（分頁內容 tabs/、樣式 css/、程式 js/），修改方式見 docs/intro/README.md。
@@ -20,13 +21,14 @@
 <nav class="bar" aria-label="分頁">
   <b>FlyCall-1999</b>
   <div class="tabs" role="tablist">
-    <a href="#tab-overview" data-tab="tab-overview">總覽</a>
-    <a href="#tab-fly" data-tab="tab-fly">Fly 的圖</a>
-    <a href="#tab-ab" data-tab="tab-ab">Fly A／B 差異</a>
-    <a href="#tab-gen1" data-tab="tab-gen1">第一代</a>
-    <a href="#tab-gen2" data-tab="tab-gen2">第二代</a>
-    <a href="#tab-end" data-tab="tab-end">結論</a>
-    <a href="#tab-tickets" data-tab="tab-tickets">工作票</a>
+    <a href="#tab-overview" data-tab="tab-overview" role="tab" id="tablink-overview" aria-controls="tab-overview">總覽</a>
+    <a href="#tab-fly" data-tab="tab-fly" role="tab" id="tablink-fly" aria-controls="tab-fly">Fly 的圖</a>
+    <a href="#tab-ab" data-tab="tab-ab" role="tab" id="tablink-ab" aria-controls="tab-ab">Fly A／B 差異</a>
+    <a href="#tab-gen1" data-tab="tab-gen1" role="tab" id="tablink-gen1" aria-controls="tab-gen1">第一代</a>
+    <a href="#tab-gen2" data-tab="tab-gen2" role="tab" id="tablink-gen2" aria-controls="tab-gen2">第二代</a>
+    <a href="#tab-v2" data-tab="tab-v2" role="tab" id="tablink-v2" aria-controls="tab-v2">資料 v2</a>
+    <a href="#tab-end" data-tab="tab-end" role="tab" id="tablink-end" aria-controls="tab-end">結論</a>
+    <a href="#tab-tickets" data-tab="tab-tickets" role="tab" id="tablink-tickets" aria-controls="tab-tickets">工作票</a>
   </div>
   <button type="button" class="theme-btn" id="theme-btn" aria-label="切換深淺色">◐ 自動</button>
 </nav>
@@ -38,8 +40,9 @@
 <!--INCLUDE:tabs/2-ab.html-->
 <!--INCLUDE:tabs/3-gen1.html-->
 <!--INCLUDE:tabs/4-gen2.html-->
-<!--INCLUDE:tabs/5-end.html-->
-<!--INCLUDE:tabs/6-tickets.html-->
+<!--INCLUDE:tabs/5-v2.html-->
+<!--INCLUDE:tabs/6-end.html-->
+<!--INCLUDE:tabs/7-tickets.html-->
 <script>
 document.querySelectorAll(".tk-tools button").forEach(b => b.addEventListener("click", () => {
   document.querySelectorAll("details.tk").forEach(d => { d.open = b.dataset.open === "1"; });
@@ -52,6 +55,7 @@ document.querySelectorAll(".tk-tools button").forEach(b => b.addEventListener("c
 <footer>
   FlyCall-1999 專案介紹 ｜ 最後更新 2026-11-14 ｜ 數字來源：工作票 01–25 與 <code>.scratch/1999-connectome-demo/runs/</code> 的實驗結果。
   相關頁面：<a href="FlyCall-1999_FlyA_FlyB_分析報告.html">FlyA_FlyB 分析報告</a>、<a href="FlyCall-1999_連接圖訊號傳遞.html">連接圖訊號傳遞</a>。
+  <br>連到其他 html 檔的連結（標有 ↗），需要這份檔案和那些檔案放在同一個 <code>outputs</code> 資料夾才能開啟；單獨寄出這份檔案時會失效。
 </footer>
 
 </main>

@@ -30,10 +30,36 @@
   /* ---------------- tabs ---------------- */
   const panels = Array.from(document.querySelectorAll(".tabpanel"));
   const tabLinks = Array.from(document.querySelectorAll(".tabs a"));
+  // ARIA tab pattern: panels labelled by their tab; only the selected tab is in the Tab order; ←/→/Home/End move between tabs
+  panels.forEach((p) => {
+    p.setAttribute("role", "tabpanel");
+    const link = tabLinks.find((a) => a.dataset.tab === p.id);
+    if (link) p.setAttribute("aria-labelledby", link.id);
+  });
+  tabLinks.forEach((a, i) => a.addEventListener("keydown", (e) => {
+    const moves = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabLinks.length - 1 };
+    if (!(e.key in moves)) return;
+    e.preventDefault();
+    const next = tabLinks[(moves[e.key] + tabLinks.length) % tabLinks.length];
+    // pushState (not location.hash) so the browser does not move focus to the panel
+    history.pushState(null, "", next.getAttribute("href"));
+    route();
+    next.focus();
+  }));
+  // links to the sibling html files only work next to them in outputs/
+  document.querySelectorAll('a[href$=".html"]').forEach((a) => {
+    if (/^[a-z]+:/i.test(a.getAttribute("href"))) return;
+    a.title = "另開同資料夾的 html 檔（需和本檔放在同一個 outputs 資料夾）";
+    if (!a.textContent.includes("↗")) a.append(" ↗");
+  });
   function activate(id, target) {
     const panel = panels.find((p) => p.id === id) || panels[0];
     panels.forEach((p) => p.classList.toggle("active", p === panel));
-    tabLinks.forEach((a) => a.setAttribute("aria-selected", String(a.dataset.tab === panel.id)));
+    tabLinks.forEach((a) => {
+      const on = a.dataset.tab === panel.id;
+      a.setAttribute("aria-selected", String(on));
+      a.tabIndex = on ? 0 : -1;
+    });
     store.set("flycall-intro-tab", panel.id);
     if (target && target !== panel) target.scrollIntoView({ behavior: "auto", block: "start" });
     else window.scrollTo(0, 0);
