@@ -2,7 +2,7 @@
 
 **Blocked by:** 19（固定符號圖核心）、20（Fly A／Fly B 各自調參流程）、21（300／200 子圖與全正對照）
 
-**Status:** blocked
+**Status:** completed (2026-11-13; validation only, test `not_run`)
 
 ## 背景
 
@@ -38,3 +38,37 @@
 - 2026-11-13：依 D2 決定新增 G2-glu+ 敏感度圖（麩胺酸改為 +1，其餘相同）。
 - 2026-11-13：工作票 21 D3b 改用新 seed `810979`，G1 − G0 的解讀已同步修正。
 - 2026-11-13：工作票 21 已完成，圖檔在 `data/connectome/derived/malecns_v1.0/subgraphs/signed-quota-v1.0/`。新圖有 6,691 條邊，是 G0 的約 3 倍；邊數也是 G1／G2 和 G0 的差異之一。訓練前要放寬 `validate_engineering_graph` 寫死的 2,216 邊檢查，改為依各圖 manifest 驗證。
+- 2026-11-13：**完成**（與工作票 20 同一次執行）。報告：[report.md](../runs/independent-tuning-20261113/report.md)。
+
+  **validation Macro-F1（三 seed 平均）**
+
+  | 組合 | G0 | G1 | G2 | G2-glu+ |
+  |---|---:|---:|---:|---:|
+  | Fly A（distance）→ SVM | 0.764 | 0.866 | 0.888 | 0.870 |
+  | Fly A（+SupCon）→ SVM | 0.881 | 0.902 | 0.919 | 0.910 |
+  | LDA → Fly B | 0.858 | 0.900 | 0.896 | 0.907 |
+  | Fly A（distance）→ Fly B | 0.796 | 0.859 | 0.889 | 0.884 |
+  | Fly A（+SupCon）→ Fly B | 0.860 | 0.904 | 0.902 | 0.922 |
+
+  - **換圖整體（G1 − G0）：** 只看 distance 目標時，Fly A→SVM（+0.102）和 Fly A→Fly B（+0.063）一致提升；其他組合不明確。原因混合了起點、組成與邊數，無法歸因於單一因素。
+  - **加入抑制（G2 − G1）：** 只有 Fly A（distance）→SVM 一致提升（+0.022，剛過門檻）；其他四項都不明確。目前證據**不支持**「加入抑制明顯改善」，頂多是 Fly A 降維有小幅改善。
+  - **麩胺酸符號（G2 − G2-glu+）：** 五項都不明確，麩胺酸算抑制或增強不影響結論。
+  - **最高分：** G2-glu+ 的 Fly A（+SupCon）→ Fly B，0.922 ± 0.003。這與 M3.4 的 MLP（0.902）在同一份 validation 上比較，仍屬探索性結果。
+  - 每張圖的時間：G0 12 分 1 秒、G1 18 分 37 秒、G2 18 分 33 秒、G2-glu+ 19 分 0 秒（`timings.json`）。
+- 2026-11-13：**以修正後語意（T 步＝T 跳，工作票 23）重跑完成**，報告：[report.md](../runs/independent-tuning-t-hops-20261113/report.md)，總耗時 79 分 21 秒。**這份結果取代上面舊語意的結論**；舊語意結果保留作為對照。
+
+  **validation Macro-F1（三 seed 平均）**
+
+  | 組合 | G0 | G1 | G2 | G2-glu+ |
+  |---|---:|---:|---:|---:|
+  | Fly A（distance）→ SVM | 0.865 | 0.855 | 0.879 | 0.865 |
+  | Fly A（+SupCon）→ SVM | 0.879 | 0.904 | 0.903 | 0.889 |
+  | LDA → Fly B | 0.860 | 0.904 | 0.898 | 0.898 |
+  | Fly A（distance）→ Fly B | 0.857 | 0.873 | 0.868 | 0.853 |
+  | Fly A（+SupCon）→ Fly B | 0.890 | 0.918 | 0.877 | 0.886 |
+
+  - **換圖整體（G1 − G0）：** 修正後只剩 LDA→Fly B 一致提升（+0.043），其他都不明確。舊語意下的大幅提升，主要是 G0 有 23 個輸出點收不到訊號造成的假象。
+  - **加入抑制（G2 − G1）：** 結果分歧。Fly A（distance）→SVM 一致提升 +0.024，但 Fly A（+SupCon）→Fly B 一致**下降** −0.041，其餘不明確。目前證據不支持「加入抑制普遍有幫助」。
+  - **麩胺酸符號（G2 − G2-glu+）：** 五項都不明確。
+  - **最高分：** G1 的 Fly A（+SupCon）→ Fly B，0.918 ± 0.014。多數組合落在 0.86–0.92，與 LDA→SVM（0.900）相近，可能已接近這份合成資料的上限。
+  - 腦部比較分析：[report.md](../runs/fly-ab-brain-comparison-t-hops-20261113/report.md)，結論記在工作票 20。

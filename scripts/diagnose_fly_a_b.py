@@ -310,6 +310,88 @@ def load_train_validation_inputs(
     return sorted(inputs, key=lambda item: item["seed"])
 
 
+GRAPH_RUN = DEFAULT_RUNS[0]
+
+
+def load_versioned_train_validation_inputs(
+    *,
+    dataset_version: str,
+    embedding_manifest_path: Path,
+    cache_root: Path,
+    graph_run_dir: Path,
+) -> dict[str, Any]:
+    """Train/validation E5 inputs for a dataset version other than the M3.2-pinned v1.0.0 (ticket 25).
+
+    Labels and scenario families come from the frozen-dataset loader for that version; the 500-node
+    G0 graph comes from the pinned M3.2 run (it does not depend on the transcripts). Test stays sealed:
+    the E5 manifest must hold exactly the 700/150 train/validation rows and no test entry.
+    """
+
+    from flycall_data.dataset_versions import get_dataset_version
+    from flycall_data.loader import load_frozen_dataset
+
+    version = get_dataset_version(dataset_version)
+    embedding_manifest_path = embedding_manifest_path.resolve(strict=True)
+    manifest = _read_json(embedding_manifest_path)
+    if manifest.get("data_status") != "synthetic" or manifest.get("review_status") != version.review_status:
+        raise FlyABDiagnosticError(f"E5 manifest does not belong to dataset {dataset_version}.")
+    entries = manifest.get("entries")
+    if not isinstance(entries, list):
+        raise FlyABDiagnosticError("E5 embedding manifest has no entry list.")
+    validate_embedding_manifest_entries(entries)
+    if manifest.get("splits") != {"train": 700, "validation": 150}:
+        raise FlyABDiagnosticError("E5 embedding manifest does not declare exactly 700/150 rows.")
+    bundle = load_frozen_dataset(version.paths)
+    if manifest.get("source_sha256") != bundle.audit_summary["source_sha256"]:
+        raise FlyABDiagnosticError("E5 manifest source checksums differ from the frozen dataset files.")
+    rows = {
+        str(row["id"]): {"family_id": str(row["scenario_family_id"]), "expected_label": str(row["label_id"]),
+                         "split": str(row["split"])}
+        for row in bundle.records if row["split"] in ("train", "validation")
+    }
+    if set(rows) != {str(entry["record_id"]) for entry in entries}:
+        raise FlyABDiagnosticError("E5 manifest IDs differ from the frozen train/validation records.")
+    if any(rows[str(entry["record_id"])]["split"] != entry["split"] for entry in entries):
+        raise FlyABDiagnosticError("E5 manifest split identities differ from the frozen dataset.")
+    train_families = {row["family_id"] for row in rows.values() if row["split"] == "train"}
+    validation_families = {row["family_id"] for row in rows.values() if row["split"] == "validation"}
+    if train_families & validation_families:
+        raise FlyABDiagnosticError("Scenario families cross train and validation.")
+    cache = EmbeddingCache(cache_root.resolve(strict=True))
+    train, train_features = _make_split("train", entries, rows, cache)
+    validation, validation_features = _make_split("validation", entries, rows, cache)
+    return {
+        "dataset_version": dataset_version,
+        "review_status": version.review_status,
+        "embedding_manifest_sha256": _sha256_file(embedding_manifest_path),
+        "graph": _load_graph(graph_run_dir.resolve(strict=True) / "graph_definition.json"),
+        "train": train,
+        "validation": validation,
+        "raw_train_features": train_features,
+        "raw_validation_features": validation_features,
+    }
+
+
+def load_inputs_for(dataset_version: str, embedding_manifest: str | None = None) -> dict[str, Any]:
+    """Dispatch: v1.0.0 keeps the fully pinned M3.2 provenance chain; later versions use the versioned loader."""
+
+    if dataset_version == "v1.0.0":
+        item = load_train_validation_inputs(
+            run_dirs=[PROJECT_ROOT / run for run in DEFAULT_RUNS],
+            embedding_manifest_path=PROJECT_ROOT / (embedding_manifest or DEFAULT_EMBEDDING_MANIFEST),
+            cache_root=PROJECT_ROOT / DEFAULT_CACHE_ROOT,
+        )[0]
+        return {**item, "dataset_version": "v1.0.0", "review_status": "pending_manual_review"}
+    if not embedding_manifest:
+        raise FlyABDiagnosticError(f"Dataset {dataset_version} needs an explicit --embedding-manifest.")
+    return load_versioned_train_validation_inputs(
+        dataset_version=dataset_version,
+        embedding_manifest_path=PROJECT_ROOT / embedding_manifest,
+        cache_root=PROJECT_ROOT / DEFAULT_CACHE_ROOT,
+        graph_run_dir=PROJECT_ROOT / GRAPH_RUN,
+    )
+
+
 def _probe_one(train: SplitEmbeddings, validation: SplitEmbeddings, *, seed: int) -> dict[str, Any]:
     results: dict[str, Any] = {}
     for candidate in ("logistic_regression", "mlp"):

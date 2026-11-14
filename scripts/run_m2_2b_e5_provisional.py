@@ -55,6 +55,8 @@ DATASET_PATHS = DatasetPaths(
     frozen_manifest_path=PROJECT_ROOT
     / "data/1999_synthetic/taxonomy/current/formal_split_manifest_frozen_v1.0.yaml",
 )
+REVIEW_STATUS = "pending_manual_review"
+DATASET_SOURCE = "formal_dataset_v1.0.0"
 OUTPUT_PARENT = PROJECT_ROOT / ".scratch/1999-connectome-demo/runs"
 CACHE_ROOT = PROJECT_ROOT / ".scratch/1999-connectome-demo/caches/m2-2b-e5-small"
 MIN_FREE_DISK_BYTES = 4 * 1024**3
@@ -578,7 +580,7 @@ def run(snapshot_dir: Path, run_dir: Path, *, seed: int = 42) -> None:
         "schema_version": 1,
         "evaluation_status": "smoke_test/provisional",
         "data_status": "synthetic",
-        "review_status": "pending_manual_review",
+        "review_status": REVIEW_STATUS,
         "source_sha256": source_before,
         "model": encoder.model_manifest,
         "preprocessing": {
@@ -726,7 +728,7 @@ def run(snapshot_dir: Path, run_dir: Path, *, seed: int = 42) -> None:
         "schema_version": 1,
         "evaluation_status": "smoke_test/provisional",
         "data_status": "synthetic",
-        "review_status": "pending_manual_review",
+        "review_status": REVIEW_STATUS,
         "label_order": list(LABEL_ORDER),
         "candidate_settings_fingerprint": registration["configuration_fingerprint"],
         "candidates": candidate_outputs,
@@ -794,8 +796,8 @@ def run(snapshot_dir: Path, run_dir: Path, *, seed: int = 42) -> None:
         "evaluation_status": "smoke_test",
         "result_status": "provisional",
         "data_status": "synthetic",
-        "review_status": "pending_manual_review",
-        "dataset_source": "formal_dataset_v1.0.0",
+        "review_status": REVIEW_STATUS,
+        "dataset_source": DATASET_SOURCE,
         "dataset_source_paths": {key: value.relative_to(PROJECT_ROOT).as_posix() for key, value in _source_paths().items()},
         "source_sha256_before": source_before,
         "source_sha256_after": final_source_hashes,
@@ -899,7 +901,7 @@ def _render_overall_report(
         "# M2.2b / M2.3 E5 provisional train/validation run",
         "",
         "- Status: `smoke_test` / `provisional`",
-        "- Dataset: synthetic; `review_status=pending_manual_review`",
+        f"- Dataset: synthetic {DATASET_SOURCE}; `review_status={REVIEW_STATUS}`",
         "- E5: `intfloat/multilingual-e5-small` at the pinned revision; frozen CPU inference, batch size 1.",
         "- Split: frozen manifest train/validation only; no re-split.",
         "- Test: `not_run`; no test transcript entered tokenizer, encoder, cache, fit, transform, predict, or metrics.",
@@ -972,7 +974,12 @@ def main() -> None:
     parser.add_argument("--output-parent", type=Path, default=OUTPUT_PARENT)
     parser.add_argument("--run-id", help="unique run directory name; defaults to a UTC timestamp")
     parser.add_argument("--seed", type=int, default=42, help="positive training seed registered before data loading")
+    parser.add_argument("--dataset-version", default="v1.0.0", help="frozen formal dataset version (v1.0.0 or v2.0.0)")
     args = parser.parse_args()
+    global DATASET_PATHS, REVIEW_STATUS, DATASET_SOURCE
+    from flycall_data.dataset_versions import get_dataset_version
+    _version = get_dataset_version(args.dataset_version)
+    DATASET_PATHS, REVIEW_STATUS, DATASET_SOURCE = _version.paths, _version.review_status, _version.source_name
     if args.seed < 1:
         parser.error("--seed must be a positive integer")
     run_id = args.run_id or (
