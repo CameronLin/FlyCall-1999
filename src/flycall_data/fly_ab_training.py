@@ -34,6 +34,8 @@ class GraphDefinition:
     steps: int = 2
     # Optional fixed (node_id, +1/-1) pairs; None keeps the all-positive core.
     node_signs: tuple[tuple[int, int], ...] | None = None
+    # Ticket 23: True makes T steps carry signals T hops; False is the legacy core.
+    input_at_step_zero: bool = False
 
     def build_core(self) -> SparseGraphCore:
         return SparseGraphCore(
@@ -43,6 +45,7 @@ class GraphDefinition:
             edges=self.edges,
             steps=self.steps,
             node_signs=None if self.node_signs is None else dict(self.node_signs),
+            input_at_step_zero=self.input_at_step_zero,
         )
 
 

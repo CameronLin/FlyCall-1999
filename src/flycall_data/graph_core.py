@@ -103,6 +103,11 @@ class SparseGraphCore(nn.Module):
     of every outgoing edge by its source neuron (Dale's principle). Signs are a
     constant, non-persistent buffer: training changes only edge magnitudes,
     which stay strictly positive. Without `node_signs` the core is unchanged.
+
+    Step semantics (ticket 23): by default (legacy, used by M3.2/M4) the state
+    starts at 0, so T steps carry signals only T-1 hops. With
+    `input_at_step_zero=True` the state starts at tanh(input drives), so T
+    steps carry signals exactly T hops.
     """
 
     def __init__(
@@ -113,6 +118,7 @@ class SparseGraphCore(nn.Module):
         edges: Sequence[tuple[int, int, int]],
         steps: int = 2,
         node_signs: Mapping[int, int] | None = None,
+        input_at_step_zero: bool = False,
     ) -> None:
         super().__init__()
         self.node_ids = _checked_ids("node_ids", node_ids)
@@ -120,7 +126,10 @@ class SparseGraphCore(nn.Module):
         self.output_node_ids = _checked_ids("output_node_ids", output_node_ids)
         if isinstance(steps, bool) or not isinstance(steps, int) or steps < 1:
             raise GraphCoreError("steps must be a positive integer")
+        if not isinstance(input_at_step_zero, bool):
+            raise GraphCoreError("input_at_step_zero must be a bool")
         self.steps = steps
+        self.input_at_step_zero = input_at_step_zero
         self.epsilon = EPSILON
 
         node_set = set(self.node_ids)
@@ -276,6 +285,8 @@ class SparseGraphCore(nn.Module):
         )
         degree = self.in_degrees.clamp_min(1).to(dtype=input_drives.dtype).unsqueeze(0)
         gains = self.signed_edge_weights
+        if self.input_at_step_zero:
+            hidden = torch.tanh(input_drive_by_node)
 
         for _ in range(self.steps):
             messages = hidden.index_select(1, self.source_index) * gains.unsqueeze(0)
@@ -299,6 +310,8 @@ class SparseGraphCore(nn.Module):
             "aggregation": "fixed-indegree-including-self-loops",
             "edge_parameter_count": len(self.edges),
         }
+        if self.input_at_step_zero:
+            metadata["step_semantics"] = "input-at-step-zero (T steps = T hops)"
         if self.node_signs is not None:
             assert self._initial_sign_summary is not None
             summary = self._initial_sign_summary
