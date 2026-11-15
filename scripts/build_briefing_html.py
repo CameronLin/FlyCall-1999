@@ -10,8 +10,10 @@ Outputs:
 Markers in the source:
     <!--DATA:bfs-->          docs/intro/data/bfs_data.json (same data as the intro page's BFS animation)
     <!--DATA:fig:NAME-->     NAME.png from the v2・T=2 brain-comparison run, as a lossless WebP data URI
+    <!--DATA:signal-->       G0／G2 topology, signs and per-T stats from outputs/FlyCall-1999_連接圖訊號傳遞.html
 """
 import html
+import json
 import re
 import sys
 from pathlib import Path
@@ -23,8 +25,20 @@ from build_intro_html import data_uri  # noqa: E402
 SRC = ROOT / "docs/briefing/deck.html"
 BFS = ROOT / "docs/intro/data/bfs_data.json"
 FIG_RUN = ROOT / ".scratch/1999-connectome-demo/runs/fly-ab-brain-comparison-v2-t2-20261114"
+SIGNAL = ROOT / "outputs/FlyCall-1999_連接圖訊號傳遞.html"
 OUT_HTML = ROOT / "outputs/FlyCall-1999_專案簡報.html"
 OUT_NOTES = ROOT / "outputs/FlyCall-1999_專案簡報_講稿.md"
+
+
+def signal_data():
+    """Topologies, signs and per-T stats for G0 and G2, taken from the signal-propagation page."""
+    page = SIGNAL.read_text(encoding="utf-8")
+    data = json.loads(re.search(r"const DATA = (\{.*?\});\n", page, flags=re.S).group(1))
+    keep = ("G0", "G2")
+    out = {"topologies": {k: {f: v[f] for f in ("din", "dout", "role", "edges")} for k, v in data["topologies"].items()},
+           "graphs": {k: data["graphs"][k] for k in keep},
+           "stats": {k: data["stats"][k] for k in keep}}
+    return json.dumps(out, ensure_ascii=False, separators=(",", ":"))
 
 
 def build_html(src):
@@ -38,6 +52,7 @@ def build_html(src):
 
     out = re.sub(r"<!--DATA:fig:([\w-]+)-->", fig, src)
     out = out.replace("<!--DATA:bfs-->", BFS.read_text(encoding="utf-8").strip())
+    out = out.replace("<!--DATA:signal-->", signal_data())
     if "<!--DATA:" in out:
         raise SystemExit("unresolved DATA marker in " + str(SRC))
     return out

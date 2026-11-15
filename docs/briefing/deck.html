@@ -121,6 +121,9 @@ canvas { display: block; width: 100%; height: 100%; }
 .ctrl button { font: inherit; font-size: 15px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); cursor: pointer; }
 .ctrl button[aria-pressed="true"] { background: var(--accent); color: var(--paper); border-color: var(--accent); }
 .ctrl button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ctrl.sm { gap: 4px; }
+.ctrl.sm button { font-size: 13.5px; padding: 4px 11px; }
+.ctrl.sm .muted { font-size: 14px; margin: 0 2px; }
 .viz { position: relative; background: var(--tint); border-radius: 12px; overflow: hidden; }
 .hud { position: absolute; left: 14px; top: 12px; font-size: 15px; line-height: 1.6; background: color-mix(in srgb, var(--paper) 88%, transparent); padding: 8px 12px; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
 .hud b { font-family: var(--f-mono); font-weight: 600; }
@@ -724,7 +727,7 @@ body.show-notes #notes { display: block; }
           <tr><td><b>訓練對象</b></td><td>每條連線一個強度（恆為正數）；實際作用＝正負號 × 強度，抑制連線永遠是抑制</td></tr>
           <tr><td><b>起始值</b></td><td>突觸數越多的連線，起始強度越大</td></tr>
           <tr><td><b>傳遞</b></td><td>每一步，每個神經元把收到的訊號加總、除以連入數量，再壓到 −1～1</td></tr>
-          <tr><td><b>T 步</b></td><td>訊號最多傳 T 跳；主設定 T=2，另比較 T=4</td></tr>
+          <tr><td><b>T 步</b></td><td>傳遞重複 T 次，訊號最多走 T 跳（下一頁以真實子圖說明）</td></tr>
         </tbody>
       </table>
       <div class="card warn"><h3>修正過的程式錯誤</h3><p class="small">早期版本第 1 步時所有神經元皆為 0，T=2 實際只傳 1 跳，G0 的 32 個輸出點有 23 個永遠為 0。發現後已修正並重跑全部實驗。</p></div>
@@ -734,6 +737,49 @@ body.show-notes #notes { display: block; }
     <p>這是兩隻果蠅共用的核心。左邊是示意圖，按下步數可以看到訊號怎麼傳遞：第 0 步訊號進入輸入點，之後每一步往外走一跳。藍色是增強連線，橘色虛線是抑制連線。</p>
     <p>重點是什麼固定、什麼可以訓練。連線存不存在、正負號是什麼，都來自果蠅，不能更改；訓練只能把每條連線調強或調弱。這就是「用果蠅的結構限制模型」的意思。</p>
     <p>右下角是我們過程中發現並修正的一個程式錯誤：早期版本 T=2 實際只傳了 1 跳。這個錯誤對結果影響很大，修正後我們重跑了所有實驗，結果的部分會再提到。</p>
+  </aside>
+</section>
+
+<section class="slide" data-title="T 跳：訊號傳到哪裡" data-chap="模型與訓練">
+  <div class="chap"><span class="no">03</span>模型與訓練・T 跳</div>
+  <h2>T 決定訊號能走多遠：只有 T 跳內到得了輸出點的連線會被訓練</h2>
+  <div class="cols c64 grow">
+    <div class="stack" style="min-height:0;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><p class="small" id="sig-hud" style="min-height:1.6em"></p><div class="legend" style="flex:none;font-size:13px"><span style="--c:var(--exc)">增強</span><span style="--c:var(--inh)">抑制</span><span style="--c:var(--rule)">未到</span><span>■ 輸入　○ 輸出</span></div></div>
+      <div class="viz grow" style="min-height:0"><canvas id="sig-canvas" style="position:absolute;inset:0"></canvas></div>
+      <div class="ctrl sm" role="group" aria-label="傳遞設定">
+        <button type="button" data-sg="G2" aria-pressed="true">G2</button>
+        <button type="button" data-sg="G0" aria-pressed="false">G0</button>
+        <span class="muted">｜</span>
+        <button type="button" data-sv="prop" aria-pressed="true">訊號傳播</button>
+        <button type="button" data-sv="train" aria-pressed="false">會被訓練的連線</button>
+        <span class="muted">｜ T</span>
+        <button type="button" data-st="0" aria-pressed="false">0</button>
+        <button type="button" data-st="1" aria-pressed="false">1</button>
+        <button type="button" data-st="2" aria-pressed="true">2</button>
+        <button type="button" data-st="3" aria-pressed="false">3</button>
+        <button type="button" data-st="4" aria-pressed="false">4</button>
+        <button type="button" id="sig-play">▶ 播放</button>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card"><h3>一跳與 T 步</h3><p class="small"><b>一跳</b>：訊號沿一條連線，傳到下一個神經元。<br><b>T 步</b>：第 0 步把訊號寫入輸入點，每一步往外傳一跳，第 T 步從輸出點讀出結果，訊號<b>最多走 T 跳</b>。</p></div>
+      <div class="card acc"><h3>為什麼重要</h3><p class="small">只有「輸入 → 輸出」在 T 跳以內的路徑會影響結果，訓練也只會調整這些連線。</p></div>
+      <table style="font-size:15px">
+        <thead><tr><th>T</th><th class="num">G0 會被訓練的連線</th><th class="num">G2 會被訓練的連線</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="num">16（1%）</td><td class="num">29（0.4%）</td></tr>
+          <tr class="hl"><td>2（主設定）</td><td class="num">277（12%）</td><td class="num">510（8%）</td></tr>
+          <tr><td>3</td><td class="num">1,196（54%）</td><td class="num">3,130（47%）</td></tr>
+          <tr><td>4</td><td class="num">1,675（76%）</td><td class="num">5,602（84%）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>這一頁說明 T 的意思。左邊是真實的 G2 子圖：最左邊一排白色方塊是 32 個輸入點，往右依序是訊號 1 跳、2 跳、3 跳、4 跳能到達的神經元，最右邊是從輸入點永遠到不了的神經元。帶圓圈的是輸出點。</p>
+    <p>一跳的意思是訊號沿一條連線，從一個神經元傳到下一個神經元。圖核心每做一步，訊號就往外傳一跳；重複 T 次之後，從輸出點讀出結果。所以 T 等於 2，訊號最多走 2 跳。大家可以按播放，看訊號一步一步往右傳。</p>
+    <p>T 很重要，因為只有在 T 跳以內、從輸入連得到輸出的路徑，才會影響結果，也才會被訓練。切到「會被訓練的連線」可以看到：T=2 時，G2 的 6,691 條連線中只有 510 條、約 8% 會被訓練；T=4 時提高到 84%。這就是我們另外比較 T=4 的原因。代價是計算量增加，一次完整調參從 70 分鐘增加到 100 分鐘。</p>
   </aside>
 </section>
 
@@ -1108,6 +1154,7 @@ body.show-notes #notes { display: block; }
 <div id="hint"><button type="button" id="btn-prev" aria-label="上一頁">‹ 上一頁</button><span id="pg"></span><button type="button" id="btn-next" aria-label="下一頁">下一頁 ›</button><button type="button" id="btn-notes">講稿 N</button><button type="button" id="btn-full">全螢幕 F</button></div>
 
 <script id="bfs-data" type="application/json"><!--DATA:bfs--></script>
+<script id="sig-data" type="application/json"><!--DATA:signal--></script>
 <script>
 (function () {
   const $ = (id) => document.getElementById(id);
@@ -1328,11 +1375,102 @@ body.show-notes #notes { display: block; }
   const img = $("sel-img");
   seg(img.closest(".slide"), "data-fig", (v) => { img.src = img.dataset["src" + v]; });
 
-  function recolor() { step(+(svg.closest(".slide").querySelector('[data-step][aria-pressed="true"]').dataset.step)); scColor(); if (sched) { resize(); draw(); } }
+  /* ---------- T-hop propagation on the real subgraph ---------- */
+  const SIG = JSON.parse($("sig-data").textContent);
+  const scv = $("sig-canvas"), sctx = scv.getContext("2d");
+  const sig = { graph: "G2", view: "prop", T: 2, prevH: null, anim: 1, timer: null, L: null };
+  function sigCur() { const g = SIG.graphs[sig.graph]; return { ...SIG.topologies[g.topology], sign: g.sign }; }
+  function sigLayout() {
+    const g = sigCur();
+    const rect = scv.getBoundingClientRect(), sc = rect.width / scv.offsetWidth || 1;
+    const w = scv.offsetWidth || 700, h = scv.offsetHeight || 420, dpr = (window.devicePixelRatio || 1) * Math.max(1, sc);
+    scv.width = Math.round(w * dpr); scv.height = Math.round(h * dpr); sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const maxHop = Math.max(...g.din), cols = maxHop + 2, colW = w / cols, top = 50, bottom = 10, usable = h - top - bottom;
+    const groups = Array.from({ length: cols }, () => []);
+    g.din.forEach((d, i) => groups[d < 0 ? cols - 1 : d].push(i));
+    const r = 2.8, pitch = r * 2.6, pos = new Array(g.din.length);
+    groups.forEach((members, c) => {
+      members.sort((a, b) => (g.role[b] === 2) - (g.role[a] === 2) || g.sign[b] - g.sign[a] || a - b);
+      const rows = Math.max(1, Math.floor(usable / pitch)), sub = Math.max(1, Math.ceil(members.length / rows));
+      const span = Math.min(colW * 0.7, sub * pitch);
+      members.forEach((idx, k) => {
+        const s2 = Math.floor(k / rows), row = k % rows, inCol = Math.min(rows, members.length - s2 * rows);
+        pos[idx] = [colW * c + colW / 2 - span / 2 + (s2 + 0.5) * span / sub, top + (usable - inCol * pitch) / 2 + (row + 0.5) * pitch];
+      });
+    });
+    sig.L = { g, w, h, cols, colW, pos, r, groups };
+  }
+  function sigEdgeOn(s, t, H) {
+    const g = sig.L.g;
+    if (sig.view === "prop") return H >= 1 && g.din[s] === H - 1;
+    return g.din[s] >= 0 && g.dout[t] >= 0 && g.din[s] + 1 + g.dout[t] <= H;
+  }
+  function sigCurve(s, t) { const [x1, y1] = sig.L.pos[s], [x2, y2] = sig.L.pos[t]; sctx.moveTo(x1, y1); sctx.quadraticCurveTo((x1 + x2) / 2, (y1 + y2) / 2 + (x2 >= x1 ? -18 : 18), x2, y2); }
+  function sigDraw() {
+    if (!sig.L) sigLayout();
+    const { g, w, h, cols, colW, pos, r, groups } = sig.L, H = sig.T, a = sig.anim;
+    sctx.clearRect(0, 0, w, h);
+    for (let c = 0; c < cols; c++) {
+      const last = c === cols - 1, members = groups[c], lit = members.filter((i) => g.din[i] >= 0 && g.din[i] <= H).length;
+      sctx.textAlign = "center"; sctx.fillStyle = css("--ink-2"); sctx.font = "700 13px " + css("--f");
+      sctx.fillText(last ? "到不了" : c === 0 ? "輸入（0 跳）" : c + " 跳", colW * c + colW / 2, 20);
+      sctx.fillStyle = css("--ink-3"); sctx.font = "12px " + css("--f-mono");
+      sctx.fillText(last ? String(members.length) : lit + "/" + members.length, colW * c + colW / 2, 36);
+      if (c > 0) { sctx.strokeStyle = css("--rule"); sctx.lineWidth = 1; sctx.setLineDash([3, 4]); sctx.beginPath(); sctx.moveTo(colW * c, 44); sctx.lineTo(colW * c, h - 4); sctx.stroke(); sctx.setLineDash([]); }
+    }
+    sctx.lineWidth = 0.5; sctx.strokeStyle = css("--ink-3"); sctx.globalAlpha = 0.07; sctx.beginPath();
+    for (const [s, t] of g.edges) sigCurve(s, t);
+    sctx.stroke(); sctx.globalAlpha = 1;
+    let on = 0; const buckets = { exc: [], inh: [], train: [] };
+    for (const [s, t] of g.edges) if (sigEdgeOn(s, t, H)) { on++; buckets[sig.view === "train" ? "train" : (g.sign[s] > 0 ? "exc" : "inh")].push([s, t]); }
+    sctx.globalAlpha = 0.55 * a; sctx.lineWidth = 1;
+    for (const [k, col] of [["train", css("--c3")], ["exc", css("--exc")], ["inh", css("--inh")]]) {
+      if (!buckets[k].length) continue; sctx.strokeStyle = col; sctx.beginPath(); for (const [s, t] of buckets[k]) sigCurve(s, t); sctx.stroke();
+    }
+    sctx.globalAlpha = 1;
+    const ink = css("--ink"), dim = css("--rule"), ink3 = css("--ink-3");
+    let train = 0; for (const [s, t] of g.edges) if (g.din[s] >= 0 && g.dout[t] >= 0 && g.din[s] + 1 + g.dout[t] <= H) train++;
+    g.din.forEach((d, i) => {
+      const lit = d >= 0 && d <= H, fresh = lit && d === H && sig.prevH !== null && H > sig.prevH, rr = fresh ? r * (0.6 + 0.4 * a) : r;
+      sctx.globalAlpha = fresh ? 0.35 + 0.65 * a : 1;
+      if (g.role[i] === 1) { sctx.fillStyle = lit ? ink : dim; sctx.fillRect(pos[i][0] - rr, pos[i][1] - rr, rr * 2, rr * 2); }
+      else { sctx.fillStyle = lit ? (g.sign[i] > 0 ? css("--exc") : css("--inh")) : dim; sctx.beginPath(); sctx.arc(pos[i][0], pos[i][1], rr, 0, Math.PI * 2); sctx.fill(); }
+      if (g.role[i] === 2) { sctx.strokeStyle = lit ? ink : ink3; sctx.lineWidth = 1.2; sctx.beginPath(); sctx.arc(pos[i][0], pos[i][1], rr + 2, 0, Math.PI * 2); sctx.stroke(); }
+      sctx.globalAlpha = 1;
+    });
+    const E = g.edges.length;
+    $("sig-hud").innerHTML = sig.view === "prop"
+      ? (H === 0 ? "<b>T=0</b>：只有輸入點有訊號" : "<b>第 " + H + " 步</b>：傳到 " + H + " 跳，<b>" + on.toLocaleString() + "</b> 條連線正在傳訊號")
+      : "<b>T=" + H + "</b>：<b>" + train.toLocaleString() + "</b>/" + E.toLocaleString() + " 條（" + Math.round(train / E * 100) + "%）會被訓練";
+  }
+  function sigAnimate() {
+    if (reduce) { sig.anim = 1; sigDraw(); return; }
+    const t0 = performance.now();
+    const tick = (now) => { sig.anim = Math.min(1, (now - t0) / 420); sigDraw(); if (sig.anim < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  }
+  function sigSetT(T) {
+    sig.prevH = sig.T; sig.T = T;
+    scv.closest(".slide").querySelectorAll("[data-st]").forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.st === T)));
+    sigAnimate();
+  }
+  function sigStop() { clearInterval(sig.timer); sig.timer = null; $("sig-play").textContent = "▶ 播放"; }
+  const sigSlide = scv.closest(".slide");
+  sigSlide.querySelectorAll("[data-st]").forEach((b) => b.addEventListener("click", () => { sigStop(); sigSetT(+b.dataset.st); }));
+  seg(sigSlide, "data-sg", (v) => { sigStop(); sig.graph = v; sigLayout(); sig.prevH = null; sigDraw(); });
+  seg(sigSlide, "data-sv", (v) => { sig.view = v; sigDraw(); });
+  $("sig-play").addEventListener("click", () => {
+    if (sig.timer) { sigStop(); return; }
+    $("sig-play").textContent = "⏸ 暫停"; sigSetT(0);
+    sig.timer = setInterval(() => { if (sig.T >= 4) { sigStop(); return; } sigSetT(sig.T + 1); }, 1300);
+  });
+
+  function recolor() { if (sig.L) sigDraw(); step(+(svg.closest(".slide").querySelector('[data-step][aria-pressed="true"]').dataset.step)); scColor(); if (sched) { resize(); draw(); } }
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", recolor);
 
   document.addEventListener("slidechange", (e) => {
     if (e.detail.contains(cv)) { requestAnimationFrame(() => play(true)); } else { cancelAnimationFrame(raf); playing = false; }
+    if (e.detail.contains(scv)) { requestAnimationFrame(() => { sigLayout(); sigDraw(); }); } else if (sig.timer) { sigStop(); }
   });
 
   step(0); scColor(); scState(false);
