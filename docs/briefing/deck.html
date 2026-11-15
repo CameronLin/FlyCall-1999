@@ -91,6 +91,9 @@ thead th { color: var(--ink-3); font-weight: 700; font-size: 14px; letter-spacin
 td.num, th.num { text-align: right; font-family: var(--f-mono); white-space: nowrap; }
 tr.hl td { background: var(--accent-soft); }
 tr.hl td:first-child { box-shadow: inset 4px 0 0 var(--accent); }
+.gtab tr.grp td { background: var(--tint); font-size: 15px; color: var(--ink-2); padding: 8px 10px; }
+.gtab tr.grp .tag { margin-right: 10px; }
+.gtab tr:not(.grp) td:first-child { padding-left: 18px; white-space: nowrap; }
 .up { color: var(--up); } .down { color: var(--down); }
 .exc { color: var(--exc); font-weight: 700; } .inh { color: var(--inh); font-weight: 700; } .glu { color: var(--glu); font-weight: 700; }
 mark { background: var(--mark); color: inherit; padding: 0 2px; border-radius: 3px; }
@@ -204,18 +207,18 @@ body.show-notes #notes { display: block; }
   <div class="chap">結論先行</div>
   <h2>果蠅連接圖可以完成分類，表現和傳統方法同一水準</h2>
   <div class="kpis" style="--n:3">
-    <div class="kpi hero"><div class="k">果蠅模型・一次性 test</div><div class="v">0.887<small> ±0.018</small></div><div class="n">依事先定好的規則選出，三個 seed 平均</div></div>
-    <div class="kpi"><div class="k">傳統方法 LDA → SVM・同一份 test</div><div class="v">0.899</div><div class="n">差距約 0.01</div></div>
-    <div class="kpi"><div class="k">第一代果蠅模型・validation</div><div class="v">0.660</div><div class="n">G0・Fly A → Fly B</div></div>
+    <div class="kpi"><div class="k">第一代果蠅模型</div><div class="v">0.660</div><div class="n">起點</div></div>
+    <div class="kpi hero"><div class="k">第二代果蠅模型</div><div class="v">0.887</div><div class="n">改進後</div></div>
+    <div class="kpi"><div class="k">傳統方法 LDA → SVM</div><div class="v">0.899</div><div class="n">對照</div></div>
   </div>
-  <p class="lead">分數皆為 <b>Macro-F1</b>：五個類別各自的 F1 取平均，1.0 代表全部答對，每一類的權重相同。</p>
+  <p class="lead">分數為 <b>Macro-F1</b>：五個類別各自的 F1 取平均，1.0 代表全部答對。<span class="tiny">　第二代與傳統方法在同一份最終測試資料上比較。</span></p>
   <div class="cols c3">
     <div class="card"><h3>資料與果蠅圖</h3><p class="small">通話資料怎麼產生？500 個神經元怎麼挑？</p></div>
     <div class="card"><h3>模型與訓練</h3><p class="small">Fly A、Fly B 各學什麼？怎麼訓練、花多久？</p></div>
     <div class="card"><h3>結果與比較</h3><p class="small">從 0.66 到 0.89 靠什麼？兩個腦有什麼不同？</p></div>
   </div>
   <aside class="notes">
-    <p>先講結論。最後的一次性 test，果蠅模型拿到 0.887，傳統的 LDA 加 SVM 是 0.899，兩者在同一個水準。我們第一代的果蠅模型只有 0.66，所以今天後半段會說明是怎麼一步一步改進到這裡的。</p>
+    <p>先講結論。我們第一代的果蠅模型只有 0.66；改進後的第二代達到 0.887，和傳統方法 LDA 加 SVM 的 0.899 在同一個水準。今天後半段會說明是怎麼從 0.66 一步一步改進到這裡的。</p>
     <p>這裡的分數都是 Macro-F1，也就是五個類別各算一次 F1 再取平均，滿分是 1。用它的好處是每一類都一樣重要，不會因為某一類特別好就掩蓋其他類的問題。</p>
     <p>今天的內容分成三部分：資料和果蠅圖怎麼準備、模型怎麼訓練、結果和比較。</p>
   </aside>
@@ -431,7 +434,33 @@ body.show-notes #notes { display: block; }
   <aside class="notes">
     <p>連接圖就是果蠅神經系統的接線圖。科學家用電子顯微鏡把整個神經系統切片重建，記錄每個神經元連到哪些神經元、中間有幾個突觸。</p>
     <p>我們使用公開的雄果蠅中樞神經系統連接圖。官方公布約 16.7 萬個神經元、11,700 種細胞類型、1.25 億個突觸；我們從下載的資料中算出 164,446 個有細胞類型的神經元、11,751 種類型，神經元之間的突觸約 1.22 億個，和官方數字一致。</p>
-    <p>整張圖放不進模型，所以我們挑出 500 個神經元，分兩步：先選一個起點，再從起點往外擴展。在這之前，先看我們實際下載的資料長什麼樣子。</p>
+    <p>整張圖放不進模型，所以我們挑出 500 個神經元，分兩步：先選一個起點，再從起點往外擴展。在這之前，先介紹簡報中會反覆出現的四張子圖。</p>
+  </aside>
+</section>
+
+<section class="slide" data-title="四張子圖 G0／G1／G2／G2-glu+" data-chap="果蠅連接圖">
+  <div class="chap"><span class="no">02</span>果蠅連接圖・四張子圖</div>
+  <h2>簡報中比較四張子圖：一張第一代、三張第二代</h2>
+  <table class="gtab" style="font-size:17.5px">
+    <thead><tr><th style="width:9.5em">名稱</th><th>正負號的設定</th><th class="num" style="width:7.5em">增強／抑制</th><th>用來回答</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="4"><span class="tag">第一代</span>從全部約 8,800 萬個片段中選，起點 274013289，<b>多為碎片</b>　・　500 點／2,216 條連線</td></tr>
+      <tr><td><b>G0</b></td><td>沒有正負號資訊，全部當增強</td><td class="num">500／0</td><td>第一代的基準</td></tr>
+      <tr class="grp"><td colspan="4"><span class="tag blue">第二代</span>只從 16 萬個有正負號的神經元中選，起點 810979　・　<b>三張圖的 500 點／6,691 條連線完全相同</b></td></tr>
+      <tr><td><b>G1</b></td><td>有正負號資訊但不使用，全部當增強</td><td class="num">500／0</td><td>換成真正的神經元（G0 → G1）</td></tr>
+      <tr><td><b>G2</b> <span class="tiny" style="color:var(--accent);font-weight:700">主要</span></td><td>依神經傳導物質判定，麩胺酸＝抑制</td><td class="num"><span class="exc">300</span>／<span class="inh">200</span></td><td>加入抑制的效果（G1 → G2）</td></tr>
+      <tr><td><b>G2-glu+</b> <span class="tiny">對照</span></td><td>同 G2，但麩胺酸＝增強</td><td class="num"><span class="exc">356</span>／<span class="inh">144</span></td><td>麩胺酸的判定會不會改變結論</td></tr>
+    </tbody>
+  </table>
+  <div class="cols">
+    <div class="card"><h3>怎麼讀這些比較</h3><p class="small"><b>G1 → G2</b>：神經元相同、只差正負號，看「加入抑制」的影響。<b>G2 → G2-glu+</b>：只差麩胺酸的判定。<b>G0 → G1</b>：起點與神經元都不同，只能看整體差異。</p></div>
+    <div class="card acc"><h3>接下來幾頁</h3><p class="small">依序說明原始資料、起點怎麼選、BFS 怎麼擴展，以及增強與抑制怎麼判定，也就是這四張圖是怎麼產生的。</p></div>
+  </div>
+  <aside class="notes">
+    <p>在介紹怎麼選神經元之前，先說明簡報中會反覆出現的四張子圖。</p>
+    <p>G0 是第一代的子圖，是從全部約 8,800 萬個片段中選出來的，裡面多數是重建碎片，也沒有正負號，所有連線都當成增強。</p>
+    <p>G1、G2、G2-glu+ 是第二代的子圖。它們只從 16 萬個有正負號的神經元中選，三張圖的神經元和連線完全相同，差別只在正負號怎麼用：G1 全部當增強；G2 依神經傳導物質給正負號，是我們主要使用的版本；G2-glu+ 把麩胺酸改成增強，用來檢查結論會不會因為麩胺酸的判定而改變。</p>
+    <p>所以比較時要注意：G1 和 G2 只差正負號，可以看出加入抑制的影響；G0 和 G1 的起點、神經元都不同，只能看整體的差異。接下來幾頁，我會說明這四張圖是怎麼產生的。</p>
   </aside>
 </section>
 
@@ -653,7 +682,7 @@ body.show-notes #notes { display: block; }
     <ol class="steps small">
       <li><span><b>重新選起點</b>：274013289 無法判定正負號；以<b>同一套抽籤規則</b>，只在 163,856 個有正負號的神經元中抽出 <b>810979</b>（乙醯膽鹼，增強）。</span></li>
       <li><span><b>配額 BFS</b>：同樣一層層擴展，增強、抑制各有名額（300／200），沒有正負號的神經元直接跳過。</span></li>
-      <li><span><b>結果</b>：第 1 層收入 242 個（跳過 578 個），第 2 層收入 257 個；共 500 點、<b>6,691 條</b>連線，全部連成一體。</span></li>
+      <li><span><b>結果</b>：第 1 層的 242 個有正負號鄰居全部收入（<span class="exc">增強 122</span>、<span class="inh">抑制 120</span>，跳過 578 個無正負號）；第 2 層依籤號補滿剩下的名額（<span class="exc">增強 177</span>、<span class="inh">抑制 80</span>）。共 500 點、<b>6,691 條</b>連線，全部連成一體。</span></li>
     </ol>
     <div class="stack">
       <table style="font-size:16.5px">
@@ -671,6 +700,7 @@ body.show-notes #notes { display: block; }
   <aside class="notes">
     <p>第二代要有正負號，但原本的起點不在神經傳導物質表中。我們沒有自行換一個點，而是沿用同一套抽籤規則，只是把範圍限定在有正負號的神經元，抽出 810979。</p>
     <p>擴展時多了名額限制：增強最多 300 個、抑制最多 200 個，沒有正負號的神經元直接跳過。前面動畫切到「有正負號」，一閃而過的灰點就是被跳過的神經元。</p>
+    <p>實際結果是：起點的第 1 層有 242 個有正負號的鄰居，名額還沒滿，所以全部收入，其中增強 122 個、抑制 120 個。第 2 層的候選很多，就依籤號補滿剩下的名額：增強還差 177 個、抑制還差 80 個。所以第 2 層的比例，是由剩下的名額決定的。</p>
     <p>同一批 500 個神經元，我們做了三種設定：G1 全部當增強、G2 有抑制、G2-glu+ 把麩胺酸改成增強。G1 和 G2 只差正負號，可以乾淨地比較抑制的影響。</p>
     <p>最後，500 個點中還要選出 32 個輸入點和 32 個輸出點，輸出點只從訊號到得了的點中挑選。</p>
   </aside>
@@ -768,18 +798,57 @@ body.show-notes #notes { display: block; }
       <table style="font-size:15px">
         <thead><tr><th>T</th><th class="num">G0 會被訓練的連線</th><th class="num">G2 會被訓練的連線</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td class="num">16（1%）</td><td class="num">29（0.4%）</td></tr>
-          <tr class="hl"><td>2（主設定）</td><td class="num">277（12%）</td><td class="num">510（8%）</td></tr>
+          <tr class="hl"><td><b>2</b>（實驗）</td><td class="num">277（12%）</td><td class="num">510（8%）</td></tr>
           <tr><td>3</td><td class="num">1,196（54%）</td><td class="num">3,130（47%）</td></tr>
-          <tr><td>4</td><td class="num">1,675（76%）</td><td class="num">5,602（84%）</td></tr>
+          <tr class="hl"><td><b>4</b>（實驗）</td><td class="num">1,675（76%）</td><td class="num">5,602（84%）</td></tr>
         </tbody>
       </table>
+      <p class="tiny">T=2 與 T=4 都完整訓練（四張圖 × 三個 seed），結果見第 4 部分。</p>
     </div>
   </div>
   <aside class="notes">
     <p>這一頁說明 T 的意思。左邊是真實的 G2 子圖：最左邊一排白色方塊是 32 個輸入點，往右依序是訊號 1 跳、2 跳、3 跳、4 跳能到達的神經元，最右邊是從輸入點永遠到不了的神經元。帶圓圈的是輸出點。</p>
     <p>一跳的意思是訊號沿一條連線，從一個神經元傳到下一個神經元。圖核心每做一步，訊號就往外傳一跳；重複 T 次之後，從輸出點讀出結果。所以 T 等於 2，訊號最多走 2 跳。大家可以按播放，看訊號一步一步往右傳。</p>
-    <p>T 很重要，因為只有在 T 跳以內、從輸入連得到輸出的路徑，才會影響結果，也才會被訓練。切到「會被訓練的連線」可以看到：T=2 時，G2 的 6,691 條連線中只有 510 條、約 8% 會被訓練；T=4 時提高到 84%。這就是我們另外比較 T=4 的原因。代價是計算量增加，一次完整調參從 70 分鐘增加到 100 分鐘。</p>
+    <p>T 很重要，因為只有在 T 跳以內、從輸入連得到輸出的路徑，才會影響結果，也才會被訓練。切到「會被訓練的連線」可以看到：T=2 時，G2 的 6,691 條連線中只有 510 條、約 8% 會被訓練；T=4 時提高到 84%。所以我們把 T=2 和 T=4 兩種設定都完整訓練過，四張圖、三個 seed 都有，結果會在第四部分比較。T=4 的代價是計算量增加，一次完整調參從 70 分鐘增加到 100 分鐘。</p>
+  </aside>
+</section>
+
+<section class="slide" data-title="每一跳的分布與到不了的神經元" data-chap="模型與訓練">
+  <div class="chap"><span class="no">03</span>模型與訓練・跳數分布</div>
+  <h2>神經元落在第幾跳，由輸入點位置與連線方向決定</h2>
+  <div class="cols">
+    <div class="stack">
+      <ol class="steps small">
+        <li><span><b>輸入點</b>：從 500 個神經元中以抽籤選出 32 個（<span class="exc">增強 20</span>、<span class="inh">抑制 12</span>）。</span></li>
+        <li><span><b>跳數</b>：從輸入點<b>沿連線方向</b>出發，一個神經元的跳數＝最短要走幾條連線才能到達。</span></li>
+        <li><span><b>與選點的差別</b>：BFS 選點時<b>不分方向</b>，只要有連線就收入；計算跳數時只能順著方向走。</span></li>
+      </ol>
+      <table style="font-size:16px">
+        <thead><tr><th>跳數</th><th class="num">增強</th><th class="num">抑制</th><th class="num">增強比例</th></tr></thead>
+        <tbody>
+          <tr><td>0 跳（輸入點）</td><td class="num">20</td><td class="num">12</td><td class="num">63%</td></tr>
+          <tr><td>1 跳</td><td class="num">119</td><td class="num">97</td><td class="num">55%</td></tr>
+          <tr><td>2 跳</td><td class="num">110</td><td class="num">78</td><td class="num">59%</td></tr>
+          <tr><td>3–4 跳</td><td class="num">17</td><td class="num">10</td><td class="num">63%</td></tr>
+          <tr class="hl"><td>到不了</td><td class="num">34</td><td class="num">3</td><td class="num">92%</td></tr>
+          <tr><td class="muted">整張 G2</td><td class="num muted">300</td><td class="num muted">200</td><td class="num muted">60%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="stack">
+      <div class="card"><h3>各跳的比例接近整體</h3><p class="small">1–2 跳就包含 404 個神經元，所以比例和整張圖的 60：40 相近；增強與抑制的總數，來自選點時的 300／200 名額。</p></div>
+      <div class="card warn"><h3>為什麼有 37 個「到不了」</h3><p class="small"><b>30 個</b>在子圖中沒有任何連入的連線，<b>7 個</b>只接收來自其他「到不了」神經元的訊號。它們當初被選入，是因為有連線<b>送出</b>到已選的神經元。</p></div>
+      <div class="card acc"><h3>為什麼幾乎都是增強</h3><p class="small">約一半是<b>感覺神經元</b>（SN、SA、JO、BM 類型）：它們的輸入來自身體的感覺器官，不在中樞神經的連接圖裡，所以只送出、不接收；感覺神經元多以乙醯膽鹼傳遞，因此判定為增強。</p></div>
+      <p class="tiny">這 37 個神經元收不到訊號，在模型中不影響輸出，也不會被訓練。</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>上一頁的動畫中，每一跳都有增強和抑制的神經元，這一頁說明它們是怎麼分布的。</p>
+    <p>神經元落在第幾跳，由兩件事決定。第一是輸入點的位置：我們用抽籤從 500 個神經元中選出 32 個輸入點，其中 20 個增強、12 個抑制。第二是連線的方向：從輸入點出發，只能順著連線的方向走，一個神經元的跳數，就是最短要走幾條連線才能到達它。</p>
+    <p>這和當初選點不一樣。BFS 選點時不分方向，只要兩個神經元之間有連線就收入；但訊號只能順著方向傳。所以選進來的神經元，不一定都收得到訊號。</p>
+    <p>從表格可以看到，1 跳和 2 跳的增強比例是 55% 和 59%，和整張圖的 60% 很接近，因為這兩層就包含了 404 個神經元。增強和抑制的總數，來自選點時 300 和 200 的名額。</p>
+    <p>唯一明顯不同的是「到不了」的 37 個神經元，幾乎都是增強。其中 30 個在子圖裡完全沒有連入的連線，另外 7 個只接收來自這些到不了的神經元。它們當初被選進來，是因為它們有連線送出到已選的神經元。</p>
+    <p>為什麼幾乎都是增強？這 37 個中大約一半是感覺神經元。感覺神經元的輸入來自身體表面的感覺器官，不在中樞神經的連接圖裡，所以在圖中只送出、不接收；而感覺神經元大多以乙醯膽鹼傳遞訊號，所以被判定為增強。這些神經元收不到訊號，在模型中不影響輸出，也不會被訓練。</p>
   </aside>
 </section>
 
