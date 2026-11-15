@@ -5,125 +5,164 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FlyCall-1999 專案簡報</title>
 <meta name="description" content="從合成通話資料、果蠅連接圖子圖、Fly A／Fly B 訓練到分類結果與兩個腦的比較。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #e9ebe6; --paper: #ffffff; --ink: #16191c; --ink-2: #4f565c; --ink-3: #7b8288; --rule: #dadcd7; --tint: #f5f6f3;
-  --accent: #2a6fb0; --accent-soft: #e6eff8; --up: #23794a; --down: #b5452f; --warn: #9a6a12; --warn-soft: #fbf3e2;
-  --exc: #2a78d6; --inh: #d95926; --glu: #8a4fc7; --neutral: #8b9297; --mark: #fff0b3;
+  --bg: #e4e7e2; --paper: #ffffff; --ink: #14181c; --ink-2: #4a525a; --ink-3: #7b838a; --rule: #e1e4df; --tint: #f4f6f2; --tint-2: #eceff0;
+  --accent: #1f63a8; --accent-2: #2f86d6; --accent-soft: #e7f0f9; --deep: #0f2a44;
+  --up: #1f7a49; --down: #b5452f; --warn: #a06b0d; --warn-soft: #fbf3e2;
+  --exc: #2a78d6; --inh: #d95926; --glu: #8a4fc7; --neutral: #8b9297; --mark: #ffeaa0;
   --c1: #2a78d6; --c2: #d95926; --c3: #23794a; --c4: #8a4fc7; --c5: #b8860b;
+  --shadow: 0 1px 2px rgba(16,24,32,.06), 0 8px 28px rgba(16,24,32,.10);
   --f: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0c0e10; --paper: #181b1e; --ink: #eceef0; --ink-2: #aab1b7; --ink-3: #7f878e; --rule: #2d3237; --tint: #1f2326;
-  --accent: #6aa6e0; --accent-soft: #1b2a38; --up: #5cbd85; --down: #e27b62; --warn: #d9a64a; --warn-soft: #2c2416;
+  --bg: #0b0d0f; --paper: #171a1d; --ink: #eceef0; --ink-2: #aab1b7; --ink-3: #7f878e; --rule: #2b3035; --tint: #1e2226; --tint-2: #24292d;
+  --accent: #6aa6e0; --accent-2: #8bbcec; --accent-soft: #1a2a39; --deep: #0d2236;
+  --up: #5cbd85; --down: #e27b62; --warn: #d9a64a; --warn-soft: #2c2416;
   --exc: #3987e5; --inh: #eb6834; --glu: #b48ae6; --neutral: #8e969d; --mark: #4a3f12;
-  --c1: #3987e5; --c2: #eb6834; --c3: #5cbd85; --c4: #b48ae6; --c5: #d9a64a; color-scheme: dark; } }
+  --c1: #3987e5; --c2: #eb6834; --c3: #5cbd85; --c4: #b48ae6; --c5: #d9a64a; --shadow: 0 8px 30px rgba(0,0,0,.4); color-scheme: dark; } }
 :root[data-theme="dark"] {
-  --bg: #0c0e10; --paper: #181b1e; --ink: #eceef0; --ink-2: #aab1b7; --ink-3: #7f878e; --rule: #2d3237; --tint: #1f2326;
-  --accent: #6aa6e0; --accent-soft: #1b2a38; --up: #5cbd85; --down: #e27b62; --warn: #d9a64a; --warn-soft: #2c2416;
+  --bg: #0b0d0f; --paper: #171a1d; --ink: #eceef0; --ink-2: #aab1b7; --ink-3: #7f878e; --rule: #2b3035; --tint: #1e2226; --tint-2: #24292d;
+  --accent: #6aa6e0; --accent-2: #8bbcec; --accent-soft: #1a2a39; --deep: #0d2236;
+  --up: #5cbd85; --down: #e27b62; --warn: #d9a64a; --warn-soft: #2c2416;
   --exc: #3987e5; --inh: #eb6834; --glu: #b48ae6; --neutral: #8e969d; --mark: #4a3f12;
-  --c1: #3987e5; --c2: #eb6834; --c3: #5cbd85; --c4: #b48ae6; --c5: #d9a64a; color-scheme: dark; }
+  --c1: #3987e5; --c2: #eb6834; --c3: #5cbd85; --c4: #b48ae6; --c5: #d9a64a; --shadow: 0 8px 30px rgba(0,0,0,.4); color-scheme: dark; }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font-family: var(--f); }
-body { overflow: hidden; }
+body { overflow: hidden; -webkit-font-smoothing: antialiased; }
 #stage { position: fixed; inset: 0 0 var(--notes-h, 0px) 0; overflow: hidden; }
 #deck { width: 1280px; height: 720px; position: absolute; left: 50%; top: 50%; transform-origin: center center; transform: translate(-50%, -50%); }
-.slide { position: absolute; inset: 0; background: var(--paper); border-radius: 10px; box-shadow: 0 6px 30px rgba(0,0,0,.12);
-  padding: 46px 64px 54px; display: none; flex-direction: column; gap: 18px; overflow: hidden; font-size: 21px; line-height: 1.55; }
+
+/* ---------- slide frame ---------- */
+.slide { position: absolute; inset: 0; background: var(--paper); border-radius: 14px; box-shadow: var(--shadow);
+  padding: 50px 72px 64px; display: none; flex-direction: column; gap: 20px; overflow: hidden; font-size: 21px; line-height: 1.6; }
 .slide.on { display: flex; }
 .slide > aside.notes { display: none; }
-.chap { font-size: 14px; letter-spacing: .08em; color: var(--accent); font-weight: 700; display: flex; gap: 10px; align-items: center; }
-.chap::before { content: ""; width: 22px; height: 3px; background: var(--accent); border-radius: 2px; }
-h1 { font-size: 52px; line-height: 1.25; margin: 0; letter-spacing: .01em; }
-h2 { font-size: 33px; line-height: 1.3; margin: 0; letter-spacing: .01em; }
-h3 { font-size: 21px; margin: 0 0 6px; }
+.slide::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: linear-gradient(var(--accent), var(--accent-2)); }
+.chap { font-size: 14px; letter-spacing: .12em; color: var(--accent); font-weight: 700; display: flex; gap: 10px; align-items: center; text-transform: uppercase; }
+.chap .no { font-family: var(--f-mono); background: var(--accent); color: var(--paper); border-radius: 6px; padding: 1px 8px; letter-spacing: 0; }
+.slide-foot { position: absolute; left: 72px; right: 48px; bottom: 20px; display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--rule); padding-top: 10px; }
+.slide-foot b { font-family: var(--f-mono); font-weight: 500; color: var(--ink-2); }
+h1 { font-size: 56px; line-height: 1.22; margin: 0; font-weight: 900; letter-spacing: .01em; }
+h2 { font-size: 34px; line-height: 1.32; margin: 0; font-weight: 900; letter-spacing: .01em; }
+h3 { font-size: 20px; margin: 0 0 6px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+h3::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); flex: none; }
 p { margin: 0; }
 ul, ol { margin: 0; padding-left: 1.2em; }
 li + li { margin-top: 6px; }
+li::marker { color: var(--accent); }
 b, strong { font-weight: 700; }
-.sub { color: var(--ink-2); font-size: 22px; }
+.sub { color: var(--ink-2); font-size: 23px; }
 .small { font-size: 17px; color: var(--ink-2); }
+.small b { color: var(--ink); }
 .tiny { font-size: 14px; color: var(--ink-3); }
 .mono { font-family: var(--f-mono); }
 .grow { flex: 1; min-height: 0; }
-.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; min-height: 0; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; min-height: 0; }
 .cols.c3 { grid-template-columns: repeat(3, 1fr); }
+.cols.c4 { grid-template-columns: repeat(4, 1fr); gap: 18px; }
 .cols.c64 { grid-template-columns: 1.5fr 1fr; }
 .cols.c46 { grid-template-columns: 1fr 1.5fr; }
-.card { background: var(--tint); border: 1px solid var(--rule); border-radius: 10px; padding: 16px 20px; min-width: 0; }
-.card.acc { background: var(--accent-soft); border-color: transparent; }
-.card.warn { background: var(--warn-soft); border-color: transparent; }
-.card h3 { font-size: 19px; }
+.stack { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.card { background: var(--tint); border-radius: 12px; padding: 16px 20px; min-width: 0; }
+.card.acc { background: var(--accent-soft); }
+.card.warn { background: var(--warn-soft); }
+.card.warn h3::before { background: var(--warn); }
+.card.line { background: var(--paper); border: 1px solid var(--rule); }
 .kpis { display: grid; grid-template-columns: repeat(var(--n, 3), 1fr); gap: 18px; }
-.kpi { background: var(--tint); border-radius: 10px; padding: 16px 20px; }
-.kpi .k { font-size: 15px; color: var(--ink-2); }
-.kpi .v { font-family: var(--f-mono); font-size: 40px; font-weight: 500; line-height: 1.2; }
-.kpi .v small { font-size: 20px; color: var(--ink-2); }
+.kpi { background: var(--tint); border-radius: 12px; padding: 18px 22px; position: relative; overflow: hidden; }
+.kpi.hero { background: var(--deep); color: #fff; }
+.kpi.hero .k, .kpi.hero .n { color: rgba(255,255,255,.75); }
+.kpi .k { font-size: 15px; color: var(--ink-2); font-weight: 500; }
+.kpi .v { font-family: var(--f-mono); font-size: 46px; font-weight: 500; line-height: 1.15; margin: 4px 0; }
+.kpi .v small { font-size: 20px; opacity: .75; }
 .kpi .n { font-size: 14px; color: var(--ink-3); }
-.ask { border-left: 4px solid var(--warn); background: var(--warn-soft); padding: 10px 16px; border-radius: 0 8px 8px 0; font-size: 18px; }
-.ask::before { content: "聽眾可能會問："; font-weight: 700; color: var(--warn); }
-.key { border-left: 4px solid var(--accent); background: var(--accent-soft); padding: 10px 16px; border-radius: 0 8px 8px 0; font-size: 19px; }
+.lead { font-size: 19px; border-left: 4px solid var(--accent); padding: 4px 0 4px 16px; color: var(--ink); }
+.lead b { color: var(--accent); }
 table { border-collapse: collapse; width: 100%; font-size: 18px; }
-th, td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
-th { color: var(--ink-2); font-weight: 600; font-size: 16px; }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+thead th { color: var(--ink-3); font-weight: 700; font-size: 14px; letter-spacing: .04em; border-bottom: 2px solid var(--ink); }
 td.num, th.num { text-align: right; font-family: var(--f-mono); white-space: nowrap; }
 tr.hl td { background: var(--accent-soft); }
+tr.hl td:first-child { box-shadow: inset 4px 0 0 var(--accent); }
 .up { color: var(--up); } .down { color: var(--down); }
 .exc { color: var(--exc); font-weight: 700; } .inh { color: var(--inh); font-weight: 700; } .glu { color: var(--glu); font-weight: 700; }
 mark { background: var(--mark); color: inherit; padding: 0 2px; border-radius: 3px; }
-.flow { display: flex; align-items: stretch; gap: 10px; }
-.flow .st { flex: 1; background: var(--tint); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; text-align: center; min-width: 0; }
-.flow .st b { display: block; font-size: 20px; }
-.flow .st span { font-size: 15px; color: var(--ink-2); }
-.flow .st.fly { background: var(--accent-soft); border-color: transparent; }
-.flow .ar { align-self: center; color: var(--ink-3); font-size: 26px; }
-.tr { font-family: var(--f); font-size: 16px; line-height: 1.6; background: var(--tint); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px; white-space: pre-wrap; overflow: hidden; }
+.flow { display: flex; align-items: stretch; gap: 0; }
+.flow .st { flex: 1; background: var(--tint); border-radius: 12px; padding: 14px 16px; text-align: center; min-width: 0; }
+.flow .st b { display: block; font-size: 20px; margin-bottom: 2px; }
+.flow .st span { font-size: 15px; color: var(--ink-2); line-height: 1.5; }
+.flow .st.fly { background: var(--accent-soft); }
+.flow .st.fly b { color: var(--accent); }
+.flow .ar { align-self: center; width: 34px; text-align: center; color: var(--accent); font-size: 24px; font-weight: 700; flex: none; }
+.tr { font-size: 15.5px; line-height: 1.65; background: var(--tint); border-radius: 12px; padding: 12px 16px; white-space: pre-wrap; overflow: hidden; }
 .tr .r { color: var(--accent); font-weight: 700; }
-.tr .l { color: var(--ink); font-weight: 700; }
-.tag { display: inline-block; font-size: 14px; padding: 1px 9px; border-radius: 999px; background: var(--tint); border: 1px solid var(--rule); color: var(--ink-2); }
-.steps { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 10px; }
-.steps li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; margin: 0; }
-.steps li::before { content: counter(s); width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: var(--paper); display: grid; place-items: center; font-weight: 700; font-size: 16px; font-family: var(--f-mono); }
+.tr .l { color: var(--c2); font-weight: 700; }
+.tag { display: inline-block; font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--tint-2); color: var(--ink-2); font-family: var(--f-mono); }
+.tag.blue { background: var(--accent); color: var(--paper); }
+.steps { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 12px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; margin: 0; }
+.steps li::before { content: counter(s); width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: var(--paper); display: grid; place-items: center; font-weight: 700; font-size: 15px; font-family: var(--f-mono); margin-top: 1px; }
 .hash { font-family: var(--f-mono); font-size: 17px; }
-.hash td { padding: 5px 10px; }
 .hash .z { color: var(--accent); font-weight: 700; }
-.bar { display: grid; grid-template-columns: 210px 1fr 80px; gap: 10px; align-items: center; font-size: 17px; }
-.bar + .bar { margin-top: 8px; }
-.bar .tk { height: 22px; background: var(--tint); border-radius: 4px; position: relative; overflow: hidden; }
-.bar .tk i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; background: var(--c, var(--accent)); }
+.bar { display: grid; grid-template-columns: 200px 1fr 70px; gap: 12px; align-items: center; font-size: 17px; }
+.bar + .bar { margin-top: 10px; }
+.bar .tk { height: 20px; background: var(--tint-2); border-radius: 5px; position: relative; overflow: hidden; }
+.bar .tk i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 5px 5px 0; background: var(--c, var(--accent)); }
 .bar .vv { font-family: var(--f-mono); text-align: right; }
 canvas { display: block; width: 100%; height: 100%; }
-.ctrl { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.ctrl button { font: inherit; font-size: 15px; padding: 5px 14px; border-radius: 999px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); cursor: pointer; }
-.ctrl button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.ctrl { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.ctrl button { font: inherit; font-size: 15px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); cursor: pointer; }
+.ctrl button[aria-pressed="true"] { background: var(--accent); color: var(--paper); border-color: var(--accent); }
 .ctrl button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.viz { position: relative; background: var(--tint); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
-.hud { position: absolute; left: 14px; top: 10px; font-size: 15px; line-height: 1.55; background: color-mix(in srgb, var(--paper) 85%, transparent); padding: 6px 10px; border-radius: 8px; }
-.hud b { font-family: var(--f-mono); font-weight: 500; }
+.viz { position: relative; background: var(--tint); border-radius: 12px; overflow: hidden; }
+.hud { position: absolute; left: 14px; top: 12px; font-size: 15px; line-height: 1.6; background: color-mix(in srgb, var(--paper) 88%, transparent); padding: 8px 12px; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.hud b { font-family: var(--f-mono); font-weight: 600; }
 .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 14px; color: var(--ink-2); }
 .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--c); margin-right: 6px; vertical-align: -1px; }
-.fig { display: flex; flex-direction: column; gap: 6px; min-height: 0; }
-.fig img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--rule); background: #fcfcfa; }
+.fig { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.fig img { width: 100%; height: auto; border-radius: 10px; background: #fcfcfa; }
 .toc { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-.toc div { background: var(--tint); border-radius: 10px; padding: 16px; }
-.toc b { display: block; font-family: var(--f-mono); color: var(--accent); font-size: 26px; }
-.toc span { font-size: 18px; font-weight: 700; }
-.toc p { font-size: 15px; color: var(--ink-2); margin-top: 6px; }
-.title-slide { justify-content: center; gap: 22px; background: linear-gradient(135deg, var(--paper) 55%, var(--accent-soft)); }
-.foot { position: absolute; left: 64px; right: 64px; bottom: 18px; display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-3); }
+.toc div { background: var(--tint); border-radius: 12px; padding: 18px; border-top: 4px solid var(--accent); }
+.toc b { display: block; font-family: var(--f-mono); color: var(--accent); font-size: 30px; line-height: 1; margin-bottom: 8px; }
+.toc span { font-size: 19px; font-weight: 700; }
+.toc p { font-size: 15px; color: var(--ink-2); margin-top: 6px; line-height: 1.5; }
 .sc-dot { transition: transform 1.1s cubic-bezier(.4,.1,.2,1); }
+.muted { color: var(--ink-3); }
 
-/* chrome */
-#bar { position: fixed; left: 0; right: 0; top: 0; height: 3px; background: transparent; z-index: 5; }
+/* ---------- title & chapter dividers ---------- */
+.slide.cover, .slide.divider { background: var(--deep); color: #fff; justify-content: center; }
+.slide.cover::before, .slide.divider::before { display: none; }
+.cover canvas.art, .divider canvas.art { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .9; pointer-events: none; }
+.cover > *:not(canvas):not(.slide-foot), .divider > *:not(canvas):not(.slide-foot) { position: relative; }
+.cover .chap, .divider .chap { color: #8fc1ef; }
+.cover h1 { max-width: 760px; }
+.cover .sub { color: rgba(255,255,255,.82); max-width: 700px; }
+.cover .tiny { color: rgba(255,255,255,.55); }
+.cover .line { width: 80px; height: 4px; background: #8fc1ef; border-radius: 2px; }
+.divider .big { font-family: var(--f-mono); font-size: 150px; line-height: 1; font-weight: 500; color: #8fc1ef; opacity: .9; }
+.divider h2 { font-size: 52px; }
+.divider ul { list-style: none; padding: 0; display: grid; gap: 10px; max-width: 760px; }
+.divider li { margin: 0; font-size: 22px; color: rgba(255,255,255,.85); padding-left: 26px; position: relative; }
+.divider li::before { content: ""; position: absolute; left: 0; top: .62em; width: 12px; height: 2px; background: #8fc1ef; }
+.slide.cover .slide-foot, .slide.divider .slide-foot { color: rgba(255,255,255,.5); border-top-color: rgba(255,255,255,.15); }
+.slide.cover .slide-foot b, .slide.divider .slide-foot b { color: rgba(255,255,255,.75); }
+
+/* ---------- chrome ---------- */
+#bar { position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 5; }
 #bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s; }
 #hint { position: fixed; right: 14px; bottom: calc(var(--notes-h, 0px) + 10px); font-size: 13px; color: var(--ink-3); z-index: 5; user-select: none; display: flex; align-items: center; gap: 6px; }
-#hint button { font: inherit; font-size: 13px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink-2); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
-#hint #btn-prev, #hint #btn-next { color: var(--ink); font-weight: 600; }
+#hint button { font: inherit; font-size: 13px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink-2); border-radius: 8px; padding: 5px 11px; cursor: pointer; }
+#hint #btn-prev, #hint #btn-next { color: var(--ink); font-weight: 700; }
 #hint button:disabled { opacity: .4; cursor: default; }
 #notes { position: fixed; left: 0; right: 0; bottom: 0; height: var(--notes-h, 0px); overflow: auto; background: var(--paper); border-top: 1px solid var(--rule);
-  padding: 14px 24px; font-size: 16px; line-height: 1.7; display: none; z-index: 4; }
+  padding: 14px 24px; font-size: 16px; line-height: 1.75; display: none; z-index: 4; }
 body.show-notes { --notes-h: 34vh; }
 body.show-notes #notes { display: block; }
 #notes h4 { margin: 0 0 6px; font-size: 14px; color: var(--ink-3); font-weight: 600; }
@@ -132,7 +171,7 @@ body.show-notes #notes { display: block; }
 @media print {
   @page { size: 1280px 720px; margin: 0; }
   html, body { overflow: visible; height: auto; background: #fff; }
-  #stage { position: static; display: block; }
+  #stage { position: static; overflow: visible; }
   #deck { transform: none !important; position: static; width: 1280px; height: auto; }
   .slide { display: flex !important; position: relative; width: 1280px; height: 720px; border-radius: 0; box-shadow: none; page-break-after: always; break-after: page; }
   #bar, #hint, #notes, .ctrl { display: none !important; }
@@ -145,244 +184,263 @@ body.show-notes #notes { display: block; }
 <div id="stage"><div id="deck">
 
 <!-- ======================= 開場 ======================= -->
-<section class="slide title-slide" data-title="標題">
+<section class="slide cover" data-title="標題" data-chap="">
+  <canvas class="art" data-art="SIGNED"></canvas>
   <div class="chap">FlyCall-1999 研究專案</div>
-  <h1>用果蠅腦的連接圖，<br>分類臺北 1999 客服通話</h1>
+  <h1>用果蠅腦的連接圖，分類臺北 1999 客服通話</h1>
+  <div class="line"></div>
   <p class="sub">從生成通話資料、挑選果蠅神經元、訓練 Fly A／Fly B，到分類結果與兩個「腦」的比較</p>
-  <p class="tiny">資料為合成，結果屬研究性質，不代表真實 1999 業務表現。　2026-11</p>
+  <p class="tiny">2026-11　｜　資料為合成，結果屬研究性質</p>
   <aside class="notes">
-    <p>今天要講的是一個研究專案：拿果蠅大腦的真實連接結構，當作神經網路的骨架，看它能不能做好臺北 1999 客服通話的案件分類。</p>
-    <p>整份簡報會照資料流動的順序走：先講資料怎麼來，再講果蠅的神經元怎麼挑，接著是模型怎麼訓練，最後是結果和訓練後兩個模型的比較。</p>
+    <p>大家好，今天要介紹的專案叫 FlyCall-1999。我們拿果蠅大腦真實的神經連接結構，當作神經網路的骨架，看它能不能做好臺北 1999 客服通話的案件分類。</p>
+    <p>背景的這張圖，就是我們從果蠅腦中挑出來的 500 個神經元。接下來我會照資料流動的順序介紹：資料怎麼產生、神經元怎麼挑、模型怎麼訓練，最後是結果和兩個模型的比較。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="先講結論">
-  <div class="chap">先講結論</div>
+<section class="slide" data-title="結論先行" data-chap="結論先行">
+  <div class="chap">結論先行</div>
   <h2>果蠅連接圖可以完成分類，表現和傳統方法同一水準</h2>
   <div class="kpis" style="--n:3">
-    <div class="kpi"><div class="k">果蠅模型・一次性 test</div><div class="v">0.887<small> ±0.018</small></div><div class="n">依事先定好的規則選出的模型，三個 seed 平均</div></div>
-    <div class="kpi"><div class="k">傳統方法 LDA → SVM・同一份 test</div><div class="v">0.899</div><div class="n">差距約 0.01，在 seed 波動範圍附近</div></div>
-    <div class="kpi"><div class="k">第一代果蠅模型（validation）</div><div class="v">0.660</div><div class="n">一路改進到現在的過程，是後半段的主軸</div></div>
+    <div class="kpi hero"><div class="k">果蠅模型・一次性 test</div><div class="v">0.887<small> ±0.018</small></div><div class="n">依事先定好的規則選出，三個 seed 平均</div></div>
+    <div class="kpi"><div class="k">傳統方法 LDA → SVM・同一份 test</div><div class="v">0.899</div><div class="n">差距約 0.01</div></div>
+    <div class="kpi"><div class="k">第一代果蠅模型・validation</div><div class="v">0.660</div><div class="n">G0・Fly A → Fly B</div></div>
   </div>
-  <div class="key">分數是 <b>Macro-F1</b>：五個類別各自的 F1 再平均，1.0 代表全對。用它而不是正確率，是為了讓每一類都一樣重要。</div>
-  <p class="small">今天要回答三個問題：<b>①</b> 資料和果蠅圖是怎麼準備的？<b>②</b> 模型是怎麼訓練的？<b>③</b> 訓練完的兩個「腦」有什麼不同？</p>
+  <p class="lead">分數皆為 <b>Macro-F1</b>：五個類別各自的 F1 取平均，1.0 代表全部答對，每一類的權重相同。</p>
+  <div class="cols c3">
+    <div class="card"><h3>資料與果蠅圖</h3><p class="small">通話資料怎麼產生？500 個神經元怎麼挑？</p></div>
+    <div class="card"><h3>模型與訓練</h3><p class="small">Fly A、Fly B 各學什麼？怎麼訓練、花多久？</p></div>
+    <div class="card"><h3>結果與比較</h3><p class="small">從 0.66 到 0.89 靠什麼？兩個腦有什麼不同？</p></div>
+  </div>
   <aside class="notes">
-    <p>先把答案放在前面，聽的人比較知道後面每一段是在支持什麼。</p>
-    <p>最終的一次性 test，果蠅模型 0.887，傳統的 LDA 加 SVM 是 0.899，兩者差不多。第一代的果蠅模型只有 0.66，所以後半段會講是怎麼從 0.66 走到這裡。</p>
-    <p>Macro-F1 第一次出現，要停一下解釋：五類各算一次 F1，再取平均。五類筆數一樣，所以和正確率很接近，但它更能反映「有沒有哪一類特別差」。</p>
+    <p>先講結論。最後的一次性 test，果蠅模型拿到 0.887，傳統的 LDA 加 SVM 是 0.899，兩者在同一個水準。我們第一代的果蠅模型只有 0.66，所以今天後半段會說明是怎麼一步一步改進到這裡的。</p>
+    <p>這裡的分數都是 Macro-F1，也就是五個類別各算一次 F1 再取平均，滿分是 1。用它的好處是每一類都一樣重要，不會因為某一類特別好就掩蓋其他類的問題。</p>
+    <p>今天的內容分成三部分：資料和果蠅圖怎麼準備、模型怎麼訓練、結果和比較。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="簡報地圖">
+<section class="slide" data-title="簡報地圖" data-chap="簡報地圖">
   <div class="chap">簡報地圖</div>
-  <h2>資料一路流過五個階段，簡報也照這個順序</h2>
+  <h2>資料依序流過五個階段，簡報也照這個順序</h2>
   <div class="toc">
-    <div><b>1</b><span>通話資料</span><p>為什麼是這五類、66 種情境、兩代生成方式</p></div>
-    <div><b>2</b><span>果蠅連接圖</span><p>第一個神經元怎麼選、BFS 擴展、增強與抑制</p></div>
-    <div><b>3</b><span>模型與訓練</span><p>E5、Fly A、Fly B、SupCon、調參、epoch 與時間</p></div>
-    <div><b>4</b><span>分類結果</span><p>從 0.66 到 0.89 的過程，以及一次性 test</p></div>
-    <div><b>5</b><span>兩個腦的比較</span><p>同一張圖，降維和分類會長成什麼樣子</p></div>
+    <div><b>01</b><span>通話資料</span><p>五個類別、66 種情境、兩代生成方式</p></div>
+    <div><b>02</b><span>果蠅連接圖</span><p>選起點、BFS 擴展、增強與抑制</p></div>
+    <div><b>03</b><span>模型與訓練</span><p>E5、Fly A、Fly B、SupCon、調參與時間</p></div>
+    <div><b>04</b><span>分類結果</span><p>從 0.66 到 0.89，以及一次性 test</p></div>
+    <div><b>05</b><span>兩個腦</span><p>同一張圖，降維和分類長成什麼樣</p></div>
   </div>
-  <div class="flow" style="margin-top:8px">
-    <div class="st"><b>通話逐字稿</b><span>合成，1,000 筆</span></div><div class="ar">→</div>
-    <div class="st"><b>E5</b><span>文字 → 384 個數字</span></div><div class="ar">→</div>
-    <div class="st fly"><b>Fly A</b><span>384 → 32（降維）</span></div><div class="ar">→</div>
+  <div class="flow">
+    <div class="st"><b>通話逐字稿</b><span>合成，1,000 筆</span></div><div class="ar">›</div>
+    <div class="st"><b>E5</b><span>文字 → 384 個數字</span></div><div class="ar">›</div>
+    <div class="st fly"><b>Fly A</b><span>384 → 32（降維）</span></div><div class="ar">›</div>
     <div class="st fly"><b>Fly B</b><span>32 → 五類之一（分類）</span></div>
   </div>
-  <p class="small">Fly A 和 Fly B 的內部結構，都是從果蠅腦挑出來的 500 個神經元和它們之間的連線。</p>
+  <p class="small">Fly A 與 Fly B 的內部結構，都是從果蠅腦挑出的 500 個神經元和它們之間的連線。</p>
   <aside class="notes">
-    <p>這張是整份簡報的地圖。下面那條流程線會一直出現：逐字稿先被 E5 變成 384 個數字，Fly A 把它壓成 32 個，Fly B 再從 32 個數字判斷是哪一類。</p>
-    <p>「Fly」就是果蠅。兩個模型都用果蠅腦的 500 個神經元當骨架，這是這個專案和一般神經網路最不一樣的地方。</p>
+    <p>這是今天的路線圖。下面這條流程線是整個系統：通話逐字稿先由 E5 轉成 384 個數字，Fly A 把它壓縮成 32 個，Fly B 再根據這 32 個數字判斷是哪一類。</p>
+    <p>Fly 就是果蠅。這兩個模型的內部都是果蠅腦的 500 個神經元，這是我們和一般神經網路最大的不同。</p>
   </aside>
 </section>
 
 <!-- ======================= 1 資料 ======================= -->
-<section class="slide" data-title="為什麼是這五類">
-  <div class="chap">1 通話資料</div>
-  <h2>五個類別都是臺北市陳情系統的官方類別，其中兩組刻意相近</h2>
+<section class="slide divider" data-title="第 1 部分：通話資料" data-chap="通話資料">
+  <canvas class="art" data-art="dots"></canvas>
+  <div class="big">01</div>
+  <h2>通話資料</h2>
+  <ul><li>為什麼選這五個類別</li><li>66 個情境家族，以及它們如何決定資料切分</li><li>第一代與第二代的生成方式與範例比較</li></ul>
+  <aside class="notes"><p>第一部分是資料。我會說明為什麼選這五個類別、什麼是情境家族，以及兩代資料是怎麼產生的。</p></aside>
+</section>
+
+<section class="slide" data-title="為什麼是這五類" data-chap="通話資料">
+  <div class="chap"><span class="no">01</span>通話資料</div>
+  <h2>五個類別都是臺北市陳情系統的官方類別，其中兩組彼此相近</h2>
   <table>
-    <thead><tr><th>類別</th><th>官方主類別</th><th class="num">2026-09 筆數</th><th>容易和誰混淆</th></tr></thead>
+    <thead><tr><th>類別</th><th>官方主類別</th><th class="num">2026-09 案件數</th><th>相近的類別</th></tr></thead>
     <tbody>
-      <tr><td><b>人行道維護</b></td><td>道路、山坡地、路樹及路燈</td><td class="num">568</td><td rowspan="2">同一個主類別：都是「路面壞了」，差在<b>人走的</b>還是<b>車走的</b></td></tr>
+      <tr><td><b>人行道維護</b></td><td>道路、山坡地、路樹及路燈</td><td class="num">568</td><td rowspan="2">同屬「道路」：差在<b>人走的</b>還是<b>車走的</b>路面</td></tr>
       <tr><td><b>道路凹陷、不平、有高低差</b></td><td>道路、山坡地、路樹及路燈</td><td class="num">435</td></tr>
-      <tr><td><b>垃圾車清運及服務</b></td><td>垃圾、噪音、污染及資源回收</td><td class="num">281</td><td rowspan="2">同一個主類別：都和垃圾有關，差在<b>垃圾車沒來</b>還是<b>路面髒了</b></td></tr>
+      <tr><td><b>垃圾車清運及服務</b></td><td>垃圾、噪音、污染及資源回收</td><td class="num">281</td><td rowspan="2">同屬「垃圾」：差在<b>垃圾車沒來</b>還是<b>路面髒了</b></td></tr>
       <tr><td><b>路面清潔</b>（果皮箱、菸蒂、狗便）</td><td>垃圾、噪音、污染及資源回收</td><td class="num">583</td></tr>
-      <tr><td><b>一般公園綠地維護</b>（含車輛違規進入）</td><td>公園、排水溝、下水道及自來水</td><td class="num">500</td><td>獨立的一類，但地點常和道路、人行道重疊</td></tr>
+      <tr><td><b>一般公園綠地維護</b>（含車輛違規進入）</td><td>公園、排水溝、下水道及自來水</td><td class="num">500</td><td>獨立一類，地點常與道路、人行道重疊</td></tr>
     </tbody>
   </table>
   <div class="cols">
-    <div class="card"><h3>為什麼用官方類別</h3><p class="small">類別名稱和次類別都在「臺北市資料大平臺」的陳情系統類別資料中逐一核對過，每月都有數百筆案件，是真實存在、量也不小的類別。</p></div>
-    <div class="card"><h3>為什麼要有相近的類別</h3><p class="small">如果五類差很多，任何方法都能輕鬆分對，就比不出模型好壞。兩組相近類別讓模型必須看懂「主要訴求」，而不是只認地點。</p></div>
+    <div class="card"><h3>真實存在的類別</h3><p class="small">名稱與主類別都對照「臺北市資料大平臺」的陳情系統類別資料，每月有數百件案件。</p></div>
+    <div class="card acc"><h3>相近的類別才比得出差異</h3><p class="small">兩組相近類別讓模型必須看懂民眾的<b>主要訴求</b>，而不是只靠地點或關鍵字。</p></div>
   </div>
   <aside class="notes">
-    <p>類別不是自己編的，而是臺北市陳情系統真的在用的次類別。我們用 2026 年 9 月的公開資料核對過名稱，右邊的筆數是那個月的案件量，只用來確認這些類別真實存在，不拿來決定資料比例。</p>
-    <p>這五類可以分成兩組相近的加一個獨立的：人行道和道路同屬一個主類別，垃圾車和路面清潔同屬一個主類別。每一類在定義檔裡都有「納入」「排除」「容易混淆」的規則，例如人行道的磚壞了算人行道，車道的坑洞算道路。</p>
-    <p>要講清楚：官方資料只提供類別名稱和筆數，沒有通話內容。真實通話涉及個資也拿不到，所以通話內容全部是合成的。</p>
+    <p>我們的五個類別，都是臺北市陳情系統實際使用的次類別。我們用 2026 年 9 月的公開資料核對過名稱，右邊是當月的案件數，這些都是每月有數百件的常見類別。</p>
+    <p>這五類可以看成兩組相近的類別加上一個獨立的類別。人行道和道路同屬道路主類別，差別在壞的是人走的還是車走的路面；垃圾車和路面清潔同屬垃圾主類別，差別在是垃圾車沒來，還是路面髒了。公園則是獨立的一類。</p>
+    <p>選擇相近的類別，是為了讓分類有一定難度，模型必須理解民眾真正的訴求。官方資料只提供類別名稱和數量，沒有通話內容，所以通話內容全部是合成的。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="66 個情境家族">
-  <div class="chap">1 通話資料</div>
+<section class="slide" data-title="66 個情境家族" data-chap="通話資料">
+  <div class="chap"><span class="no">01</span>通話資料</div>
   <h2>每一類再細分成 11–15 種具體情境，共 66 個「情境家族」</h2>
   <div class="cols c64 grow">
-    <table style="font-size:16px">
-      <thead><tr><th>類別</th><th class="num">家族數</th><th>例子</th></tr></thead>
+    <table style="font-size:16.5px">
+      <thead><tr><th>類別</th><th class="num">家族數</th><th>情境例子</th></tr></thead>
       <tbody>
         <tr><td>人行道維護</td><td class="num">14</td><td>地磚踩了會晃、導盲磚缺一段、無障礙坡道表面裂開</td></tr>
         <tr><td>道路凹陷不平</td><td class="num">14</td><td>路口局部下陷、深坑洞、補過的路面沒接平</td></tr>
-        <tr><td>公園綠地維護</td><td class="num">15</td><td>遊具零件壞了、公廁門關不上、機車騎進公園</td></tr>
+        <tr><td>公園綠地維護</td><td class="num">15</td><td>遊具零件損壞、公廁門關不上、機車騎進公園</td></tr>
         <tr><td>垃圾車清運</td><td class="num">12</td><td>在等候點沒等到車、假日有沒有收、音樂沒播放</td></tr>
-        <tr><td>路面清潔</td><td class="num">11</td><td>果皮箱滿出來、反覆有菸蒂、人行道上的狗便</td></tr>
+        <tr><td>路面清潔</td><td class="num">11</td><td>果皮箱滿出來、反覆出現菸蒂、人行道上的狗便</td></tr>
       </tbody>
     </table>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div class="card"><h3>為什麼要分家族</h3><p class="small">讓同一類的通話內容夠多樣，不會 200 筆都在講同一件事。</p></div>
-      <div class="card acc"><h3>家族決定資料怎麼切</h3><p class="small">同一個家族的通話，<b>只會全部出現在同一個資料集</b>。模型考試時看到的，一定是訓練時沒看過的情境。</p></div>
-      <div class="card"><h3>切分</h3><p class="small mono">train 700／validation 150／test 150</p><p class="tiny">每類 140／30／30，一開始就固定，之後不再改。</p></div>
+    <div class="stack">
+      <div class="card"><h3>內容多樣</h3><p class="small">每一類的 200 通電話分散在十幾種情境，而不是都在講同一件事。</p></div>
+      <div class="card acc"><h3>家族決定資料切分</h3><p class="small">同一個家族的通話<b>只會出現在同一個資料集</b>，模型測試時面對的一定是訓練時沒看過的情境。</p></div>
+      <div class="card"><h3>固定切分</h3><p class="small mono">train 700／validation 150／test 150</p><p class="tiny">每類 140／30／30</p></div>
     </div>
   </div>
-  <div class="ask">為什麼不能隨機切？——同家族的兩筆通話很像，如果一筆在訓練、一筆在考試，等於考古題，分數會虛高。</div>
+  <p class="lead">同家族的通話彼此很像，若分散在訓練與測試兩邊，就像考古題，分數會虛高。</p>
   <aside class="notes">
-    <p>每一類底下有十幾種具體情境，我們叫它情境家族。例如垃圾車這一類，有「在等候點沒等到車」「假日有沒有收」「車子的音樂沒播」等等。總共 66 個家族。</p>
-    <p>家族最重要的用途是切資料。一般做法是把 1,000 筆隨機分成訓練和考試，但同家族的通話很像，隨機切會讓考題和練習題幾乎一樣。所以我們規定同一個家族只能整個放在 train、validation 或 test 其中一邊。</p>
-    <p>三個資料集的用途：train 用來訓練，validation 用來調整設定和比較方法，test 留到最後只評估一次。</p>
+    <p>每個類別底下，再細分成十幾種具體情境，我們稱為情境家族，總共 66 個。例如垃圾車這一類，有「在等候點沒等到車」「假日有沒有收」「車子的音樂沒有播」等等。</p>
+    <p>家族最重要的用途是切分資料。同一個家族的通話內容很像，如果隨機切分，訓練和測試會出現幾乎一樣的題目，分數會偏高。所以我們規定同一個家族只能整個放在 train、validation 或 test 其中一邊。</p>
+    <p>三個資料集的用途分別是：train 用來訓練，validation 用來比較方法和調整設定，test 保留到最後只評估一次。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="第一代資料的生成方式">
-  <div class="chap">1 通話資料・第一代（v1）</div>
-  <h2>第一代用「情境素材庫＋模板」組裝，結構嚴謹但句子重複</h2>
+<section class="slide" data-title="第一代資料的生成方式" data-chap="通話資料">
+  <div class="chap"><span class="no">01</span>通話資料・第一代 v1</div>
+  <h2>第一代以「情境素材＋模板」組裝，結構嚴謹但句子重複</h2>
   <div class="cols">
-    <div>
-      <h3>做法</h3>
-      <ol class="steps">
-        <li><span>先為每個家族寫好素材：地點說法、問題描述、客服追問。</span></li>
-        <li><span>程式用固定規則把素材填進對話模板（9、11 或 13 行）。</span></li>
-        <li><span>自動檢查格式、字數、重複率，凍結成 1,000 筆。</span></li>
+    <div class="stack">
+      <ol class="steps small">
+        <li><span>為每個家族準備素材：地點說法、問題描述、客服追問。</span></li>
+        <li><span>程式依固定規則把素材填入對話模板（9、11 或 13 行）。</span></li>
+        <li><span>自動檢查格式、字數、重複率後，凍結成 1,000 筆。</span></li>
       </ol>
-      <p class="tiny" style="margin-top:10px">由 AI（GPT via Codex）撰寫素材與程式，組裝過程是確定性的。</p>
+      <p class="tiny">素材與程式由 AI（GPT via Codex）撰寫，組裝過程為確定性。</p>
+      <div class="card acc"><h3>TF-IDF 拿到 0.98</h3><p class="small">只數關鍵字的方法，分數比所有深度模型都高，代表靠句型就能答對。</p></div>
     </div>
     <div>
-      <h3>後來發現的問題</h3>
-      <div class="bar"><span>開場白只有</span><div class="tk"><i style="width:3%"></i></div><span class="vv">8 種</span></div>
-      <div class="bar"><span>結尾只有</span><div class="tk"><i style="width:8%"></i></div><span class="vv">24 種</span></div>
+      <h3>重複程度</h3>
+      <div class="bar"><span>開場白種類</span><div class="tk"><i style="width:3%"></i></div><span class="vv">8</span></div>
+      <div class="bar"><span>結尾種類</span><div class="tk"><i style="width:8%"></i></div><span class="vv">24</span></div>
       <div class="bar"><span>重複使用的對話行</span><div class="tk"><i style="width:70%;--c:var(--down)"></i></div><span class="vv">≈70%</span></div>
-      <div class="bar"><span>公園類出現「一般公園」</span><div class="tk"><i style="width:61.5%;--c:var(--down)"></i></div><span class="vv">123/200</span></div>
-      <div class="key" style="margin-top:16px">證據：最簡單的「數關鍵字」方法 TF-IDF 拿到 <b>0.98</b>，比所有深度模型都高。模型可能只是在「認句型」。</div>
+      <div class="bar"><span>公園類含「一般公園」</span><div class="tk"><i style="width:61.5%;--c:var(--down)"></i></div><span class="vv">62%</span></div>
+      <p class="tiny" style="margin-top:12px">「一般公園」幾乎等於類別名稱，是一種捷徑詞：只要出現就能猜中類別（200 筆中有 123 筆）。</p>
     </div>
   </div>
   <aside class="notes">
-    <p>第一代資料是先寫好每個情境的素材，再用程式套模板組出來。好處是每一筆的類別、家族、切分都很乾淨。</p>
-    <p>問題是句子重複得很嚴重：開場白只有 8 種，七成的對話行在別的通話裡出現過。更麻煩的是「捷徑詞」：公園類有六成以上的通話直接說出「一般公園」，這幾乎就是類別名稱。</p>
-    <p>最明顯的證據是：只數關鍵字的 TF-IDF 方法拿到 0.98，比 E5 加 MLP 的 0.90 還高。代表這份資料不用理解內容也能答對，拿來評估果蠅模型會不準。</p>
+    <p>第一代資料的做法，是先為每個情境準備好素材，再用程式套進對話模板。好處是每一筆的類別、家族和切分都非常乾淨。</p>
+    <p>問題是句子重複得很嚴重：開場白只有 8 種，大約七成的對話行在其他通話裡也出現過。另外還有捷徑詞，公園類有六成以上的通話直接說出「一般公園」，這幾乎就是類別名稱。</p>
+    <p>最明顯的證據是：只數關鍵字的 TF-IDF 方法拿到 0.98，比所有深度模型都高。這表示第一代資料不需要理解內容就能答對，用來評估果蠅模型並不理想，所以我們重新產生了第二代資料。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="兩代資料範例對照">
-  <div class="chap">1 通話資料・範例對照</div>
+<section class="slide" data-title="兩代資料範例對照" data-chap="通話資料">
+  <div class="chap"><span class="no">01</span>通話資料・範例對照</div>
   <h2>同一個情境「在等候點沒等到垃圾車」，兩代資料的差別</h2>
   <div class="cols c3 grow" style="gap:16px">
-    <div class="fig"><span class="tag">v1・WT-0001</span>
-<div class="tr"><span class="r">R:</span>您好，請您先描述一下現場的情況，我來聽聽。
-<span class="l">L:</span>不好意思，我在內湖區住區收運路線的一段那一帶遇到一個狀況。<mark>最近幾次到原本的停靠位置等，都沒看到車輛停留。</mark>
-<span class="r">R:</span><mark>你有看到車輛停留，還是只聽到周邊的聲音？</mark>
-<span class="l">L:</span><mark>我有問同一段的住戶，大家描述的時間接近，但沒有人看見它停。</mark>
-<span class="r">R:</span>好，我再確認一個細節……</div></div>
-    <div class="fig"><span class="tag">v1・WT-0019</span>
-<div class="tr"><span class="r">R:</span>您好，請問您今天想反映哪方面的情況？
-<span class="l">L:</span>不好意思，我在士林區一處固定收運等候點那一帶遇到一個狀況。<mark>最近幾次到原本的停靠位置等，都沒看到車輛停留。</mark>
-<span class="r">R:</span><mark>你有看到車輛停留，還是只聽到周邊的聲音？</mark>
-<span class="l">L:</span><mark>我有問同一段的住戶，大家描述的時間接近，但沒有人看見它停。</mark>
-<span class="r">R:</span>我了解。是在固定停靠點附近……</div></div>
-    <div class="fig"><span class="tag" style="background:var(--accent-soft)">v2・WT-0053</span>
-<div class="tr"><span class="r">R:</span>臺北1999，您好，我在聽，請說。
-<span class="l">L:</span>你好，嗯，我們這邊垃圾車連續兩天都沒來，我下去等，等了一個多小時都沒有，可是我問隔壁街的朋友，他們那邊有來……
-<span class="r">R:</span>可以說一下附近的路名嗎？
-<span class="l">L:</span>信義區，靠近虎林街的一個停靠點。
-<span class="r">R:</span>您平常大概幾點等？
-<span class="l">L:</span>七點下去，車子大概七點十分到。
-<span class="r">R:</span>這兩天有聽到音樂嗎？……</div></div>
+    <div class="fig"><span><span class="tag">v1・WT-0001</span></span>
+<div class="tr"><span class="r">R：</span>您好，請您先描述一下現場的情況，我來聽聽。
+<span class="l">L：</span>不好意思，我在內湖區住區收運路線的一段那一帶遇到一個狀況。<mark>最近幾次到原本的停靠位置等，都沒看到車輛停留。</mark>
+<span class="r">R：</span><mark>你有看到車輛停留，還是只聽到周邊的聲音？</mark>
+<span class="l">L：</span><mark>我有問同一段的住戶，大家描述的時間接近，但沒有人看見它停。</mark>
+<span class="r">R：</span>好，我再確認一個細節……</div></div>
+    <div class="fig"><span><span class="tag">v1・WT-0019</span></span>
+<div class="tr"><span class="r">R：</span>您好，請問您今天想反映哪方面的情況？
+<span class="l">L：</span>不好意思，我在士林區一處固定收運等候點那一帶遇到一個狀況。<mark>最近幾次到原本的停靠位置等，都沒看到車輛停留。</mark>
+<span class="r">R：</span><mark>你有看到車輛停留，還是只聽到周邊的聲音？</mark>
+<span class="l">L：</span><mark>我有問同一段的住戶，大家描述的時間接近，但沒有人看見它停。</mark>
+<span class="r">R：</span>我了解。是在固定停靠點附近……</div></div>
+    <div class="fig"><span><span class="tag blue">v2・WT-0053</span></span>
+<div class="tr"><span class="r">R：</span>臺北1999，您好，我在聽，請說。
+<span class="l">L：</span>你好，嗯，我們這邊垃圾車連續兩天都沒來，我下去等，等了一個多小時都沒有，可是我問隔壁街的朋友，他們那邊有來……
+<span class="r">R：</span>可以說一下附近的路名嗎？
+<span class="l">L：</span>信義區，靠近虎林街的一個停靠點。
+<span class="r">R：</span>您平常大概幾點等？
+<span class="l">L：</span>七點下去，車子大概七點十分到。
+<span class="r">R：</span>這兩天有聽到音樂嗎？……</div></div>
   </div>
-  <p class="small"><mark>黃底</mark>＝兩筆 v1 完全相同的句子。v2 每筆都是逐句寫的：有語助詞、具體時間、和情境相關的追問。<span class="tiny">R＝客服，L＝來電民眾。</span></p>
+  <p class="small"><mark>黃底</mark>為兩筆 v1 中完全相同的句子。v2 每筆逐句撰寫，有語助詞、具體時間，以及和情境相關的追問。<span class="tiny">　R＝客服，L＝來電民眾</span></p>
   <aside class="notes">
-    <p>左邊兩筆是第一代同一個家族的兩通電話，黃色的句子一字不差。只有地點從內湖換成士林。</p>
-    <p>右邊是第二代同一個家族的一通電話：民眾講話有「嗯」，有具體的「七點下去、七點十分到」，客服會問「有沒有聽到音樂」這種和垃圾車有關的細節。</p>
-    <p>R 是客服、L 是來電民眾，這是整個資料集固定的格式。</p>
+    <p>這裡用同一個情境來比較兩代資料。左邊兩筆是第一代、同一個家族的兩通電話，黃色標示的句子一字不差，只有地點從內湖換成士林。</p>
+    <p>右邊是第二代同一個家族的一通電話。民眾說話會有「嗯」，會講出「七點下去、七點十分到」這種具體細節，客服也會追問「有沒有聽到音樂」這種和垃圾車相關的問題，比較接近真實的通話。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="第二代資料的生成方式">
-  <div class="chap">1 通話資料・第二代（v2）</div>
-  <h2>第二代由 Claude 逐筆撰寫 1,000 通，用自動檢查把關</h2>
+<section class="slide" data-title="第二代資料的生成方式" data-chap="通話資料">
+  <div class="chap"><span class="no">01</span>通話資料・第二代 v2</div>
+  <h2>第二代由 Claude 逐筆撰寫 1,000 通，並以自動檢查把關</h2>
   <div class="cols">
-    <div>
-      <h3>保留不變</h3>
-      <p class="small">五類、66 個家族、每個家族屬於哪個資料集、每家族的筆數。只重寫對話內容。</p>
-      <h3 style="margin-top:14px">刻意加入的真實感</h3>
-      <ul class="small">
-        <li>口語、語助詞、台語夾雜（例如「攏」「毋知」）</li>
-        <li>通話狀況：打斷、重複、請對方再說一次</li>
-        <li>語音辨識錯字</li>
-        <li>難分但標籤明確的邊界案例，約 10–15%</li>
-      </ul>
-      <h3 style="margin-top:14px">撰寫規則</h3>
-      <p class="small">一通只有一個主要問題；不出現類別名稱；不含電話、門牌、姓名；客服不承諾處理結果。</p>
+    <div class="stack">
+      <div><h3>保留不變</h3><p class="small">五類、66 個家族、家族所屬的資料集與每家族筆數；只重寫對話內容。</p></div>
+      <div><h3>加入真實感</h3>
+        <ul class="small">
+          <li>口語、語助詞、台語夾雜（例如「攏」「毋知」）</li>
+          <li>通話狀況：打斷、重複、請對方再說一次</li>
+          <li>語音辨識錯字</li>
+          <li>難分但標籤明確的邊界案例，約 10–15%</li>
+        </ul></div>
+      <div><h3>撰寫規則</h3><p class="small">一通只談一個問題；不出現類別名稱；不含電話、門牌、姓名；客服不承諾處理結果。</p></div>
     </div>
-    <div>
-      <h3>五層自動檢查</h3>
-      <table style="font-size:16px">
+    <div class="stack">
+      <div><h3>品質指標</h3>
+      <table style="font-size:16.5px">
         <thead><tr><th>指標</th><th class="num">v1</th><th class="num">v2</th></tr></thead>
         <tbody>
           <tr><td>重複使用的對話行</td><td class="num">≈70%</td><td class="num up">19.6%</td></tr>
           <tr><td>開場白種類</td><td class="num">8</td><td class="num up">1,000</td></tr>
           <tr><td>兩筆間最高相似度</td><td class="num">0.48</td><td class="num up">0.26</td></tr>
           <tr><td>對話行數</td><td class="num">9／11／13</td><td class="num up">9–16</td></tr>
+          <tr><td>排除同家族的分類一致性</td><td class="num">—</td><td class="num">0.982</td></tr>
         </tbody>
-      </table>
-      <p class="tiny" style="margin-top:8px">另有：捷徑詞掃描、「排除同家族」的分類器檢查標籤一致性（0.982），以及抽查被標記的資料。</p>
-      <div class="card warn" style="margin-top:12px"><p class="small"><b>限制：</b>沒有人工逐筆複核。已知 77 筆開場接不上、326 筆補充問答位置不自然，經實驗確認不影響分類，維持原版。</p></div>
+      </table></div>
+      <div class="card warn"><h3>限制</h3><p class="small">未經人工逐筆複核。另有 77 筆開場銜接不順、326 筆補充問答位置不自然，經實驗確認不影響分類。</p></div>
     </div>
   </div>
   <aside class="notes">
-    <p>第二代保留了類別、家族和切分，只把每一通的內容重新寫過。這樣兩代資料可以直接比較。</p>
-    <p>加了四種真實感：口語、通話中的打斷和重複、語音辨識錯字、少量難分的邊界案例。</p>
-    <p>原本規格要求人工複核，第二代改用五層自動檢查代替，所以要老實說「沒有經過人工逐筆複核」。檢查之一是：拿掉某個家族，用其他資料訓練分類器去猜這個家族，猜錯又很有把握的就退回重寫，最後一致性是 0.982。</p>
-    <p>凍結後發現兩個小問題：77 筆的開場接得不順、326 筆補充問答放的位置不自然。我們做了實驗，把這些地方改掉或拿掉再訓練，分數沒有變，所以維持原版。</p>
+    <p>第二代資料保留了類別、家族和切分方式，只把每一通的內容重新寫過，所以兩代資料可以直接比較。</p>
+    <p>我們加入了四種真實感：口語和台語夾雜、通話中的打斷和重複、語音辨識錯字，以及大約一成的邊界案例。</p>
+    <p>品質上，重複使用的對話行從七成降到兩成，開場白從 8 種變成 1,000 種。另外我們做了一個一致性檢查：每次拿掉一個情境家族，用其他資料訓練分類器去預測它，一致性達到 0.982。</p>
+    <p>限制是這批資料沒有經過人工逐筆複核。我們也發現 77 筆開場銜接不順、326 筆補充問答的位置不自然，實驗確認修正與否對分類結果沒有影響，所以維持原版。</p>
   </aside>
 </section>
 
 <!-- ======================= 2 果蠅連接圖 ======================= -->
-<section class="slide" data-title="什麼是連接圖">
-  <div class="chap">2 果蠅連接圖</div>
-  <h2>連接圖記錄了「哪個神經元連到哪個、連了多少個突觸」</h2>
+<section class="slide divider" data-title="第 2 部分：果蠅連接圖" data-chap="果蠅連接圖">
+  <canvas class="art" data-art="G0"></canvas>
+  <div class="big">02</div>
+  <h2>果蠅連接圖</h2>
+  <ul><li>第一個神經元怎麼選</li><li>用 BFS 找出其餘 499 個</li><li>增強與抑制：補上神經傳導物質資料</li></ul>
+  <aside class="notes"><p>第二部分是果蠅連接圖，也就是模型的骨架。我會說明 500 個神經元是怎麼挑出來的，以及增強和抑制神經元的處理方式。</p></aside>
+</section>
+
+<section class="slide" data-title="什麼是連接圖" data-chap="果蠅連接圖">
+  <div class="chap"><span class="no">02</span>果蠅連接圖</div>
+  <h2>連接圖記錄「哪個神經元連到哪個、連了多少個突觸」</h2>
   <div class="cols c46">
     <div class="kpis" style="--n:1">
-      <div class="kpi"><div class="k">資料來源</div><div class="v" style="font-size:28px">MaleCNS v1.0</div><div class="n">雄果蠅中樞神經系統的公開連接圖（CC BY 4.0）</div></div>
-      <div class="kpi"><div class="k">連線（有方向）</div><div class="v">1.5<small> 億條</small></div><div class="n">每條記錄：來源神經元 → 目標神經元、突觸數</div></div>
+      <div class="kpi hero"><div class="k">資料來源</div><div class="v" style="font-size:34px">MaleCNS v1.0</div><div class="n">雄果蠅中樞神經系統的公開連接圖（CC BY 4.0）</div></div>
+      <div class="kpi"><div class="k">有方向的連線</div><div class="v">1.5<small> 億條</small></div><div class="n">每條記錄：來源 → 目標、突觸數</div></div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div class="card"><h3>為什麼只取 500 個神經元</h3><p class="small">完整的圖太大，一般電腦跑不動，第一版先用 500 個驗證流程可行。<b>500 不是最佳值，也不代表整個果蠅腦。</b></p></div>
-      <div class="card"><h3>這 500 個神經元在模型裡扮演什麼</h3><p class="small">它們的連線就是模型的「電路」：訊號只能沿著真實存在的連線傳。哪些連線存在固定不變，訓練只能調整每條連線的強弱。</p></div>
-      <div class="card acc"><h3>要回答兩個問題</h3><p class="small"><b>①</b> 從數千萬個神經元中，第一個點怎麼選？<b>②</b> 其餘 499 個怎麼找？</p></div>
+    <div class="stack">
+      <div class="card"><h3>只取 500 個神經元</h3><p class="small">完整的圖太大，第一版先以 500 個神經元驗證流程。500 是工程上的選擇，不代表整個果蠅腦。</p></div>
+      <div class="card"><h3>連線就是模型的電路</h3><p class="small">訊號只能沿真實存在的連線傳遞；哪些連線存在固定不變，訓練只調整每條連線的強弱。</p></div>
+      <div class="card acc"><h3>兩個步驟</h3><p class="small"><b>①</b> 選出第一個神經元　<b>②</b> 從它往外找出其餘 499 個</p></div>
     </div>
   </div>
   <aside class="notes">
-    <p>連接圖就是果蠅神經系統的「接線圖」：科學家用電子顯微鏡把整個神經系統切片重建，記錄每個神經元連到哪些神經元、中間有幾個突觸。</p>
-    <p>我們用的是公開的雄果蠅中樞神經系統連接圖，共約 1.5 億條連線。資料表裡有約 8,800 萬個編號，其中包含大量重建時產生的碎片，不全是完整的神經元。</p>
-    <p>整張圖放不進模型，所以只挑 500 個。挑法分兩步：先選一個起點，再從起點往外擴展。</p>
+    <p>連接圖就是果蠅神經系統的接線圖。科學家用電子顯微鏡把整個神經系統切片重建，記錄每個神經元連到哪些神經元、中間有幾個突觸。</p>
+    <p>我們使用公開的雄果蠅中樞神經系統連接圖，大約有 1.5 億條連線。資料表中約有 8,800 萬個編號，其中包含大量重建時產生的碎片。</p>
+    <p>整張圖放不進模型，所以我們挑出 500 個神經元，分兩步：先選一個起點，再從起點往外擴展。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="第一個點怎麼選">
-  <div class="chap">2 果蠅連接圖・選起點</div>
-  <h2>第一個點用「可以重現的抽籤」決定，沒有人為挑選</h2>
+<section class="slide" data-title="第一個點怎麼選" data-chap="果蠅連接圖">
+  <div class="chap"><span class="no">02</span>果蠅連接圖・選起點</div>
+  <h2>第一個神經元由「可重現的抽籤」決定，沒有人為挑選</h2>
   <div class="cols c46">
     <ol class="steps small">
-      <li><span>每個神經元的編號，都用同一個公式（<b>BLAKE2b-128 雜湊</b>，加上固定字串 <span class="mono">FlyCallM12-v1</span>）算出一串 32 字元的「籤號」。</span></li>
-      <li><span>雜湊的特性：同一個編號永遠得到同一個籤號；編號只差 1，籤號就完全不同；看不出編號大小或連線多寡。</span></li>
-      <li><span>全部神經元都算一次，<b>籤號最小的當起點</b>。</span></li>
+      <li><span>每個神經元編號都用同一個公式（<b>BLAKE2b-128 雜湊</b>，加上固定字串 <span class="mono">FlyCallM12-v1</span>）算出一組 32 字元的「籤號」。</span></li>
+      <li><span>同一個編號永遠得到同一個籤號；編號只差 1，籤號就完全不同；籤號和編號大小、連線多寡都無關。</span></li>
+      <li><span>全部神經元都計算一次，<b>籤號最小者為起點</b>。</span></li>
     </ol>
-    <div>
+    <div class="stack">
       <table class="hash">
         <thead><tr><th>神經元編號</th><th>籤號（前 16 字元）</th></tr></thead>
         <tbody>
@@ -392,138 +450,146 @@ body.show-notes #notes { display: block; }
           <tr class="hl"><td><b>274013289</b></td><td><span class="z">000000</span>101b2e6230…</td></tr>
         </tbody>
       </table>
-      <p class="small" style="margin-top:10px">在約 8,800 萬個編號中，<b>274013289</b> 的籤號最小（開頭 6 個 0），成為第一代子圖 G0 的起點。</p>
+      <p class="small">在約 8,800 萬個編號中，<b>274013289</b> 的籤號最小（開頭 6 個 0），成為第一代子圖 G0 的起點。</p>
     </div>
   </div>
   <div class="cols">
-    <div class="card"><h3>為什麼不挑「最重要」的神經元？</h3><p class="small">挑連線最多的會偏向特殊的樞紐；手動指定會被質疑偷挑。抽籤公平，而且任何人重算都得到同一個點。</p></div>
-    <div class="card warn"><h3>代價</h3><p class="small">抽籤保證的是公平和可重現，<b>不保證</b>這個起點對分類最有利。換起點結論會不會變，目前還沒驗證。</p></div>
+    <div class="card"><h3>為什麼用抽籤</h3><p class="small">挑連線最多的神經元會偏向特殊樞紐，手動指定則缺乏客觀依據。抽籤公平，任何人重算都得到同一個點。</p></div>
+    <div class="card warn"><h3>代價</h3><p class="small">抽籤保證公平與可重現，但不保證這個起點對分類最有利；換起點的影響尚未驗證。</p></div>
   </div>
   <aside class="notes">
-    <p>這頁是聽眾最容易卡住的地方，慢慢講。雜湊可以想成一台「打亂機」：放進去一個數字，出來一串看似亂碼的籤號。同樣的數字永遠得到同樣的籤號，所以可以重現；但數字只差一點點，籤號就天差地遠，所以沒辦法預測或操控。</p>
-    <p>表格裡的數字都是實際算出來的。編號 1、2 的籤號開頭是 29、a3，排很後面；274013289 的籤號開頭有 6 個 0，在全部 8,800 萬個編號中最小，所以它就是起點。274013290 只差 1，籤號卻是 f4 開頭。</p>
-    <p>要誠實說：這個方法解決的是「怎麼選才公平」，不是「怎麼選分數最高」。</p>
+    <p>第一個神經元我們用抽籤決定。具體做法是雜湊：把每個神經元的編號放進一個固定的公式，得到一串看起來像亂碼的籤號。同一個編號永遠得到同一個籤號，所以結果可以重現；但編號只要差一點點，籤號就完全不同，所以無法預測或操控。</p>
+    <p>表格中的數字都是實際算出來的。編號 1 和 2 的籤號開頭是 29 和 a3，排在很後面；274013289 的籤號開頭有 6 個 0，是全部 8,800 萬個編號中最小的，所以它就是第一代子圖的起點。</p>
+    <p>這個方法確保了公平和可重現，但並不代表這個起點對分類最有利。換起點會不會影響結論，是我們之後要驗證的問題。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="BFS 擴展動畫">
-  <div class="chap">2 果蠅連接圖・BFS</div>
-  <h2>從起點一層一層往外收鄰居，收滿 500 個就停</h2>
+<section class="slide" data-title="BFS 擴展動畫" data-chap="果蠅連接圖">
+  <div class="chap"><span class="no">02</span>果蠅連接圖・BFS</div>
+  <h2>從起點一層一層往外收鄰居，收滿 500 個為止</h2>
   <div class="cols c64 grow">
     <div class="viz"><canvas id="bfs-canvas"></canvas><div class="hud" id="bfs-hud"></div></div>
-    <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="stack">
       <div class="ctrl" role="group" aria-label="選擇子圖">
-        <button type="button" data-g="G0" aria-pressed="true">G0（第一代）</button>
-        <button type="button" data-g="SIGNED" aria-pressed="false">有正負號（第二代）</button>
+        <button type="button" data-g="G0" aria-pressed="true">G0 第一代</button>
+        <button type="button" data-g="SIGNED" aria-pressed="false">有正負號 第二代</button>
         <button type="button" id="bfs-play">▶ 播放</button>
       </div>
       <ol class="steps small">
         <li><span><b>第 0 層</b>：起點。</span></li>
-        <li><span><b>第 1 層</b>：和起點直接相連的神經元（不論方向）。</span></li>
-        <li><span><b>第 2 層</b>：和第 1 層相連、還沒收過的神經元。某一層會超過 500 時，只收<b>籤號最小</b>的那些。</span></li>
-        <li><span>最後保留這 500 個點之間<b>所有原始的有向連線</b>。</span></li>
+        <li><span><b>第 1 層</b>：與起點直接相連的神經元（不分方向）。</span></li>
+        <li><span><b>第 2 層</b>：與第 1 層相連、尚未收入的神經元。若會超過 500，只收<b>籤號最小</b>的。</span></li>
+        <li><span>保留這 500 個點之間<b>所有原始的有向連線</b>。</span></li>
       </ol>
       <div class="legend" id="bfs-legend"></div>
       <p class="tiny" id="bfs-note"></p>
     </div>
   </div>
   <aside class="notes">
-    <p>BFS 是「廣度優先搜尋」：像丟一顆石頭到水裡，漣漪一圈一圈往外。第 0 圈是起點，第 1 圈是直接相連的鄰居，第 2 圈是鄰居的鄰居。</p>
-    <p>按播放可以看到 G0 的擴展：起點只有 3 個鄰居，第 2 層一下子就超過 500，所以只取籤號最小的 496 個。最後把這 500 點之間的所有連線保留下來，共 2,216 條。</p>
-    <p>切到「有正負號」可以看第二代的版本，下一頁會說明它為什麼不一樣。</p>
+    <p>找出其餘神經元的方法叫 BFS，廣度優先搜尋。就像在水面丟一顆石頭，漣漪一圈一圈往外擴散：第 0 圈是起點，第 1 圈是直接相連的鄰居，第 2 圈是鄰居的鄰居。</p>
+    <p>大家可以看 G0 的動畫：起點只有 3 個鄰居，到第 2 層候選就遠超過 500 個，所以只收籤號最小的 496 個。最後保留這 500 個點之間的所有連線，共 2,216 條。</p>
+    <p>切換到「有正負號」，是第二代的版本，接下來兩頁會說明它的差別。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="增強與抑制">
-  <div class="chap">2 果蠅連接圖・正負號</div>
-  <h2>真實大腦有「抑制」神經元，但原本的資料裡沒有這個資訊</h2>
+<section class="slide" data-title="增強與抑制" data-chap="果蠅連接圖">
+  <div class="chap"><span class="no">02</span>果蠅連接圖・正負號</div>
+  <h2>真實大腦有「抑制」神經元，原本的連線資料卻沒有這項資訊</h2>
   <div class="cols">
-    <div>
-      <div class="card"><h3>增強與抑制</h3><p class="small">神經元靠釋放「神經傳導物質」影響下一個神經元。<span class="exc">增強</span>（＋）讓下一個更容易被啟動，<span class="inh">抑制</span>（−）讓它更不容易被啟動。同一個神經元送出的訊號全部同號（Dale 原則）。</p></div>
-      <div class="card warn" style="margin-top:12px"><h3>問題</h3><p class="small">第一代用的連線檔只有「來源、目標、突觸數」三個欄位，<b>沒有正負號</b>，所以 G0 的連線在模型裡全部當成增強。</p></div>
-      <div class="card acc" style="margin-top:12px"><h3>補充資料</h3><p class="small">另外從官方下載<b>神經傳導物質預測檔</b>（1,835,518 筆），用官方建議的欄位判斷每個神經元釋放哪一種物質。</p></div>
+    <div class="stack">
+      <div class="card"><h3>增強與抑制</h3><p class="small">神經元以神經傳導物質影響下一個神經元：<span class="exc">增強</span>（＋）使其更容易被啟動，<span class="inh">抑制</span>（−）使其更不容易被啟動。同一個神經元送出的訊號全部同號（Dale 原則）。</p></div>
+      <div class="card warn"><h3>第一代的缺口</h3><p class="small">連線檔只有「來源、目標、突觸數」三個欄位，沒有正負號，因此 G0 的連線全部當成增強。</p></div>
+      <div class="card acc"><h3>補充官方資料</h3><p class="small">另外下載官方的<b>神經傳導物質預測檔</b>（1,835,518 筆），依官方建議的欄位判定每個神經元釋放的物質。</p></div>
     </div>
-    <div>
-      <table style="font-size:16px">
+    <div class="stack">
+      <table style="font-size:16.5px">
         <thead><tr><th>神經傳導物質</th><th>判定</th><th class="num">神經元數</th></tr></thead>
         <tbody>
           <tr><td>乙醯膽鹼 ACh</td><td class="exc">＋ 增強</td><td class="num">104,193</td></tr>
           <tr><td>GABA</td><td class="inh">− 抑制</td><td class="num">22,196</td></tr>
-          <tr><td>麩胺酸 Glu</td><td class="inh">− 抑制<span class="tiny">（另做 ＋ 的對照版）</span></td><td class="num">29,443</td></tr>
+          <tr><td>麩胺酸 Glu</td><td class="inh">− 抑制 <span class="tiny">另做 ＋ 的對照版</span></td><td class="num">29,443</td></tr>
           <tr><td>組織胺</td><td class="inh">− 抑制</td><td class="num">8,024</td></tr>
-          <tr><td>多巴胺、章魚胺、血清素</td><td>排除（調節型）</td><td class="num">545</td></tr>
-          <tr><td>無法判定（unclear）</td><td>排除</td><td class="num">1,671,117</td></tr>
-          <tr class="hl"><td colspan="2"><b>有正負號、可以使用的神經元</b></td><td class="num"><b>163,856</b></td></tr>
+          <tr><td>多巴胺、章魚胺、血清素</td><td class="muted">排除（調節型）</td><td class="num">545</td></tr>
+          <tr><td>無法判定</td><td class="muted">排除</td><td class="num">1,671,117</td></tr>
+          <tr class="hl"><td colspan="2"><b>有正負號、可使用的神經元</b></td><td class="num"><b>163,856</b></td></tr>
         </tbody>
       </table>
-      <p class="tiny" style="margin-top:8px">麩胺酸在果蠅腦中多半經氯離子通道產生抑制（Shiu et al. 2024 的全腦模型也這樣設定）；因為有爭議，另外做一個「麩胺酸＝增強」的版本檢查結論會不會變。</p>
+      <p class="tiny">麩胺酸在果蠅腦中多經氯離子通道產生抑制，與 Shiu et al. 2024 全腦模型的設定一致；另以「麩胺酸＝增強」的版本檢查結論是否改變。</p>
     </div>
   </div>
   <aside class="notes">
-    <p>第一代的圖有個不真實的地方：所有連線都是增強。真實大腦大約有一部分神經元是抑制性的，它們讓其他神經元安靜下來，對計算很重要。</p>
-    <p>原本的連線檔只有三個欄位，看不出正負號。所以我們另外下載官方的神經傳導物質預測檔，依每個神經元主要釋放的物質判斷正負號：乙醯膽鹼是增強，GABA、麩胺酸、組織胺是抑制。多巴胺這類調節型物質作用比較複雜，直接排除。</p>
-    <p>183 萬筆裡有九成判定不出來（多半是碎片），最後可用的是 163,856 個神經元，其中增強 104,193 個、抑制 59,663 個。這就是「聚焦到 16 萬個點」的由來。</p>
-    <p>麩胺酸是唯一有爭議的，所以做兩個版本對照。</p>
+    <p>第一代的圖有一個不真實的地方：所有連線都是增強。真實的大腦裡有不少抑制性神經元，它們讓其他神經元安靜下來，對神經計算很重要。</p>
+    <p>原本的連線檔只有三個欄位，看不出正負號，所以我們另外下載官方的神經傳導物質預測檔，依每個神經元主要釋放的物質判定正負號：乙醯膽鹼是增強，GABA、麩胺酸、組織胺是抑制，多巴胺這類調節型物質作用比較複雜，予以排除。</p>
+    <p>183 萬筆資料中，有九成無法判定，最後可用的是 163,856 個神經元，其中增強 104,193 個、抑制 59,663 個。第二代的子圖就從這 16 萬個神經元中挑選。</p>
+    <p>麩胺酸的判定在文獻中較有爭議，所以我們另外做了一個麩胺酸當增強的對照版本。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="有正負號的子圖">
-  <div class="chap">2 果蠅連接圖・第二代子圖</div>
-  <h2>第二代在 16 萬個有正負號的神經元中，選出 300 個增強＋200 個抑制</h2>
+<section class="slide" data-title="有正負號的子圖" data-chap="果蠅連接圖">
+  <div class="chap"><span class="no">02</span>果蠅連接圖・第二代子圖</div>
+  <h2>第二代從 16 萬個有正負號的神經元中，選出 300 增強＋200 抑制</h2>
   <div class="cols">
     <ol class="steps small">
-      <li><span><b>重新選起點</b>：原本的 274013289 判定不出正負號。用<b>同一套抽籤規則</b>，但只在 163,856 個有正負號的神經元中抽 → <b>810979</b>（乙醯膽鹼，增強）。</span></li>
-      <li><span><b>名額 BFS</b>：一樣一層一層擴展，但增強、抑制各有名額（300／200）；沒有正負號的直接跳過。</span></li>
-      <li><span><b>結果</b>：第 1 層收 242 個（跳過 578 個無正負號），第 2 層收 257 個。500 點、<b>6,691 條</b>邊，全部連成一塊。</span></li>
+      <li><span><b>重新選起點</b>：274013289 無法判定正負號；以<b>同一套抽籤規則</b>，只在 163,856 個有正負號的神經元中抽出 <b>810979</b>（乙醯膽鹼，增強）。</span></li>
+      <li><span><b>配額 BFS</b>：同樣一層層擴展，增強、抑制各有名額（300／200），沒有正負號的神經元直接跳過。</span></li>
+      <li><span><b>結果</b>：第 1 層收入 242 個（跳過 578 個），第 2 層收入 257 個；共 500 點、<b>6,691 條</b>連線，全部連成一體。</span></li>
     </ol>
-    <div>
-      <table style="font-size:16px">
-        <thead><tr><th>同一批 500 點的三種設定</th><th class="num">增強點</th><th class="num">抑制點</th><th class="num">抑制邊</th></tr></thead>
+    <div class="stack">
+      <table style="font-size:16.5px">
+        <thead><tr><th>同一批 500 點的三種設定</th><th class="num">增強點</th><th class="num">抑制點</th><th class="num">抑制連線</th></tr></thead>
         <tbody>
-          <tr><td><b>G1</b> 全部當增強</td><td class="num">500</td><td class="num">0</td><td class="num">0</td></tr>
-          <tr><td><b>G2</b> 麩胺酸＝抑制（主要）</td><td class="num">300</td><td class="num">200</td><td class="num">2,951</td></tr>
+          <tr><td><b>G1</b> 全部視為增強</td><td class="num">500</td><td class="num">0</td><td class="num">0</td></tr>
+          <tr class="hl"><td><b>G2</b> 麩胺酸＝抑制</td><td class="num">300</td><td class="num">200</td><td class="num">2,951</td></tr>
           <tr><td><b>G2-glu+</b> 麩胺酸＝增強</td><td class="num">356</td><td class="num">144</td><td class="num">2,464</td></tr>
         </tbody>
       </table>
-      <div class="card" style="margin-top:12px"><p class="small">G1 和 G2 點完全相同、只差正負號，所以兩者比較就是「加入抑制」的效果。G0 和 G1 的起點、點都不同，不能看成單純「換一批點」。</p></div>
+      <p class="small">G1 與 G2 的神經元完全相同、只差正負號，兩者的差異就是「加入抑制」的效果。</p>
     </div>
   </div>
-  <div class="card acc"><h3>輸入點與輸出點</h3><p class="small">500 點中，用另一組抽籤選 <b>32 個輸入點</b>（訊號從這裡進去）和 <b>32 個輸出點</b>（從這裡讀結果）。輸出點只從「訊號 2 跳內到得了」的點中選，保證訊號傳得到。</p></div>
+  <div class="card acc"><h3>輸入點與輸出點</h3><p class="small">500 個點中，再以抽籤選出 <b>32 個輸入點</b>（訊號從這裡進入）與 <b>32 個輸出點</b>（從這裡讀出結果）。輸出點只從訊號 2 跳內能到達的點中選出，確保訊號傳得到。</p></div>
   <aside class="notes">
-    <p>第二代要有正負號，但原本的起點不在神經傳導物質表裡。規則是不能自己換一個順眼的點，所以用同一套抽籤，只是把範圍限制在有正負號的神經元，抽到 810979。</p>
-    <p>擴展時多了名額限制：增強最多 300、抑制最多 200，沒有正負號的跳過。可以回到上一頁的動畫切到「有正負號」，灰色一閃而過的點就是被跳過的。</p>
-    <p>同一批 500 個點做了三種設定。G1 全部當增強、G2 有抑制，兩者只差正負號，所以能乾淨地比較「抑制有沒有用」。G2-glu+ 是麩胺酸改當增強的對照版。</p>
-    <p>輸入輸出點也是抽籤選的。第一次選完發現有 3 個輸出點訊號到不了，所以規則改成只從到得了的點中選。</p>
+    <p>第二代要有正負號，但原本的起點不在神經傳導物質表中。我們沒有自行換一個點，而是沿用同一套抽籤規則，只是把範圍限定在有正負號的神經元，抽出 810979。</p>
+    <p>擴展時多了名額限制：增強最多 300 個、抑制最多 200 個，沒有正負號的神經元直接跳過。前面動畫切到「有正負號」，一閃而過的灰點就是被跳過的神經元。</p>
+    <p>同一批 500 個神經元，我們做了三種設定：G1 全部當增強、G2 有抑制、G2-glu+ 把麩胺酸改成增強。G1 和 G2 只差正負號，可以乾淨地比較抑制的影響。</p>
+    <p>最後，500 個點中還要選出 32 個輸入點和 32 個輸出點，輸出點只從訊號到得了的點中挑選。</p>
   </aside>
 </section>
 
 <!-- ======================= 3 模型與訓練 ======================= -->
-<section class="slide" data-title="整體流程">
-  <div class="chap">3 模型與訓練</div>
-  <h2>三段模型各做一件事：E5 讀文字、Fly A 壓縮、Fly B 分類</h2>
+<section class="slide divider" data-title="第 3 部分：模型與訓練" data-chap="模型與訓練">
+  <canvas class="art" data-art="dots"></canvas>
+  <div class="big">03</div>
+  <h2>模型與訓練</h2>
+  <ul><li>E5、Fly A、Fly B 各自的角色</li><li>圖核心：什麼固定、什麼訓練</li><li>SupCon、調參流程、epoch 與訓練時間</li></ul>
+  <aside class="notes"><p>第三部分是模型與訓練。我會先說明三段模型的分工，再介紹圖核心、SupCon，以及我們的調參流程和訓練時間。</p></aside>
+</section>
+
+<section class="slide" data-title="整體流程" data-chap="模型與訓練">
+  <div class="chap"><span class="no">03</span>模型與訓練</div>
+  <h2>三段模型各司其職：E5 讀文字、Fly A 壓縮、Fly B 分類</h2>
   <div class="flow">
-    <div class="st"><b>E5</b><span>現成的多語文字模型<br>逐字稿 → 384 個數字<br>固定不訓練</span></div><div class="ar">→</div>
-    <div class="st fly"><b>Fly A（降維）</b><span>384 → 32 個數字<br>用 500 個神經元的圖<br>要盡量保留資訊</span></div><div class="ar">→</div>
-    <div class="st fly"><b>Fly B（分類）</b><span>32 → 五類的分數<br>用同一張圖、另一份權重<br>取分數最高的類別</span></div>
+    <div class="st"><b>E5</b><span>現成的多語文字模型<br>逐字稿 → 384 個數字<br>固定不訓練</span></div><div class="ar">›</div>
+    <div class="st fly"><b>Fly A・降維</b><span>384 → 32 個數字<br>以 500 個神經元為骨架<br>盡量保留資訊</span></div><div class="ar">›</div>
+    <div class="st fly"><b>Fly B・分類</b><span>32 → 五類分數<br>同一張圖、另一份權重<br>取分數最高的類別</span></div>
   </div>
   <div class="cols">
-    <div class="card"><h3>為什麼拆成兩隻果蠅</h3><p class="small">這是老師最初的構想：一隻負責「接電話、整理重點」，一隻負責「判斷送哪個單位」。拆開也方便分別檢查哪一段出問題。</p></div>
-    <div class="card"><h3>對照組：不用連接圖的方法</h3><p class="small"><b>LDA</b>：傳統的降維方法，五類最多壓成 4 維。<b>SVM、邏輯迴歸、MLP</b>：常見的分類器。每一段都可以拿果蠅版和傳統版互換比較。</p></div>
+    <div class="card"><h3>兩隻果蠅的分工</h3><p class="small">源自老師的構想：一隻負責「接電話、整理重點」，一隻負責「判斷案件類別」。分開也便於檢查問題出在哪一段。</p></div>
+    <div class="card"><h3>不用連接圖的對照</h3><p class="small"><b>LDA</b>：傳統降維，五類最多壓成 4 維。<b>SVM、邏輯迴歸、MLP</b>：常見分類器。每一段都能和果蠅版互換比較。</p></div>
   </div>
-  <div class="ask">為什麼不直接把逐字稿丟給果蠅？——果蠅模型只接受數字。E5 負責把文字變成數字，所有方法共用同一份 E5 輸出，比較才公平。</div>
+  <p class="lead">果蠅模型只接受數字，由 E5 將文字轉成數字；所有方法共用同一份 E5 輸出，比較才公平。</p>
   <aside class="notes">
-    <p>E5 是現成的文字模型，我們不訓練它，只用它把每通電話變成 384 個數字，意思相近的通話，數字也會接近。</p>
-    <p>Fly A 把 384 個數字壓成 32 個，Fly B 從 32 個數字判斷類別。兩隻果蠅用同一張 500 點的圖，但各自訓練自己的連線強度。</p>
-    <p>每一段都有傳統的對照：LDA 對應 Fly A，SVM 對應 Fly B。這樣可以交叉組合，例如「LDA 接 Fly B」「Fly A 接 SVM」，看問題出在哪一段。</p>
+    <p>整個系統分三段。E5 是現成的文字模型，我們不訓練它，只用它把每通電話轉成 384 個數字，意思相近的通話，數字也會接近。</p>
+    <p>Fly A 把 384 個數字壓縮成 32 個，Fly B 再根據這 32 個數字判斷類別。兩隻果蠅使用同一張 500 點的圖，但各自訓練自己的連線強度。</p>
+    <p>每一段都有傳統方法作為對照：LDA 對應 Fly A，SVM 對應 Fly B。因為所有方法都用同一份 E5 輸出，可以交叉組合，例如 LDA 接 Fly B，或 Fly A 接 SVM，找出問題出在哪一段。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="圖核心">
-  <div class="chap">3 模型與訓練・圖核心</div>
-  <h2>訊號只能沿真實連線傳，訓練只調整每條連線的強弱</h2>
+<section class="slide" data-title="圖核心" data-chap="模型與訓練">
+  <div class="chap"><span class="no">03</span>模型與訓練・圖核心</div>
+  <h2>訊號只能沿真實連線傳遞，訓練只調整每條連線的強弱</h2>
   <div class="cols c46">
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div class="viz" style="height:300px"><svg id="core-svg" viewBox="0 0 520 300" width="100%" height="100%" role="img" aria-label="訊號在圖上逐步傳遞的示意"></svg></div>
+    <div class="stack">
+      <div class="viz" style="height:290px"><svg id="core-svg" viewBox="0 0 520 300" width="100%" height="100%" role="img" aria-label="訊號在圖上逐步傳遞的示意"></svg></div>
       <div class="ctrl" role="group" aria-label="傳遞步數">
         <button type="button" data-step="0" aria-pressed="true">第 0 步</button>
         <button type="button" data-step="1" aria-pressed="false">第 1 步</button>
@@ -531,134 +597,130 @@ body.show-notes #notes { display: block; }
         <button type="button" data-step="3" aria-pressed="false">第 3 步</button>
         <button type="button" data-step="4" aria-pressed="false">第 4 步</button>
       </div>
-      <p class="tiny">示意圖：<span class="exc">藍實線</span>＝增強連線，<span class="inh">橘虛線</span>＝抑制連線。真實的圖有 500 點，還有迴圈和雙向連線；輸入每一步都會再注入一次。</p>
+      <p class="tiny">示意圖：<span class="exc">藍實線</span>為增強連線，<span class="inh">橘虛線</span>為抑制連線。實際的圖有 500 點，包含迴圈與雙向連線，輸入每一步都會再注入一次。</p>
     </div>
-    <div>
+    <div class="stack">
       <table style="font-size:17px">
         <tbody>
-          <tr><td style="width:7.5em"><b>固定不變</b></td><td>哪些連線存在、每個神經元的正負號、輸入輸出點</td></tr>
-          <tr><td><b>要訓練的</b></td><td>每條連線一個強度（永遠是正數）。實際作用＝正負號 × 強度，所以抑制連線永遠是抑制</td></tr>
-          <tr><td><b>起始值</b></td><td>突觸越多的連線，起始強度越大</td></tr>
-          <tr><td><b>傳遞</b></td><td>每一步：每個神經元把收到的訊號加總（除以連入數量），再壓到 −1～1 之間</td></tr>
-          <tr><td><b>T 步</b></td><td>訊號最多走 T 跳。主設定 T=2，另外比較 T=4</td></tr>
+          <tr><td style="width:6.5em"><b>固定不變</b></td><td>連線是否存在、神經元的正負號、輸入與輸出點</td></tr>
+          <tr><td><b>訓練對象</b></td><td>每條連線一個強度（恆為正數）；實際作用＝正負號 × 強度，抑制連線永遠是抑制</td></tr>
+          <tr><td><b>起始值</b></td><td>突觸數越多的連線，起始強度越大</td></tr>
+          <tr><td><b>傳遞</b></td><td>每一步，每個神經元把收到的訊號加總、除以連入數量，再壓到 −1～1</td></tr>
+          <tr><td><b>T 步</b></td><td>訊號最多傳 T 跳；主設定 T=2，另比較 T=4</td></tr>
         </tbody>
       </table>
-      <div class="card warn" style="margin-top:12px"><p class="small"><b>曾經的程式錯誤：</b>舊版第 1 步時所有神經元都是 0，T=2 實際只傳 1 跳，G0 的 32 個輸出點有 23 個永遠是 0。發現後修正並重跑全部實驗。</p></div>
+      <div class="card warn"><h3>修正過的程式錯誤</h3><p class="small">早期版本第 1 步時所有神經元皆為 0，T=2 實際只傳 1 跳，G0 的 32 個輸出點有 23 個永遠為 0。發現後已修正並重跑全部實驗。</p></div>
     </div>
   </div>
   <aside class="notes">
-    <p>這是兩隻果蠅共用的核心。可以按下面的按鈕看訊號怎麼一步一步傳：第 0 步訊號放進輸入點，每多一步就往外走一跳。藍色是增強連線，橘色虛線是抑制連線。</p>
-    <p>重點是「什麼固定、什麼訓練」：連線存不存在、正負號都來自果蠅，不能改；訓練只能把每條連線調強或調弱。這就是「用果蠅的結構限制模型」的意思。</p>
-    <p>右下角的錯誤值得提：早期版本第一步沒有訊號可以傳，T=2 實際只傳了 1 跳。這個錯誤影響很大，後面看結果時會再提到，修正後所有實驗都重跑了。</p>
+    <p>這是兩隻果蠅共用的核心。左邊是示意圖，按下步數可以看到訊號怎麼傳遞：第 0 步訊號進入輸入點，之後每一步往外走一跳。藍色是增強連線，橘色虛線是抑制連線。</p>
+    <p>重點是什麼固定、什麼可以訓練。連線存不存在、正負號是什麼，都來自果蠅，不能更改；訓練只能把每條連線調強或調弱。這就是「用果蠅的結構限制模型」的意思。</p>
+    <p>右下角是我們過程中發現並修正的一個程式錯誤：早期版本 T=2 實際只傳了 1 跳。這個錯誤對結果影響很大，修正後我們重跑了所有實驗，結果的部分會再提到。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="Fly A 與 Fly B 各學什麼">
-  <div class="chap">3 模型與訓練</div>
+<section class="slide" data-title="Fly A 與 Fly B 各學什麼" data-chap="模型與訓練">
+  <div class="chap"><span class="no">03</span>模型與訓練</div>
   <h2>Fly A 學「壓縮後遠近不變」，Fly B 學「答對類別」</h2>
   <div class="cols">
-    <div class="card">
-      <h3>Fly A（降維）</h3>
-      <p class="small mono" style="margin:6px 0">E5 384 維 → 轉成 32 個輸入 → 圖核心 T 步 → 32 個輸出</p>
-      <p class="small"><b>目標一：只保留距離</b>。任兩通電話，在 E5 裡有多遠，壓縮後就該有多遠。誤差叫 <b>stress</b>，越小越好。</p>
-      <p class="small" style="margin-top:8px">這個目標<b>完全不看類別答案</b>，只看資料本身的遠近。</p>
-      <p class="small" style="margin-top:8px"><b>目標二：距離＋SupCon</b>（下一頁）。</p>
+    <div class="card line">
+      <h3>Fly A・降維</h3>
+      <p class="small mono" style="margin:4px 0 10px">E5 384 維 → 32 個輸入 → 圖核心 T 步 → 32 個輸出</p>
+      <p class="small"><b>目標一：只保留距離</b>。任兩通電話在 E5 中相距多遠，壓縮後也應相距多遠；誤差稱為 <b>stress</b>，越小越好。</p>
+      <p class="small" style="margin-top:8px">這個目標<b>不使用類別答案</b>，只看資料本身的遠近。</p>
+      <p class="small" style="margin-top:8px"><b>目標二：距離＋SupCon</b>，詳見下一頁。</p>
     </div>
-    <div class="card">
-      <h3>Fly B（分類）</h3>
-      <p class="small mono" style="margin:6px 0">32 維 → 轉成 32 個輸入 → 圖核心 T 步 → 五類分數</p>
-      <p class="small">用標準的分類誤差（cross-entropy）：答對的類別分數越高越好。</p>
-      <p class="small" style="margin-top:8px"><b>先訓練好 Fly A 並凍結</b>，再把它的輸出當成固定的輸入來訓練 Fly B。Fly B 的誤差不會回頭改 Fly A。</p>
-      <p class="small" style="margin-top:8px">Fly B 也可以改接 LDA 的 4 維輸出。</p>
+    <div class="card line">
+      <h3>Fly B・分類</h3>
+      <p class="small mono" style="margin:4px 0 10px">32 維 → 32 個輸入 → 圖核心 T 步 → 五類分數</p>
+      <p class="small">以標準的分類誤差（cross-entropy）訓練：正確類別的分數越高越好。</p>
+      <p class="small" style="margin-top:8px"><b>先訓練 Fly A 並凍結</b>，再以它的輸出為固定輸入訓練 Fly B；Fly B 的誤差不會回頭修改 Fly A。</p>
+      <p class="small" style="margin-top:8px">Fly B 也可改接 LDA 的 4 維輸出。</p>
     </div>
   </div>
-  <div class="ask">為什麼不一起訓練？——分開訓練才能分別判斷「壓縮好不好」和「分類好不好」，第一代分數低時也是靠這樣找出問題。</div>
+  <p class="lead">分開訓練，才能分別判斷「壓縮得好不好」與「分類得好不好」。</p>
   <aside class="notes">
-    <p>Fly A 原本的目標很單純：壓縮前後，兩通電話之間的距離要一樣。像把地球儀攤平成地圖，希望城市之間的距離盡量不變。這個目標不用知道類別答案。</p>
-    <p>Fly B 就是一般的分類訓練，看答案學。兩隻是分開訓練的：Fly A 先練好、凍結，Fly B 再用它的輸出練。</p>
+    <p>Fly A 原本的目標很單純：壓縮前後，兩通電話之間的距離要保持一樣。就像把地球儀攤平成地圖，希望城市之間的距離盡量不變。這個目標不需要知道類別答案。</p>
+    <p>Fly B 則是一般的分類訓練，看著答案學習。兩隻果蠅分開訓練：Fly A 先練好並固定，Fly B 再用它的輸出來訓練。這樣分數不好時，我們可以分別判斷是壓縮的問題，還是分類的問題。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="SupCon 是什麼">
-  <div class="chap">3 模型與訓練・SupCon</div>
-  <h2>SupCon：壓縮時順便把同類拉近、不同類推遠</h2>
+<section class="slide" data-title="SupCon 是什麼" data-chap="模型與訓練">
+  <div class="chap"><span class="no">03</span>模型與訓練・SupCon</div>
+  <h2>SupCon：壓縮時同時把同類拉近、不同類推遠</h2>
   <div class="cols c46">
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div class="viz" style="height:330px"><svg id="sc-svg" viewBox="0 0 400 330" width="100%" height="100%" role="img" aria-label="SupCon 讓同類點聚在一起的示意"></svg></div>
+    <div class="stack">
+      <div class="viz" style="height:320px"><svg id="sc-svg" viewBox="0 0 400 330" width="100%" height="100%" role="img" aria-label="SupCon 讓同類點聚在一起的示意"></svg></div>
       <div class="ctrl" role="group" aria-label="Fly A 的目標">
         <button type="button" data-sc="0" aria-pressed="true">只保留距離</button>
         <button type="button" data-sc="1" aria-pressed="false">距離＋SupCon</button>
       </div>
-      <div class="legend"><span style="--c:var(--c1)">人行道</span><span style="--c:var(--c2)">道路</span><span style="--c:var(--c3)">公園</span><span style="--c:var(--c4)">垃圾車</span><span style="--c:var(--c5)">路面清潔</span></div>
-      <p class="tiny">示意圖，不是真實資料：只保留距離時各類部分重疊；加入 SupCon 後聚成五團。</p>
+      <div class="legend"><span style="--c:var(--c1)">人行道</span><span style="--c:var(--c2)">道路</span><span style="--c:var(--c3)">公園</span><span style="--c:var(--c4)">垃圾車</span><span style="--c:var(--c5)">路面清潔</span><span class="tiny" style="margin-left:auto">示意圖</span></div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="card"><h3>是什麼</h3><p class="small"><b>Sup</b>ervised <b>Con</b>trastive learning，監督式對比學習。每一批資料裡，對每一通電話：<b>同類</b>的電話當「正例」要靠近，<b>其他類</b>要遠離。</p><p class="tiny" style="margin-top:6px">設定：權重 λ=1（和距離目標一樣重要）、溫度 τ=0.1（越小越強調分得乾淨）。</p></div>
-      <div class="card"><h3>為什麼要用</h3><p class="small">第一代診斷發現 Fly A 是瓶頸：只保留距離時，壓縮丟掉了分類需要的資訊（接 MLP 從 0.902 掉到 0.776）。SupCon 讓 Fly A 在壓縮時就知道「哪些差異對分類重要」。</p></div>
-      <div class="card warn"><h3>代價</h3><p class="small">Fly A 會用到類別答案，就不再是單純的降維；距離也保留得比較差（stress 約從 0.004 升到 0.1–0.18）。</p></div>
+    <div class="stack">
+      <div class="card"><h3>是什麼</h3><p class="small"><b>Sup</b>ervised <b>Con</b>trastive learning，監督式對比學習。在每一批資料中，對每一通電話：<b>同類</b>的電話要靠近，<b>其他類</b>的要遠離。</p><p class="tiny" style="margin-top:6px">權重 λ=1（與距離目標同等重要）；溫度 τ=0.1（越小越要求分得乾淨）。</p></div>
+      <div class="card acc"><h3>為什麼使用</h3><p class="small">第一代的診斷顯示 Fly A 是瓶頸：只保留距離時，壓縮丟失了分類所需的資訊（接 MLP 從 0.902 降到 0.776）。SupCon 讓 Fly A 在壓縮時就保留對分類重要的差異。</p></div>
+      <div class="card warn"><h3>代價</h3><p class="small">Fly A 會用到類別答案，不再是單純的降維；距離的保留也變差（stress 約從 0.004 升到 0.1–0.18）。</p></div>
     </div>
   </div>
   <aside class="notes">
-    <p>SupCon 是這個專案最關鍵的概念之一。按左下的按鈕切換：只保留距離時，五種顏色混在一起，因為 E5 的遠近不一定等於類別的遠近；加了 SupCon 之後，同顏色的點聚成一團。</p>
-    <p>原理是：每次拿一批電話，對其中每一通，同類的是「隊友」，要拉近；不同類的是「對手」，要推遠。溫度 0.1 是個調整參數，越小越要求分得乾淨。</p>
-    <p>為什麼要用？第一代診斷時，我們把 Fly A 的輸出接上 MLP，分數從原始 E5 的 0.902 掉到 0.776，代表壓縮時丟了分類資訊。SupCon 直接告訴 Fly A 哪些差異重要。</p>
-    <p>代價也要講：Fly A 看了答案，就不是純粹的降維；而且距離保留得比較差。所以我們兩種目標都保留，分開報告。效果在結果那一段會用數字說明。</p>
+    <p>SupCon 是這個專案中很關鍵的概念。左邊的示意圖可以切換：只保留距離時，五種顏色有部分重疊，因為文字上的遠近不完全等於類別上的遠近；加入 SupCon 之後，同顏色的點聚成一團。</p>
+    <p>它的原理是：每次拿一批電話，對其中每一通，同類的電話是隊友，要拉近；不同類的是對手，要推遠。溫度 0.1 是調整參數，數值越小，越要求類別之間分得乾淨。</p>
+    <p>我們使用它的原因是：第一代診斷時，把 Fly A 的輸出接上 MLP，分數從 0.902 掉到 0.776，表示壓縮時丟失了分類資訊。SupCon 直接告訴 Fly A 哪些差異對分類重要。</p>
+    <p>它也有代價：Fly A 使用了類別答案，就不再是純粹的降維，距離也保留得比較差。所以兩種目標我們都保留，分開報告。實際的效果，會在結果的部分用數字說明。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="訓練名詞">
-  <div class="chap">3 模型與訓練・名詞</div>
+<section class="slide" data-title="訓練名詞" data-chap="模型與訓練">
+  <div class="chap"><span class="no">03</span>模型與訓練・名詞</div>
   <h2>四個訓練名詞：batch、epoch、學習率、early stopping</h2>
-  <div class="cols">
-    <div class="card"><h3>batch（批次）</h3><p class="small">每次拿 <b>32 通</b>電話算一次誤差、調整一次權重。700 筆訓練資料約 22 批。</p></div>
-    <div class="card"><h3>epoch（回合）</h3><p class="small">把 700 筆<b>全部看過一遍</b>叫一個 epoch，約 22 次調整。最多訓練 200 個 epoch。</p></div>
-    <div class="card"><h3>學習率</h3><p class="small">每次調整跨<b>多大一步</b>。太大會在答案附近來回震盪，太小學得太慢。候選：0.001、0.003、0.01。</p></div>
-    <div class="card"><h3>early stopping（提早停止）</h3><p class="small">每個 epoch 結束都在保留的資料上打分數，<b>連續 25 個 epoch 沒進步就停</b>，取表現最好的那個 epoch。</p></div>
+  <div class="cols c4">
+    <div class="card"><h3>batch</h3><p class="small">每次取 <b>32 通</b>電話計算一次誤差、調整一次權重。700 筆訓練資料約分成 22 批。</p></div>
+    <div class="card"><h3>epoch</h3><p class="small">700 筆<b>全部看過一遍</b>為一個 epoch，約 22 次調整；上限 200 個 epoch。</p></div>
+    <div class="card"><h3>學習率</h3><p class="small">每次調整的<b>步伐大小</b>。太大會來回震盪，太小學得太慢；候選 0.001、0.003、0.01。</p></div>
+    <div class="card"><h3>early stopping</h3><p class="small">每個 epoch 結束都評估一次，<b>連續 25 個 epoch 沒有進步就停止</b>，採用表現最好的那個 epoch。</p></div>
   </div>
-  <div class="key">seed（隨機種子）：決定初始值和資料順序的亂數。每個設定都用 <b>3 個 seed</b>（42、1337、2026）各訓練一次，報告平均，避免一次運氣好或壞。</div>
+  <div class="card acc"><h3>seed（隨機種子）</h3><p class="small">決定初始值與資料順序的亂數。每個設定都以 <b>3 個 seed</b>（42、1337、2026）各訓練一次並取平均，避免結果受單次運氣影響。</p></div>
   <aside class="notes">
-    <p>下一頁講調參流程前，先統一幾個名詞，不然聽眾會跟不上。</p>
-    <p>學習率可以想成在霧中下山：每一步跨多大。太大會一步跨過谷底，太小要走很久，在這裡還可能還沒學好就被提早停止。</p>
-    <p>early stopping 是避免過度訓練：繼續練下去，模型可能開始背訓練資料，在新資料上反而變差。</p>
+    <p>在介紹調參流程之前，先說明四個訓練名詞。batch 是每次拿 32 通電話來計算誤差和調整權重；把 700 筆資料全部看過一遍叫一個 epoch。</p>
+    <p>學習率是每次調整的步伐大小，可以想成在霧中下山：步伐太大會跨過谷底，步伐太小要走很久。early stopping 是為了避免過度訓練，模型繼續練下去可能開始死記訓練資料，所以連續 25 個 epoch 沒有進步就停下來。</p>
+    <p>另外，每個設定都用三個不同的隨機種子各訓練一次，取平均作為結果。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="調參流程">
-  <div class="chap">3 模型與訓練・調參</div>
-  <h2>學習率和訓練長度都由交叉驗證決定，validation 只在最後讀一次</h2>
+<section class="slide" data-title="調參流程" data-chap="模型與訓練">
+  <div class="chap"><span class="no">03</span>模型與訓練・調參</div>
+  <h2>學習率與訓練長度由交叉驗證決定，validation 只在最後讀一次</h2>
   <div class="flow">
-    <div class="st"><b>① Fly A 交叉驗證</b><span>2 目標 × 3 學習率 × 3 seed × 5 份<br><b class="mono" style="font-size:18px;display:inline">90 次</b>訓練</span></div><div class="ar">→</div>
-    <div class="st"><b>② Fly B 交叉驗證</b><span>3 種輸入 × 3 學習率 × 3 seed × 5 份<br><b class="mono" style="font-size:18px;display:inline">135 次</b>訓練</span></div><div class="ar">→</div>
-    <div class="st fly"><b>③ 最終訓練</b><span>全部 700 筆、固定 epoch<br><b class="mono" style="font-size:18px;display:inline">15 次</b>訓練</span></div>
+    <div class="st"><b>① Fly A 交叉驗證</b><span>2 目標 × 3 學習率 × 3 seed × 5 份<br><b class="mono" style="display:inline;font-size:19px">90</b> 次訓練</span></div><div class="ar">›</div>
+    <div class="st"><b>② Fly B 交叉驗證</b><span>3 種輸入 × 3 學習率 × 3 seed × 5 份<br><b class="mono" style="display:inline;font-size:19px">135</b> 次訓練</span></div><div class="ar">›</div>
+    <div class="st fly"><b>③ 最終訓練</b><span>全部 700 筆、固定 epoch<br><b class="mono" style="display:inline;font-size:19px">15</b> 次訓練</span></div>
   </div>
   <div class="cols">
-    <div>
-      <h3>5 份交叉驗證怎麼做</h3>
-      <p class="small">把 700 筆訓練資料依情境家族分成 5 份，每次用 4 份訓練、1 份打分數，輪流 5 次。每種學習率得到一個平均分數，選最高的（同分選較小的學習率）。</p>
-      <h3 style="margin-top:12px">最終訓練要練幾個 epoch</h3>
-      <p class="small">取交叉驗證中 15 次（5 份 × 3 seed）停止點的<b>中位數</b>，用全部 train 重新訓練，不再提早停止。</p>
+    <div class="stack">
+      <div><h3>5 份交叉驗證</h3><p class="small">700 筆訓練資料依情境家族分成 5 份，每次以 4 份訓練、1 份評估，輪流 5 次。每個學習率取平均分數，選最高者（同分時選較小的學習率）。</p></div>
+      <div><h3>最終訓練的 epoch 數</h3><p class="small">取交叉驗證中 15 次（5 份 × 3 seed）停止點的<b>中位數</b>，以全部訓練資料重新訓練。</p></div>
     </div>
-    <div>
-      <h3>為什麼這麼麻煩</h3>
-      <p class="small">如果用 validation 決定什麼時候停、選哪個學習率，又用 validation 報告分數，等於自己出題自己改，分數會偏高。這套流程讓 validation 完全不參與選擇。</p>
-      <div class="card acc" style="margin-top:12px"><p class="small">規則在跑實驗<b>之前</b>就寫好（預註冊），不會看了結果才改規則。</p></div>
+    <div class="stack">
+      <div><h3>validation 不參與選擇</h3><p class="small">若以 validation 決定停止時機與學習率，又以 validation 報告分數，結果會偏高。這套流程讓 validation 只用來報告結果。</p></div>
+      <div class="card acc"><p class="small">所有規則都在實驗<b>之前</b>寫定（預註冊），不依結果調整。</p></div>
     </div>
   </div>
   <aside class="notes">
-    <p>每張圖都要跑這三個階段。先用交叉驗證幫 Fly A 選學習率，再幫 Fly B 選，最後用選好的設定在全部訓練資料上重訓。</p>
-    <p>關鍵是「validation 只看一次」。早期版本是直接看 validation 決定什麼時候停，後來改成這套流程，確保 validation 分數沒有被拿來做選擇。test 更嚴格，整個專案只評估一次。</p>
-    <p>一張圖一次要訓練 240 次模型，四張圖、兩種 T、兩代資料，總共跑了很多次，下一頁是時間。</p>
+    <p>每張圖都要經過這三個階段。先用交叉驗證幫 Fly A 選學習率，再幫 Fly B 選學習率，最後用選好的設定，在全部訓練資料上重新訓練。</p>
+    <p>交叉驗證的做法是把訓練資料依情境家族分成 5 份，輪流用其中 4 份訓練、1 份評估。最終要訓練幾個 epoch，則取交叉驗證停止點的中位數。</p>
+    <p>這樣設計的目的是讓 validation 完全不參與選擇，只用來報告結果；test 更嚴格，整個專案只評估一次。這些規則都在實驗之前就寫定了。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="epoch 與訓練時間">
-  <div class="chap">3 模型與訓練・時間</div>
-  <h2>一次完整調參約 70–100 分鐘；SupCon 的 Fly A 幾個 epoch 就停</h2>
+<section class="slide" data-title="epoch 與訓練時間" data-chap="模型與訓練">
+  <div class="chap"><span class="no">03</span>模型與訓練・時間</div>
+  <h2>一次完整調參約 70–100 分鐘；SupCon 版的 Fly A 幾個 epoch 就收斂</h2>
   <div class="kpis" style="--n:4">
-    <div class="kpi"><div class="k">四張圖・T=2・資料 v2</div><div class="v">70<small> 分</small></div><div class="n">v1 為 79 分</div></div>
+    <div class="kpi hero"><div class="k">四張圖・T=2・資料 v2</div><div class="v">70<small> 分</small></div><div class="n">v1 為 79 分</div></div>
     <div class="kpi"><div class="k">四張圖・T=4・資料 v2</div><div class="v">100<small> 分</small></div><div class="n">v1 為 128 分</div></div>
-    <div class="kpi"><div class="k">G2 一張圖・T=2・v2</div><div class="v">19<small> 分</small></div><div class="n">G0 邊較少，只要 12 分</div></div>
-    <div class="kpi"><div class="k">E5 編碼 1,000 筆</div><div class="v">1.8<small> 分</small></div><div class="n">只需做一次</div></div>
+    <div class="kpi"><div class="k">G2 一張圖・T=2・v2</div><div class="v">19<small> 分</small></div><div class="n">G0 連線較少，12 分</div></div>
+    <div class="kpi"><div class="k">E5 編碼 1,000 筆</div><div class="v">1.8<small> 分</small></div><div class="n">只需執行一次</div></div>
   </div>
   <div class="cols">
     <div>
@@ -667,36 +729,44 @@ body.show-notes #notes { display: block; }
       <div class="bar"><span>Fly A 距離＋SupCon</span><div class="tk"><i style="width:3.5%;--c:var(--c3)"></i></div><span class="vv">7</span></div>
       <div class="bar"><span>Fly B 接 Fly A（SupCon）</span><div class="tk"><i style="width:15.5%"></i></div><span class="vv">31</span></div>
       <div class="bar"><span>Fly B 接 LDA</span><div class="tk"><i style="width:3.5%"></i></div><span class="vv">7</span></div>
-      <p class="tiny" style="margin-top:6px">長條以 200 epoch 上限為滿格。</p>
+      <p class="tiny" style="margin-top:8px">長條以 200 epoch 上限為滿格。</p>
     </div>
-    <div>
+    <div class="stack">
       <h3>觀察</h3>
       <ul class="small">
-        <li>SupCon 很快就把類別分開，再練下去保留的那一份反而變差，所以 7–15 個 epoch 就停。</li>
-        <li>換成資料 v2 後，Fly B 平均停止 epoch 從 87 降到 52，整體快了 1–2 成。</li>
-        <li>v1 有幾格碰到 200 上限，可能沒練完；v2 沒有。</li>
+        <li>SupCon 很快就把類別分開，繼續訓練反而變差，所以 7–15 個 epoch 即停止。</li>
+        <li>換成資料 v2 後，Fly B 平均停止 epoch 從 87 降到 52，整體快 1–2 成。</li>
+        <li>v1 有幾個設定達到 200 上限，v2 則沒有。</li>
       </ul>
-      <p class="tiny" style="margin-top:8px">Windows 筆電 CPU、單一程序的實際時間，會受電腦負載影響。</p>
+      <p class="tiny">Windows 筆電 CPU、單一程序的實際執行時間。</p>
     </div>
   </div>
   <aside class="notes">
-    <p>時間都是一般筆電 CPU 跑的，不需要 GPU。四張圖一次完整調參，T=2 約 70 分鐘，T=4 傳遞步數多，約 100 分鐘。</p>
-    <p>epoch 數最有意思的是 SupCon：只要 7 個 epoch 就達到最好，只保留距離則要 58 個。因為 SupCon 的目標很直接，很快就把類別分開。</p>
-    <p>資料 v2 比 v1 快，主要是 Fly B 提早停止，推測是 v2 的類別在表徵上分得比較開，但這點沒有另外驗證。</p>
+    <p>訓練時間方面，全部都在一般筆電的 CPU 上執行，不需要 GPU。四張圖一次完整調參，T=2 大約 70 分鐘，T=4 因為傳遞步數多，大約 100 分鐘。</p>
+    <p>epoch 數最有意思的是 SupCon：只要 7 個 epoch 就達到最好，只保留距離則需要 58 個，因為 SupCon 的目標很直接，很快就把類別分開。</p>
+    <p>資料 v2 也比 v1 快，主要是 Fly B 提早停止，平均從 87 個 epoch 降到 52 個。</p>
   </aside>
 </section>
 
 <!-- ======================= 4 結果 ======================= -->
-<section class="slide" data-title="第一代結果與診斷">
-  <div class="chap">4 分類結果・第一代</div>
+<section class="slide divider" data-title="第 4 部分：分類結果" data-chap="分類結果">
+  <canvas class="art" data-art="dots"></canvas>
+  <div class="big">04</div>
+  <h2>分類結果</h2>
+  <ul><li>第一代為什麼只有 0.66</li><li>從 0.66 到 0.9 的三個改變</li><li>一次性 test 與圖的影響</li></ul>
+  <aside class="notes"><p>第四部分是結果。我會從第一代的 0.66 說起，說明我們如何找出問題、做了哪些改變，最後是一次性 test 的結果。</p></aside>
+</section>
+
+<section class="slide" data-title="第一代結果與診斷" data-chap="分類結果">
+  <div class="chap"><span class="no">04</span>分類結果・第一代</div>
   <h2>第一代只有 0.66；拆開測試後，發現瓶頸在 Fly A</h2>
   <div class="cols c46">
     <div class="kpis" style="--n:1">
-      <div class="kpi"><div class="k">第一代 Fly A → Fly B（G0・資料 v1）</div><div class="v">0.660</div><div class="n">三個 seed：0.65／0.59／0.74，很不穩定</div></div>
-      <div class="kpi"><div class="k">對照 E5 → MLP</div><div class="v">0.902</div><div class="n">差了將近 0.25</div></div>
+      <div class="kpi hero"><div class="k">第一代 Fly A → Fly B（G0・資料 v1）</div><div class="v">0.660</div><div class="n">三個 seed：0.65／0.59／0.74</div></div>
+      <div class="kpi"><div class="k">對照 E5 → MLP</div><div class="v">0.902</div><div class="n">相差約 0.25</div></div>
     </div>
-    <div>
-      <h3>交叉實驗：降維 × 分類 全部組合（validation）</h3>
+    <div class="stack">
+      <h3>交叉實驗：降維 × 分類的所有組合（validation）</h3>
       <table>
         <thead><tr><th>降維 ＼ 分類</th><th class="num">SVM</th><th class="num">Fly B</th><th class="num">Fly B 加長訓練</th></tr></thead>
         <tbody>
@@ -705,28 +775,28 @@ body.show-notes #notes { display: block; }
           <tr class="hl"><td>Fly A 32 維</td><td class="num">0.792</td><td class="num">0.660</td><td class="num">0.804</td></tr>
         </tbody>
       </table>
-      <ul class="small" style="margin-top:10px">
-        <li><b>看同一欄</b>：分類器都用 SVM，Fly A 比 LDA 低 0.11 → <b>Fly A 壓縮時丟了資訊</b>。</li>
-        <li><b>看同一列</b>：Fly B 加長訓練後追上 SVM → Fly B 原本只是<b>練不夠</b>。</li>
+      <ul class="small">
+        <li><b>同一欄比較</b>：同樣用 SVM，Fly A 比 LDA 低 0.11，表示 <b>Fly A 壓縮時丟失了資訊</b>。</li>
+        <li><b>同一列比較</b>：Fly B 加長訓練後追上 SVM，表示 Fly B 原本只是<b>訓練不足</b>。</li>
       </ul>
     </div>
   </div>
   <aside class="notes">
-    <p>第一代結果很差：0.66，而且換個 seed 從 0.59 到 0.74，很不穩定。</p>
-    <p>為了找原因，把降維和分類拆開，做成交叉表。看最後一列和中間一列的 SVM 欄：同樣用 SVM 分類，Fly A 壓縮後只有 0.79，LDA 有 0.90，所以 Fly A 是主要瓶頸。再看 Fly B：給它更長的訓練，就和 SVM 差不多，所以 Fly B 本身沒問題，只是練不夠。</p>
-    <p>這兩個發現直接導出第二代的兩個改變：Fly A 加入 SupCon，以及每隻果蠅各自調參。</p>
+    <p>第一代的結果是 0.66，而且不同 seed 之間從 0.59 到 0.74，非常不穩定。</p>
+    <p>為了找出原因，我們把降維和分類拆開，做成這張交叉表。先看 SVM 這一欄：同樣用 SVM 分類，Fly A 壓縮後只有 0.79，LDA 有 0.90，所以 Fly A 是主要瓶頸。再看 Fly B：給它更長的訓練時間，就和 SVM 差不多，表示 Fly B 本身沒有問題，只是訓練不夠。</p>
+    <p>這兩個發現，直接引導出第二代的兩個改變：Fly A 加入 SupCon，以及兩隻果蠅各自調參。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="從 0.66 到 0.9 的三個改變">
-  <div class="chap">4 分類結果・改進過程</div>
-  <h2>從 0.66 到 0.9 左右，靠的是三個改變，不只是 SupCon</h2>
+<section class="slide" data-title="從 0.66 到 0.9 的三個改變" data-chap="分類結果">
+  <div class="chap"><span class="no">04</span>分類結果・改進過程</div>
+  <h2>從 0.66 到 0.9 左右，來自三個改變的共同作用</h2>
   <div class="cols c3">
-    <div class="card"><h3>① 各自調參</h3><p class="small">Fly A、Fly B 分別用交叉驗證選學習率與訓練長度，Fly B 不再練不夠。</p></div>
-    <div class="card"><h3>② 修正傳遞錯誤</h3><p class="small">T=2 真的傳 2 跳後，G0 的「只保留距離」從 0.764 升到 0.865。之前看到的「換圖有效」主要是這個錯誤造成的。</p></div>
-    <div class="card acc"><h3>③ SupCon</h3><p class="small">修正後，在每一張圖上都比只保留距離高，但幅度比修正前看到的小。</p></div>
+    <div class="card"><h3>各自調參</h3><p class="small">Fly A、Fly B 分別以交叉驗證選擇學習率與訓練長度，Fly B 不再訓練不足。</p></div>
+    <div class="card"><h3>修正傳遞錯誤</h3><p class="small">T=2 真正傳 2 跳後，G0「只保留距離」從 0.764 升到 0.865；先前看似「換圖有效」，主要來自這個錯誤。</p></div>
+    <div class="card acc"><h3>SupCon</h3><p class="small">修正後，在每一張圖上都優於只保留距離，提升 +0.01～+0.06。</p></div>
   </div>
-  <div>
+  <div class="stack">
     <h3>SupCon 的效果（Fly A → SVM，validation，修正後程式）</h3>
     <table>
       <thead><tr><th></th><th class="num">G0</th><th class="num">G1</th><th class="num">G2</th><th class="num">G2-glu+</th></tr></thead>
@@ -737,177 +807,182 @@ body.show-notes #notes { display: block; }
         <tr class="hl"><td>資料 v2・距離＋SupCon</td><td class="num up">0.926</td><td class="num up">0.938</td><td class="num up">0.936</td><td class="num up">0.927</td></tr>
       </tbody>
     </table>
-    <p class="tiny" style="margin-top:6px">T=2、三個 seed 平均。對照 LDA → SVM：v1 0.900、v2 0.913。SupCon 提升 +0.01～+0.06。</p>
+    <p class="tiny">T=2，三個 seed 平均。對照 LDA → SVM：v1 0.900、v2 0.913。</p>
   </div>
   <aside class="notes">
-    <p>這頁要講清楚，避免聽眾以為 SupCon 是唯一的功臣。從 0.66 到 0.9 有三個原因：Fly B 調好了、傳遞錯誤修正了、Fly A 加了 SupCon。</p>
-    <p>特別是第二點：修正錯誤之前，G0 只保留距離只有 0.764，加了 SupCon 跳到 0.881，看起來 SupCon 效果很大。修正後，只保留距離本身就有 0.865，SupCon 再加上去是 0.879。原因是錯誤讓 G0 只剩 9 個輸出有作用，資訊很少，SupCon 才顯得特別重要。</p>
-    <p>修正後 SupCon 仍然每張圖都比較好，提升 0.01 到 0.06，而且在資料 v2 上能超過 LDA 加 SVM 的 0.913。</p>
+    <p>從 0.66 到 0.9 左右，是三個改變共同的結果：Fly B 調好了、傳遞錯誤修正了，以及 Fly A 加入了 SupCon。</p>
+    <p>第二點特別重要。修正錯誤之前，G0 只保留距離只有 0.764，加上 SupCon 跳到 0.881，看起來 SupCon 的效果非常大。修正錯誤之後，只保留距離本身就有 0.865，再加上 SupCon 是 0.879。原因是錯誤讓 G0 只剩 9 個輸出在作用，資訊很少，SupCon 才顯得特別重要。</p>
+    <p>從下面的表格可以看到，修正後 SupCon 在每張圖上都比較好，提升 0.01 到 0.06，而且在資料 v2 上能超過 LDA 加 SVM 的 0.913。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="一次性 test">
-  <div class="chap">4 分類結果・test</div>
-  <h2>最後的 test 只評估一次：果蠅模型 0.887，傳統方法 0.899</h2>
+<section class="slide" data-title="一次性 test" data-chap="分類結果">
+  <div class="chap"><span class="no">04</span>分類結果・test</div>
+  <h2>test 只評估一次：果蠅模型 0.887，傳統方法 0.899</h2>
   <div class="cols c64">
-    <div>
-      <table>
-        <thead><tr><th>模型</th><th class="num">validation</th><th class="num">test</th></tr></thead>
-        <tbody>
-          <tr class="hl"><td><b>依規則選定的果蠅模型</b><br><span class="tiny">T=2・G2・Fly A（SupCon）→ Fly B</span></td><td class="num">0.919</td><td class="num"><b>0.887</b> ±0.018</td></tr>
-          <tr><td>LDA → SVM</td><td class="num">0.913</td><td class="num">0.899</td></tr>
-          <tr><td>E5 → LDA → 邏輯迴歸</td><td class="num">0.907</td><td class="num">0.891</td></tr>
-          <tr><td>E5 → MLP</td><td class="num">0.946</td><td class="num down">0.845</td></tr>
-          <tr><td>E5 → 邏輯迴歸</td><td class="num">0.953</td><td class="num down">0.791</td></tr>
-          <tr><td class="tiny">參考：所有候選中 test 最高<br>T=4・G2-glu+・Fly A（SupCon）→ SVM</td><td class="num tiny">0.931</td><td class="num tiny">0.950</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="card"><h3>怎麼選出「那一個」模型</h3><p class="small">讀 test 之前就寫定規則：所有以 Fly B 結尾的組合中，<b>validation 最高的那個</b>。test 分數再好也不能改選擇。</p></div>
-      <div class="card"><h3>為什麼 E5 → 邏輯迴歸掉這麼多</h3><p class="small">test 的情境家族比較難，直接用 384 維的方法掉了 0.16。壓縮過、用了類別資訊的表徵（LDA、SupCon）在新情境上比較穩。</p></div>
-      <div class="card warn"><p class="small">test 只有 150 筆（每類 30 筆），差 0.01 大約只是 1–2 筆。</p></div>
+    <table>
+      <thead><tr><th>模型</th><th class="num">validation</th><th class="num">test</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><b>依規則選定的果蠅模型</b><br><span class="tiny">T=2・G2・Fly A（SupCon）→ Fly B</span></td><td class="num">0.919</td><td class="num"><b>0.887</b> ±0.018</td></tr>
+        <tr><td>LDA → SVM</td><td class="num">0.913</td><td class="num">0.899</td></tr>
+        <tr><td>E5 → LDA → 邏輯迴歸</td><td class="num">0.907</td><td class="num">0.891</td></tr>
+        <tr><td>E5 → MLP</td><td class="num">0.946</td><td class="num down">0.845</td></tr>
+        <tr><td>E5 → 邏輯迴歸</td><td class="num">0.953</td><td class="num down">0.791</td></tr>
+        <tr><td class="tiny">參考：全部候選中 test 最高<br>T=4・G2-glu+・Fly A（SupCon）→ SVM</td><td class="num tiny">0.931</td><td class="num tiny">0.950</td></tr>
+      </tbody>
+    </table>
+    <div class="stack">
+      <div class="card"><h3>選定規則</h3><p class="small">讀取 test 之前即寫定：所有以 Fly B 結尾的組合中，<b>validation 最高者</b>。test 結果不改變選擇。</p></div>
+      <div class="card"><h3>E5 → 邏輯迴歸下滑 0.16</h3><p class="small">test 的情境家族較困難；經過壓縮、並使用類別資訊的表徵（LDA、SupCon）在新情境上較穩定。</p></div>
+      <div class="card warn"><p class="small">test 共 150 筆（每類 30 筆），差 0.01 約為 1–2 筆。</p></div>
     </div>
   </div>
   <aside class="notes">
-    <p>test 是整個專案只能用一次的考卷，有程式記錄，用過就不能重來。</p>
-    <p>選模型的規則在看 test 之前就寫死：以 Fly B 結尾的組合裡 validation 最高的，是 T=2、G2、SupCon 接 Fly B。它的 test 是 0.887，傳統的 LDA 加 SVM 是 0.899，差 0.012，大約是一兩通電話。</p>
-    <p>有兩個值得注意的現象：E5 直接接邏輯迴歸在 validation 最高，test 卻掉到 0.79，代表 test 的情境比較陌生；而所有候選中 test 最高的其實是 0.950 的果蠅組合，但規則不允許事後換，所以只當參考。</p>
+    <p>最後是一次性 test。test 是整個專案只能使用一次的資料，有程式記錄，用過就不能重來。</p>
+    <p>選擇模型的規則在讀取 test 之前就寫定了：以 Fly B 結尾的組合中，validation 最高的那一個，也就是 T=2、G2、SupCon 接 Fly B。它的 test 是 0.887，傳統的 LDA 加 SVM 是 0.899，相差 0.012，大約是一到兩通電話。</p>
+    <p>另外有兩個值得注意的現象。第一，E5 直接接邏輯迴歸在 validation 最高，到 test 卻降到 0.79，表示 test 的情境比較陌生，而經過壓縮的表徵比較穩定。第二，所有候選中 test 最高的其實是一個果蠅組合，達到 0.950，但依規則不能事後更換，所以只列為參考。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="圖的影響">
-  <div class="chap">4 分類結果・圖的影響</div>
-  <h2>換圖、加抑制、加步數，效果都不大，也會隨資料改變</h2>
+<section class="slide" data-title="圖的影響" data-chap="分類結果">
+  <div class="chap"><span class="no">04</span>分類結果・圖的影響</div>
+  <h2>換圖、加入抑制、增加步數，影響都不大，且會隨資料改變</h2>
   <div class="cols">
-    <div class="card"><h3>加入抑制（G1 → G2）</h3><p class="small">點完全相同、只差正負號。資料 v2・T=2・Fly A 只保留距離 → SVM：0.895 → 0.922；但加了 SupCon 後兩者差不多（0.938／0.936）。</p></div>
-    <div class="card"><h3>T=2 → T=4</h3><p class="small">T=4 能讓更多連線參與（G0 從 12% 到 76%）。資料 v1 時，有抑制的圖接 Fly B 變好；換成資料 v2，T=4 大多持平或變差。</p></div>
-    <div class="card"><h3>G0 → 新圖</h3><p class="small">修正傳遞錯誤後，G0 和新圖的差距大多消失，原本的「換圖有效」主要來自錯誤。</p></div>
-    <div class="card"><h3>麩胺酸當增強或抑制</h3><p class="small">G2 和 G2-glu+ 互有高低，沒有一致的方向。</p></div>
+    <div class="card"><h3>加入抑制 G1 → G2</h3><p class="small">神經元相同、只差正負號。資料 v2・T=2・只保留距離 → SVM：0.895 → 0.922；加入 SupCon 後兩者相近（0.938／0.936）。</p></div>
+    <div class="card"><h3>T=2 → T=4</h3><p class="small">T=4 讓更多連線參與（G0 從 12% 到 76%）。資料 v1 時有抑制的圖接 Fly B 變好；換成資料 v2，T=4 大多持平或下降。</p></div>
+    <div class="card"><h3>G0 → 新圖</h3><p class="small">修正傳遞錯誤後，G0 與新圖的差距大多消失。</p></div>
+    <div class="card"><h3>麩胺酸的判定</h3><p class="small">G2 與 G2-glu+ 互有高低，沒有一致的方向。</p></div>
   </div>
-  <div class="key">目前的證據顯示：<b>訓練目標（SupCon）比圖的細節更重要</b>。「真實的連接結構是否比隨機接線更好」還需要對照實驗才能回答。</div>
+  <p class="lead">目前的證據顯示：<b>訓練目標（SupCon）比圖的細節更重要</b>。真實連接結構是否優於隨機接線，需要對照實驗才能回答。</p>
   <aside class="notes">
-    <p>原本最期待的是「真實的果蠅結構」帶來的效果，但結果顯示圖的細節影響都不大，而且換了資料方向就變。</p>
-    <p>加抑制在只保留距離時有幫助，但加了 SupCon 就看不出差別。T=4 在 v1 看起來有幫助，到 v2 就不明顯。</p>
-    <p>要回答「果蠅結構到底有沒有用」，下一步需要做打亂連線的對照圖：保留每個神經元的連線數量，但隨機重接。這個還沒做。</p>
+    <p>接著看圖本身的影響。結果顯示，換圖、加入抑制、增加傳遞步數，影響都不大，而且換了資料版本方向就可能改變。</p>
+    <p>加入抑制在只保留距離時有幫助，但加了 SupCon 之後就看不出差別。T=4 在資料 v1 看起來有幫助，到資料 v2 就不明顯。</p>
+    <p>所以目前的結論是，訓練目標比圖的細節更重要。至於真實的果蠅結構是否比隨機接線更好，需要再做打亂連線的對照實驗才能回答。</p>
   </aside>
 </section>
 
 <!-- ======================= 5 兩個腦 ======================= -->
-<section class="slide" data-title="怎麼比較兩個腦">
-  <div class="chap">5 兩個腦的比較</div>
-  <h2>同一張圖、同樣的正負號，只因任務不同，訓練完會長成什麼樣？</h2>
+<section class="slide divider" data-title="第 5 部分：兩個腦的比較" data-chap="兩個腦的比較">
+  <canvas class="art" data-art="SIGNED"></canvas>
+  <div class="big">05</div>
+  <h2>兩個腦的比較</h2>
+  <ul><li>同一張圖、同樣的正負號，只有任務不同</li><li>四種比較方法</li><li>訓練後的 Fly A 與 Fly B 有什麼差異</li></ul>
+  <aside class="notes"><p>最後一部分，我們比較訓練完的兩隻果蠅。它們使用同一張圖，只有任務不同，我們想知道訓練後的大腦會長成什麼樣子。</p></aside>
+</section>
+
+<section class="slide" data-title="怎麼比較兩個腦" data-chap="兩個腦的比較">
+  <div class="chap"><span class="no">05</span>兩個腦的比較</div>
+  <h2>同一張圖，一隻學降維、一隻學分類，以四種方法比較</h2>
   <div class="cols">
-    <div class="card"><h3>① 連線改變量</h3><p class="small">每條連線的強度比起始值改了多少？哪隻果蠅改得多？</p></div>
-    <div class="card"><h3>② 改的是不是同一批連線</h3><p class="small">兩隻果蠅加強或減弱的連線有沒有相關？和「同一隻果蠅換 seed 重練」比較。</p></div>
-    <div class="card"><h3>③ 神經元的類別選擇性 η²</h3><p class="small">一個神經元的反應有多少是由案件類別決定的？0＝和類別無關，1＝完全由類別決定。</p></div>
-    <div class="card"><h3>④ 損傷實驗</h3><p class="small">一次關掉一個神經元，分數掉多少？兩隻果蠅依賴的是不是同一批神經元？</p></div>
+    <div class="card"><h3>① 連線改變量</h3><p class="small">每條連線的強度相對起始值改變了多少？哪一隻改得多？</p></div>
+    <div class="card"><h3>② 是否改了同一批連線</h3><p class="small">兩隻果蠅加強或減弱的連線是否相關？並與「同一隻換 seed 重練」比較。</p></div>
+    <div class="card"><h3>③ 神經元的類別選擇性 η²</h3><p class="small">神經元的反應有多少由案件類別決定？0 表示與類別無關，1 表示完全由類別決定。</p></div>
+    <div class="card"><h3>④ 損傷實驗</h3><p class="small">一次關閉一個神經元，分數下降多少？兩隻果蠅依賴的是否為同一批神經元？</p></div>
   </div>
-  <p class="small">分析對象：四個版本（資料 v1／v2 × T=2／T=4）、四張圖、兩種 Fly A 目標，每個都三個 seed 平均。訓練後分析，不再訓練。</p>
+  <p class="small">分析範圍：資料 v1／v2 × T=2／T=4 四個版本、四張圖、兩種 Fly A 目標，皆為三個 seed 平均；分析時不再訓練。</p>
   <aside class="notes">
-    <p>這一段回答一個比較「神經科學」的問題：兩隻果蠅用同一張圖起步，一隻學降維、一隻學分類，訓練完的大腦會不會不一樣？</p>
-    <p>用四種方法看：連線改了多少、改的是不是同一批、神經元對類別敏不敏感、拿掉單一神經元的影響。比較基準是「同一隻果蠅換 seed 重練」，這樣才知道差異是來自任務，還是只是隨機。</p>
+    <p>我們用四種方法比較兩隻果蠅：連線改了多少、改的是不是同一批連線、神經元對類別是否敏感，以及關掉單一神經元的影響。</p>
+    <p>比較的基準是「同一隻果蠅換一個 seed 重新訓練」。如果兩隻果蠅的差異比換 seed 的差異還大，就表示差異來自任務本身，而不是隨機性。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="兩個腦的差異">
-  <div class="chap">5 兩個腦的比較</div>
+<section class="slide" data-title="兩個腦的差異" data-chap="兩個腦的比較">
+  <div class="chap"><span class="no">05</span>兩個腦的比較</div>
   <h2>分類的 Fly B 大幅改寫連線，降維的 Fly A 幾乎維持原樣</h2>
   <div class="cols c46 grow">
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div class="key"><b>改變量</b>：Fly B 是 Fly A 的 <b>3–22 倍</b>（四個版本方向都相同）。</div>
-      <div class="key"><b>改的連線</b>：兩者相關接近 0，比同一隻換 seed 還低 → 差異來自<b>任務</b>，不是隨機。</div>
-      <div class="key"><b>類別選擇性</b>：Fly B 的神經元幾乎都在分辨類別（η² 0.70–1.00）。</div>
-      <div class="key"><b>損傷</b>：一次關掉一個神經元，分數幾乎不變；兩隻最依賴的神經元重疊很少。</div>
+    <div class="stack">
+      <div class="card"><h3>連線改變量</h3><p class="small">Fly B 是 Fly A 的 <b>3–22 倍</b>，四個版本方向一致。</p></div>
+      <div class="card"><h3>改了不同的連線</h3><p class="small">兩者相關接近 0，低於同一隻換 seed 的相關，差異來自<b>任務</b>。</p></div>
+      <div class="card"><h3>類別選擇性</h3><p class="small">Fly B 的神經元幾乎都在分辨類別（η² 0.70–1.00）。</p></div>
+      <div class="card"><h3>損傷實驗</h3><p class="small">關閉任一神經元分數幾乎不變；兩隻最依賴的神經元重疊很少。</p></div>
     </div>
     <div class="fig">
       <div class="ctrl" role="group" aria-label="Fly A 的目標">
         <button type="button" data-fig="0" aria-pressed="true">Fly A 只保留距離</button>
         <button type="button" data-fig="1" aria-pressed="false">Fly A 距離＋SupCon</button>
       </div>
-      <img id="sel-img" data-src0="<!--DATA:fig:G2_distance_hist_class_selectivity-->" data-src1="<!--DATA:fig:G2_distance_supcon_hist_class_selectivity-->" src="<!--DATA:fig:G2_distance_hist_class_selectivity-->" style="max-height:340px;width:auto;align-self:center" alt="G2 圖上 500 個神經元的類別選擇性分布：藍色 Fly A、橘色 Fly B">
-      <p class="small">藍色 Fly A、橘色 Fly B（G2・資料 v2・T=2・seed 42）。只保留距離時，Fly A 的神經元大多和類別無關；<b>加入 SupCon 後，Fly A 的神經元也變成在分辨類別</b>，這正是 SupCon 讓分數提升的原因。</p>
+      <img id="sel-img" data-src0="<!--DATA:fig:G2_distance_hist_class_selectivity-->" data-src1="<!--DATA:fig:G2_distance_supcon_hist_class_selectivity-->" src="<!--DATA:fig:G2_distance_hist_class_selectivity-->" style="max-height:330px;width:auto;align-self:center" alt="G2 圖上 500 個神經元的類別選擇性分布：藍色 Fly A、橘色 Fly B">
+      <p class="small">藍色 Fly A、橘色 Fly B（G2・資料 v2・T=2・seed 42）。只保留距離時，Fly A 的神經元多半與類別無關；<b>加入 SupCon 後，Fly A 的神經元也轉為分辨類別</b>，這是 SupCon 提升分數的機制。</p>
     </div>
   </div>
   <aside class="notes">
-    <p>結論很一致：Fly B 為了分類，大幅改寫連線，改變量是 Fly A 的 3 到 22 倍；Fly A 只需要微調。兩隻改的不是同一批連線，相關比同一隻換 seed 還低，所以差異是任務造成的。</p>
-    <p>右邊的圖是每個神經元的類別選擇性分布。切換按鈕看：只保留距離時，藍色的 Fly A 散在 0 到 0.6，代表大多和類別無關；加了 SupCon 之後，藍色整個移到右邊，Fly A 的神經元也開始分辨類別。這把 SupCon 的效果從分數連到了神經元層次。</p>
-    <p>最後，單一神經元都不關鍵，拿掉任何一個分數都幾乎不變，代表資訊是分散在很多神經元上的。</p>
+    <p>比較的結果非常一致。Fly B 為了分類，大幅改寫連線，改變量是 Fly A 的 3 到 22 倍；Fly A 只需要微調。兩隻果蠅改的不是同一批連線，相關性比同一隻換 seed 還低，所以差異來自任務。</p>
+    <p>右邊是每個神經元的類別選擇性分布。只保留距離時，藍色的 Fly A 分散在 0 到 0.6 之間，多數神經元和類別無關；切換到加入 SupCon，藍色整體移到右邊，Fly A 的神經元也開始分辨類別。這從神經元的層次說明了 SupCon 為什麼能提升分數。</p>
+    <p>最後，關掉任何單一神經元，分數幾乎都不變，表示資訊分散在很多神經元上，而不是依賴少數幾個。</p>
   </aside>
 </section>
 
 <!-- ======================= 結尾 ======================= -->
-<section class="slide" data-title="結論">
+<section class="slide" data-title="結論" data-chap="結論">
   <div class="chap">結論</div>
   <h2>五個結論</h2>
   <ol class="steps">
-    <li><span><b>果蠅連接圖可以完成分類</b>，test 0.887，和傳統方法 0.899 同一水準，但還沒有穩定勝過。</span></li>
-    <li><span><b>訓練目標比圖的細節重要</b>：SupCon 讓 Fly A 壓縮時保留類別資訊，在每張圖上都有提升。</span></li>
-    <li><span><b>兩個腦很不一樣</b>：分類的 Fly B 大幅改寫連線，降維的 Fly A 幾乎不動；差異來自任務。</span></li>
-    <li><span><b>換圖、加抑制、加步數的效果都不大</b>，而且會隨資料版本改變。</span></li>
-    <li><span><b>資料品質會改變結論</b>：v1 有捷徑詞，靠認字就能答對；v2 去掉捷徑後，才看得出模型真正的能力。</span></li>
+    <li><span><b>果蠅連接圖可以完成分類</b>：test 0.887，與傳統方法 0.899 同一水準，尚未穩定勝出。</span></li>
+    <li><span><b>訓練目標比圖的細節重要</b>：SupCon 讓 Fly A 在壓縮時保留類別資訊，在每張圖上都有提升。</span></li>
+    <li><span><b>兩個腦很不一樣</b>：分類的 Fly B 大幅改寫連線，降維的 Fly A 幾乎不變，差異來自任務。</span></li>
+    <li><span><b>換圖、加入抑制、增加步數的影響都不大</b>，且會隨資料版本改變。</span></li>
+    <li><span><b>資料品質會改變結論</b>：v1 有捷徑詞，靠關鍵字就能答對；v2 去除捷徑後，才看得出模型真正的能力。</span></li>
   </ol>
   <aside class="notes">
-    <p>把前面的內容收成五點。第一點回答研究問題；第二、四點是「什麼重要、什麼不重要」；第三點是神經科學角度的發現；第五點是方法上的教訓。</p>
+    <p>最後總結五點。第一，果蠅連接圖可以完成分類，test 的表現和傳統方法在同一水準。第二，訓練目標比圖的細節更重要，SupCon 在每張圖上都有提升。第三，兩隻果蠅訓練後長成很不一樣的大腦，差異來自任務。第四，換圖、加入抑制、增加步數的影響都不大。第五，資料品質會直接影響結論，第二代資料去除捷徑後，才能看出模型真正的能力。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="限制與下一步">
+<section class="slide" data-title="限制與下一步" data-chap="限制與下一步">
   <div class="chap">限制與下一步</div>
-  <h2>結果的限制，以及接下來可以回答的問題</h2>
+  <h2>結果的限制，以及接下來要回答的問題</h2>
   <div class="cols">
     <div class="card warn">
       <h3>限制</h3>
       <ul class="small">
-        <li>資料是合成的，沒有經過人工逐筆複核。</li>
-        <li>validation 和 test 各只有 150 筆，差 0.01 約是 1–2 筆。</li>
+        <li>資料為合成，且未經人工逐筆複核。</li>
+        <li>validation 與 test 各 150 筆，差 0.01 約為 1–2 筆。</li>
         <li>子圖只有 500 點、一個起點，是工程上的選擇，不代表整個果蠅腦。</li>
-        <li>結果屬研究性質，不代表真實 1999 業務表現，也不連接真實派工。</li>
+        <li>結果屬研究性質，不代表真實 1999 業務表現。</li>
       </ul>
     </div>
     <div class="card acc">
       <h3>下一步</h3>
       <ul class="small">
-        <li><b>換起點</b>：用籤號第 2–5 小的神經元再做幾張圖，看結論是否穩定。</li>
-        <li><b>打亂接線的對照圖</b>：保留連線數量、隨機重接，回答「真實結構是否比隨機好」。</li>
-        <li>少量人工抽查 v2 資料，補強資料品質的證據。</li>
-        <li>研究 LDA → Fly B 在 v2 變差的原因。</li>
+        <li><b>更換起點</b>：以籤號第 2–5 小的神經元再建立數張子圖，檢驗結論是否穩定。</li>
+        <li><b>打亂接線的對照圖</b>：保留連線數量、隨機重接，檢驗真實結構是否優於隨機。</li>
+        <li>少量人工抽查第二代資料。</li>
+        <li>研究 LDA → Fly B 在資料 v2 下降的原因。</li>
       </ul>
     </div>
   </div>
-  <p class="small">完整數據、互動圖表與每一階段的決策紀錄：<b>outputs/FlyCall-1999_專案介紹.html</b>、Fly A／Fly B 分析報告、<span class="mono">.scratch/1999-connectome-demo/issues/</span> 工作票。</p>
+  <p class="small">完整數據、互動圖表與各階段紀錄：<b>專案介紹頁</b>（outputs/FlyCall-1999_專案介紹.html）、Fly A／Fly B 分析報告、工作票。</p>
   <aside class="notes">
-    <p>限制要主動講，比被問到再講好。最重要的兩點：資料是合成且沒人工複核；子圖只有一個起點。</p>
-    <p>下一步中最有價值的是打亂接線的對照圖，因為它直接回答這個專案最核心的問題：真實的果蠅結構到底有沒有帶來好處。</p>
+    <p>這份研究也有幾個限制：資料是合成的，而且沒有經過人工逐筆複核；validation 和 test 各只有 150 筆；子圖只有 500 個神經元和一個起點。</p>
+    <p>接下來我們想回答兩個問題。第一，換一個起點，結論是否仍然成立。第二，也是最核心的問題：把連線隨機打亂、但保留每個神經元的連線數量，真實的果蠅結構是否比隨機接線更好。</p>
+    <p>完整的數據和互動圖表都在專案介紹頁中。以上是我的報告，謝謝大家。</p>
   </aside>
 </section>
 
-<section class="slide" data-title="附錄：名詞表">
+<section class="slide" data-title="附錄：名詞表" data-chap="附錄">
   <div class="chap">附錄</div>
   <h2>名詞表</h2>
-  <div class="cols" style="font-size:17px">
-    <table style="font-size:16px"><tbody>
+  <div class="cols">
+    <table style="font-size:16.5px"><tbody>
       <tr><td><b>Macro-F1</b></td><td>五類 F1 的平均，主要指標</td></tr>
-      <tr><td><b>情境家族</b></td><td>同一類下的一種具體情境，共 66 個；決定資料怎麼切</td></tr>
+      <tr><td><b>情境家族</b></td><td>同一類下的一種具體情境，共 66 個；決定資料切分</td></tr>
       <tr><td><b>train／validation／test</b></td><td>訓練用／比較與調整用／最後只評估一次</td></tr>
-      <tr><td><b>E5</b></td><td>現成的多語文字模型，把逐字稿變成 384 個數字</td></tr>
+      <tr><td><b>E5</b></td><td>現成的多語文字模型，把逐字稿轉成 384 個數字</td></tr>
       <tr><td><b>LDA</b></td><td>傳統的監督式降維，五類最多壓到 4 維</td></tr>
       <tr><td><b>SVM／邏輯迴歸／MLP</b></td><td>常見的分類器，作為對照</td></tr>
       <tr><td><b>捷徑詞</b></td><td>只要出現就能猜出類別的詞</td></tr>
     </tbody></table>
-    <table style="font-size:16px"><tbody>
+    <table style="font-size:16.5px"><tbody>
       <tr><td><b>連接圖</b></td><td>神經元之間的連線與突觸數</td></tr>
-      <tr><td><b>BFS</b></td><td>從起點一層一層往外收鄰居</td></tr>
-      <tr><td><b>G0／G1／G2／G2-glu+</b></td><td>第一代圖／新圖全增強／新圖有抑制／麩胺酸改當增強</td></tr>
+      <tr><td><b>BFS</b></td><td>從起點一層一層往外收入鄰居</td></tr>
+      <tr><td><b>G0／G1／G2／G2-glu+</b></td><td>第一代圖／新圖全增強／新圖有抑制／麩胺酸改為增強</td></tr>
       <tr><td><b>T</b></td><td>訊號在圖上傳遞的步數（跳數）</td></tr>
       <tr><td><b>stress</b></td><td>壓縮前後距離的誤差，越小越好</td></tr>
       <tr><td><b>SupCon</b></td><td>監督式對比學習：同類拉近、不同類推遠</td></tr>
       <tr><td><b>η²</b></td><td>神經元反應中由類別決定的比例，0～1</td></tr>
     </tbody></table>
   </div>
-  <aside class="notes">
-    <p>備用頁：問答時如果有人問到名詞，可以跳到這頁。</p>
-  </aside>
+  <aside class="notes"><p>附錄：本簡報使用的名詞。</p></aside>
 </section>
 
 </div></div>
@@ -922,6 +997,15 @@ body.show-notes #notes { display: block; }
   const deck = $("deck");
   let cur = 0;
   const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const BFS = JSON.parse($("bfs-data").textContent);
+
+  // footer on every slide
+  slides.forEach((s, i) => {
+    const f = document.createElement("div");
+    f.className = "slide-foot";
+    f.innerHTML = "<span>FlyCall-1999 專案簡報" + (s.dataset.chap ? "　｜　" + s.dataset.chap : "") + "</span><b>" + String(i + 1).padStart(2, "0") + " / " + slides.length + "</b>";
+    s.appendChild(f);
+  });
 
   function fit() {
     const st = $("stage").getBoundingClientRect();
@@ -935,8 +1019,8 @@ body.show-notes #notes { display: block; }
     $("pg").textContent = (cur + 1) + " / " + slides.length;
     $("btn-prev").disabled = cur === 0; $("btn-next").disabled = cur === slides.length - 1;
     const n = slides[cur].querySelector("aside.notes");
-    $("notes").innerHTML = "<h4>第 " + (cur + 1) + " 頁｜" + slides[cur].dataset.title + "</h4>" + (n ? n.innerHTML : "<p>（沒有講稿）</p>");
-    if (push !== false) { try { history.replaceState(null, "", "#" + (cur + 1)); } catch (err) { /* embedded or sandboxed view: no URL update */ } }
+    $("notes").innerHTML = "<h4>第 " + (cur + 1) + " 頁｜" + slides[cur].dataset.title + "</h4>" + (n ? n.innerHTML : "");
+    if (push !== false) { try { history.replaceState(null, "", "#" + (cur + 1)); } catch (err) { /* embedded view */ } }
     document.dispatchEvent(new CustomEvent("slidechange", { detail: slides[cur] }));
   }
   document.addEventListener("keydown", (e) => {
@@ -953,12 +1037,11 @@ body.show-notes #notes { display: block; }
   document.addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; }, { passive: true });
   document.addEventListener("touchend", (e) => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1)); tx = null; });
   function toggleNotes() { document.body.classList.toggle("show-notes"); setTimeout(fit, 0); }
-  function toggleFull() { if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+  function toggleFull() { try { if (!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); } catch (err) { /* not allowed */ } }
   $("btn-prev").addEventListener("click", () => show(cur - 1));
   $("btn-next").addEventListener("click", () => show(cur + 1));
-  // click on a slide's empty area: right 2/3 = next, left 1/3 = previous (controls, links and figures excluded)
   deck.addEventListener("click", (e) => {
-    if (e.target.closest("button, a, canvas, svg, img, input, .ctrl, table, .tr") || getSelection().toString()) return;
+    if (e.target.closest("button, a, canvas:not(.art), svg, img, input, .ctrl, table, .tr") || getSelection().toString()) return;
     const r = deck.getBoundingClientRect();
     show(cur + ((e.clientX - r.left) < r.width / 3 ? -1 : 1));
   });
@@ -968,20 +1051,46 @@ body.show-notes #notes { display: block; }
   window.addEventListener("resize", fit);
   window.addEventListener("hashchange", () => { const n = parseInt(location.hash.slice(1), 10); if (n) show(n - 1, false); });
 
-  /* ---------- segmented controls ---------- */
   function seg(container, attr, cb) {
     container.querySelectorAll("[" + attr + "]").forEach((b) => b.addEventListener("click", () => {
       container.querySelectorAll("[" + attr + "]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
       cb(b.getAttribute(attr));
     }));
   }
+  function mulberry(a) { return function () { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+  /* ---------- cover / divider art ---------- */
+  function drawArt(c) {
+    const w = 1280, h = 720, dpr = 2;
+    c.width = w * dpr; c.height = h * dpr;
+    const x = c.getContext("2d"); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, w, h);
+    const kind = c.dataset.art;
+    if (kind === "dots") {
+      const r = mulberry(kind.length * 7 + slides.indexOf(c.closest(".slide")));
+      const pts = Array.from({ length: 70 }, () => [760 + r() * 520, r() * 720]);
+      x.strokeStyle = "rgba(143,193,239,.18)"; x.lineWidth = 1;
+      pts.forEach((p, i) => pts.slice(i + 1).forEach((q) => { if (Math.hypot(p[0] - q[0], p[1] - q[1]) < 120) { x.beginPath(); x.moveTo(p[0], p[1]); x.lineTo(q[0], q[1]); x.stroke(); } }));
+      pts.forEach((p, i) => { x.fillStyle = i % 5 === 0 ? "rgba(235,104,52,.8)" : "rgba(143,193,239,.75)"; x.beginPath(); x.arc(p[0], p[1], 2.6, 0, Math.PI * 2); x.fill(); });
+      return;
+    }
+    const g = BFS[kind]; if (!g) return;
+    const cx = 960, cy = 360, s = 700;
+    const P = (n) => [cx + (n[0] - 0.5) * s, cy + (n[1] - 0.5) * s];
+    x.strokeStyle = "rgba(143,193,239,.10)"; x.lineWidth = .6; x.beginPath();
+    for (const [a, b] of g.edges) { const [x1, y1] = P(g.nodes[a]), [x2, y2] = P(g.nodes[b]); x.moveTo(x1, y1); x.lineTo(x2, y2); }
+    x.stroke();
+    g.nodes.forEach((n, i) => {
+      const [px, py] = P(n);
+      x.fillStyle = kind === "G0" ? "rgba(200,214,226,.8)" : n[4] < 0 ? "rgba(235,104,52,.9)" : "rgba(111,170,232,.9)";
+      x.beginPath(); x.arc(px, py, i === 0 ? 6 : 2.4, 0, Math.PI * 2); x.fill();
+    });
+  }
+  document.querySelectorAll("canvas.art").forEach(drawArt);
 
   /* ---------- BFS animation ---------- */
-  const BFS = JSON.parse($("bfs-data").textContent);
   const cv = $("bfs-canvas"), ctx = cv.getContext("2d");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let graph = "G0", playing = false, start = 0, raf = 0, W = 700, H = 500, sched = null;
-  function mulberry(a) { return function () { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
   function build() {
     const g = BFS[graph], times = new Array(g.nodes.length), ls = {}, le = {};
     let t = 0.4; const maxL = Math.max(...g.nodes.map((n) => n[2]));
@@ -997,7 +1106,7 @@ body.show-notes #notes { display: block; }
   function resize() {
     const r = cv.getBoundingClientRect(); const sc = r.width / cv.offsetWidth || 1;
     W = cv.offsetWidth || 700; H = cv.offsetHeight || 500;
-    const dpr = (window.devicePixelRatio || 1) * sc;
+    const dpr = (window.devicePixelRatio || 1) * Math.max(1, sc);
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   function px(n) { const s = Math.min(W, H); return [W / 2 + (n[0] - 0.5) * s, H / 2 + (n[1] - 0.5) * s]; }
@@ -1026,24 +1135,24 @@ body.show-notes #notes { display: block; }
       ctx.fillStyle = colorOf(n); ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
       const age = t - ti; if (playing && age < 0.6) { ctx.strokeStyle = colorOf(n); ctx.globalAlpha = 1 - age / 0.6; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x, y, r + 3 + age * 14, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1; }
     });
-    const [sx, sy] = px(g.nodes[0]); ctx.fillStyle = css("--ink"); ctx.font = "600 13px " + css("--f"); ctx.textAlign = "center"; ctx.fillText("起點 " + g.seed, sx, sy - 13);
+    const [sx, sy] = px(g.nodes[0]); ctx.fillStyle = css("--ink"); ctx.font = "700 13px " + css("--f"); ctx.textAlign = "center"; ctx.fillText("起點 " + g.seed, sx, sy - 13);
     let skipped = 0;
     if (graph !== "G0") { skipped = sched.ghosts.filter((gh) => gh.t <= t).length; const L2 = sched.ls[2], E2 = sched.le[2]; if (t > L2) skipped += Math.round(g.ghosts["2"] * Math.min(1, (t - L2) / (E2 - L2))); }
     let hud = "<div>" + (c.n ? "第 " + c.layer + " 層" : "準備中") + "｜已收 <b>" + c.n + "</b>／500 點</div>";
     if (graph !== "G0") hud += '<div><span class="exc">增強 <b>' + c.exc + '</b>／300</span>　<span class="inh">抑制 <b>' + c.inh + "</b>／200</span></div><div>跳過（沒有正負號）<b>" + skipped.toLocaleString() + "</b></div>";
-    else hud += "<div>沒有正負號（模型裡全部當增強）</div>";
-    if (done) hud += "<div>" + g.edges.length.toLocaleString() + " 條有向邊</div>";
+    else hud += "<div>沒有正負號（模型中全部視為增強）</div>";
+    if (done) hud += "<div>" + g.edges.length.toLocaleString() + " 條有向連線</div>";
     $("bfs-hud").innerHTML = hud;
     if (playing && !done) raf = requestAnimationFrame(draw);
     else if (playing && done) { playing = false; $("bfs-play").textContent = "↻ 重播"; draw(); }
   }
   function legend() {
     $("bfs-legend").innerHTML = graph === "G0"
-      ? '<span style="--c:var(--neutral)">G0 的點（沒有正負號）</span>'
-      : '<span style="--c:var(--exc)">增強（乙醯膽鹼）</span><span style="--c:var(--inh)">抑制（GABA、麩胺酸、組織胺）</span><span style="--c:var(--ink-3)">一閃即逝的灰點：被跳過的無正負號點（示意）</span>';
+      ? '<span style="--c:var(--neutral)">G0 的神經元（沒有正負號）</span>'
+      : '<span style="--c:var(--exc)">增強（乙醯膽鹼）</span><span style="--c:var(--inh)">抑制（GABA、麩胺酸、組織胺）</span><span style="--c:var(--ink-3)">灰點：被跳過的無正負號神經元</span>';
     $("bfs-note").textContent = graph === "G0"
-      ? "G0：起點只有 3 個鄰居；第 2 層的候選遠超過 500，只收籤號最小的 496 個。結果 500 點、2,216 條邊，很多是重建碎片。"
-      : "有正負號：第 1 層 820 個候選，收 242 個、跳過 578 個沒有正負號的；第 2 層 421,657 個候選，收 257 個。結果 300 增強＋200 抑制、6,691 條邊。";
+      ? "G0：起點只有 3 個鄰居；第 2 層的候選遠超過 500，只收籤號最小的 496 個。結果為 500 點、2,216 條連線。"
+      : "第二代：第 1 層 820 個候選，收入 242 個、跳過 578 個；第 2 層 421,657 個候選，收入 257 個。結果為 300 增強＋200 抑制、6,691 條連線。";
   }
   function play(auto) {
     cancelAnimationFrame(raf); build(); resize(); legend();
@@ -1061,24 +1170,24 @@ body.show-notes #notes { display: block; }
     [290, 70, 2, 1], [290, 160, 2, -1], [290, 250, 2, 1],
     [400, 110, 3, 1], [400, 220, 3, 1],
     [480, 165, 4, 1]];
-  const E = [[0,3],[0,4],[1,4],[1,5],[2,5],[2,6],[3,7],[4,7],[4,8],[5,8],[6,9],[5,9],[7,10],[8,10],[8,11],[9,11],[10,12],[11,12],[3,3]];
+  const E = [[0,3],[0,4],[1,4],[1,5],[2,5],[2,6],[3,7],[4,7],[4,8],[5,8],[6,9],[5,9],[7,10],[8,10],[8,11],[9,11],[10,12],[11,12]];
   function el(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
-  const edgeEls = E.filter(([a, b]) => a !== b).map(([a, b]) => {
+  const edgeEls = E.map(([a, b]) => {
     const [x1, y1, , s] = N[a], [x2, y2] = N[b];
-    const l = el("line", { x1, y1, x2, y2, "stroke-width": 2.2, "stroke-linecap": "round" });
+    const l = el("line", { x1, y1, x2, y2, "stroke-width": 2.4, "stroke-linecap": "round" });
     if (s < 0) l.setAttribute("stroke-dasharray", "5 4");
     l.dataset.sign = s; l.dataset.hop = N[b][2]; svg.appendChild(l); return l;
   });
   const nodeEls = N.map(([x, y, hop, s], i) => {
-    const c = el("circle", { cx: x, cy: y, r: i < 3 ? 13 : i === 12 ? 13 : 11, "stroke-width": 2.5 });
+    const c = el("circle", { cx: x, cy: y, r: i < 3 || i === 12 ? 13 : 11, "stroke-width": 2.5 });
     c.dataset.hop = hop; c.dataset.sign = s; svg.appendChild(c); return c;
   });
-  const lab = (x, y, t) => { const e = el("text", { x, y, "text-anchor": "middle", "font-size": 13 }); e.textContent = t; e.dataset.lab = 1; svg.appendChild(e); };
+  const lab = (x, y, t) => { const e = el("text", { x, y, "text-anchor": "middle", "font-size": 13, "font-weight": 700 }); e.textContent = t; e.dataset.lab = 1; svg.appendChild(e); };
   lab(40, 290, "輸入點"); lab(480, 205, "輸出點");
   function step(k) {
     const exc = css("--exc"), inh = css("--inh"), neu = css("--rule"), ink3 = css("--ink-3"), paper = css("--paper"), ink = css("--ink-2");
     svg.querySelectorAll("[data-lab]").forEach((t) => t.setAttribute("fill", ink));
-    edgeEls.forEach((l) => { const on = +l.dataset.hop <= k; l.setAttribute("stroke", on ? (+l.dataset.sign < 0 ? inh : exc) : neu); l.setAttribute("opacity", on ? 0.95 : 0.6); });
+    edgeEls.forEach((l) => { const on = +l.dataset.hop <= k; l.setAttribute("stroke", on ? (+l.dataset.sign < 0 ? inh : exc) : neu); l.setAttribute("opacity", on ? 0.95 : 0.8); });
     nodeEls.forEach((c) => { const on = +c.dataset.hop <= k; const col = +c.dataset.sign < 0 ? inh : exc; c.setAttribute("fill", on ? col : paper); c.setAttribute("stroke", on ? col : ink3); });
   }
   seg(svg.closest(".slide"), "data-step", (k) => step(+k));

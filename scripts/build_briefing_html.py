@@ -54,7 +54,7 @@ def text(fragment):
 def build_notes(src):
     parts = ["# FlyCall-1999 專案簡報・講稿", "",
              "由 `docs/briefing/deck.html` 自動產生（`python scripts/build_briefing_html.py`），請改原始檔，不要直接改這份。", ""]
-    slides = re.findall(r'<section class="slide[^"]*" data-title="([^"]+)">(.*?)</section>', src, flags=re.S)
+    slides = re.findall(r'<section class="slide[^"]*" data-title="([^"]+)"[^>]*>(.*?)</section>', src, flags=re.S)
     for i, (title, body) in enumerate(slides, 1):
         m = re.search(r'<aside class="notes">(.*?)</aside>', body, flags=re.S)
         parts += [f"## 第 {i} 頁｜{title}", "", text(m.group(1)) if m else "（沒有講稿）", ""]
