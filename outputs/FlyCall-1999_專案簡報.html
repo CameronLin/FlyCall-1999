@@ -416,7 +416,8 @@ body.show-notes #notes { display: block; }
   <div class="cols c46">
     <div class="kpis" style="--n:1">
       <div class="kpi hero"><div class="k">資料來源</div><div class="v" style="font-size:34px">MaleCNS v1.0</div><div class="n">雄果蠅中樞神經系統的公開連接圖（CC BY 4.0）</div></div>
-      <div class="kpi"><div class="k">有方向的連線</div><div class="v">1.5<small> 億條</small></div><div class="n">每條記錄：來源 → 目標、突觸數</div></div>
+      <div class="kpi"><div class="k">神經元・細胞類型</div><div class="v">16.4<small> 萬・11,751 種</small></div><div class="n">官方公布：166,691 個神經元、約 11,700 種類型</div></div>
+      <div class="kpi"><div class="k">神經元之間的突觸</div><div class="v">1.22<small> 億</small></div><div class="n">官方公布：約 1.25 億</div></div>
     </div>
     <div class="stack">
       <div class="card"><h3>只取 500 個神經元</h3><p class="small">完整的圖太大，第一版先以 500 個神經元驗證流程。500 是工程上的選擇，不代表整個果蠅腦。</p></div>
@@ -426,7 +427,7 @@ body.show-notes #notes { display: block; }
   </div>
   <aside class="notes">
     <p>連接圖就是果蠅神經系統的接線圖。科學家用電子顯微鏡把整個神經系統切片重建，記錄每個神經元連到哪些神經元、中間有幾個突觸。</p>
-    <p>我們使用公開的雄果蠅中樞神經系統連接圖，大約有 1.5 億條連線。資料表中約有 8,800 萬個編號，其中包含大量重建時產生的碎片。</p>
+    <p>我們使用公開的雄果蠅中樞神經系統連接圖。官方公布約 16.7 萬個神經元、11,700 種細胞類型、1.25 億個突觸；我們從下載的資料中算出 164,446 個有細胞類型的神經元、11,751 種類型，神經元之間的突觸約 1.22 億個，和官方數字一致。</p>
     <p>整張圖放不進模型，所以我們挑出 500 個神經元，分兩步：先選一個起點，再從起點往外擴展。在這之前，先看我們實際下載的資料長什麼樣子。</p>
   </aside>
 </section>
@@ -437,7 +438,7 @@ body.show-notes #notes { display: block; }
   <div class="cols">
     <div class="stack">
       <div><span class="tag blue">檔案 1・連線</span> <span class="tiny mono">connectome-weights-…-minconf-0.5.feather</span></div>
-      <p class="small"><b>1.05 GB・151,856,684 列</b>，每一列是一條有方向的連線。</p>
+      <p class="small"><b>1.05 GB・151,856,684 列</b>，每一列是兩個「片段」之間的有向連線；片段包含神經元與重建碎片。</p>
       <table style="font-size:15.5px">
         <thead><tr><th class="num">body_pre<br>來源神經元</th><th class="num">body_post<br>目標神經元</th><th class="num">weight<br>突觸數</th></tr></thead>
         <tbody>
@@ -467,9 +468,50 @@ body.show-notes #notes { display: block; }
   </div>
   <p class="lead">兩份檔案使用<b>同一套神經元編號</b>（body ＝ body_pre／body_post），因此可以把化學物質對應到每一條連線的來源神經元。</p>
   <aside class="notes">
-    <p>我們從官方下載了兩份檔案。第一份是連線檔，大約 1 GB、一億五千萬列，每一列是一條有方向的連線，只有三個欄位：來源神經元、目標神經元，以及兩者之間有幾個突觸。例如表格中，神經元 810979 連到 800743，中間有 77 個突觸。這份檔案只告訴我們誰連到誰、連得多強，沒有正負號，也沒有細胞類型。</p>
+    <p>我們從官方下載了兩份檔案。第一份是連線檔，大約 1 GB、一億五千萬列，每一列是兩個片段之間的有向連線，只有三個欄位：來源神經元、目標神經元，以及兩者之間有幾個突觸。例如表格中，神經元 810979 連到 800743，中間有 77 個突觸。這份檔案只告訴我們誰連到誰、連得多強，沒有正負號，也沒有細胞類型。</p>
     <p>第二份是神經傳導物質檔，每一列是一個神經元。右邊是 810979 這一列：官方對它的 246 個突觸做了預測，97% 判定為乙醯膽鹼；同類型的神經元合起來看也是乙醯膽鹼，而且有實驗證據。最後的 consensus_nt 欄位是官方建議使用的標籤，我們就是讀這個欄位。</p>
     <p>兩份檔案用同一套神經元編號，所以可以把每個神經元的化學物質，對應到它送出去的每一條連線。</p>
+  </aside>
+</section>
+
+<section class="slide" data-title="連線資料中的碎片" data-chap="果蠅連接圖">
+  <div class="chap"><span class="no">02</span>果蠅連接圖・資料品質</div>
+  <h2>1.5 億列中，只有 17% 是神經元之間的連線，其餘多與重建碎片有關</h2>
+  <div class="cols">
+    <div class="stack">
+      <h3>151,856,684 列的組成</h3>
+      <table style="font-size:16px">
+        <thead><tr><th>連線的兩端</th><th class="num">列數</th><th class="num">比例</th><th class="num">突觸數</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td>神經元 ↔ 神經元</td><td class="num">25,135,616</td><td class="num">17%</td><td class="num">1.22 億</td></tr>
+          <tr><td>神經元 ↔ 碎片</td><td class="num">116,609,982</td><td class="num">77%</td><td class="num">1.77 億</td></tr>
+          <tr><td>碎片 ↔ 碎片</td><td class="num">10,111,086</td><td class="num">7%</td><td class="num">0.12 億</td></tr>
+        </tbody>
+      </table>
+      <p class="small">神經元＝有細胞類型的 164,446 個片段，只占約 8,800 萬個編號的 <b>0.19%</b>；其餘多為電子顯微鏡重建留下的碎片。</p>
+    </div>
+    <div class="stack">
+      <h3>只看神經元之間，和官方數字一致</h3>
+      <table style="font-size:16.5px">
+        <thead><tr><th></th><th class="num">下載資料</th><th class="num">官方公布</th></tr></thead>
+        <tbody>
+          <tr><td>神經元</td><td class="num">164,446</td><td class="num">166,691</td></tr>
+          <tr><td>細胞類型</td><td class="num">11,751</td><td class="num">約 11,700</td></tr>
+          <tr><td>突觸</td><td class="num">1.22 億</td><td class="num">約 1.25 億</td></tr>
+          <tr><td>連線（列）</td><td class="num">2,514 萬</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="card warn"><h3>第一代 G0：以碎片為主</h3><p class="small">從全部編號中抽籤，抽中神經元的機率只有 0.19%：起點 274013289 本身就不在神經元名單中，500 個點有 360 個多半是碎片，連線也只有 2,216 條。</p></div>
+    <div class="card acc"><h3>第二代 G1／G2：只含神經元</h3><p class="small">配額 BFS 只收入有正負號的神經元，碎片會被跳過；500 個點與 6,691 條連線都在神經元之間。</p></div>
+  </div>
+  <aside class="notes">
+    <p>連線檔有一點需要特別說明。官方是以「片段」為單位發布連線，片段除了完整的神經元，也包括電子顯微鏡重建時留下的大量細小碎片。所以一億五千萬列裡，只有 17% 是兩個神經元之間的連線，其餘八成以上至少有一端是碎片。</p>
+    <p>如果只看神經元之間的部分，我們算出 164,446 個神經元、11,751 種細胞類型、1.22 億個突觸，和官方公布的數字一致。</p>
+    <p>這對兩代子圖的影響很大。第一代是從全部約 8,800 萬個編號中抽籤，其中神經元只占 0.19%，所以幾乎一定會抽到碎片。實際上，第一代的起點 274013289 就不在神經元名單中，500 個點有 360 個多半是碎片，連線也只有 2,216 條。第二代只在有正負號的神經元中抽籤和擴展，碎片會被自動跳過，所以第二代子圖完全由真正的神經元組成，連線有 6,691 條。</p>
+    <p>碎片確實讓 G0 的品質較差，但第一代 0.66 的主因是 Fly A 壓縮時丟失資訊、Fly B 訓練不足，以及傳遞錯誤，這部分在結果中會說明。修正這些問題後，同樣用 G0 也能達到 0.86–0.93。至於 G0 本身的影響：資料 v1 時，G0 和新圖的差距在 0.04 以內；資料 v2 時，G0 在不用 SupCon 的組合中多數低 0.03–0.08，這可能和 G0 以碎片為主有關。</p>
   </aside>
 </section>
 
@@ -526,7 +568,7 @@ body.show-notes #notes { display: block; }
           <tr class="hl"><td><b>274013289</b></td><td><span class="z">000000</span>101b2e6230…</td></tr>
         </tbody>
       </table>
-      <p class="small">在約 8,800 萬個編號中，<b>274013289</b> 的籤號最小（開頭 6 個 0），成為第一代子圖 G0 的起點。</p>
+      <p class="small">在約 8,800 萬個片段編號中，<b>274013289</b> 的籤號最小（開頭 6 個 0），成為第一代子圖 G0 的起點。</p>
     </div>
   </div>
   <div class="cols">
@@ -926,7 +968,7 @@ body.show-notes #notes { display: block; }
   <div class="cols">
     <div class="card"><h3>加入抑制 G1 → G2</h3><p class="small">神經元相同、只差正負號。資料 v2・T=2・只保留距離 → SVM：0.895 → 0.922；加入 SupCon 後兩者相近（0.938／0.936）。</p></div>
     <div class="card"><h3>T=2 → T=4</h3><p class="small">T=4 讓更多連線參與（G0 從 12% 到 76%）。資料 v1 時有抑制的圖接 Fly B 變好；換成資料 v2，T=4 大多持平或下降。</p></div>
-    <div class="card"><h3>G0 → 新圖</h3><p class="small">修正傳遞錯誤後，G0 與新圖的差距大多消失。</p></div>
+    <div class="card"><h3>G0 → 新圖</h3><p class="small">修正傳遞錯誤後，資料 v1 的差距在 0.04 以內；資料 v2 中 G0 不用 SupCon 時多數低 0.03–0.08，可能與 G0 以碎片為主有關。</p></div>
     <div class="card"><h3>麩胺酸的判定</h3><p class="small">G2 與 G2-glu+ 互有高低，沒有一致的方向。</p></div>
   </div>
   <p class="lead">目前的證據顯示：<b>訓練目標（SupCon）比圖的細節更重要</b>。真實連接結構是否優於隨機接線，需要對照實驗才能回答。</p>
@@ -1227,7 +1269,7 @@ body.show-notes #notes { display: block; }
       ? '<span style="--c:var(--neutral)">G0 的神經元（沒有正負號）</span>'
       : '<span style="--c:var(--exc)">增強（乙醯膽鹼）</span><span style="--c:var(--inh)">抑制（GABA、麩胺酸、組織胺）</span><span style="--c:var(--ink-3)">灰點：被跳過的無正負號神經元</span>';
     $("bfs-note").textContent = graph === "G0"
-      ? "G0：起點只有 3 個鄰居；第 2 層的候選遠超過 500，只收籤號最小的 496 個。結果為 500 點、2,216 條連線。"
+      ? "G0：起點只有 3 個鄰居；第 2 層的候選遠超過 500，只收籤號最小的 496 個。結果為 500 點、2,216 條連線，其中 360 個點多半是碎片。"
       : "第二代：第 1 層 820 個候選，收入 242 個、跳過 578 個；第 2 層 421,657 個候選，收入 257 個。結果為 300 增強＋200 抑制、6,691 條連線。";
   }
   function play(auto) {

@@ -483,7 +483,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
   <div class="panel" id="fg-what">
     <h3 class="sub"><span class="subno">2.1</span>連接圖是什麼</h3>
     <ul>
-      <li><b>資料來源：</b>雄果蠅神經系統（MaleCNS v1.0）官方的連線資料，約 1.5 億列。每一列是「來源 → 目標，有幾個突觸」。</li>
+      <li><b>資料來源：</b>雄果蠅神經系統（MaleCNS v1.0）官方的連線資料，約 1.5 億列。每一列是「來源 → 目標，有幾個突觸」；來源與目標是「片段」，包含神經元與重建碎片。兩端都是神經元的只有約 2,514 萬列（17%）、1.22 億個突觸，與官方公布的約 1.25 億一致。</li>
       <li><b>點：</b>一個身體片段（body）。大部分是神經元，但也有很多重建時留下的小片段，這點後面很重要。</li>
       <li><b>邊：</b>有方向的連線，代表來源的訊號可以送到目標；連線數（突觸數）越多，初始強度越大。</li>
       <li>整張圖有 8,838 萬個點，太大無法訓練，所以要用固定規則選出 500 個點的小圖。</li>
@@ -1098,7 +1098,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
     <div class="block why"><span class="tag">為什麼</span><p>之後每個實驗都要能完全重現：資料不能被改到、連接圖每次選出來都要一樣。</p></div>
     <div class="block what"><span class="tag">做了什麼</span><ul>
       <li>資料讀取器每次載入都檢查筆數、類別數量和切分，而且只讀不改。</li>
-      <li>下載雄果蠅神經系統官方資料（約 1 GB、1.5 億條連線），轉成「點」與「有方向的邊」兩張表，並記錄校驗碼。</li>
+      <li>下載雄果蠅神經系統官方資料（約 1 GB、1.5 億列片段連線，其中神經元之間約 2,514 萬列），轉成「點」與「有方向的邊」兩張表，並記錄校驗碼。</li>
       <li>用固定規則從整個神經系統選出 <b>500 個神經元、2,216 條連線</b>（之後稱為 G0）。</li>
       <li>在 500 點中選 32 個輸入點、32 個輸出點，確認訊號走得到。</li>
     </ul></div>
@@ -1637,7 +1637,7 @@ footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule);
     <summary><span class="tk-no">02</span><span class="tk-title">M0.1 MaleCNS 資料來源</span><span class="st done">完成</span><span class="tk-one">選定並釘住果蠅神經系統的官方連線資料</span></summary>
     <div class="tk-body"><dl>
       <dt>追蹤什麼</dt><dd>要用哪一份果蠅連接圖、從哪裡下載、怎麼確認拿到的是同一份檔案。</dd>
-      <dt>變更與產出</dt><dd>選定雄果蠅神經系統（MaleCNS v1.0）官方檔 <code>connectome-weights-male-cns-v1.0-minconf-0.5.feather</code>（約 1 GB、1.5 億條連線）；<code>source_manifest.yaml</code> 記錄來源、版本與校驗碼。</dd>
+      <dt>變更與產出</dt><dd>選定雄果蠅神經系統（MaleCNS v1.0）官方檔 <code>connectome-weights-male-cns-v1.0-minconf-0.5.feather</code>（約 1 GB、1.5 億列片段連線，其中神經元之間約 2,514 萬列）；<code>source_manifest.yaml</code> 記錄來源、版本與校驗碼。</dd>
       <dt>結果</dt><dd>來源固定，完整檔案 SHA-256 已記錄，之後所有連接圖都由這份檔案衍生。</dd>
       <dt>相依</dt><dd>無；03 依賴它。</dd>
     </dl></div>
