@@ -230,7 +230,7 @@ body.show-notes #notes { display: block; }
   </div>
   <div class="flow">
     <div class="st"><b>通話逐字稿</b><span>合成，1,000 筆</span></div><div class="ar">›</div>
-    <div class="st"><b>E5</b><span>文字 → 384 個數字</span></div><div class="ar">›</div>
+    <div class="st"><b>E5</b><span>multilingual-e5-small<br>文字 → 384 個數字</span></div><div class="ar">›</div>
     <div class="st fly"><b>Fly A</b><span>384 → 32（降維）</span></div><div class="ar">›</div>
     <div class="st fly"><b>Fly B</b><span>32 → 五類之一（分類）</span></div>
   </div>
@@ -427,7 +427,83 @@ body.show-notes #notes { display: block; }
   <aside class="notes">
     <p>連接圖就是果蠅神經系統的接線圖。科學家用電子顯微鏡把整個神經系統切片重建，記錄每個神經元連到哪些神經元、中間有幾個突觸。</p>
     <p>我們使用公開的雄果蠅中樞神經系統連接圖，大約有 1.5 億條連線。資料表中約有 8,800 萬個編號，其中包含大量重建時產生的碎片。</p>
-    <p>整張圖放不進模型，所以我們挑出 500 個神經元，分兩步：先選一個起點，再從起點往外擴展。</p>
+    <p>整張圖放不進模型，所以我們挑出 500 個神經元，分兩步：先選一個起點，再從起點往外擴展。在這之前，先看我們實際下載的資料長什麼樣子。</p>
+  </aside>
+</section>
+
+<section class="slide" data-title="下載的兩份官方檔案" data-chap="果蠅連接圖">
+  <div class="chap"><span class="no">02</span>果蠅連接圖・原始資料</div>
+  <h2>下載的兩份官方檔案：一份記錄連線，一份記錄神經元的化學物質</h2>
+  <div class="cols">
+    <div class="stack">
+      <div><span class="tag blue">檔案 1・連線</span> <span class="tiny mono">connectome-weights-…-minconf-0.5.feather</span></div>
+      <p class="small"><b>1.05 GB・151,856,684 列</b>，每一列是一條有方向的連線。</p>
+      <table style="font-size:15.5px">
+        <thead><tr><th class="num">body_pre<br>來源神經元</th><th class="num">body_post<br>目標神經元</th><th class="num">weight<br>突觸數</th></tr></thead>
+        <tbody>
+          <tr><td class="num">810979</td><td class="num">800743</td><td class="num">77</td></tr>
+          <tr><td class="num">810979</td><td class="num">800928</td><td class="num">42</td></tr>
+          <tr><td class="num">810979</td><td class="num">803007</td><td class="num">27</td></tr>
+        </tbody>
+      </table>
+      <p class="tiny">只有三個欄位：沒有正負號，也沒有細胞類型。神經元 810979 共有 694 條輸出、144 條輸入連線。</p>
+    </div>
+    <div class="stack">
+      <div><span class="tag blue">檔案 2・神經傳導物質</span> <span class="tiny mono">body-neurotransmitters-….feather</span></div>
+      <p class="small"><b>43 MB・1,835,518 列</b>，每一列是一個神經元，共 10 個欄位。</p>
+      <table style="font-size:15.5px">
+        <thead><tr><th>欄位</th><th>神經元 810979 的值</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">cell_type</td><td>IN07B098</td></tr>
+          <tr><td class="mono">total_nt_predictions</td><td>246 個突觸做過預測</td></tr>
+          <tr><td class="mono">predicted_nt</td><td>acetylcholine（信心 0.97）</td></tr>
+          <tr><td class="mono">celltype_predicted_nt</td><td>acetylcholine（同類型合併）</td></tr>
+          <tr><td class="mono">ground_truth</td><td>acetylcholine（實驗證據）</td></tr>
+          <tr class="hl"><td class="mono"><b>consensus_nt</b></td><td><b>acetylcholine</b>（官方建議使用）</td></tr>
+        </tbody>
+      </table>
+      <p class="tiny">標籤由官方團隊產生：逐一預測每個突觸釋放的物質，再以整個神經元、整個細胞類型投票，有實驗證據時以實驗為準；證據不足標為 unclear。</p>
+    </div>
+  </div>
+  <p class="lead">兩份檔案使用<b>同一套神經元編號</b>（body ＝ body_pre／body_post），因此可以把化學物質對應到每一條連線的來源神經元。</p>
+  <aside class="notes">
+    <p>我們從官方下載了兩份檔案。第一份是連線檔，大約 1 GB、一億五千萬列，每一列是一條有方向的連線，只有三個欄位：來源神經元、目標神經元，以及兩者之間有幾個突觸。例如表格中，神經元 810979 連到 800743，中間有 77 個突觸。這份檔案只告訴我們誰連到誰、連得多強，沒有正負號，也沒有細胞類型。</p>
+    <p>第二份是神經傳導物質檔，每一列是一個神經元。右邊是 810979 這一列：官方對它的 246 個突觸做了預測，97% 判定為乙醯膽鹼；同類型的神經元合起來看也是乙醯膽鹼，而且有實驗證據。最後的 consensus_nt 欄位是官方建議使用的標籤，我們就是讀這個欄位。</p>
+    <p>兩份檔案用同一套神經元編號，所以可以把每個神經元的化學物質，對應到它送出去的每一條連線。</p>
+  </aside>
+</section>
+
+<section class="slide" data-title="官方提供與我們的選擇" data-chap="果蠅連接圖">
+  <div class="chap"><span class="no">02</span>果蠅連接圖・參數</div>
+  <h2>官方提供的資料不更動；選點與正負號的規則由我們決定</h2>
+  <div class="cols c46">
+    <div class="stack">
+      <div class="card"><h3>官方提供（不更動）</h3>
+        <ul class="small">
+          <li>哪些神經元相連、突觸數（weight）</li>
+          <li>突觸的偵測門檻：使用官方的 minconf-0.5 版本</li>
+          <li>每個神經元的神經傳導物質（consensus_nt）</li>
+        </ul></div>
+      <div class="card acc"><h3>訓練時唯一會變的</h3><p class="small">每條連線的<b>強度</b>。連線是否存在、正負號，都固定不變。</p></div>
+    </div>
+    <table style="font-size:15.5px">
+      <thead><tr><th>我們決定的參數</th><th>設定值</th></tr></thead>
+      <tbody>
+        <tr><td><b>子圖大小</b></td><td>500 個神經元</td></tr>
+        <tr><td><b>起點</b></td><td>雜湊籤號最小者（G0：274013289；第二代：810979）</td></tr>
+        <tr><td><b>擴展方式</b></td><td>不分方向的 BFS；同一層超額時取籤號最小者</td></tr>
+        <tr><td><b>增強／抑制名額</b></td><td>第二代 300／200</td></tr>
+        <tr><td><b>判定欄位</b></td><td>consensus_nt，不另加信心門檻</td></tr>
+        <tr><td><b>正負號規則</b></td><td>ACh ＋；GABA、組織胺 −；麩胺酸 −（對照版 ＋）；調節型與 unclear 排除</td></tr>
+        <tr><td><b>輸入／輸出點</b></td><td>各 32 個；輸出點須在 2 跳內可達</td></tr>
+        <tr><td><b>起始強度</b></td><td>依突觸數 log(1＋weight)，再以目標神經元的平均值正規化</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <aside class="notes">
+    <p>這一頁整理哪些是官方提供的、哪些是我們自己的選擇。官方提供的連線、突觸數，以及每個神經元的神經傳導物質，我們完全不更動。</p>
+    <p>右邊是我們決定的參數：子圖取 500 個神經元；起點用雜湊抽籤；擴展用不分方向的 BFS；第二代限定 300 個增強、200 個抑制；用 consensus_nt 判定物質，再用對照規則轉成正負號；輸入和輸出點各 32 個；每條連線的起始強度依突觸數決定。</p>
+    <p>到了訓練階段，唯一會改變的是每條連線的強度，連線存在與否和正負號都固定。接下來我依序說明起點、BFS 和正負號這幾個選擇。</p>
   </aside>
 </section>
 
@@ -568,7 +644,7 @@ body.show-notes #notes { display: block; }
   <div class="chap"><span class="no">03</span>模型與訓練</div>
   <h2>三段模型各司其職：E5 讀文字、Fly A 壓縮、Fly B 分類</h2>
   <div class="flow">
-    <div class="st"><b>E5</b><span>現成的多語文字模型<br>逐字稿 → 384 個數字<br>固定不訓練</span></div><div class="ar">›</div>
+    <div class="st"><b>E5</b><span class="mono" style="font-size:13px">intfloat/multilingual-e5-small</span><span><br>現成的多語文字模型<br>逐字稿 → 384 個數字・固定不訓練</span></div><div class="ar">›</div>
     <div class="st fly"><b>Fly A・降維</b><span>384 → 32 個數字<br>以 500 個神經元為骨架<br>盡量保留資訊</span></div><div class="ar">›</div>
     <div class="st fly"><b>Fly B・分類</b><span>32 → 五類分數<br>同一張圖、另一份權重<br>取分數最高的類別</span></div>
   </div>
@@ -578,7 +654,7 @@ body.show-notes #notes { display: block; }
   </div>
   <p class="lead">果蠅模型只接受數字，由 E5 將文字轉成數字；所有方法共用同一份 E5 輸出，比較才公平。</p>
   <aside class="notes">
-    <p>整個系統分三段。E5 是現成的文字模型，我們不訓練它，只用它把每通電話轉成 384 個數字，意思相近的通話，數字也會接近。</p>
+    <p>整個系統分三段。E5 的全名是 multilingual-e5-small，是現成的多語文字模型，我們不訓練它，只用它把每通電話轉成 384 個數字，意思相近的通話，數字也會接近。</p>
     <p>Fly A 把 384 個數字壓縮成 32 個，Fly B 再根據這 32 個數字判斷類別。兩隻果蠅使用同一張 500 點的圖，但各自訓練自己的連線強度。</p>
     <p>每一段都有傳統方法作為對照：LDA 對應 Fly A，SVM 對應 Fly B。因為所有方法都用同一份 E5 輸出，可以交叉組合，例如 LDA 接 Fly B，或 Fly A 接 SVM，找出問題出在哪一段。</p>
   </aside>
@@ -967,7 +1043,7 @@ body.show-notes #notes { display: block; }
       <tr><td><b>Macro-F1</b></td><td>五類 F1 的平均，主要指標</td></tr>
       <tr><td><b>情境家族</b></td><td>同一類下的一種具體情境，共 66 個；決定資料切分</td></tr>
       <tr><td><b>train／validation／test</b></td><td>訓練用／比較與調整用／最後只評估一次</td></tr>
-      <tr><td><b>E5</b></td><td>現成的多語文字模型，把逐字稿轉成 384 個數字</td></tr>
+      <tr><td><b>E5</b></td><td>multilingual-e5-small，現成的多語文字模型，把逐字稿轉成 384 個數字</td></tr>
       <tr><td><b>LDA</b></td><td>傳統的監督式降維，五類最多壓到 4 維</td></tr>
       <tr><td><b>SVM／邏輯迴歸／MLP</b></td><td>常見的分類器，作為對照</td></tr>
       <tr><td><b>捷徑詞</b></td><td>只要出現就能猜出類別的詞</td></tr>
