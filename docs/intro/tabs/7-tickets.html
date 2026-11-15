@@ -118,7 +118,7 @@
     <summary><span class="tk-no">07</span><span class="tk-title">M3.0 資料流與訓練規則</span><span class="st done">完成</span><span class="tk-one">定下 Fly A／Fly B 的架構、運算方式與訓練規則</span></summary>
     <div class="tk-body"><dl>
       <dt>追蹤什麼</dt><dd>E5 → Fly A → Fly B 的每一步怎麼算：連線強度怎麼表示、訊號怎麼傳、各自用什麼目標訓練、怎麼選模，以及禁止繞過連接圖的捷徑。</dd>
-      <dt>變更與產出</dt><dd>契約文件 <code>docs/research/m3-0-connectome-classifier-contract.md</code>：每條連線一個正值強度、訊號共用 T 步；Fly A 只學「保留距離」，Fly B 學分類；主設定 T=2。</dd>
+      <dt>變更與產出</dt><dd>契約文件 <code>.scratch/1999-connectome-demo/research/m3-0-connectome-classifier-contract.md</code>：每條連線一個正值強度、訊號共用 T 步；Fly A 只學「保留距離」，Fly B 學分類；主設定 T=2。</dd>
       <dt>結果</dt><dd>後續所有果蠅模型的設計依據；之後的改版（19 的正負號、20 的類別分離、23 的跳數）都是在這份規則上修改。</dd>
       <dt>相依</dt><dd>01、05。</dd>
     </dl></div>
@@ -223,7 +223,7 @@
     <div class="tk-body"><dl>
       <dt>追蹤什麼</dt><dd>你的中心思想：只改參數，讓 Fly A（降維）與 Fly B（分類）分別達到最好表現；規則要事先寫定，避免看了 validation 再改。</dd>
       <dt>變更與產出</dt><dd><code>independent_tuning.py</code>、<code>scripts/run_independent_tuning.py</code>：依情境家族分組的 5 折交叉驗證、3 個 seed、3 種學習率，由交叉驗證決定 epoch；Fly A 新增「距離＋類別分離」（SupCon）目標。預先登記文件在 <code>research/</code>。</dd>
-      <dt>結果</dt><dd>加入類別分離後，Fly A → SVM 從 0.792 提升到 0.88–0.92；Fly B 已練到位。</dd>
+      <dt>結果</dt><dd>加入類別分離後，Fly A → SVM 在四張圖上都比只保留距離高 0.03–0.12（修正前程式；工作票 23 修正後縮小為 0.01–0.05）；Fly B 已練到位。</dd>
       <dt>相依</dt><dd>17 的結論；22 依賴它。</dd>
     </dl></div>
   </details>

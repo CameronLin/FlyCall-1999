@@ -22,7 +22,7 @@
 數字是 Macro-F1（五類 F1 的平均），果蠅模型為三個 seed 平均。
 
 1. **果蠅連接圖可以完成分類，表現和傳統方法大致同一水準**，但還沒有穩定勝過 LDA → SVM。
-2. **最大的改進來自訓練目標，不是圖本身**：讓 Fly A 同時保留距離與類別（SupCon），是從 0.66 提升到 0.9 左右的關鍵。
+2. **訓練目標比圖的細節重要**：讓 Fly A 同時保留距離與類別（SupCon），在每張圖上都比只保留距離好（Fly A → SVM 高 0.01–0.06）。從 0.66 到 0.9 左右，則是各自調參、修正程式錯誤與 SupCon 三者合起來的結果。
 3. **Fly A 和 Fly B 學成很不一樣的「腦」**：分類的 Fly B 大幅改寫連線，降維的 Fly A 幾乎維持原樣。
 4. **換子圖、加抑制性神經元、增加傳遞步數（T=2 → T=4）的效果都不大**，而且會隨資料版本改變。
 5. **限制**：資料未經人工複核；validation 與 test 各只有 150 筆；子圖起點用可重現的抽籤規則決定，尚未驗證換起點後結論是否相同。
@@ -32,6 +32,7 @@
 | 想知道 | 看這裡 |
 |---|---|
 | 完整的圖文介紹（建議從這裡開始） | [`outputs/FlyCall-1999_專案介紹.html`](outputs/FlyCall-1999_專案介紹.html)（下載後用瀏覽器開啟） |
+| 簡報形式的技術說明（資料生成、選點、訓練、結果，附講稿） | [`outputs/FlyCall-1999_專案簡報.html`](outputs/FlyCall-1999_專案簡報.html)、[講稿](outputs/FlyCall-1999_專案簡報_講稿.md) |
 | 名詞是什麼意思（Fly A／B、G0–G2、T、SupCon…） | [CONTEXT.md](CONTEXT.md) |
 | Fly A／Fly B 兩個腦的差異分析 | [`outputs/FlyCall-1999_FlyA_FlyB_分析報告.html`](outputs/FlyCall-1999_FlyA_FlyB_分析報告.html) |
 | 最初的規格與設計理由 | [1999-connectome-demo-spec.md](1999-connectome-demo-spec.md) |
