@@ -8,7 +8,7 @@
 
 ## 範圍
 
-- 依 `docs/research/m3-0-connectome-classifier-contract.md` v1.1 實作小型 fixture-only 模型核心；模組遵守現有 `src/flycall_data/` 慣例，測試遵守 `unittest` 慣例。
+- 依 `.scratch/1999-connectome-demo/research/m3-0-connectome-classifier-contract.md` v1.1 實作小型 fixture-only 模型核心；模組遵守現有 `src/flycall_data/` 慣例，測試遵守 `unittest` 慣例。
 - 先寫並執行有意義的 fixture 測試，再實作。可唯讀讀取 M1.3 `io_manifest.json` 的 32 個 ordered input/output IDs；edge rows 必須是手工建立的小型 synthetic fixture，不讀取 500-node edge table。以這些 IDs 建立小型 toy graph，測試真實 manifest 座標順序但不使用正式 connectome 邊。
 - 覆蓋 Fly A 的 frozen-input adapter／圖核心／ordered output、Fly A output normalization、Fly B trainable 32→32 adapter／獨立圖核心／32→5 readout。Encoder 可由測試直接注入數值向量；不載入 E5。
 - 使用固定稀疏 edge list；每條存在 edge 各一個 trainable raw parameter，非邊沒有參數，自連線保留。每個 Fly 的 gains 獨立；同一 Fly 的 edge gains 在 T 個時間步共享。
@@ -55,11 +55,11 @@ gain_e = 1e-6 + softplus(raw_e)
 - [x] **訓練界線：** Fly A distance-preserving loss 與 Fly B cross-entropy fixture 通過；Fly A 凍結；流程僅使用合成記憶體張量，未呼叫正式 loader 或讀取任何 split rows／指標。
 - [x] **checkpoint 一致：** CPU/eval fixture 載入前後 logits 在容差內一致；metadata 記錄 node／edge 順序、topology checksum、T、weight init／aggregation、A/B 參數量與 label order；不相容設定拒絕載入。
 - [x] **資源閘門：** 實測 RAM `8,589,934,592` bytes；隔離環境使用 PyTorch CPU wheel，resolver 下載 `131.29 MiB`；最終 fixture 測試峰值 RSS `290,045,952` bytes；最新可用磁碟 `23,275,204 KiB`，高於 4 GiB 保留線；未載入模型。
-- [x] **報告：** `docs/research/m3-1-small-fixture-model-core-report.md` 列出命令、fixture、參數量、依賴、RSS／磁碟、TDD 與限制；無正式資料訓練、test 指標或生物學代表性主張。
+- [x] **報告：** `.scratch/1999-connectome-demo/research/m3-1-small-fixture-model-core-report.md` 列出命令、fixture、參數量、依賴、RSS／磁碟、TDD 與限制；無正式資料訓練、test 指標或生物學代表性主張。
 
 ## Comments
 
 - 2026-10-16：依使用者已確認的 M3.0 v1.1 工程契約建立 ticket。Ticket 只定義小型 fixture 核心與驗收條件；本次沒有開始實作、寫測試、安裝套件、下載／載入模型或訓練。
-- 2026-10-16：依使用者指示先寫 fixture 測試，紅燈確認缺少 `flycall_data.graph_core` 後新增核心；專用測試 12/12 通過。資源、套件與 fixture 細節見 `docs/research/m3-1-small-fixture-model-core-report.md`。因本次明確限制不得讀 M1.3 manifest，保留實際 32+32 manifest ID 對照項目未勾選，ticket 維持 `in-progress`；未讀正式資料／connectome 產物，未做正式訓練。
+- 2026-10-16：依使用者指示先寫 fixture 測試，紅燈確認缺少 `flycall_data.graph_core` 後新增核心；專用測試 12/12 通過。資源、套件與 fixture 細節見 `.scratch/1999-connectome-demo/research/m3-1-small-fixture-model-core-report.md`。因本次明確限制不得讀 M1.3 manifest，保留實際 32+32 manifest ID 對照項目未勾選，ticket 維持 `in-progress`；未讀正式資料／connectome 產物，未做正式訓練。
 - 2026-10-26：依目前後續開發任務唯讀核對 M1.3 `io_manifest.json`：500 nodes、2,216 edges、32 unique input IDs、32 unique output IDs、0 overlap；全部 outputs 在 M1.3 宣告的 T=4 reachability check 中 reachable。`graph_core` constructors 保留呼叫端提供的 I/O order。補足先前保留的 32+32 manifest 對照項目；M3.1 fixture-only ticket 完成。這次 manifest 檢查未讀取 edge/node Parquet；M3.2 ticket 才核對固定 graph checksum 並使用該子圖。
 - 2026-10-16：依後續授權只讀指定 `io_manifest.json` 的 ordered I/O ID 欄位，確認 input/output 各 32 個、唯一、互斥；以實際 ID 與合成 edges 驗證 graph core、Fly A／Fly B 的節點順序和端到端 fixture logits。M3.1 專用測試 13/13 通過，所有驗收條件完成，ticket 標記 `completed`。未讀 Parquet、完整子圖或正式資料，未訓練或開始 M3.2。

@@ -12,7 +12,7 @@
 
 ## 產物
 
-- 首版契約：[docs/research/m3-0-connectome-classifier-contract.md](../../../docs/research/m3-0-connectome-classifier-contract.md)（v1.4；E5 runtime 與三 seed M3.2 train/validation runs 已通過；M3.4／人工複核狀態見各工作票）
+- 首版契約：[m3-0-connectome-classifier-contract.md](../research/m3-0-connectome-classifier-contract.md)（v1.4；E5 runtime 與三 seed M3.2 train/validation runs 已通過；M3.4／人工複核狀態見各工作票）
 - 下一項獨立實作工作：08 M3.1 小型 fixture 模型核心。
 
 ## 驗收條件
